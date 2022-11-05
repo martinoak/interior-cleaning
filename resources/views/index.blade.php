@@ -34,7 +34,7 @@
                     <div class="navbar-collapse">
                         <ul id="nav" class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#about">O nás</a>
+                                <a class="ud-menu-scroll" href="#about">O mně</a>
                             </li>
                             <li class="nav-item">
                                 <a class="ud-menu-scroll" href="#reference">Reference</a>
@@ -79,7 +79,7 @@
             <div class="col-lg-12">
                 <div class="ud-section-title">
                     <span>Služby</span>
-                    <h2>Tohle vše dokážeme zařídit</h2>
+                    <h2>Tohle vše dokážu zařídit</h2>
                     <hr />
                 </div>
             </div>
@@ -153,9 +153,9 @@
             <div class="ud-about-content-wrapper">
                 <div class="ud-about-content">
                     <span class="tag">O nás</span>
-                    <h2>Mladí kluci s citem pro detail</h2>
-                    <p>Svou dílnu máme v Kondraci, zastavte se!</p>
-                    <p>Na čištění interiéru používáme šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
+                    <h2>Mladý kluk s citem pro detail</h2>
+                    <p>Svou dílnu mám v Kondraci, zastavte se!</p>
+                    <p>Na čištění interiéru používám šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
                 </div>
             </div>
             <div class="ud-about-image" style="width: 30%">
@@ -263,7 +263,7 @@
             <div class="col-lg-12">
                 <div class="ud-section-title mx-auto text-center">
                     <span>Reference</span>
-                    <h2>Co o nás píší zákazníci</h2>
+                    <h2>Co o mně píší zákazníci</h2>
                     <hr />
                 </div>
             </div>
@@ -301,7 +301,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ud-section-title mx-auto text-center">
-                    <span>Náš tým</span>
+                    <span>Tým</span>
                     <h2>Ahoj!</h2>
                     <hr />
                 </div>
@@ -358,7 +358,7 @@
                         <span>Kontakt</span>
                         <h2>
                             Máte dotazy? <br />
-                            Napište nebo zavolejte! Jsme tu pro Vás!
+                            Napište nebo zavolejte! Jsem tu jen pro Vás!
                         </h2>
                     </div>
                     <div class="ud-contact-info-wrapper">
@@ -368,7 +368,6 @@
                             </div>
                             <div class="ud-info-meta">
                                 <h5>Adresa</h5>
-                                <p>Autodoprava Hana Houlíková</p>
                                 <p>Kondrac 115, 258 01 Vlašim</p>
                                 <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=49.665563,14.884062" class="py-1" target="_blank"><i class="fa-solid fa-location-arrow"></i> Pustit GPS</a>
                             </div>
@@ -389,7 +388,6 @@
                             <div class="ud-info-meta">
                                 <h5>Haló!</h5>
                                 <a href="tel:+420602352402">+420 602 352 402</a>
-                                <a href="tel:+420732790409">+420 732 790 409</a>
                             </div>
                         </div>
                     </div>

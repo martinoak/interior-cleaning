@@ -1107,8 +1107,8 @@ p {
 
 .ud-single-testimonial {
   padding: 30px;
-  -webkit-box-shadow: 0 60px 120px -20px #ebeffd;
-          box-shadow: 0 60px 120px -20px #ebeffd;
+  border-radius: 3px;
+  border: 1px solid #ddd;
   background: var(--white);
   margin-bottom: 50px;
 }
