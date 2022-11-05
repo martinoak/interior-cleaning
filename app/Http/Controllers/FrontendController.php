@@ -13,6 +13,11 @@ class FrontendController extends Controller
         return view('index');
     }
 
+    public function tailwind()
+    {
+        return view('tailwind');
+    }
+
     public function sendEmail(Request $request)
     {
         $details = [

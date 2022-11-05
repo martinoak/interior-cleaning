@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('css/ud-styles.css') }}" />
 
+
+{{--    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>--}}
+
+
 </head>
 <body>
 <!-- ====== Header Start ====== -->
@@ -47,6 +53,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="ud-menu-scroll fw-bold" href="#kontakt">Kontakty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="ud-menu-scroll" onclick="window.location.href='/tailwind'">Tailwind</a>
                             </li>
                         </ul>
                     </div>
@@ -269,6 +278,96 @@
             </div>
         </div>
 
+        <div id="carouselExampleIndicators" class="carousel carousel-dark slide w-75 mx-auto" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner w-50 mx-auto">
+                <div class="carousel-item active">
+                    <div class="d-block w-100">
+                        <div class="ud-single-testimonial">
+                            <div class="ud-testimonial-ratings">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                            <div class="ud-testimonial-content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies.</p>
+                            </div>
+                            <div class="ud-testimonial-info">
+                                <div class="ud-testimonial-image">
+                                    <img src="{{ asset('images/testimonials/author-01.png') }}" alt=""/>
+                                </div>
+                                <div class="ud-testimonial-meta">
+                                    <h4>Martin Dub</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="d-block w-100">
+                        <div class="ud-single-testimonial">
+                            <div class="ud-testimonial-ratings">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="ud-testimonial-content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies.</p>
+                            </div>
+                            <div class="ud-testimonial-info">
+                                <div class="ud-testimonial-image">
+                                    <img src="{{ asset('images/testimonials/author-01.png') }}" alt=""/>
+                                </div>
+                                <div class="ud-testimonial-meta">
+                                    <h4>Bum Shakalaka</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="d-block w-100">
+                        <div class="ud-single-testimonial">
+                            <div class="ud-testimonial-ratings">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                            <div class="ud-testimonial-content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies.</p>
+                            </div>
+                            <div class="ud-testimonial-info">
+                                <div class="ud-testimonial-image">
+                                    <img src="{{ asset('images/testimonials/author-01.png') }}" alt=""/>
+                                </div>
+                                <div class="ud-testimonial-meta">
+                                    <h4>Lorem Ipsum</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+{{--
         <div class="row d-flex justify-content-center">
             <div class="col-lg-4 col-md-6">
                 <div class="ud-single-testimonial">
@@ -293,6 +392,7 @@
                 </div>
             </div>
         </div>
+--}}
     </div>
 </section>
 
