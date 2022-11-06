@@ -6,7 +6,7 @@
         const ud_header = document.querySelector(".ud-header");
         const sticky = ud_header.offsetTop;
         const logo = document.querySelector(".navbar-brand img");
-        const logoText = document.querySelector(".navbar-brand");
+        const logoText = document.querySelector(".navbar-brand-text");
         const burger = document.querySelector(".navbar-toggler i");
 
         if (window.scrollY > sticky) {

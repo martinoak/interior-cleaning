@@ -16,12 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('css/ud-styles.css') }}" />
 
-
-{{--    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>--}}
-
-
 </head>
 <body>
 <!-- ====== Header Start ====== -->
@@ -30,9 +24,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg">
-                    <a class="navbar-brand fw-bold" href="/" style="color: white">
-                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" class="w-25"/>
-                        Čištění interiéru Kondrac
+                    <span class="navbar-brand">
+                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" class="w-100"/>
+                    </span>
+                    <a class="ud-logo-text navbar-brand-text fw-bold" href="/" style="color: white">
+                        Čištění interiéru
                     </a>
                     <button class="navbar-toggler">
                         <i class="fa-solid fa-bars text-white"></i>
@@ -54,9 +50,9 @@
                             <li class="nav-item">
                                 <a class="ud-menu-scroll fw-bold" href="#kontakt">Kontakty</a>
                             </li>
-                            <li class="nav-item">
+                            {{--<li class="nav-item">
                                 <a class="ud-menu-scroll" onclick="window.location.href='/tailwind'">Tailwind</a>
-                            </li>
+                            </li>--}}
                         </ul>
                     </div>
                 </nav>
@@ -71,10 +67,10 @@
             <div class="col-lg-12">
                 <div class="ud-hero-content">
                     <h1 class="ud-hero-title">
-                        Práce všeho druhu
+                        Čištění interiéru Kondrac
                     </h1>
                     <p class="ud-hero-desc">
-                        -
+                        Práce všeho druhu
                     </p>
                 </div>
             </div>
@@ -161,7 +157,7 @@
         <div class="ud-about-wrapper">
             <div class="ud-about-content-wrapper">
                 <div class="ud-about-content">
-                    <span class="tag">O nás</span>
+                    <span class="tag">O mně</span>
                     <h2>Mladý kluk s citem pro detail</h2>
                     <p>Svou dílnu mám v Kondraci, zastavte se!</p>
                     <p>Na čištění interiéru používám šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
@@ -206,7 +202,7 @@
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
-                        <a href="#kontakt" class="ud-main-btn ud-border-btn">
+                        <a href="/variant/1" class="ud-main-btn ud-border-btn">
                             To beru!
                         </a>
                     </div>
@@ -231,7 +227,7 @@
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
-                        <a href="#kontakt" class="ud-main-btn ud-white-btn">
+                        <a href="/variant/2" class="ud-main-btn ud-white-btn">
                             To beru!
                         </a>
                     </div>
@@ -256,7 +252,7 @@
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
-                        <a href="#kontakt" class="ud-main-btn ud-border-btn">
+                        <a href="/variant/3" class="ud-main-btn ud-border-btn">
                             To beru!
                         </a>
                     </div>
@@ -278,7 +274,7 @@
             </div>
         </div>
 
-        <div id="carouselExampleIndicators" class="carousel carousel-dark slide w-75 mx-auto" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -537,6 +533,19 @@
                                 placeholder="Dobrý den..."
                             ></textarea>
                         </div>
+                        @if (Session::has('variant'))
+                        <div class="ud-form-group">
+                            <label for="variant">Varianta <i class="fa-brands fa-angellist text-danger"></i></label>
+                            <input
+                                type="text"
+                                name="variant"
+                                id="variant"
+                                value="{{ Session::get('variant') }}"
+                                placeholder=""
+                                required
+                            />
+                        </div>
+                        @endif
                         <div class="ud-form-group mb-0">
                             <button type="submit" class="ud-main-btn w-100" role="button">
                                 Odeslat poptávku

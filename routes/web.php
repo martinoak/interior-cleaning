@@ -16,5 +16,6 @@ use App\Http\Controllers\FrontendController;
 
 Route::any('/', [FrontendController::class, 'index']);
 Route::any('/tailwind', [FrontendController::class, 'tailwind'])->name('tailwind');
+Route::any('/variant/{id}', [FrontendController::class, 'formWithVariant']);
 
 Route::any('/sendEmail', [FrontendController::class, 'sendEmail'])->name('sendEmail');
