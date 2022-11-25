@@ -34,10 +34,10 @@ class FrontendController extends Controller
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
             'message' => $request->get('message'),
-            'variant' => $request->get('variant')
+            'variant' => $request->get('variant') ?? 'Není vyplněná varianta',
         ];
 
-        Mail::to('oakk.martin@gmail.com')->send(new FormEmail($details));
+        Mail::to('info@cisteni-kondrac.cz')->send(new FormEmail($details));
         return back();
     }
 
