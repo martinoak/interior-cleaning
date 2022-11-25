@@ -110,9 +110,9 @@
                         <i class="fa-solid fa-soap"></i>
                     </div>
                     <div class="ud-feature-content">
-                        <h3 class="ud-feature-title">Umytí skel</h3>
+                        <h3 class="ud-feature-title">Hloubkové čištění sedaček</h3>
                         <p class="ud-feature-desc">
-                            Zevnitř i z venku, týká se všech skel včetně zrcátek
+                            Výkonným tepovačem a účinnými přípravky
                         </p>
                     </div>
                 </div>
@@ -195,8 +195,8 @@
                             <li>Vyluxování zavazadlového prostoru</li>
                             <li>Vyčištění koberečků</li>
                             <li>Oživení plastů</li>
+                            <li>Impregnace plastů proti poškrábání</li>
                             <li>Vyleštění čelního skla</li>
-                            <li>&nbsp;</li>
                             <li>&nbsp;</li>
                             <li>&nbsp;</li>
                         </ul>
@@ -450,7 +450,7 @@
         <div class="row align-items-center">
             <div class="col-xl-8 col-lg-7">
                 <div class="ud-contact-content-wrapper">
-                    <div class="ud-contact-title">
+                    <div class="ud-section-title">
                         <span>Kontakt</span>
                         <h2>
                             Máte dotazy? <br />
@@ -491,7 +491,7 @@
             </div>
             <div class="col-xl-4 col-lg-5">
                 <div class="ud-contact-form-wrapper">
-                    <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
+                    <h3 class="ud-contact-form-title">Napište mi! <i class="fa-solid fa-pen ms-2"></i></h3>
                     <form class="ud-contact-form" method="post" action="{{ route('sendEmail') }}">
                         {{ csrf_field() }}
                         <div class="ud-form-group">

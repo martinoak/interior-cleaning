@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormEmail;
+use App\Mail\FeedbackEmail;
 use Illuminate\Support\Facades\Session;
 
 class FrontendController extends Controller
@@ -38,5 +39,17 @@ class FrontendController extends Controller
 
         Mail::to('oakk.martin@gmail.com')->send(new FormEmail($details));
         return back();
+    }
+
+    public function sendFeedbackEmail()
+    {
+        Mail::to('oakk.martin@gmail.com')->send(new FeedbackEmail());
+    }
+
+    public function saveFeedback(Request $request)
+    {
+        return view('feedback', [
+            'hash' => $request->get('id')
+        ]);
     }
 }
