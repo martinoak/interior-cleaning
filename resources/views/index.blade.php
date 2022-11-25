@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Čištění interiéru Kondrac" />
     <title>Čištění interiéru Kondrac</title>
 
     <!--====== Favicon Icon ======-->
@@ -609,7 +610,7 @@
     </div>
 </footer>
 
-<a href="javascript:void(0)" class="back-to-top">
+<a href="" class="back-to-top">
     <i class="fa-solid fa-chevron-up"></i>
 </a>
 
