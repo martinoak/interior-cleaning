@@ -36,7 +36,7 @@
                     <div class="navbar-collapse">
                         <ul id="nav" class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#about">O mně</a>
+                                <a class="ud-menu-scroll" href="#about">O nás</a>
                             </li>
                             <li class="nav-item">
                                 <a class="ud-menu-scroll" href="#reference">Reference</a>
@@ -50,9 +50,6 @@
                             <li class="nav-item">
                                 <a class="ud-menu-scroll fw-bold" href="#kontakt">Kontakty</a>
                             </li>
-                            {{--<li class="nav-item">
-                                <a class="ud-menu-scroll" onclick="window.location.href='/tailwind'">Tailwind</a>
-                            </li>--}}
                         </ul>
                     </div>
                 </nav>
@@ -70,7 +67,7 @@
                         Čištění interiéru Kondrac
                     </h1>
                     <p class="ud-hero-desc">
-                        Práce všeho druhu
+                        Vaše auto vyčistíme rychle, levně a kvalitně!
                     </p>
                 </div>
             </div>
@@ -84,7 +81,7 @@
             <div class="col-lg-12">
                 <div class="ud-section-title">
                     <span>Služby</span>
-                    <h2>Tohle vše dokážu zařídit</h2>
+                    <h2>Tohle vše dokážeme zařídit</h2>
                     <hr />
                 </div>
             </div>
@@ -158,9 +155,9 @@
             <div class="ud-about-content-wrapper">
                 <div class="ud-about-content">
                     <span class="tag">O mně</span>
-                    <h2>Mladý kluk s citem pro detail</h2>
-                    <p>Svou dílnu mám v Kondraci, zastavte se!</p>
-                    <p>Na čištění interiéru používám šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
+                    <h2>Mladí kluci s citem pro detail</h2>
+                    <p>Svou dílnu máme v Kondraci, zastavte se!</p>
+                    <p>Na čištění interiéru používáme šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
                 </div>
             </div>
             <div class="ud-about-image" style="width: 30%">
@@ -193,10 +190,11 @@
                         <ul>
                             <li>Základní luxování interiéru</li>
                             <li>Vyluxování zavazadlového prostoru</li>
-                            <li>Vyčištění koberečků</li>
-                            <li>Oživení plastů</li>
-                            <li>Impregnace plastů proti poškrábání</li>
+                            <li>Vyluxování koberečků</li>
+                            <li>Ošetření plastů proti poškrábání</li>
                             <li>Vyleštění čelního skla</li>
+                            <li>&nbsp;</li>
+                            <li>&nbsp;</li>
                             <li>&nbsp;</li>
                             <li>&nbsp;</li>
                         </ul>
@@ -213,17 +211,19 @@
                     <span class="ud-popular-tag">Populární</span>
                     <div class="ud-pricing-header">
                         <h3>ZLATÁ STŘEDNÍ CESTA</h3>
-                        <h4>1 299,- Kč</h4>
+                        <h4>1 399,- Kč</h4>
                     </div>
                     <div class="ud-pricing-body">
                         <ul>
                             <li><strong>Detailní</strong> luxování interiéru</li>
                             <li>Vyluxování zavazadlového prostoru</li>
                             <li>Vyčištění koberečků a umytí disků</li>
-                            <li>Oživení plastů</li>
+                            <li>Ošetření plastů proti poškrábání</li>
+                            <li>Vyleštění oken a zrcátek</li>
                             <li>Tepování sedaček a koberečků</li>
-                            <li>Vyleštění oken zevnitř</li>
                             <li>Desinfekce klimatizace</li>
+                            <li>&nbsp;</li>
+                            <li>&nbsp;</li>
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
@@ -237,18 +237,19 @@
                 <div class="ud-single-pricing last-item ms-2">
                     <div class="ud-pricing-header">
                         <h3>DELUXE</h3>
-                        <h4>2 299,- Kč</h4>
+                        <h4>2 399,- Kč</h4>
                     </div>
                     <div class="ud-pricing-body">
                         <ul>
                             <li><strong>Detailní</strong> luxování celého interiéru</li>
                             <li>Vyluxování zavazadlového prostoru</li>
-                            <li>Mokré čištění koberečků a umytí disků</li>
-                            <li>Vyčištění a oživení plastů</li>
-                            <li>Tepování sedaček, kufru i stropnice</li>
-                            <li>Vyleštění všech oken z obou stran</li>
+                            <li>Vyčištění koberečků a umytí disků</li>
+                            <li>Vyčištění a ošetření plastů proti poškrábání</li>
+                            <li>Vyleštění všech skel z obou stran</li>
+                            <li>Tepování sedaček a koberečků</li>
                             <li>Základní čištění kožených částí</li>
                             <li>Vyčištění klimatizace s vůní po citrónu</li>
+                            <li>Navoskování čelního skla</li>
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
@@ -424,8 +425,45 @@
                     </div>
                     <div class="ud-team-info">
                         <h5>Štěpán Dub</h5>
-                        <h6>Úklidový četař</h6>
+                        <h6>Majitel</h6>
                         <a href="tel:+420602352402">+420 602 352 402</a>
+                    </div>
+                    <ul class="ud-team-socials">
+                        <li>
+                            <a href="/">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-sm-6">
+                <div class="ud-single-team">
+                    <div class="ud-team-image-wrapper">
+                        <div class="ud-team-image">
+                            <img src="{{ asset('images/team/team-01.png') }}" alt="team" />
+                        </div>
+                        <img
+                            src="{{ asset('images/team/dotted-shape.svg') }}"
+                            alt="shape"
+                            class="shape shape-1"
+                        />
+                        <img
+                            src="{{ asset('images/team/shape-2.svg') }}"
+                            alt="shape"
+                            class="shape shape-2"
+                        />
+                    </div>
+                    <div class="ud-team-info">
+                        <h5>Daniel Pohorský</h5>
+                        <h6>Pracovník</h6>
+                        <a href="tel:+420732790409">+420 732 790 409</a>
                     </div>
                     <ul class="ud-team-socials">
                         <li>
@@ -454,7 +492,7 @@
                         <span>Kontakt</span>
                         <h2>
                             Máte dotazy? <br />
-                            Napište nebo zavolejte! Jsem tu jen pro Vás!
+                            Napište nebo zavolejte! Jsme tu pro Vás!
                         </h2>
                     </div>
                     <div class="ud-contact-info-wrapper">
@@ -474,7 +512,7 @@
                             </div>
                             <div class="ud-info-meta">
                                 <h5>Spojme se!</h5>
-                                <a href="mailto:cisteni.kondrac@gmail.com">cisteni.kondrac@gmail.com</a>
+                                <a href="mailto:info@cisteni-kondrac.cz">info@cisteni-kondrac.cz</a>
                             </div>
                         </div>
                         <div class="ud-single-info">
@@ -491,7 +529,7 @@
             </div>
             <div class="col-xl-4 col-lg-5">
                 <div class="ud-contact-form-wrapper">
-                    <h3 class="ud-contact-form-title">Napište mi! <i class="fa-solid fa-pen ms-2"></i></h3>
+                    <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
                     <form class="ud-contact-form" method="post" action="{{ route('sendEmail') }}">
                         {{ csrf_field() }}
                         <div class="ud-form-group">
