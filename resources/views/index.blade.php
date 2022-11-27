@@ -155,7 +155,7 @@
         <div class="ud-about-wrapper">
             <div class="ud-about-content-wrapper">
                 <div class="ud-about-content">
-                    <span class="tag">O mně</span>
+                    <span class="tag">O nás</span>
                     <h2>Mladí kluci s citem pro detail</h2>
                     <p>Svou dílnu máme v Kondraci, zastavte se!</p>
                     <p>Na čištění interiéru používáme šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
@@ -270,91 +270,64 @@
             <div class="col-lg-12">
                 <div class="ud-section-title mx-auto text-center">
                     <span>Reference</span>
-                    <h2>Co o mně píší zákazníci</h2>
+                    <h2>Co o nás píší zákazníci</h2>
                     <hr />
                 </div>
             </div>
         </div>
 
         <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
             <div class="carousel-inner w-50 mx-auto">
-                <div class="carousel-item active">
-                    <div class="d-block w-100">
-                        <div class="ud-single-testimonial">
-                            <div class="ud-testimonial-ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="ud-testimonial-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies.</p>
-                            </div>
-                            <div class="ud-testimonial-info">
-                                <div class="ud-testimonial-image">
-                                    <img src="{{ asset('images/testimonials/author-01.png') }}" alt=""/>
+                @foreach($feedbacks as $feedback)
+                    <div class="carousel-item @if ($loop->first) active @endif">
+                        <div class="d-block w-100">
+                            <div class="ud-single-testimonial">
+                                <div class="ud-testimonial-ratings">
+                                    @if ($feedback->rating == 1)
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    @elseif($feedback->rating == 2)
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    @elseif($feedback->rating == 3)
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    @elseif($feedback->rating == 4)
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    @else
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    @endif
                                 </div>
-                                <div class="ud-testimonial-meta">
-                                    <h4>Martin Dub</h4>
+                                <div class="ud-testimonial-content">
+                                    <p>{{$feedback->message}}</p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="d-block w-100">
-                        <div class="ud-single-testimonial">
-                            <div class="ud-testimonial-ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <div class="ud-testimonial-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies.</p>
-                            </div>
-                            <div class="ud-testimonial-info">
-                                <div class="ud-testimonial-image">
-                                    <img src="{{ asset('images/testimonials/author-01.png') }}" alt=""/>
-                                </div>
-                                <div class="ud-testimonial-meta">
-                                    <h4>Bum Shakalaka</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="d-block w-100">
-                        <div class="ud-single-testimonial">
-                            <div class="ud-testimonial-ratings">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="ud-testimonial-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies.</p>
-                            </div>
-                            <div class="ud-testimonial-info">
-                                <div class="ud-testimonial-image">
-                                    <img src="{{ asset('images/testimonials/author-01.png') }}" alt=""/>
-                                </div>
-                                <div class="ud-testimonial-meta">
-                                    <h4>Lorem Ipsum</h4>
+                                <div class="ud-testimonial-info">
+                                    <div class="ud-testimonial-meta">
+                                        <h4>{{ $feedback->fullname }}</h4>
+                                        <p>Varianta: {{ $feedback->variant }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

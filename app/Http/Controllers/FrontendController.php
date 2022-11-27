@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormEmail;
 use App\Mail\FeedbackEmail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class FrontendController extends Controller
 {
     public function index()
     {
-        return view('index');
-    }
-
-    public function tailwind()
-    {
-        return view('tailwind');
+        return view('index', [
+            'feedbacks' => DB::table('feedback')->where([['rating', '>', 3]])->get(),
+        ]);
     }
 
     public function formWithVariant($id)
@@ -26,7 +26,7 @@ class FrontendController extends Controller
         return redirect(url()->previous() . '#kontakt');
     }
 
-    public function sendEmail(Request $request)
+    public function sendEmail(Request $request): RedirectResponse
     {
         $details = [
             'title' => 'Přišla nová poptávka!',
@@ -46,10 +46,23 @@ class FrontendController extends Controller
         Mail::to('oakk.martin@gmail.com')->send(new FeedbackEmail());
     }
 
-    public function saveFeedback(Request $request)
+    public function newFeedback(Request $request): View
     {
         return view('feedback', [
             'hash' => $request->get('id')
         ]);
+    }
+
+    public function storeFeedback(Request $request)
+    {
+        DB::table('feedback')->insert([
+            'hash' => $request->get('hash'),
+            'fullname' => $request->get('fullname'),
+            'message' => $request->get('message'),
+            'rating' => $request->get('stars'),
+            'variant' => $request->get('variant')
+        ]);
+
+        return redirect(route('homepage'));
     }
 }

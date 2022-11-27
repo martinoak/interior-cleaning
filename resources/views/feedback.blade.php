@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('css/ud-styles.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
 </head>
 <body>
@@ -80,28 +81,54 @@
 
 <section id="feedback-form" class="container my-5">
     <form method="post" action="/!/save-feedback">
+        {{ csrf_field() }}
         <div class="form-group my-2">
             <label for="name">Jméno a příjmení</label>
-            <input type="text" class="form-control" id="name" name="name">
+            <input type="text" class="form-control" id="name" name="fullname">
             <small id="emailHelp" class="form-text text-muted text-sm opacity-50">Vyplněním jména souhlasíte s jeho zveřejněním na domovské stránce.</small>
         </div>
         <div class="form-group my-2">
-            <label for="variant">Varianta</label>
-            <input type="text" class="form-control" id="variant" name="variant" value="TODO" disabled>
+            <input type="hidden" class="form-control" id="variant" name="variant" value="TODO" readonly>
         </div>
         <div class="form-group my-2">
             <label for="message">Text recenze</label>
             <textarea class="form-control" id="message" name="message" rows="3"></textarea>
         </div>
-        <div class="form-group ud-logo-text my-2">
-            <i id="1" class="fa-regular fa-star"></i>
-            <i id="2" class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
+
+        <div class="rating">
+            <label>
+                <input type="radio" name="stars" value="1" />
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+            </label>
+            <label>
+                <input type="radio" name="stars" value="2" />
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+            </label>
+            <label>
+                <input type="radio" name="stars" value="3" />
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+            </label>
+            <label>
+                <input type="radio" name="stars" value="4" />
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+            </label>
+            <label>
+                <input type="radio" name="stars" value="5" />
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+                <span class="icon"><i class="fa-regular fa-star"></i></span>
+            </label>
         </div>
         <div class="form-group my-2">
-            <input class="form-control" type="text" name="hash" value="{{$hash}}" readonly>
+            <input class="form-control" type="hidden" name="hash" value="{{$hash}}">
         </div>
         <button type="submit" class="btn btn-primary">Odeslat recenzi</button>
     </form>
