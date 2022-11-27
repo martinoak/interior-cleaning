@@ -20,6 +20,19 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function dashboard()
+    {
+        return view('dashboard', [
+            'contactFormMembers' => DB::table('contact_form_inputs')->get()
+        ]);
+    }
+
+    public function deleteMember($id)
+    {
+        DB::table('contact_form_inputs')->where('id', $id)->delete();
+        return back();
+    }
+
     public function formWithVariant($id)
     {
         Session::put('variant', $id);
