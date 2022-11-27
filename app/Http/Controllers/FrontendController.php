@@ -37,6 +37,13 @@ class FrontendController extends Controller
             'variant' => $request->get('variant') ?? 'Není vyplněná varianta',
         ];
 
+        DB::table('contact_form_inputs')->insert([
+            'fullname' => $details['name'],
+            'email' => $details['email'],
+            'telephone' => $details['phone'],
+            'message' => $details['message'],
+        ]);
+
         Mail::to('info@cisteni-kondrac.cz')->send(new FormEmail($details));
         return back();
     }
