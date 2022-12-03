@@ -20,14 +20,7 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function dashboard()
-    {
-        return view('dashboard', [
-            'contactFormMembers' => DB::table('contact_form_inputs')->get()
-        ]);
-    }
-
-    public function deleteMember($id)
+    public function deleteMember($id): RedirectResponse
     {
         DB::table('contact_form_inputs')->where('id', $id)->delete();
         return back();

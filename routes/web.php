@@ -22,5 +22,4 @@ Route::any('/add-feedback', [FrontendController::class, 'newFeedback']);
 Route::any('/!/save-feedback', [FrontendController::class, 'storeFeedback']);
 Route::any('/sendEmail', [FrontendController::class, 'sendEmail'])->name('sendEmail');
 
-Route::any('/dashboard', [FrontendController::class, 'dashboard'])->name('dashboard');
 Route::any('/delete-member/{id}', [FrontendController::class, 'deleteMember']);
