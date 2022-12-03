@@ -62,7 +62,8 @@ class FrontendController extends Controller
     public function newFeedback(Request $request): View
     {
         return view('feedback', [
-            'hash' => $request->get('id')
+            'hash' => $request->get('id'),
+            'variant' => $request->get('variant')
         ]);
     }
 

@@ -88,11 +88,11 @@
             <small id="emailHelp" class="form-text text-muted text-sm opacity-50">Vyplněním jména souhlasíte s jeho zveřejněním na domovské stránce.</small>
         </div>
         <div class="form-group my-2">
-            <input type="hidden" class="form-control" id="variant" name="variant" value="TODO" readonly>
+            <input type="hidden" class="form-control" id="variant" name="variant" value="{{ $variant }}" readonly>
         </div>
         <div class="form-group my-2">
             <label for="message">Text recenze</label>
-            <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+            <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
         </div>
 
         <div class="rating">
