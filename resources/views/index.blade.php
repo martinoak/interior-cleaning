@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Čištění interiéru Kondrac" />
+    <meta name="title" content="Čištění interiéru Kondrac">
+    <meta name="description" content="Vaše auto vyčistíme rychle, levně a kvalitně! Čištíme osobní automobily a používáme šetrné, ale účinné prostředky, aby se Vaše auto blyštilo.">
     <title>Čištění interiéru Kondrac</title>
+
+    <!--====== OG META ======-->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cisteni-kondrac.cz/">
+    <meta property="og:title" content="Čištění interiéru Kondrac">
+    <meta property="og:description" content="Vaše auto vyčistíme rychle, levně a kvalitně! Čištíme osobní automobily a používáme šetrné, ale účinné prostředky, aby se Vaše auto blyštilo.">
+    <meta property="og:image" content="">
 
     <!--====== Favicon Icon ======-->
     <link
@@ -212,7 +220,7 @@
                     <span class="ud-popular-tag">Populární</span>
                     <div class="ud-pricing-header">
                         <h3>ZLATÁ STŘEDNÍ CESTA</h3>
-                        <h4>1 399,- Kč</h4>
+                        <h4>1 799,- Kč</h4>
                     </div>
                     <div class="ud-pricing-body">
                         <ul>
@@ -238,7 +246,7 @@
                 <div class="ud-single-pricing last-item ms-2">
                     <div class="ud-pricing-header">
                         <h3>DELUXE</h3>
-                        <h4>2 399,- Kč</h4>
+                        <h4>2 999,- Kč</h4>
                     </div>
                     <div class="ud-pricing-body">
                         <ul>
