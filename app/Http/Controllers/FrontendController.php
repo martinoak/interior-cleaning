@@ -69,12 +69,20 @@ class FrontendController extends Controller
 
     public function storeFeedback(Request $request)
     {
+        if ($request->get('variant') == 1) {
+            $variant = 'Lehký start';
+        } else if ($request->get('variant') == 2) {
+            $variant = 'Zlatá střední cesta';
+        } else {
+            $variant = 'Deluxe';
+        }
+
         DB::table('feedback')->insert([
             'hash' => $request->get('hash'),
             'fullname' => $request->get('fullname'),
             'message' => $request->get('message'),
             'rating' => $request->get('stars'),
-            'variant' => $request->get('variant')
+            'variant' => $variant,
         ]);
 
         return redirect(route('homepage'));
