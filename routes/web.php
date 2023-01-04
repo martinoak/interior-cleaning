@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,8 @@ Route::any('/!/save-feedback', [FrontendController::class, 'storeFeedback']);
 Route::any('/sendEmail', [FrontendController::class, 'sendEmail'])->name('sendEmail');
 
 Route::any('/delete-member/{id}', [FrontendController::class, 'deleteMember']);
+
+Route::any('/admin', [FrontendController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
+Route::any('/login', [AuthController::class, 'showLoginPage'])->name('login');
+Route::any('/!/login', [AuthController::class, 'login']);
+Route::any('/!/logout', [AuthController::class, 'logout']); /* TODO: logout */

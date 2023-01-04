@@ -54,9 +54,10 @@ class FrontendController extends Controller
         return back();
     }
 
-    public function sendFeedbackEmail()
+    public function sendFeedbackEmail(Request $request)
     {
-        Mail::to('oakk.martin@gmail.com')->send(new FeedbackEmail());
+        Mail::to($request->get('email'))->send(new FeedbackEmail($request->get('variant')));
+        return back()->with('success', 'Feedback email odeslán!');
     }
 
     public function newFeedback(Request $request): View
@@ -86,5 +87,12 @@ class FrontendController extends Controller
         ]);
 
         return redirect(route('homepage'));
+    }
+
+    public function showDashboard() {
+        return view('admin.dashboard', [
+            'contactFormMembers' => DB::table('contact_form_inputs')->get(),
+            'feedbacks' => DB::table('feedback')->get(),
+        ]);
     }
 }
