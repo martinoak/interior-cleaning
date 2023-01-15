@@ -106,6 +106,12 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function showInvoices() {
+        return view('admin.invoices', [
+            'invoices' => DB::table('invoices')->get(),
+        ]);
+    }
+
     public function newOrder() {
         return view('admin.newOrder');
     }

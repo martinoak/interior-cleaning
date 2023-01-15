@@ -22,6 +22,46 @@
 
 </head>
 <body>
+<header class="ud-header">
+    <div class="container container-nav">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg">
+                    <span class="navbar-brand">
+                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" class="w-100"/>
+                    </span>
+                    <a class="ud-logo-text navbar-brand-text fw-bold" href="{{url()->current()}}" style="color: white">
+                        Admin panel
+                    </a>
+                    <button class="navbar-toggler">
+                        <i class="fa-solid fa-bars text-white"></i>
+                    </button>
+                    <div class="navbar-collapse">
+                        <ul id="nav" class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="fw-bold" href="{{url()->current()}}/customers">Zákazníci</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="fw-bold" href="{{url()->current()}}/feedback">Recenze</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="fw-bold" href="{{url()->current()}}/calendar">Kalendář</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="fw-bold" href="{{url()->current()}}/invoices">Faktury</a>
+                            </li>
+{{--
+                            <li class="nav-item">
+                                <a class="ud-menu-scroll fw-bold" href="/admin/">Item</a>
+                            </li>
+--}}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
 
 <section class="ud-hero" id="home">
     <div class="container">
@@ -57,7 +97,7 @@
                         </div>
                         @if($member->feedbackSent)
                             <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
-                                Feedback byl odeslán
+                                Feedback odeslán
                             </button>
                         @else
                             <button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="feedbackModal-{{$member->email}}">
