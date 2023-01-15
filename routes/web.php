@@ -35,6 +35,7 @@ Route::any('/admin/invoices', [FrontendController::class, 'showInvoices'])->name
 
 Route::any('/newOrder', [FrontendController::class, 'newOrder'])->name('newOrder');
 Route::any('/!/saveCustomer', [FrontendController::class, 'saveCustomer'])->name('saveCustomer');
+Route::any('/!/saveInvoice', [FrontendController::class, 'saveInvoice'])->name('saveInvoice');
 Route::any('/!/finishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
     return redirect(route('calendar'));

@@ -103,8 +103,47 @@
                 <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ date('d.m.Y',strtotime($fOrder->date)) }}</time>
                 <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">{{ $fOrder->description }}</p>
                 <a href="/!/unfinishOrder/{{ $fOrder->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Není hotovo</a>
-                <a href="/!/addInvoice/{{ $fOrder->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-orange-500 bg-white border-2 border-orange-500 rounded-lg"><i class="fa-solid fa-file-invoice text-orange-500 pe-2"></i> Faktura</a>
+                @if($fOrder->isInvoiceCreated)
+                    <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border-2 border-gray-500 rounded-lg" disabled><i class="fa-solid fa-file-invoice text-gray-500 pe-2"></i> Fakturováno</button>
+                @else
+                    <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-orange-500 bg-white border-2 border-orange-500 rounded-lg cursor-pointer" data-modal-toggle="invoice-{{$fOrder->id}}"><i class="fa-solid fa-file-invoice text-orange-500 pe-2"></i> Faktura</button>
+                @endif
             </li>
+
+            <div id="invoice-{{$fOrder->id}}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                <div class="relative w-75">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal body -->
+                        <form action="/!/saveInvoice" method="post">
+                            {{ csrf_field() }}
+                            <div class="p-6 space-y-6">
+                                <div class="flex flex-col">
+                                    <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum provedení práce (lze i zpětně) <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                    <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno zákazníka <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                    <input type="text" name="name" id="name" value="{{$fOrder->name}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label for="price" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Cena <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                    <input type="number" name="price" id="price" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label for="worker" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Pracovník</label>
+                                    <select id="worker" name="worker" class="border border-gray-300 px-4 py-2 rounded-lg">
+                                        <option value="Štěpán, Daniel">Štěpán, Daniel</option>
+                                        <option value="Štěpán">Štěpán</option>
+                                        <option value="Daniel">Daniel</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="text-white bg-orange-500 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Vytvořit fakturu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         @endforeach
     </ol>
 

@@ -54,7 +54,7 @@ class FrontendController extends Controller
         return back();
     }
 
-    public function sendFeedbackEmail(Request $request)
+    public function sendFeedbackEmail(Request $request): RedirectResponse
     {
         Mail::to($request->get('email'))->send(new FeedbackEmail($request->get('variant')));
         DB::table('contact_form_inputs')->where('email', $request->get('email'))->update([
@@ -122,6 +122,23 @@ class FrontendController extends Controller
             'date' => $request->get('date'),
             'description' => $request->get('message'),
             'isDone' => 0,
+        ]);
+        DB::table('contact_form_inputs')->where('fullname', $request->get('name'))->update([
+            'hasTerm' => $request->get('date'),
+        ]);
+
+        return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
+    }
+
+    public function saveInvoice(Request $request): RedirectResponse {
+        DB::table('invoices')->insert([
+            'date' => $request->get('date'),
+            'name' => $request->get('name'),
+            'price' => $request->get('price'),
+            'worker' => $request->get('worker'),
+        ]);
+        DB::table('calendar')->where('name', $request->get('name'))->update([
+            'isInvoiceCreated' => 1,
         ]);
 
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');

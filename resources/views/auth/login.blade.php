@@ -29,8 +29,8 @@
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <form class="space-y-4 md:space-y-6" action="/!/login">
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">E-mail</label>
-                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-white bg-gray-700 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value="@cisteni-kondrac.cz" placeholder="name@company.com" required>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Jméno</label>
+                        <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-white bg-gray-700 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="jmeno" required>
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Heslo</label>

@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function register(Request $request): RedirectResponse
     {
         User::create([
-            'email' => $request->get('email'),
+            'name' => $request->get('name'),
             'password' => bcrypt($request->get('password')),
         ]);
 
@@ -24,7 +24,7 @@ class AuthController extends Controller
     }
 
     public function login(Request $request): RedirectResponse {
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::attempt($request->only('name', 'password'))) {
             return redirect()->route('dashboard');
         } else {
             return back()->with('error', 'Nesprávné přihlašovací údaje');

@@ -92,8 +92,12 @@
                     <p>{{$member->message}}</p>
                     <div class="d-flex justify-content-between mt-3">
                         <div class="d-flex justify-content-start">
-                            <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{{$member->fullname}}">Objednat</button>
-                            <a href="/delete-member/{{$member->id}}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>
+                            @if($member->hasTerm !== null)
+                                <button class="text-white bg-green-900 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>{{date('d.m.Y', strtotime($member->hasTerm))}}</button>
+                            @else
+                                <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{{$member->fullname}}">Objednat</button>
+                            @endif
+                            <a href="/delete-member/{{$member->id}}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Skrýt</button></a>
                         </div>
                         @if($member->feedbackSent)
                             <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
@@ -159,7 +163,7 @@
                                     </div>
                                     <div class="flex flex-col">
                                         <label for="message" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Zpráva</label>
-                                        <textarea name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg" rows="4" required>{{$member->message}}</textarea>
+                                        <textarea name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg" rows="4">{{$member->message}}</textarea>
                                     </div>
                                     <div class="flex flex-col">
                                         <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum <i class="fa-solid fa-asterisk text-red-600"></i></label>
