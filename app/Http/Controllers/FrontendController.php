@@ -57,6 +57,9 @@ class FrontendController extends Controller
     public function sendFeedbackEmail(Request $request)
     {
         Mail::to($request->get('email'))->send(new FeedbackEmail($request->get('variant')));
+        DB::table('contact_form_inputs')->where('email', $request->get('email'))->update([
+            'feedbackSent' => 1,
+        ]);
         return back()->with('success', 'Feedback email odeslán!');
     }
 
@@ -94,5 +97,27 @@ class FrontendController extends Controller
             'contactFormMembers' => DB::table('contact_form_inputs')->get(),
             'feedbacks' => DB::table('feedback')->get(),
         ]);
+    }
+
+    public function showCalendar() {
+        return view('admin.calendar', [
+            'orders' => DB::table('calendar')->get()->where('isDone', 0),
+            'fOrders' => DB::table('calendar')->get()->where('isDone', 1),
+        ]);
+    }
+
+    public function newOrder() {
+        return view('admin.newOrder');
+    }
+
+    public function saveCustomer(Request $request): RedirectResponse {
+        DB::table('calendar')->insert([
+            'name' => $request->get('name'),
+            'date' => $request->get('date'),
+            'description' => $request->get('message'),
+            'isDone' => 0,
+        ]);
+
+        return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 }

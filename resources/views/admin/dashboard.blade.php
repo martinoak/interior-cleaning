@@ -52,12 +52,18 @@
                     <p>{{$member->message}}</p>
                     <div class="d-flex justify-content-between mt-3">
                         <div class="d-flex justify-content-start">
-                            <a href=""><button type="button" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Objednat</button></a>
+                            <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{{$member->fullname}}">Objednat</button>
                             <a href="/delete-member/{{$member->id}}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>
                         </div>
-                        <button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="feedbackModal-{{$member->email}}">
-                            Feedback
-                        </button>
+                        @if($member->feedbackSent)
+                            <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
+                                Feedback byl odeslán
+                            </button>
+                        @else
+                            <button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="feedbackModal-{{$member->email}}">
+                                Feedback
+                            </button>
+                        @endif
                     </div>
                 </div>
 
@@ -73,7 +79,6 @@
                                         Základ
                                     </button>
                                 </a>
-
                                 <a href="/feedback?email={{$member->email}}&variant=2" class="w-100">
                                     <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                         <i class="fa-solid fa-2 mr-5"></i>
@@ -87,6 +92,42 @@
                                     </button>
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="order-{{$member->fullname}}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                    <div class="relative w-75">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <!-- Modal body -->
+                            <form action="/!/saveCustomer" method="post">
+                                {{ csrf_field() }}
+                                <!-- create form with required name, required date, description -->
+                                <div class="p-6 space-y-6">
+                                    <div class="flex flex-col">
+                                        <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                        <input type="text" name="name" id="name" value="{{$member->fullname}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="email" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Email <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                        <input type="email" name="email" id="email" value="{{$member->email}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="telephone" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Telefon <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                        <input type="text" name="telephone" id="telephone" value="{{$member->telephone}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="message" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Zpráva</label>
+                                        <textarea name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg" rows="4" required>{{$member->message}}</textarea>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                        <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                    </div>
+                                    <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Objednat</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

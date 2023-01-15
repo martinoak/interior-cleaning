@@ -29,3 +29,15 @@ Route::any('/admin', [FrontendController::class, 'showDashboard'])->name('dashbo
 Route::any('/login', [AuthController::class, 'showLoginPage'])->name('login');
 Route::any('/!/login', [AuthController::class, 'login']);
 Route::any('/!/logout', [AuthController::class, 'logout']); /* TODO: logout */
+Route::any('/admin/calendar', [FrontendController::class, 'showCalendar'])->name('calendar')->middleware('auth');
+
+Route::any('/newOrder', [FrontendController::class, 'newOrder'])->name('newOrder');
+Route::any('/!/saveCustomer', [FrontendController::class, 'saveCustomer'])->name('saveCustomer');
+Route::any('/!/finishOrder/{id}', function ($id) {
+    Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
+    return redirect(route('calendar'));
+});
+Route::any('/!/unfinishOrder/{id}', function ($id) {
+    Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 0]);
+    return redirect(route('calendar'));
+});
