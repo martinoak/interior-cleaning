@@ -253,7 +253,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
-<script src="{{ asset('js/main.js') }}"></script>
 <script>
     // ==== for menu scroll
     const pageLink = document.querySelectorAll(".ud-menu-scroll");
