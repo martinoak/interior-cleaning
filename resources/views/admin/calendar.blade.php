@@ -150,17 +150,7 @@
 </section>
 
 
-<footer class="ud-footer">
-    <div class="ud-footer-bottom">
-        <div class="container">
-            <div class="row">
-                <p class="ud-footer-bottom-right text-center">
-                    &copy; 2022 Martin Dub
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
+@include('partials.footer')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
