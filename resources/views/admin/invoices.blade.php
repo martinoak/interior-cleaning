@@ -91,15 +91,23 @@
                     {{ csrf_field() }}
                     <div class="p-6 space-y-6">
                         <div class="flex flex-col">
+                            <label for="type" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Typ faktury</label>
+                            <select id="type" name="type" class="border border-gray-300 px-4 py-2 rounded-lg">
+                                <option value="T">Tržba (dokončené čištění)</option>
+                                <option value="N">Náklad (nákup prostředků)</option>
+                                <option value="O">Ostatní</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col">
                             <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum provedení práce (lze i zpětně) <i class="fa-solid fa-asterisk text-red-600"></i></label>
                             <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                         </div>
                         <div class="flex flex-col">
-                            <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno zákazníka <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                            <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno na faktuře <i class="fa-solid fa-asterisk text-red-600"></i></label>
                             <input type="text" name="name" id="name" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                         </div>
                         <div class="flex flex-col">
-                            <label for="price" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Cena <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                            <label for="price" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Částka <i class="fa-solid fa-asterisk text-red-600"></i></label>
                             <input type="number" name="price" id="price" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                         </div>
                         <div class="flex flex-col">
@@ -118,9 +126,15 @@
     </div>
     @foreach($invoices as $invoice)
         <div class="border border-gray-100 p-3 mb-3">
-            <div class="p-3 bg-white rounded-lg flex justify-between">
+            <div class="p-3 bg-white rounded-lg flex flex-col md:flex-row justify-between">
                 <div>
-                    <i class="fa-solid fa-file-invoice text-3xl text-gray-500 pe-4"></i>
+                    @if($invoice->type === 'T')
+                        <i class="fa-solid fa-money-bills text-3xl text-gray-500 pe-4"></i>
+                    @elseif($invoice->type === 'N')
+                        <i class="fa-solid fa-cart-plus text-3xl text-gray-500 pe-4"></i>
+                    @else
+                        <i class="fa-solid fa-file-invoice text-3xl text-gray-500 pe-4"></i>
+                    @endif
                     <span><h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">{{$invoice->worker}}</h5></span>
                 </div>
                 <div class="flex gap-x-4">

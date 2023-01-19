@@ -149,6 +149,7 @@ class FrontendController extends Controller
 
     public function saveInvoice(Request $request): RedirectResponse {
         DB::table('invoices')->insert([
+            'type' => $request->get('type'),
             'date' => $request->get('date'),
             'name' => $request->get('name'),
             'price' => $request->get('price'),
