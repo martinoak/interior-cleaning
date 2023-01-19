@@ -19,6 +19,7 @@ Route::any('/', [FrontendController::class, 'index'])->name('homepage');
 Route::any('/variant/{id}', [FrontendController::class, 'formWithVariant']);
 Route::any('/feedback', [FrontendController::class, 'sendFeedbackEmail']);
 Route::any('/add-feedback', [FrontendController::class, 'newFeedback']);
+Route::any('/delete-feedback/{id}', [FrontendController::class, 'deleteFeedback']);
 
 Route::any('/!/save-feedback', [FrontendController::class, 'storeFeedback']);
 Route::any('/sendEmail', [FrontendController::class, 'sendEmail'])->name('sendEmail');

@@ -92,6 +92,12 @@ class FrontendController extends Controller
         return redirect(route('homepage'));
     }
 
+    public function deleteFeedback(int $id): RedirectResponse
+    {
+        DB::table('feedback')->where('id', $id)->delete();
+        return back();
+    }
+
     public function showDashboard() {
         return view('admin.dashboard', [
             'contactFormMembers' => DB::table('contact_form_inputs')->get(),
