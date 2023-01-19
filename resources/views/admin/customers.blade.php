@@ -88,14 +88,6 @@
             <a href="tel:{{$member->telephone}}" class="mb-2 underline font-medium text-blue-600">{{$member->telephone}}</a>
             <p>{{$member->message}}</p>
             <div class="d-flex justify-content-between mt-3">
-                <div class="d-flex justify-content-start">
-                    @if($member->hasTerm !== null)
-                        <button class="text-white bg-green-900 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>{{date('d.m.Y', strtotime($member->hasTerm))}}</button>
-                    @else
-                        <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{{$member->fullname}}">Objednat</button>
-                    @endif
-                    <a href="/archive-member/{{$member->id}}"><button type="button" class="text-white bg-amber-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Archivovat</button></a>
-                </div>
                 @if($member->feedbackSent)
                     <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
                         Feedback odeslán
