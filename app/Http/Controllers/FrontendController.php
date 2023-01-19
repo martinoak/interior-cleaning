@@ -155,4 +155,15 @@ class FrontendController extends Controller
 
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
+
+    public function saveCalendarEvent(Request $request): RedirectResponse {
+        DB::table('calendar')->insert([
+            'date' => $request->get('date'),
+            'name' => $request->get('name'),
+            'variant' => $request->get('variant'),
+            'description' => $request->get('message'),
+            'isDone' => 0,
+        ]);
+        return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
+    }
 }

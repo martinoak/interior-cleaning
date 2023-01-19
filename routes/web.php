@@ -46,3 +46,5 @@ Route::any('/!/unfinishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 0]);
     return redirect(route('calendar'));
 });
+
+Route::any('/!/saveCalendarEvent', [FrontendController::class, 'saveCalendarEvent']);
