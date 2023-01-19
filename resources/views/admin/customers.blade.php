@@ -72,7 +72,7 @@
                         Admin panel
                     </h1>
                     <p class="ud-hero-desc">
-                        Kalendář
+                        Zákazníci
                     </p>
                 </div>
             </div>

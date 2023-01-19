@@ -50,11 +50,11 @@
                             <li class="nav-item">
                                 <a class="fw-bold" href="/admin/invoices">Faktury</a>
                             </li>
-                        {{--
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll fw-bold" href="/admin/">Item</a>
-                            </li>
-                        --}}
+                            {{--
+                                                        <li class="nav-item">
+                                                            <a class="ud-menu-scroll fw-bold" href="/admin/">Item</a>
+                                                        </li>
+                            --}}
                         </ul>
                     </div>
                 </nav>
@@ -72,7 +72,7 @@
                         Admin panel
                     </h1>
                     <p class="ud-hero-desc">
-                        Faktury
+                        Recenze
                     </p>
                 </div>
             </div>
@@ -80,55 +80,55 @@
     </div>
 </section>
 
-<section id="invoices" class="container">
-    <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2"data-modal-toggle="invoice-modal">Vytvořit fakturu mimo kontaktní formulář</button>
-    <div id="invoice-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-        <div class="relative w-75">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal body -->
-                <form action="/!/saveInvoice" method="post">
-                    {{ csrf_field() }}
-                    <div class="p-6 space-y-6">
-                        <div class="flex flex-col">
-                            <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum provedení práce (lze i zpětně) <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                            <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno zákazníka <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                            <input type="text" name="name" id="name" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="price" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Cena <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                            <input type="number" name="price" id="price" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="worker" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Pracovník</label>
-                            <select id="worker" name="worker" class="border border-gray-300 px-4 py-2 rounded-lg">
-                                <option value="Štěpán, Daniel">Štěpán, Daniel</option>
-                                <option value="Štěpán">Štěpán</option>
-                                <option value="Daniel">Daniel</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="text-white bg-orange-500 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Vytvořit fakturu</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    @foreach($invoices as $invoice)
+<section id="ratings" class="container my-4">
+    @foreach($feedbacks as $feedback)
         <div class="border border-gray-100 p-3 mb-3">
-            <div class="p-3 bg-white rounded-lg flex justify-between">
-                <div>
-                    <i class="fa-solid fa-file-invoice text-3xl text-gray-500 pe-4"></i>
-                    <span><h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">{{$invoice->worker}}</h5></span>
-                </div>
-                <div class="flex gap-x-4">
-                    <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-user text-black"></i> {{$invoice->name}}</p>
-                    <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-calendar-days text-black"></i> {{date('d.m.Y', strtotime($invoice->date))}}</p>
-                    <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-hand-holding-dollar text-black"></i> {{$invoice->price}},- Kč</p>
-                </div>
-                <button type="button" class="focus:outline-none text-white bg-green-700 font-medium rounded-lg text-sm px-2 py-2.5 mr-2 mb-2">Vytvořit příjmový doklad</button>
+            <p class="fw-bold text-black">{{$feedback->fullname}}</p>
+            <p>{{$feedback->message}}</p>
+            @if ($feedback->rating == 1)
+                <p class="text-[#FF9119]">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                </p>
+            @elseif ($feedback->rating == 2)
+                <p class="text-[#FF9119]">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                </p>
+            @elseif ($feedback->rating == 3)
+                <p class="text-[#FF9119]">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                </p>
+            @elseif ($feedback->rating == 4)
+                <p class="text-[#FF9119]">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="text-black fa-regular fa-star"></i>
+                </p>
+            @elseif ($feedback->rating == 5)
+                <p class="text-[#FF9119]">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </p>
+            @endif
+            <p>{{ $feedback->variant }}</p>
+            <div class="d-flex justify-content-between mt-3">
+                <a href="/delete-feedback/{{ $feedback->id }}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>
             </div>
         </div>
     @endforeach

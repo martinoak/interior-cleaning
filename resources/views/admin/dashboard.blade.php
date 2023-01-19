@@ -80,163 +80,100 @@
     </div>
 </section>
 
-<section id="customers">
-    <div class="container-fluid">
-        <div class="col-12 col-md-6 col-lg-4">
-            <h4 class="font-bold text-xl py-2">Zákazníci z kontaktního formuláře:</h4>
-            @foreach($contactFormMembers as $member)
-                <div class="border border-gray-100 p-3 mb-3">
-                    <p class="fw-bold text-black">{{$member->fullname}}</p>
-                    <a href="mailto:{{$member->email}}" class="mb-2 underline font-medium text-blue-600">{{$member->email}}</a><br>
-                    <a href="tel:{{$member->telephone}}" class="mb-2 underline font-medium text-blue-600">{{$member->telephone}}</a>
-                    <p>{{$member->message}}</p>
-                    <div class="d-flex justify-content-between mt-3">
-                        <div class="d-flex justify-content-start">
-                            @if($member->hasTerm !== null)
-                                <button class="text-white bg-green-900 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>{{date('d.m.Y', strtotime($member->hasTerm))}}</button>
-                            @else
-                                <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{{$member->fullname}}">Objednat</button>
-                            @endif
-                            <a href="/archive-member/{{$member->id}}"><button type="button" class="text-white bg-amber-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Archivovat</button></a>
-                        </div>
-                        @if($member->feedbackSent)
-                            <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
-                                Feedback odeslán
-                            </button>
-                        @else
-                            <button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="feedbackModal-{{$member->email}}">
-                                Feedback
-                            </button>
-                        @endif
-                    </div>
-                </div>
-
-                <div id="feedbackModal-{{$member->email}}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-                    <div class="relative w-75">
-                        <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <!-- Modal body -->
-                            <div class="p-6 space-y-6">
-                                <a href="/feedback?email={{$member->email}}&variant=1" class="w-100">
-                                    <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
-                                        <i class="fa-solid fa-1 mr-5"></i>
-                                        Základ
-                                    </button>
-                                </a>
-                                <a href="/feedback?email={{$member->email}}&variant=2" class="w-100">
-                                    <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
-                                        <i class="fa-solid fa-2 mr-5"></i>
-                                        Střed
-                                    </button>
-                                </a>
-                                <a href="/feedback?email={{$member->email}}&variant=3" class="w-100">
-                                    <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
-                                        <i class="fa-solid fa-3 mr-5"></i>
-                                        Deluxe
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="order-{{$member->fullname}}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-                    <div class="relative w-75">
-                        <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <!-- Modal body -->
-                            <form action="/!/saveCustomer" method="post">
-                                {{ csrf_field() }}
-                                <!-- create form with required name, required date, description -->
-                                <div class="p-6 space-y-6">
-                                    <div class="flex flex-col">
-                                        <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                                        <input type="text" name="name" id="name" value="{{$member->fullname}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="email" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Email <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                                        <input type="email" name="email" id="email" value="{{$member->email}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="telephone" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Telefon <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                                        <input type="text" name="telephone" id="telephone" value="{{$member->telephone}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="message" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Zpráva</label>
-                                        <textarea name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg" rows="4">{{$member->message}}</textarea>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                                        <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                                    </div>
-                                    <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Objednat</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section id="ratings">
-    <div class="container-fluid">
-        <div class="col-12 col-md-6 col-lg-4">
-            <h4 class="font-bold text-xl py-2 border-t-8 border-black">Všechny recenze</h4>
-            @foreach($feedbacks as $feedback)
-                <div class="border border-gray-100 p-3 mb-3">
-                    <p class="fw-bold text-black">{{$feedback->fullname}}</p>
-                    <p>{{$feedback->message}}</p>
-                    @if ($feedback->rating == 1)
-                        <p class="text-[#FF9119]">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                        </p>
-                    @elseif ($feedback->rating == 2)
-                        <p class="text-[#FF9119]">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                        </p>
-                    @elseif ($feedback->rating == 3)
-                        <p class="text-[#FF9119]">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                        </p>
-                    @elseif ($feedback->rating == 4)
-                        <p class="text-[#FF9119]">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="text-black fa-regular fa-star"></i>
-                        </p>
-                    @elseif ($feedback->rating == 5)
-                        <p class="text-[#FF9119]">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </p>
+<section id="customers" class="container my-4">
+    <h4 class="font-bold text-xl py-2">Zákazníci z kontaktního formuláře:</h4>
+    @foreach($contactFormMembers as $member)
+        <div class="border border-gray-100 p-3 mb-3">
+            <p class="fw-bold text-black">{{$member->fullname}}</p>
+            <a href="mailto:{{$member->email}}" class="mb-2 underline font-medium text-blue-600">{{$member->email}}</a><br>
+            <a href="tel:{{$member->telephone}}" class="mb-2 underline font-medium text-blue-600">{{$member->telephone}}</a>
+            <p>{{$member->message}}</p>
+            <div class="d-flex justify-content-between mt-3">
+                <div class="d-flex justify-content-start">
+                    @if($member->hasTerm !== null)
+                        <button class="text-white bg-green-900 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>{{date('d.m.Y', strtotime($member->hasTerm))}}</button>
+                    @else
+                        <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{{$member->fullname}}">Objednat</button>
                     @endif
-                    <p>{{ $feedback->variant }}</p>
-                    <div class="d-flex justify-content-between mt-3">
-                        <a href="/delete-feedback/{{ $feedback->id }}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>
+                    <a href="/archive-member/{{$member->id}}"><button type="button" class="text-white bg-amber-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Archivovat</button></a>
+                </div>
+                @if($member->feedbackSent)
+                    <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
+                        Feedback odeslán
+                    </button>
+                @else
+                    <button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="feedbackModal-{{$member->email}}">
+                        Feedback
+                    </button>
+                @endif
+            </div>
+        </div>
+
+        <div id="feedbackModal-{{$member->email}}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+            <div class="relative w-75">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal body -->
+                    <div class="p-6 space-y-6">
+                        <a href="/feedback?email={{$member->email}}&variant=1" class="w-100">
+                            <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                                <i class="fa-solid fa-1 mr-5"></i>
+                                Základ
+                            </button>
+                        </a>
+                        <a href="/feedback?email={{$member->email}}&variant=2" class="w-100">
+                            <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                                <i class="fa-solid fa-2 mr-5"></i>
+                                Střed
+                            </button>
+                        </a>
+                        <a href="/feedback?email={{$member->email}}&variant=3" class="w-100">
+                            <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                                <i class="fa-solid fa-3 mr-5"></i>
+                                Deluxe
+                            </button>
+                        </a>
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
-    </div>
+
+        <div id="order-{{$member->fullname}}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+            <div class="relative w-75">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal body -->
+                    <form action="/!/saveCustomer" method="post">
+                        {{ csrf_field() }}
+                        <!-- create form with required name, required date, description -->
+                        <div class="p-6 space-y-6">
+                            <div class="flex flex-col">
+                                <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                <input type="text" name="name" id="name" value="{{$member->fullname}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="email" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Email <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                <input type="email" name="email" id="email" value="{{$member->email}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="telephone" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Telefon <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                <input type="text" name="telephone" id="telephone" value="{{$member->telephone}}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="message" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Zpráva</label>
+                                <textarea name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg" rows="4">{{$member->message}}</textarea>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                            </div>
+                            <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Objednat</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 </section>
 
 @include('partials.footer')

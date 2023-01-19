@@ -101,7 +101,6 @@ class FrontendController extends Controller
     public function showDashboard() {
         return view('admin.dashboard', [
             'contactFormMembers' => DB::table('contact_form_inputs')->where('isArchived', 0)->get(),
-            'feedbacks' => DB::table('feedback')->get(),
         ]);
     }
 
@@ -109,6 +108,12 @@ class FrontendController extends Controller
         return view('admin.calendar', [
             'orders' => DB::table('calendar')->get()->where('isDone', 0),
             'fOrders' => DB::table('calendar')->get()->where('isDone', 1),
+        ]);
+    }
+
+    public function showFeedback(): View {
+        return view('admin.feedbacks', [
+            'feedbacks' => DB::table('feedback')->get(),
         ]);
     }
 
