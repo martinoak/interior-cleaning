@@ -97,7 +97,7 @@
                             @else
                                 <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{{$member->fullname}}">Objednat</button>
                             @endif
-                            <a href="/delete-member/{{$member->id}}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Skrýt</button></a>
+                            <a href="/archive-member/{{$member->id}}"><button type="button" class="text-white bg-amber-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Archivovat</button></a>
                         </div>
                         @if($member->feedbackSent)
                             <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
@@ -253,6 +253,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+{{--<script src="{{ asset('js/main.js') }}"></script>--}}
 <script>
     // ==== for menu scroll
     const pageLink = document.querySelectorAll(".ud-menu-scroll");

@@ -20,9 +20,9 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function deleteMember($id): RedirectResponse
+    public function archiveMember($id): RedirectResponse
     {
-        DB::table('contact_form_inputs')->where('id', $id)->delete();
+        DB::table('contact_form_inputs')->where('id', $id)->update(['isArchived' => 1]);
         return back();
     }
 
@@ -100,7 +100,7 @@ class FrontendController extends Controller
 
     public function showDashboard() {
         return view('admin.dashboard', [
-            'contactFormMembers' => DB::table('contact_form_inputs')->get(),
+            'contactFormMembers' => DB::table('contact_form_inputs')->where('isArchived', 0)->get(),
             'feedbacks' => DB::table('feedback')->get(),
         ]);
     }
@@ -115,6 +115,12 @@ class FrontendController extends Controller
     public function showInvoices() {
         return view('admin.invoices', [
             'invoices' => DB::table('invoices')->get(),
+        ]);
+    }
+
+    public function showCustomers() {
+        return view('admin.customers', [
+            'customers' => DB::table('contact_form_inputs')->where('isArchived', 1)->get(),
         ]);
     }
 

@@ -24,7 +24,7 @@ Route::any('/delete-feedback/{id}', [FrontendController::class, 'deleteFeedback'
 Route::any('/!/save-feedback', [FrontendController::class, 'storeFeedback']);
 Route::any('/sendEmail', [FrontendController::class, 'sendEmail'])->name('sendEmail');
 
-Route::any('/delete-member/{id}', [FrontendController::class, 'deleteMember']);
+Route::any('/archive-member/{id}', [FrontendController::class, 'archiveMember']);
 
 Route::any('/admin', [FrontendController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
 Route::any('/login', [AuthController::class, 'showLoginPage'])->name('login');
@@ -33,6 +33,7 @@ Route::any('/!/logout', [AuthController::class, 'logout']); /* TODO: logout */
 
 Route::any('/admin/calendar', [FrontendController::class, 'showCalendar'])->name('calendar')->middleware('auth');
 Route::any('/admin/invoices', [FrontendController::class, 'showInvoices'])->name('invoices')->middleware('auth');
+Route::any('/admin/customers', [FrontendController::class, 'showCustomers'])->name('customers')->middleware('auth');
 
 Route::any('/newOrder', [FrontendController::class, 'newOrder'])->name('newOrder');
 Route::any('/!/saveCustomer', [FrontendController::class, 'saveCustomer'])->name('saveCustomer');
