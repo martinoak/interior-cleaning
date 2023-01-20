@@ -106,7 +106,7 @@ class FrontendController extends Controller
 
     public function showCalendar() {
         return view('admin.calendar', [
-            'orders' => DB::table('calendar')->get()->where('isDone', 0),
+            'orders' => DB::table('calendar')->get()->where('isDone', 0)->sortBy('date'),
             'fOrders' => DB::table('calendar')->get()->where('isDone', 1),
         ]);
     }
@@ -137,6 +137,7 @@ class FrontendController extends Controller
         DB::table('calendar')->insert([
             'name' => $request->get('name'),
             'date' => $request->get('date'),
+            'variant' => $request->get('variant'),
             'description' => $request->get('message'),
             'isDone' => 0,
         ]);

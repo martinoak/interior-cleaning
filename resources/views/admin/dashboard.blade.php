@@ -167,6 +167,14 @@
                                 <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum <i class="fa-solid fa-asterisk text-red-600"></i></label>
                                 <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                             </div>
+                            <div class="flex flex-col">
+                                <label for="variant" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Varianta <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                <select id="variant" name="variant" class="border border-gray-300 px-4 py-2 rounded-lg">
+                                    <option value="1">Základ</option>
+                                    <option value="2">Zlatá střední cesta</option>
+                                    <option value="3">Deluxe</option>
+                                </select>
+                            </div>
                             <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Objednat</button>
                         </div>
                     </form>
