@@ -581,10 +581,6 @@
 
 @include('partials.footer')
 
-<a href="" class="back-to-top">
-    <i class="fa-solid fa-chevron-up"></i>
-</a>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script>

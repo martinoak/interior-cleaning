@@ -9,3 +9,7 @@
         </div>
     </div>
 </footer>
+
+<a href="" class="back-to-top">
+    <i class="fa-solid fa-chevron-up"></i>
+</a>
