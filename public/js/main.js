@@ -10,13 +10,13 @@
         const burger = document.querySelector(".navbar-toggler i");
 
         if (window.scrollY > sticky) {
-            ud_header.classList.add("sticky");
+            ud_header.classList.add("ud-sticky");
         } else {
-            ud_header.classList.remove("sticky");
+            ud_header.classList.remove("ud-sticky");
         }
 
         // === logo change
-        if (ud_header.classList.contains("sticky")) {
+        if (ud_header.classList.contains("ud-sticky")) {
             logo.src = "../images/logo/logo-2.png";
             logoText.style.color = "#3056d3";
             burger.className = "fa-solid fa-bars text-primary";
