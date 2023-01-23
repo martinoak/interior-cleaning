@@ -65,47 +65,15 @@
         <div class="border border-gray-100 p-3 mb-3">
             <p class="fw-bold text-black">{{$feedback->fullname}}</p>
             <p>{{$feedback->message}}</p>
-            @if ($feedback->rating == 1)
-                <p class="text-[#FF9119]">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                </p>
-            @elseif ($feedback->rating == 2)
-                <p class="text-[#FF9119]">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                </p>
-            @elseif ($feedback->rating == 3)
-                <p class="text-[#FF9119]">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                </p>
-            @elseif ($feedback->rating == 4)
-                <p class="text-[#FF9119]">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="text-black fa-regular fa-star"></i>
-                </p>
-            @elseif ($feedback->rating == 5)
-                <p class="text-[#FF9119]">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-            @endif
+            <p class="text-[#FF9119]">
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= $feedback->rating)
+                        <i class="fa-solid fa-star"></i>
+                    @else
+                        <i class="text-black fa-regular fa-star"></i>
+                    @endif
+                @endfor
+            </p>
             <p>{{ $feedback->variant }}</p>
             <div class="d-flex justify-content-between mt-3">
                 <a href="/delete-feedback/{{ $feedback->id }}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>

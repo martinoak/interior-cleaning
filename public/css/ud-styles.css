@@ -456,7 +456,7 @@ p {
   color: var(--heading-color);
 }
 
-.sticky {
+.ud-sticky {
     position: fixed;
     z-index: 99;
     background-color: rgba(255, 255, 255, 0.8);
@@ -468,43 +468,43 @@ p {
     transition: all 0.3s ease-out 0s;
 }
 
-.sticky .navbar {
+.ud-sticky .navbar {
     padding: 0;
 }
 
-.sticky .navbar-toggler .toggler-icon {
+.ud-sticky .navbar-toggler .toggler-icon {
   background-color: var(--heading-color);
 }
 
-.sticky .navbar-nav .nav-item:hover > a {
+.ud-sticky .navbar-nav .nav-item:hover > a {
   color: var(--primary-color);
   opacity: 1;
 }
 
-.sticky .navbar-nav .nav-item a {
+.ud-sticky .navbar-nav .nav-item a {
   color: var(--heading-color);
 }
 
-.sticky .navbar-nav .nav-item a.active, .sticky .navbar-nav .nav-item a:hover {
+.ud-sticky .navbar-nav .nav-item a.active, .ud-sticky .navbar-nav .nav-item a:hover {
   color: var(--primary-color);
   opacity: 1;
 }
 
-.sticky .navbar-btn .ud-main-btn.ud-login-btn {
+.ud-sticky .navbar-btn .ud-main-btn.ud-login-btn {
   color: var(--heading-color);
 }
 
-.sticky .navbar-btn .ud-main-btn.ud-login-btn:hover {
+.ud-sticky .navbar-btn .ud-main-btn.ud-login-btn:hover {
   color: var(--primary-color);
   opacity: 1;
 }
 
-.sticky .navbar-btn .ud-white-btn {
+.ud-sticky .navbar-btn .ud-white-btn {
   background: var(--primary-color);
   color: var(--white);
 }
 
-.sticky .navbar-btn .ud-white-btn:hover {
+.ud-sticky .navbar-btn .ud-white-btn:hover {
   background: var(--heading-color);
 }
 
