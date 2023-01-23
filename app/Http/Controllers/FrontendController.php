@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ class FrontendController extends Controller
     {
         return view('index', [
             'feedbacks' => DB::table('feedback')->where([['rating', '>', 3]])->get(),
+            'dev' => preg_match('#dev\.#', url()->current())
         ]);
     }
 
@@ -101,6 +103,7 @@ class FrontendController extends Controller
     public function showDashboard() {
         return view('admin.dashboard', [
             'contactFormMembers' => DB::table('contact_form_inputs')->where('isArchived', 0)->get(),
+            'dev' => preg_match('#dev\.#', url()->current())
         ]);
     }
 
@@ -127,6 +130,27 @@ class FrontendController extends Controller
         return view('admin.customers', [
             'customers' => DB::table('contact_form_inputs')->where('isArchived', 1)->get(),
         ]);
+    }
+
+    public function showVouchers() {
+        return view('admin.vouchers');
+    }
+
+    public function checkVoucher(Request $request): JsonResponse {
+        $hash = md5($request->get('date').$request->get('price'));
+        $voucher = DB::table('vouchers')->where('hash', $hash)->first();
+        if ($voucher) {
+            return response()->json([
+                'status' => 'green',
+                'message' => 'Voucher je platný!',
+                'price' => $voucher->price,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'red',
+                'message' => 'Voucher není platný!',
+            ]);
+        }
     }
 
     public function newOrder() {
@@ -171,5 +195,47 @@ class FrontendController extends Controller
             'isDone' => 0,
         ]);
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
+    }
+
+    public function storeVoucher(Request $request): View {
+        $hash = substr(md5(date('d. m. Y H:i:s')), 0, 6);
+        DB::table('vouchers')->insert([
+            'hash' => $hash,
+            'date' => date('d-m-Y', strtotime('+6 months')) /* TODO 6 mesicu? */,
+            'price' => $request->get('price'),
+        ]);
+        /* TODO nadesignovat vykreslovani voucheru pomoci FPDF */
+        return view('admin.vouchers', ['voucher' => [
+            'hash' => $hash,
+            'date' => date('d-m-Y', strtotime('+6 months')),
+            'price' => $request->get('price'),
+        ]]);
+    }
+
+
+    public function validateVoucher(Request $request): View
+    {
+        $voucher = DB::table('vouchers')->where('hash', $request->get('hash'))->first();
+        if($voucher && $request->get('hash') === substr($voucher->hash, 0, 6) && $voucher->price === (int)$request->get('price') && !$voucher->isAccepted) {
+            return view('admin.vouchers', ['checkedVoucher' => [
+                'status' => 'green',
+                'message' => 'Voucher je platný!',
+                'hash' => $voucher->hash,
+                'price' => $voucher->price,
+            ]]);
+        }
+        else {
+            return view('admin.vouchers', ['checkedVoucher' => [
+                'status' => 'red',
+                'message' => 'Voucher není platný nebo neexistuje!',
+            ]]);
+        }
+    }
+
+    public function useVoucher(Request $request): View {
+        DB::table('vouchers')->where('hash', $request->get('hash'))->update([
+            'isAccepted' => 1,
+        ]);
+        return view('admin.vouchers')->with('success', 'Voucher byl úspěšně použit!');
     }
 }

@@ -36,27 +36,7 @@
                     <button class="navbar-toggler">
                         <i class="fa-solid fa-bars text-white"></i>
                     </button>
-                    <div class="navbar-collapse">
-                        <ul id="nav" class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/customers">Zákazníci</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/feedback">Recenze</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/calendar">Kalendář</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/invoices">Faktury</a>
-                            </li>
-                            {{--
-                                                        <li class="nav-item">
-                                                            <a class="ud-menu-scroll fw-bold" href="/admin/">Item</a>
-                                                        </li>
-                            --}}
-                        </ul>
-                    </div>
+                    @include ('partials.admin_nav')
                 </nav>
             </div>
         </div>

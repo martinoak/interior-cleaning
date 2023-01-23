@@ -36,27 +36,7 @@
                     <button class="navbar-toggler">
                         <i class="fa-solid fa-bars text-white"></i>
                     </button>
-                    <div class="navbar-collapse">
-                        <ul id="nav" class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/customers">Zákazníci</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/feedback">Recenze</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/calendar">Kalendář</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="/admin/invoices">Faktury</a>
-                            </li>
-                        {{--
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll fw-bold" href="/admin/">Item</a>
-                            </li>
-                        --}}
-                        </ul>
-                    </div>
+                    @include ('partials.admin_nav')
                 </nav>
             </div>
         </div>
@@ -81,7 +61,7 @@
 </section>
 
 <section id="invoices" class="container">
-    <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2"data-modal-toggle="invoice-modal">Vytvořit fakturu mimo kontaktní formulář</button>
+    <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2" data-modal-toggle="invoice-modal">Vytvořit fakturu mimo kontaktní formulář</button>
     <div id="invoice-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-75">
             <!-- Modal content -->

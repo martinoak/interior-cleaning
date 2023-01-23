@@ -29,6 +29,15 @@
 <body>
 <!-- ====== Header Start ====== -->
 <header class="ud-header">
+    @if($dev)
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger text-center fw-bold">
+                    Developer verze
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="container container-nav">
         <div class="row">
             <div class="col-lg-12">

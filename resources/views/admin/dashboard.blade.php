@@ -23,6 +23,15 @@
 </head>
 <body>
 <header class="ud-header">
+    @if($dev)
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger text-center fw-bold">
+                    Developer verze
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="container container-nav">
         <div class="row">
             <div class="col-lg-12">
@@ -36,27 +45,7 @@
                     <button class="navbar-toggler">
                         <i class="fa-solid fa-bars text-white"></i>
                     </button>
-                    <div class="navbar-collapse">
-                        <ul id="nav" class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="fw-bold" href="{{url()->current()}}/customers">Zákazníci</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="{{url()->current()}}/feedback">Recenze</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="{{url()->current()}}/calendar">Kalendář</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="fw-bold" href="{{url()->current()}}/invoices">Faktury</a>
-                            </li>
-{{--
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll fw-bold" href="/admin/">Item</a>
-                            </li>
---}}
-                        </ul>
-                    </div>
+                    @include ('partials.admin_nav')
                 </nav>
             </div>
         </div>

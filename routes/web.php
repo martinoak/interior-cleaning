@@ -35,6 +35,7 @@ Route::any('/admin/calendar', [FrontendController::class, 'showCalendar'])->name
 Route::any('/admin/invoices', [FrontendController::class, 'showInvoices'])->name('invoices')->middleware('auth');
 Route::any('/admin/customers', [FrontendController::class, 'showCustomers'])->name('customers')->middleware('auth');
 Route::any('/admin/feedback', [FrontendController::class, 'showFeedback'])->name('feedback')->middleware('auth');
+Route::any('/admin/vouchers', [FrontendController::class, 'showVouchers'])->name('vouchers')->middleware('auth');
 
 Route::any('/newOrder', [FrontendController::class, 'newOrder'])->name('newOrder');
 Route::any('/!/saveCustomer', [FrontendController::class, 'saveCustomer'])->name('saveCustomer');
@@ -49,3 +50,6 @@ Route::any('/!/unfinishOrder/{id}', function ($id) {
 });
 
 Route::any('/!/saveCalendarEvent', [FrontendController::class, 'saveCalendarEvent']);
+Route::any('/!/storeVoucher', [FrontendController::class, 'storeVoucher']);
+Route::any('/!/validateVoucher', [FrontendController::class, 'validateVoucher']);
+Route::any('/!/useVoucher', [FrontendController::class, 'useVoucher']);
