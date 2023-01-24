@@ -11,8 +11,6 @@ use App\Mail\FormEmail;
 use App\Mail\FeedbackEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Fpdf\Fpdf;
-use setasign\Fpdi\Fpdi;
 
 class FrontendController extends Controller
 {
