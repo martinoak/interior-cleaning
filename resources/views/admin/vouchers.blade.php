@@ -126,6 +126,7 @@
             <p class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative text-center fw-bold my-1">Voucher bude po odkliknutí skryt!!</p>
             <div>
                 <a href="/admin/vouchers"><button class="text-white bg-green-900 font-medium rounded-lg text-sm py-2 px-3 my-2">Zapsal jsem si údaje.</button></a>
+                <a href="/admin/showVoucher?price={{$voucher['price']}}"><button class="text-white bg-amber-700 font-medium rounded-lg text-sm py-2 px-3 my-2">Zobrazit voucher</button></a>
             </div>
         </div>
     @endif

@@ -53,3 +53,4 @@ Route::any('/!/saveCalendarEvent', [FrontendController::class, 'saveCalendarEven
 Route::any('/!/storeVoucher', [FrontendController::class, 'storeVoucher']);
 Route::any('/!/validateVoucher', [FrontendController::class, 'validateVoucher']);
 Route::any('/!/useVoucher', [FrontendController::class, 'useVoucher']);
+Route::any('/admin/showVoucher', [FrontendController::class, 'generateVoucher'])->middleware('auth');

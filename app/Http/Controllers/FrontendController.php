@@ -11,6 +11,8 @@ use App\Mail\FormEmail;
 use App\Mail\FeedbackEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Fpdf\Fpdf;
+use setasign\Fpdi\Fpdi;
 
 class FrontendController extends Controller
 {
@@ -238,5 +240,10 @@ class FrontendController extends Controller
             'isAccepted' => 1,
         ]);
         return view('admin.vouchers')->with('success', 'Voucher byl úspěšně použit!');
+    }
+
+    public function generateVoucher(Request $request) {
+        /* TODO dodelat FPDI komponentu na vepisovani do voucheru */
+        return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
     }
 }
