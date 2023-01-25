@@ -178,8 +178,8 @@
                     <p>Na čištění interiéru používáme šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
                 </div>
             </div>
-            <div class="ud-about-image" style="width: 30%">
-                <img src="assets/images" alt="about-image" />
+            <div class="ud-about-image" style="width: 30%; background-color: #3056d3">
+                {{--<img src="{{asset('images/logo.png')}}" alt="about-image" />--}}
             </div>
         </div>
     </div>
