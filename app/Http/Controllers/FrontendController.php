@@ -239,4 +239,9 @@ class FrontendController extends Controller
         ]);
         return view('admin.vouchers')->with('success', 'Voucher byl úspěšně použit!');
     }
+
+    public function generateVoucher(Request $request) {
+        /* TODO dodelat FPDI komponentu na vepisovani do voucheru */
+        return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
+    }
 }
