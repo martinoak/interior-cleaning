@@ -79,7 +79,7 @@
                             </select>
                         </div>
                         <div class="flex flex-col">
-                            <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum provedení práce (lze i zpětně) <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                            <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum (lze i zpětně) <i class="fa-solid fa-asterisk text-red-600"></i></label>
                             <input type="date" name="date" id="date" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                         </div>
                         <div class="flex flex-col">
