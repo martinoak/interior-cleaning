@@ -40,6 +40,8 @@ Route::any('/admin/vouchers', [FrontendController::class, 'showVouchers'])->name
 Route::any('/newOrder', [FrontendController::class, 'newOrder'])->name('newOrder');
 Route::any('/!/saveCustomer', [FrontendController::class, 'saveCustomer'])->name('saveCustomer');
 Route::any('/!/saveInvoice', [FrontendController::class, 'saveInvoice'])->name('saveInvoice');
+Route::any('/!/exportInvoice/{id}', [FrontendController::class, 'exportInvoice'])->name('exportInvoice');
+
 Route::any('/!/finishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
     return redirect(route('calendar'));
@@ -48,7 +50,9 @@ Route::any('/!/unfinishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 0]);
     return redirect(route('calendar'));
 });
-
+Route::any('/!/deleteCalendarNote/{id}', function ($id) {
+    \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->delete();
+});
 Route::any('/!/saveCalendarEvent', [FrontendController::class, 'saveCalendarEvent']);
 Route::any('/!/storeVoucher', [FrontendController::class, 'storeVoucher']);
 Route::any('/!/validateVoucher', [FrontendController::class, 'validateVoucher']);

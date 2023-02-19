@@ -11,6 +11,8 @@ use App\Mail\FormEmail;
 use App\Mail\FeedbackEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Fpdf\Fpdf;
+use setasign\Fpdi\Fpdi;
 
 class FrontendController extends Controller
 {
@@ -187,6 +189,12 @@ class FrontendController extends Controller
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 
+    public function exportInvoice(int $invoiceId)
+    {
+        $pdf = new FPDF();
+        /*TODO*/
+    }
+
     public function saveCalendarEvent(Request $request): RedirectResponse {
         DB::table('calendar')->insert([
             'date' => $request->get('date'),
@@ -202,10 +210,26 @@ class FrontendController extends Controller
         $hash = substr(md5(date('d. m. Y H:i:s')), 0, 6);
         DB::table('vouchers')->insert([
             'hash' => $hash,
-            'date' => date('d-m-Y', strtotime('+6 months')) /* TODO 6 mesicu? */,
+            'date' => date('d-m-Y', strtotime('+6 months')) /* TODO expirace 6 mesicu? */,
             'price' => $request->get('price'),
         ]);
+
+        $pdf = new Fpdi();
+        $pdf->AddPage();
+        $pdf->setSourceFile(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
+        $tplIdx = $pdf->importPage(1);
+        $pdf->useTemplate($tplIdx);
+
+        $pdf->SetFont('Helvetica');
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->setXY(100, 50);
+        $pdf->Cell(0, 0, 'Poukaz na služby');
+
+        $filename = 'poukaz_'.substr($hash, 0, 4).'.pdf';
+        $pdf->Output(asset('images/vouchers'), $filename);
+
         /* TODO nadesignovat vykreslovani voucheru pomoci FPDF */
+
         return view('admin.vouchers', ['voucher' => [
             'hash' => $hash,
             'date' => date('d-m-Y', strtotime('+6 months')),

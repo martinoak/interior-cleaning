@@ -108,7 +108,8 @@
                 <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">{{$order->name}} | {{$order->variant}} {{--<span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">Latest</span>--}}</h3>
                 <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ date('d.m.Y',strtotime($order->date)) }}</time>
                 <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">{{ $order->description }}</p>
-                <a href="/!/finishOrder/{{ $order->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-green-800 rounded-lg"><i class="fa-solid fa-check     text-green-800 pe-2"></i> Hotovo</a>
+                <a href="/!/finishOrder/{{ $order->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-green-800 rounded-lg"><i class="fa-solid fa-check text-green-800 pe-2"></i> Hotovo</a>
+                <a href="/!/deleteCalendarNote/{{ $order->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Zrušit</a>
             </li>
         @endforeach
     </ol>

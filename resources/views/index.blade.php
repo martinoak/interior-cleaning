@@ -202,7 +202,7 @@
                 <div class="ud-single-pricing first-item me-2">
                     <div class="ud-pricing-header">
                         <h3>LEHKÝ START</h3>
-                        <h4>499,- Kč</h4>
+                        <h4>699,- Kč</h4>
                     </div>
                     <div class="ud-pricing-body">
                         <ul>
@@ -229,7 +229,7 @@
                     <span class="ud-popular-tag">Populární</span>
                     <div class="ud-pricing-header">
                         <h3>ZLATÁ STŘEDNÍ CESTA</h3>
-                        <h4>1 799,- Kč</h4>
+                        <h4>1 999,- Kč</h4>
                     </div>
                     <div class="ud-pricing-body">
                         <ul>
@@ -255,7 +255,7 @@
                 <div class="ud-single-pricing last-item ms-2">
                     <div class="ud-pricing-header">
                         <h3>DELUXE</h3>
-                        <h4>2 999,- Kč</h4>
+                        <h4>3 299,- Kč</h4>
                     </div>
                     <div class="ud-pricing-body">
                         <ul>
@@ -504,15 +504,17 @@
                             <div class="ud-info-meta">
                                 <h5>Spojme se!</h5>
                                 <a href="mailto:info@cisteni-kondrac.cz">info@cisteni-kondrac.cz</a>
+                                <a href="tel:+420602352402">+420 602 352 402</a>
                             </div>
                         </div>
                         <div class="ud-single-info">
                             <div class="ud-info-icon">
-                                <i class="fa-solid fa-phone"></i>
+                                <i class="fa-solid fa-briefcase"></i>
                             </div>
                             <div class="ud-info-meta">
-                                <h5>Haló!</h5>
-                                <a href="tel:+420602352402">+420 602 352 402</a>
+                                <h5></h5>
+                                <p><strong>IČO:</strong> 18026087</p>
+                                <p><strong>Sídlo:</strong> Kondrac 115</p>
                             </div>
                         </div>
                     </div>

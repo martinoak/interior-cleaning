@@ -122,7 +122,7 @@
                     <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-calendar-days text-black"></i> {{date('d.m.Y', strtotime($invoice->date))}}</p>
                     <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-hand-holding-dollar text-black"></i> {{$invoice->price}},- Kč</p>
                 </div>
-                <button type="button" class="focus:outline-none text-white bg-green-700 font-medium rounded-lg text-sm px-2 py-2.5 mr-2 mb-2">Vytvořit příjmový doklad</button>
+                <a href="/!/makeInvoice/{{$invoice->id}}"><button type="button" class="focus:outline-none text-white bg-green-700 font-medium rounded-lg text-sm px-2 py-2.5 mr-2 mb-2">Vytvořit příjmový doklad</button></a>
             </div>
         </div>
     @endforeach
