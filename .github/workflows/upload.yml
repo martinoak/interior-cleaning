@@ -2,7 +2,7 @@ name: Upload code to ftp.endora.cz
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   deploy:
     runs-on: ubuntu-latest
