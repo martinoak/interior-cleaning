@@ -17,4 +17,4 @@ jobs:
           rm -rf !(vendor)
       - name: Upload to FTP
         run: |
-          lftp -c "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} medvidek.endora.cz && mirror -R --exclude-glob vendor . /"
+          lftp -c "set ssl:verify-certificate no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} medvidek.endora.cz && mirror -R --exclude-glob vendor . /"
