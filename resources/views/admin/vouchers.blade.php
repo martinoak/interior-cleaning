@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-10">10% sleva</button>
+            <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-10">10% slevička pane</button>
             <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-modal">Založit voucher</button>
         </div>
 
