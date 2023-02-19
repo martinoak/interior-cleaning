@@ -135,7 +135,9 @@ class FrontendController extends Controller
     }
 
     public function showVouchers() {
-        return view('admin.vouchers');
+        return view('admin.vouchers', [
+            'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5))
+        ]);
     }
 
     public function checkVoucher(Request $request): JsonResponse {
@@ -191,7 +193,7 @@ class FrontendController extends Controller
 
     public function exportInvoice(int $invoiceId)
     {
-        $pdf = new FPDF();
+        $pdf = new Fpdi();
         /*TODO*/
     }
 
@@ -213,22 +215,6 @@ class FrontendController extends Controller
             'date' => date('d-m-Y', strtotime('+6 months')) /* TODO expirace 6 mesicu? */,
             'price' => $request->get('price'),
         ]);
-
-        $pdf = new Fpdi();
-        $pdf->AddPage();
-        $pdf->setSourceFile(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
-        $tplIdx = $pdf->importPage(1);
-        $pdf->useTemplate($tplIdx);
-
-        $pdf->SetFont('Helvetica');
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->setXY(100, 50);
-        $pdf->Cell(0, 0, 'Poukaz na služby');
-
-        $filename = 'poukaz_'.substr($hash, 0, 4).'.pdf';
-        $pdf->Output(asset('images/vouchers'), $filename);
-
-        /* TODO nadesignovat vykreslovani voucheru pomoci FPDF */
 
         return view('admin.vouchers', ['voucher' => [
             'hash' => $hash,
@@ -267,5 +253,15 @@ class FrontendController extends Controller
     public function generateVoucher(Request $request) {
         /* TODO dodelat FPDI komponentu na vepisovani do voucheru */
         return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
+    }
+
+    public function saveMiniVoucher(string $hex): RedirectResponse
+    {
+        DB::table('vouchers')->insert([
+            'hash' => $hex,
+            'date' => date('d-m-Y', strtotime('+3 months')),
+            'price' => 0,
+        ]);
+        return back()->with('success', 'Voucher byl úspěšně vytvořen!');
     }
 }

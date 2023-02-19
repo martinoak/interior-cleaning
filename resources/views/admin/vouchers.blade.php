@@ -62,8 +62,28 @@
 
 <section id="vouchers" class="container">
     @if(!(isset($voucher) || isset($checkedVoucher)))
-        <div class="flex justify-center gap-x-8">
-            <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-5 my-2 " data-modal-toggle="voucher-modal">Založit voucher</button>
+        <div class="flex flex-col md:flex-row md:justify-center gap-x-8">
+            <div id="voucher-10" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                <div class="relative w-75">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal body -->
+                        <div class="flex-col justify-center space-y-4">
+                            <p class="w-full text-center">{{$hex}}</p>
+                            <div class="flex justify-center gap-x-4">
+                                <a href="/!/saveMiniVoucher/{{$hex}}">
+                                    <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                                        <i class="fa-solid fa-save mr-2"></i>
+                                        <span>Uložit voucher</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-10">10% sleva</button>
+            <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-modal">Založit voucher</button>
         </div>
 
         <div id="voucher-verify" class="container">

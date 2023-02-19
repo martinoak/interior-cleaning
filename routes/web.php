@@ -52,9 +52,11 @@ Route::any('/!/unfinishOrder/{id}', function ($id) {
 });
 Route::any('/!/deleteCalendarNote/{id}', function ($id) {
     \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->delete();
+    return redirect(route('calendar'));
 });
 Route::any('/!/saveCalendarEvent', [FrontendController::class, 'saveCalendarEvent']);
 Route::any('/!/storeVoucher', [FrontendController::class, 'storeVoucher']);
 Route::any('/!/validateVoucher', [FrontendController::class, 'validateVoucher']);
 Route::any('/!/useVoucher', [FrontendController::class, 'useVoucher']);
 Route::any('/admin/showVoucher', [FrontendController::class, 'generateVoucher'])->middleware('auth');
+Route::any('/!/saveMiniVoucher/{hex}', [FrontendController::class, 'saveMiniVoucher']);
