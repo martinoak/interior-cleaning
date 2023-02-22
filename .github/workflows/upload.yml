@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Get IP address
+        run: sudo curl -s https://api.ipify.org
       - name: Install FTP
         run: sudo apt-get update && sudo apt-get install -y lftp
       - name: Remove all files except vendor directory
