@@ -215,6 +215,7 @@
                             <li>&nbsp;</li>
                             <li>&nbsp;</li>
                             <li>&nbsp;</li>
+                            <li>&nbsp;</li>
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
@@ -237,6 +238,7 @@
                             <li>Vyluxování zavazadlového prostoru</li>
                             <li>Vyčištění koberečků a umytí disků</li>
                             <li>Ošetření plastů proti poškrábání</li>
+                            <li>Důkladné vyčištění párou</li>
                             <li>Vyleštění oken a zrcátek</li>
                             <li>Tepování sedaček a koberečků</li>
                             <li>Desinfekce klimatizace</li>
@@ -263,6 +265,7 @@
                             <li>Vyluxování zavazadlového prostoru</li>
                             <li>Vyčištění koberečků a umytí disků</li>
                             <li>Vyčištění a ošetření plastů proti poškrábání</li>
+                            <li>Důkladné vyčištění párou</li>
                             <li>Vyleštění všech skel z obou stran</li>
                             <li>Tepování sedaček a koberečků</li>
                             <li>Základní čištění kožených částí</li>
@@ -401,7 +404,7 @@
                 <div class="ud-single-team">
                     <div class="ud-team-image-wrapper">
                         <div class="ud-team-image">
-                            <img src="{{ asset('images/team/team-01.png') }}" alt="team" />
+                            <img src="{{ asset('images/team/ste.jpg') }}" alt="team" />
                         </div>
                         <img
                             src="{{ asset('images/team/dotted-shape.svg') }}"
@@ -438,7 +441,7 @@
                 <div class="ud-single-team">
                     <div class="ud-team-image-wrapper">
                         <div class="ud-team-image">
-                            <img src="{{ asset('images/team/team-01.png') }}" alt="team" />
+                            <img src="{{ asset('images/team/dan.jpg') }}" alt="team" />
                         </div>
                         <img
                             src="{{ asset('images/team/dotted-shape.svg') }}"
