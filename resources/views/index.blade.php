@@ -404,7 +404,7 @@
                 <div class="ud-single-team">
                     <div class="ud-team-image-wrapper">
                         <div class="ud-team-image">
-                            <img src="{{ asset('images/team/ste.jpg') }}" alt="team" />
+                            <img src="{{ asset('images/team/team-01.png') }}" alt="team" />
                         </div>
                         <img
                             src="{{ asset('images/team/dotted-shape.svg') }}"
@@ -441,7 +441,7 @@
                 <div class="ud-single-team">
                     <div class="ud-team-image-wrapper">
                         <div class="ud-team-image">
-                            <img src="{{ asset('images/team/dan.jpg') }}" alt="team" />
+                            <img src="{{ asset('images/team/team-01.png') }}" alt="team" />
                         </div>
                         <img
                             src="{{ asset('images/team/dotted-shape.svg') }}"
