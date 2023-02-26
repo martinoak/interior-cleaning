@@ -134,7 +134,6 @@
                     <!-- Modal body -->
                     <form action="/!/saveCustomer" method="post">
                         {{ csrf_field() }}
-                        <!-- create form with required name, required date, description -->
                         <div class="p-6 space-y-6">
                             <div class="flex flex-col">
                                 <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>
