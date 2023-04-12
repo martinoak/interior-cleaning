@@ -78,7 +78,7 @@
             <a href="tel:{{$member->telephone}}" class="mb-2 underline font-medium text-blue-600">{{$member->telephone}}</a>
             <p>{{$member->message}}</p>
             <div class="d-flex justify-content-between mt-3">
-                <div class="d-flex justify-content-start">
+                <div class="flex justify-start flex-col lg:justify-around lg:flex-row">
                     @if($member->hasTerm !== null)
                         <button class="text-white bg-green-900 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>{{date('d.m.Y', strtotime($member->hasTerm))}}</button>
                     @else

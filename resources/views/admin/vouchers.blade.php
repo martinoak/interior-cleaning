@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-10">10% slevička pane</button>
+            <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-10">10% sleva</button>
             <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-5 my-2" data-modal-toggle="voucher-modal">Založit voucher</button>
         </div>
 
@@ -98,7 +98,9 @@
                         <label for="price" class="mb-2 text-sm font-medium text-gray-600">Cena <i class="fa-solid fa-asterisk text-red-600"></i></label>
                         <input type="number" name="price" id="price" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                     </div>
-                    <button type="submit" class="text-white bg-red-500 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Ověřit voucher</button>
+                    <div class="flex justify-center">
+                        <button type="submit" class="text-white bg-red-500 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Ověřit voucher</button>
+                    </div>
                 </div>
             </form>
         </div>
