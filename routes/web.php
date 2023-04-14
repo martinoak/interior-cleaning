@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FrontendController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,14 +44,17 @@ Route::any('/!/exportInvoice/{id}', [FrontendController::class, 'exportInvoice']
 
 Route::any('/!/finishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
+
     return redirect(route('calendar'));
 });
 Route::any('/!/unfinishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 0]);
+
     return redirect(route('calendar'));
 });
 Route::any('/!/deleteCalendarNote/{id}', function ($id) {
     \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->delete();
+
     return redirect(route('calendar'));
 });
 Route::any('/!/saveCalendarEvent', [FrontendController::class, 'saveCalendarEvent']);

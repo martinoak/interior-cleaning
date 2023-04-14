@@ -8,15 +8,16 @@ use Illuminate\Queue\SerializesModels;
 
 class FeedbackEmail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public string $hash;
+
     public int $variant;
 
     /**
      * Create a new message instance.
      *
-     * @param int|null $variant
      * @return void
      */
     public function __construct(?int $variant)

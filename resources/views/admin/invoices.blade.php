@@ -61,7 +61,10 @@
 </section>
 
 <section id="invoices" class="container">
-    <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2" data-modal-toggle="invoice-modal">Vytvořit fakturu mimo kontaktní formulář</button>
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-x-4">
+        <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2" data-modal-toggle="invoice-modal">Vytvořit fakturu mimo kontaktní formulář</button>
+        <a href="/invoice/excel"><button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 my-2"><i class="fa-regular fa-file-excel"></i> Excel export</button></a>
+    </div>
     <div id="invoice-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-75">
             <!-- Modal content -->
@@ -104,28 +107,30 @@
             </div>
         </div>
     </div>
-    @foreach($invoices as $invoice)
-        <div class="border border-gray-100 p-3 mb-3">
-            <div class="p-3 bg-white rounded-lg flex flex-col md:flex-row justify-between">
-                <div>
-                    @if($invoice->type === 'T')
-                        <i class="fa-solid fa-money-bills text-3xl text-gray-500 pe-4"></i>
-                    @elseif($invoice->type === 'N')
-                        <i class="fa-solid fa-cart-plus text-3xl text-gray-500 pe-4"></i>
-                    @else
-                        <i class="fa-solid fa-file-invoice text-3xl text-gray-500 pe-4"></i>
-                    @endif
-                    <span><h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">{{$invoice->worker}}</h5></span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+        @foreach($invoices as $invoice)
+            <div class="p-6 bg-white rounded-lg shadow mt-4">
+                @if($invoice->type === 'T')
+                    <i class="fa-solid fa-money-bills text-3xl text-gray-500 pe-4"></i>
+                @elseif($invoice->type === 'N')
+                    <i class="fa-solid fa-cart-plus text-3xl text-gray-500 pe-4"></i>
+                @else
+                    <i class="fa-solid fa-file-invoice text-3xl text-gray-500 pe-4"></i>
+                @endif
+                <span><h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">{{$invoice->worker}}</h5></span>
+
+                <div class="flex justify-between flex-col">
+                    <p class="mb-2 font-normal text-gray-500"><i class="fa-solid fa-user text-black"></i> {{$invoice->name}}</p>
+                    <p class="mb-2 font-normal text-gray-500"><i class="fa-solid fa-calendar-days text-black"></i> {{date('d.m.Y', strtotime($invoice->date))}}</p>
+                    <p class="mb-2 font-normal text-gray-500"><i class="fa-solid fa-hand-holding-dollar text-black"></i> {{$invoice->price}},- Kč</p>
                 </div>
-                <div class="flex gap-x-4">
-                    <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-user text-black"></i> {{$invoice->name}}</p>
-                    <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-calendar-days text-black"></i> {{date('d.m.Y', strtotime($invoice->date))}}</p>
-                    <p class="mb-3 font-normal text-gray-500"><i class="fa-solid fa-hand-holding-dollar text-black"></i> {{$invoice->price}},- Kč</p>
+
+                <div class="flex justify-center">
+                    <a href="/!/makeInvoice/{{$invoice->id}}"><button type="button" class="text-white bg-green-700 font-medium rounded-lg text-sm px-2 py-2.5 mt-2">Vytvořit příjmový doklad</button></a>
                 </div>
-                <a href="/!/makeInvoice/{{$invoice->id}}"><button type="button" class="focus:outline-none text-white bg-green-700 font-medium rounded-lg text-sm px-2 py-2.5 mr-2 mb-2">Vytvořit příjmový doklad</button></a>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 </section>
 
 

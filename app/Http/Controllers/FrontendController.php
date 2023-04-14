@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FeedbackEmail;
+use App\Mail\FormEmail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\FormEmail;
-use App\Mail\FeedbackEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Fpdf\Fpdf;
 use setasign\Fpdi\Fpdi;
 
 class FrontendController extends Controller
@@ -20,20 +19,22 @@ class FrontendController extends Controller
     {
         return view('index', [
             'feedbacks' => DB::table('feedback')->where([['rating', '>', 3]])->get(),
-            'dev' => preg_match('#dev\.#', url()->current())
+            'dev' => preg_match('#dev\.#', url()->current()),
         ]);
     }
 
     public function archiveMember($id): RedirectResponse
     {
         DB::table('contact_form_inputs')->where('id', $id)->update(['isArchived' => 1]);
+
         return back();
     }
 
     public function formWithVariant($id)
     {
         Session::put('variant', $id);
-        return redirect(url()->previous() . '#kontakt');
+
+        return redirect(url()->previous().'#kontakt');
     }
 
     public function sendEmail(Request $request): RedirectResponse
@@ -55,6 +56,7 @@ class FrontendController extends Controller
         ]);
 
         Mail::to('info@cisteni-kondrac.cz')->send(new FormEmail($details));
+
         return back();
     }
 
@@ -64,6 +66,7 @@ class FrontendController extends Controller
         DB::table('contact_form_inputs')->where('email', $request->get('email'))->update([
             'feedbackSent' => 1,
         ]);
+
         return back()->with('success', 'Feedback email odeslán!');
     }
 
@@ -71,7 +74,7 @@ class FrontendController extends Controller
     {
         return view('feedback', [
             'hash' => $request->get('id'),
-            'variant' => $request->get('variant')
+            'variant' => $request->get('variant'),
         ]);
     }
 
@@ -79,7 +82,7 @@ class FrontendController extends Controller
     {
         if ($request->get('variant') == 1) {
             $variant = 'Lehký start';
-        } else if ($request->get('variant') == 2) {
+        } elseif ($request->get('variant') == 2) {
             $variant = 'Zlatá střední cesta';
         } else {
             $variant = 'Deluxe';
@@ -99,48 +102,56 @@ class FrontendController extends Controller
     public function deleteFeedback(int $id): RedirectResponse
     {
         DB::table('feedback')->where('id', $id)->delete();
+
         return back();
     }
 
-    public function showDashboard() {
+    public function showDashboard()
+    {
         return view('admin.dashboard', [
             'contactFormMembers' => DB::table('contact_form_inputs')->where('isArchived', 0)->get(),
-            'dev' => preg_match('#dev\.#', url()->current())
+            'dev' => preg_match('#dev\.#', url()->current()),
         ]);
     }
 
-    public function showCalendar() {
+    public function showCalendar()
+    {
         return view('admin.calendar', [
             'orders' => DB::table('calendar')->get()->where('isDone', 0)->sortBy('date'),
             'fOrders' => DB::table('calendar')->get()->where('isDone', 1),
         ]);
     }
 
-    public function showFeedback(): View {
+    public function showFeedback(): View
+    {
         return view('admin.feedbacks', [
             'feedbacks' => DB::table('feedback')->get(),
         ]);
     }
 
-    public function showInvoices() {
+    public function showInvoices()
+    {
         return view('admin.invoices', [
-            'invoices' => DB::table('invoices')->get(),
+            'invoices' => DB::table('invoices')->orderBy('date', 'desc')->get(),
         ]);
     }
 
-    public function showCustomers() {
+    public function showCustomers()
+    {
         return view('admin.customers', [
             'customers' => DB::table('contact_form_inputs')->where('isArchived', 1)->get(),
         ]);
     }
 
-    public function showVouchers() {
+    public function showVouchers()
+    {
         return view('admin.vouchers', [
-            'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5))
+            'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ]);
     }
 
-    public function checkVoucher(Request $request): JsonResponse {
+    public function checkVoucher(Request $request): JsonResponse
+    {
         $hash = md5($request->get('date').$request->get('price'));
         $voucher = DB::table('vouchers')->where('hash', $hash)->first();
         if ($voucher) {
@@ -157,11 +168,13 @@ class FrontendController extends Controller
         }
     }
 
-    public function newOrder() {
+    public function newOrder()
+    {
         return view('admin.newOrder');
     }
 
-    public function saveCustomer(Request $request): RedirectResponse {
+    public function saveCustomer(Request $request): RedirectResponse
+    {
         DB::table('calendar')->insert([
             'name' => $request->get('name'),
             'date' => $request->get('date'),
@@ -176,7 +189,8 @@ class FrontendController extends Controller
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 
-    public function saveInvoice(Request $request): RedirectResponse {
+    public function saveInvoice(Request $request): RedirectResponse
+    {
         DB::table('invoices')->insert([
             'type' => $request->get('type'),
             'date' => $request->get('date'),
@@ -197,7 +211,8 @@ class FrontendController extends Controller
         /*TODO*/
     }
 
-    public function saveCalendarEvent(Request $request): RedirectResponse {
+    public function saveCalendarEvent(Request $request): RedirectResponse
+    {
         DB::table('calendar')->insert([
             'date' => $request->get('date'),
             'name' => $request->get('name'),
@@ -205,10 +220,12 @@ class FrontendController extends Controller
             'description' => $request->get('message'),
             'isDone' => 0,
         ]);
+
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 
-    public function storeVoucher(Request $request): View {
+    public function storeVoucher(Request $request): View
+    {
         $hash = substr(md5(date('d. m. Y H:i:s')), 0, 6);
         DB::table('vouchers')->insert([
             'hash' => $hash,
@@ -223,19 +240,17 @@ class FrontendController extends Controller
         ]]);
     }
 
-
     public function validateVoucher(Request $request): View
     {
         $voucher = DB::table('vouchers')->where('hash', $request->get('hash'))->first();
-        if($voucher && $request->get('hash') === substr($voucher->hash, 0, 6) && $voucher->price === (int)$request->get('price') && !$voucher->isAccepted) {
+        if ($voucher && $request->get('hash') === substr($voucher->hash, 0, 6) && $voucher->price === (int) $request->get('price') && ! $voucher->isAccepted) {
             return view('admin.vouchers', ['checkedVoucher' => [
                 'status' => 'green',
                 'message' => 'Voucher je platný!',
                 'hash' => $voucher->hash,
                 'price' => $voucher->price,
             ]]);
-        }
-        else {
+        } else {
             return view('admin.vouchers', ['checkedVoucher' => [
                 'status' => 'red',
                 'message' => 'Voucher není platný nebo neexistuje!',
@@ -243,14 +258,17 @@ class FrontendController extends Controller
         }
     }
 
-    public function useVoucher(Request $request): View {
+    public function useVoucher(Request $request): View
+    {
         DB::table('vouchers')->where('hash', $request->get('hash'))->update([
             'isAccepted' => 1,
         ]);
+
         return view('admin.vouchers')->with('success', 'Voucher byl úspěšně použit!');
     }
 
-    public function generateVoucher(Request $request) {
+    public function generateVoucher(Request $request)
+    {
         /* TODO dodelat FPDI komponentu na vepisovani do voucheru */
         return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
     }
@@ -262,6 +280,7 @@ class FrontendController extends Controller
             'date' => date('d-m-Y', strtotime('+3 months')),
             'price' => 0,
         ]);
+
         return back()->with('success', 'Voucher byl úspěšně vytvořen!');
     }
 }
