@@ -60,7 +60,7 @@
     </div>
 </section>
 
-<section id="vouchers" class="container">
+<section id="vouchers" class="container md:w-1/2">
     @if(!(isset($voucher) || isset($checkedVoucher)))
         <div class="flex flex-col md:flex-row md:justify-center gap-x-8">
             <div id="voucher-10" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">

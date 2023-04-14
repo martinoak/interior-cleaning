@@ -139,7 +139,7 @@ class FrontendController extends Controller
     public function showCustomers()
     {
         return view('admin.customers', [
-            'customers' => DB::table('contact_form_inputs')->where('isArchived', 1)->get(),
+            'customers' => DB::table('contact_form_inputs')->where('isArchived', 1)->orderBy('id', 'desc')->get(),
         ]);
     }
 

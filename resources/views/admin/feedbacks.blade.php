@@ -60,9 +60,9 @@
     </div>
 </section>
 
-<section id="ratings" class="container my-4">
+<section id="ratings" class="container w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
     @foreach($feedbacks as $feedback)
-        <div class="border border-gray-100 p-3 mb-3">
+        <div class="p-6 bg-white rounded-lg shadow mt-4">
             <p class="fw-bold text-black">{{$feedback->fullname}}</p>
             <p>{{$feedback->message}}</p>
             <p class="text-[#FF9119]">
