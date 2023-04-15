@@ -127,8 +127,8 @@ class FrontendController extends Controller
     public function showCalendar()
     {
         return view('admin.calendar', [
-            'orders' => DB::table('calendar')->get()->where('isDone', 0)->sortBy('date'),
-            'fOrders' => DB::table('calendar')->get()->where('isDone', 1),
+            'orders' => DB::table('calendar')->orderBy('date')->get()->where('isDone', 0),
+            'fOrders' => DB::table('calendar')->orderBy('date', 'desc')->get()->where('isDone', 1),
         ]);
     }
 

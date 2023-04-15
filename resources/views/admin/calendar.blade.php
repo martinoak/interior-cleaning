@@ -103,7 +103,9 @@
                 <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">{{$fOrder->name}}&nbsp;|&nbsp;<span class="text-gray-400">{{$fOrder->variant}} {{--<span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">Latest</span>--}}</h3>
                 <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ date('d.m.Y',strtotime($fOrder->date)) }}</time>
                 <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">{{ $fOrder->description }}</p>
+{{--
                 <a href="/!/unfinishOrder/{{ $fOrder->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Není hotovo</a>
+--}}
                 @if($fOrder->isInvoiceCreated)
                     <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border-2 border-gray-500 rounded-lg" disabled><i class="fa-solid fa-file-invoice text-gray-500 pe-2"></i> Fakturováno</button>
                 @else
