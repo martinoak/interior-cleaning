@@ -23,26 +23,7 @@
 
 </head>
 <body>
-<header class="ud-header">
-    <div class="container container-nav">
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg">
-                    <span class="navbar-brand">
-                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" class="w-100"/>
-                    </span>
-                    <a class="ud-logo-text navbar-brand-text fw-bold" href="/admin" style="color: white">
-                        Admin panel
-                    </a>
-                    <button class="navbar-toggler">
-                        <i class="fa-solid fa-bars text-white"></i>
-                    </button>
-                    @include ('partials.admin_nav')
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
+@include('partials.admin_header')
 
 <section class="ud-hero" id="home">
     <div class="container">
@@ -105,7 +86,7 @@
             <li class="mb-10 ml-6">
                 <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-800 rounded-full -left-3 ring-8 ring-white">
                 </span>
-                <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">{{$order->name}} | {{$order->variant}} {{--<span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">Latest</span>--}}</h3>
+                <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">{{$order->name}}&nbsp;|&nbsp;<span class="text-gray-400">{{$order->variant}}</span></h3>
                 <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ date('d.m.Y',strtotime($order->date)) }}</time>
                 <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">{{ $order->description }}</p>
                 <a href="/!/finishOrder/{{ $order->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-green-800 rounded-lg"><i class="fa-solid fa-check text-green-800 pe-2"></i> Hotovo</a>
@@ -119,7 +100,7 @@
             <li class="mb-10 ml-6">
                 <span class="absolute flex items-center justify-center w-6 h-6 bg-green-800 rounded-full -left-3 ring-8 ring-white">
                 </span>
-                <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">{{$fOrder->name}} | {{$fOrder->variant}} {{--<span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">Latest</span>--}}</h3>
+                <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">{{$fOrder->name}}&nbsp;|&nbsp;<span class="text-gray-400">{{$fOrder->variant}} {{--<span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">Latest</span>--}}</h3>
                 <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ date('d.m.Y',strtotime($fOrder->date)) }}</time>
                 <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">{{ $fOrder->description }}</p>
                 <a href="/!/unfinishOrder/{{ $fOrder->id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Není hotovo</a>

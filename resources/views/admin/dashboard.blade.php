@@ -22,35 +22,7 @@
 
 </head>
 <body>
-<header class="ud-header">
-    @if($dev)
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-danger text-center fw-bold">
-                    Developer verze
-                </div>
-            </div>
-        </div>
-    @endif
-    <div class="container container-nav">
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg">
-                    <span class="navbar-brand">
-                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" class="w-100"/>
-                    </span>
-                    <a class="ud-logo-text navbar-brand-text fw-bold" href="{{url()->current()}}" style="color: white">
-                        Admin panel
-                    </a>
-                    <button class="navbar-toggler">
-                        <i class="fa-solid fa-bars text-white"></i>
-                    </button>
-                    @include ('partials.admin_nav')
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
+@include('partials.admin_header')
 
 <section class="ud-hero" id="home">
     <div class="container">
@@ -73,7 +45,7 @@
     <h4 class="font-bold text-xl py-2">Zákazníci z kontaktního formuláře:</h4>
     @foreach($contactFormMembers as $member)
         <div class="border border-gray-100 p-3 mb-3">
-            <p class="fw-bold text-black">{{$member->fullname}}</p>
+            <p class="fw-bold text-black">{{$member->fullname}}@if($member->variant) | <span class="text-gray-400"> {{$member->variant}}</span>@endif</p>
             <a href="mailto:{{$member->email}}" class="mb-2 underline font-medium text-blue-600">{{$member->email}}</a><br>
             <a href="tel:{{$member->telephone}}" class="mb-2 underline font-medium text-blue-600">{{$member->telephone}}</a>
             <p>{{$member->message}}</p>
@@ -158,9 +130,9 @@
                             <div class="flex flex-col">
                                 <label for="variant" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Varianta <i class="fa-solid fa-asterisk text-red-600"></i></label>
                                 <select id="variant" name="variant" class="border border-gray-300 px-4 py-2 rounded-lg">
-                                    <option value="1">Základ</option>
-                                    <option value="2">Zlatá střední cesta</option>
-                                    <option value="3">Deluxe</option>
+                                    <option value="Základ">Základ</option>
+                                    <option value="Zlatá střední cesta">Zlatá střední cesta</option>
+                                    <option value="Deluxe">Deluxe</option>
                                 </select>
                             </div>
                             <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Objednat</button>

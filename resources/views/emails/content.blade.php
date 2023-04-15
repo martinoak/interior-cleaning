@@ -10,7 +10,7 @@
 <p>Jmeno: {{ $details['name'] }}</p>
 <p>Email: {{ $details['email'] }}</p>
 <p>Telefon: <a href="tel:{{$details['phone']}}">{{ $details['phone'] }}</a></p>
-<p>Varianta: @php if ($details['variant'] == 1) {echo "Lehký start";}elseif ($details['variant'] == 2) {echo "Zlatá střední cesta";}elseif ($details == 3) {echo "Deluxe";} else {echo 'Nebyla vybrána varianta';}@endphp</p>
+<p>Varianta: {{$details['variant']}}</p>
 <hr>
 <p>{{ $details['message'] }}</p>
 <p>Odesláno @php echo date('d.n.Y \v H:i')@endphp</p>

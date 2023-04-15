@@ -22,26 +22,8 @@
 
 </head>
 <body>
-<header class="ud-header">
-    <div class="container container-nav">
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg">
-                    <span class="navbar-brand">
-                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" class="w-100"/>
-                    </span>
-                    <a class="ud-logo-text navbar-brand-text fw-bold" href="/admin" style="color: white">
-                        Admin panel
-                    </a>
-                    <button class="navbar-toggler">
-                        <i class="fa-solid fa-bars text-white"></i>
-                    </button>
-                    @include ('partials.admin_nav')
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
+
+@include('partials.admin_header')
 
 <section class="ud-hero" id="home">
     <div class="container">
@@ -63,7 +45,7 @@
 <section id="invoices" class="container">
     <div class="flex flex-col sm:flex-row justify-center items-center gap-x-4">
         <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2" data-modal-toggle="invoice-modal">Vytvořit fakturu mimo kontaktní formulář</button>
-        <a href="/invoice/excel"><button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 my-2"><i class="fa-regular fa-file-excel"></i> Excel export</button></a>
+        <a href="/!/exportCustomers"><button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 my-2"><i class="fa-regular fa-file-excel"></i> Excel export</button></a>
     </div>
     <div id="invoice-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-75">
@@ -78,7 +60,7 @@
                             <select id="type" name="type" class="border border-gray-300 px-4 py-2 rounded-lg">
                                 <option value="T">Tržba (dokončené čištění)</option>
                                 <option value="N">Náklad (nákup prostředků)</option>
-                                <option value="O">Ostatní</option>
+                                <option value="O">Ostatní (voucher,...)</option>
                             </select>
                         </div>
                         <div class="flex flex-col">
@@ -126,7 +108,7 @@
                 </div>
 
                 <div class="flex justify-center">
-                    <a href="/!/makeInvoice/{{$invoice->id}}"><button type="button" class="text-white bg-green-700 font-medium rounded-lg text-sm px-2 py-2.5 mt-2">Vytvořit příjmový doklad</button></a>
+                    <a href="{{asset('images/invoice/template.jpg')}}"><button type="button" class="text-white bg-green-700 font-medium rounded-lg text-sm px-2 py-2.5 mt-2">Vzor př. dokladu</button></a>
                 </div>
             </div>
         @endforeach

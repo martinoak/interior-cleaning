@@ -22,26 +22,7 @@
 
 </head>
 <body>
-<header class="ud-header">
-    <div class="container container-nav">
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg">
-                    <span class="navbar-brand">
-                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" class="w-100"/>
-                    </span>
-                    <a class="ud-logo-text navbar-brand-text fw-bold" href="/admin" style="color: white">
-                        Admin panel
-                    </a>
-                    <button class="navbar-toggler">
-                        <i class="fa-solid fa-bars text-white"></i>
-                    </button>
-                    @include ('partials.admin_nav')
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
+@include('partials.admin_header')
 
 <section class="ud-hero" id="home">
     <div class="container">
@@ -65,7 +46,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         @foreach($customers as $member)
             <div class="border border-gray-100 p-3 mb-3">
-                <p class="fw-bold text-black">{{$member->fullname}}</p>
+                <p class="fw-bold text-black">{{$member->fullname}}@if($member->variant) | <span class="text-gray-400">{{$member->variant}}</span>@endif</p>
                 <a href="mailto:{{$member->email}}" class="mb-2 underline font-medium text-blue-600">{{$member->email}}</a><br>
                 <a href="tel:{{$member->telephone}}" class="mb-2 underline font-medium text-blue-600">{{$member->telephone}}</a>
                 <p>{{$member->message}}</p>

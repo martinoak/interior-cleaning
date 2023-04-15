@@ -219,7 +219,7 @@
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
-                        <a href="/variant/1" class="ud-main-btn ud-border-btn">
+                        <a href="#kontakt" class="ud-main-btn ud-border-btn" onclick="@php \Illuminate\Support\Facades\Session::put('variant', 1) @endphp">
                             To beru!
                         </a>
                     </div>
@@ -247,7 +247,7 @@
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
-                        <a href="/variant/2" class="ud-main-btn ud-white-btn">
+                        <a href="#kontakt" class="ud-main-btn ud-white-btn" onclick="@php \Illuminate\Support\Facades\Session::put('variant', 2) @endphp">
                             To beru!
                         </a>
                     </div>
@@ -274,7 +274,7 @@
                         </ul>
                     </div>
                     <div class="ud-pricing-footer">
-                        <a href="/variant/3" class="ud-main-btn ud-border-btn">
+                        <a href="#kontakt" class="ud-main-btn ud-border-btn" onclick="@php \Illuminate\Support\Facades\Session::put('variant', 3) @endphp">
                             To beru!
                         </a>
                     </div>
@@ -568,17 +568,12 @@
                             ></textarea>
                         </div>
                         @if (Session::has('variant'))
-                        <div class="ud-form-group">
-                            <label for="variant">Varianta <i class="fa-brands fa-angellist text-danger"></i></label>
                             <input
-                                type="text"
+                                type="hidden"
                                 name="variant"
-                                id="variant"
                                 value="{{ Session::get('variant') }}"
                                 placeholder=""
-                                required
                             />
-                        </div>
                         @endif
                         <div class="ud-form-group mb-0">
                             <button type="submit" class="ud-main-btn w-100" role="button">

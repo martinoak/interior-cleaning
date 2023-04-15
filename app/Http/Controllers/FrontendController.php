@@ -39,13 +39,22 @@ class FrontendController extends Controller
 
     public function sendEmail(Request $request): RedirectResponse
     {
+        if ($request->get('variant') == 1) {
+            $variant = "Lehký start";
+        } elseif ($request->get('variant') == 2) {
+            $variant = "Zlatá střední cesta";
+        } elseif ($request->get('variant') == 3) {
+            $variant = "Deluxe";
+        } else {
+            $variant = 'Nebyla vybrána varianta';
+        }
         $details = [
             'title' => 'Přišla nová poptávka!',
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
             'message' => $request->get('message'),
-            'variant' => $request->get('variant') ?? 'Není vyplněná varianta',
+            'variant' => $variant,
         ];
 
         DB::table('contact_form_inputs')->insert([
@@ -53,6 +62,7 @@ class FrontendController extends Controller
             'email' => $details['email'],
             'telephone' => $details['phone'],
             'message' => $details['message'],
+            'variant' => $details['variant'],
         ]);
 
         Mail::to('info@cisteni-kondrac.cz')->send(new FormEmail($details));
@@ -205,10 +215,11 @@ class FrontendController extends Controller
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 
-    public function exportInvoice(int $invoiceId)
+    public function makeInvoice(int $id)
     {
-        $pdf = new Fpdi();
-        /*TODO*/
+        $img = imagecreatefromjpeg(asset('images/invoice/template.jpg'));
+
+        return asset('images/invoice/template.jpg');
     }
 
     public function saveCalendarEvent(Request $request): RedirectResponse

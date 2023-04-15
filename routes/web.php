@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,7 +41,8 @@ Route::any('/admin/vouchers', [FrontendController::class, 'showVouchers'])->name
 Route::any('/newOrder', [FrontendController::class, 'newOrder'])->name('newOrder');
 Route::any('/!/saveCustomer', [FrontendController::class, 'saveCustomer'])->name('saveCustomer');
 Route::any('/!/saveInvoice', [FrontendController::class, 'saveInvoice'])->name('saveInvoice');
-Route::any('/!/exportInvoice/{id}', [FrontendController::class, 'exportInvoice'])->name('exportInvoice');
+Route::any('/!/makeInvoice/{id}', [FrontendController::class, 'makeInvoice'])->name('exportInvoice');
+Route::any('/!/exportCustomers', [ExcelController::class, 'exportCustomers']);
 
 Route::any('/!/finishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
