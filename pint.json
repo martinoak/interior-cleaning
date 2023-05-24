@@ -1,3 +1,9 @@
 {
-    "preset": "psr12"
+    "preset": "psr12",
+    "rules": {
+        "single_quote": false,
+        "not_operator_with_successor_space": false,
+        "visibility_required": false,
+        "function_declaration": false
+    }
 }
