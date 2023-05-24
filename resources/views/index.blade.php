@@ -29,11 +29,11 @@
 <body>
 <!-- ====== Header Start ====== -->
 <header class="ud-header">
-    @if($dev)
+    @if(str_contains(url()->current(), 'mad.dek.cz'))
         <div class="row">
             <div class="col-lg-12">
                 <div class="alert alert-danger text-center fw-bold">
-                    Developer verze
+                    Developer verze Laravel {{ Illuminate\Foundation\Application::VERSION }}, PHP {{ PHP_VERSION }}
                 </div>
             </div>
         </div>
@@ -57,10 +57,10 @@
                                 <a class="ud-menu-scroll" href="#about">O nás</a>
                             </li>
                             <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#reference">Reference</a>
+                                <a class="ud-menu-scroll" href="#cenik">Ceník</a>
                             </li>
                             <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#cenik">Ceník</a>
+                                <a class="ud-menu-scroll" href="#reference">Reference</a>
                             </li>
                             <li class="nav-item">
                                 <a class="ud-menu-scroll" href="#tym">Tým</a>
