@@ -1,4 +1,4 @@
-@if(str_contains(url()->current(), 'mad.dek.cz'))
+@if(str_contains(url()->current(), 'mad.dek.cz') || str_contains(url()->current(), 'localhost'))
     <div class="row">
         <div class="col-lg-12">
             <div class="alert alert-danger text-center fw-bold">
