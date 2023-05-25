@@ -14,3 +14,4 @@ jobs:
         server: ftpx.forpsi.com
         username: www.cisteni-kondrac.cz
         password: ${{ secrets.ftp_password }}
+        port: 21
