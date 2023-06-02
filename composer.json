@@ -12,7 +12,8 @@
         "laravel/framework": "^10.0",
         "laravel/pint": "^1.10",
         "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "marvelousmartin/laravel-latte": "^1.0"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",
