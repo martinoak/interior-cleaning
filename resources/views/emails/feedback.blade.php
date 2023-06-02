@@ -13,4 +13,4 @@
 <p><a href="{{\Illuminate\Support\Facades\URL::to('/')}}/add-feedback?id={{md5(time())}}&variant={{$variant}}">Odkaz na napsání recenze</a></p>
 <p>Odesláno @php echo date('d.n.Y \v H:i')@endphp</p>
 <img src="https://github.com/MarvelousMartin/interior-cleaning/blob/master/public/images/logo/logo-2.png?raw=true"
-     style="max-width: 100px" alt="Čistění interiéru Kondrac">
+     style="max-width: 100px" alt="Čistění interiérů Kondrac">

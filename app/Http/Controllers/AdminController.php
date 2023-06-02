@@ -2,27 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\FeedbackEmail;
-use App\Mail\FormEmail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use setasign\Fpdi\Fpdi;
 
-class FrontendController extends Controller
+class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('index', [
-            'feedbacks' => DB::table('feedback')->where([['rating', '>', 3]])->get(),
-            'dev' => preg_match('#dev\.#', url()->current()),
-        ]);
-    }
-
     public function archiveMember($id): RedirectResponse
     {
         DB::table('contact_form_inputs')->where('id', $id)->update(['isArchived' => 1]);
@@ -30,93 +17,7 @@ class FrontendController extends Controller
         return back();
     }
 
-    public function formWithVariant($id)
-    {
-        Session::put('variant', $id);
-
-        return redirect(url()->previous().'#kontakt');
-    }
-
-    public function sendEmail(Request $request): RedirectResponse
-    {
-        if ($request->get('variant') == 1) {
-            $variant = "Lehký start";
-        } elseif ($request->get('variant') == 2) {
-            $variant = "Zlatá střední cesta";
-        } elseif ($request->get('variant') == 3) {
-            $variant = "Deluxe";
-        } else {
-            $variant = 'Nebyla vybrána varianta';
-        }
-        $details = [
-            'title' => 'Přišla nová poptávka!',
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
-            'message' => $request->get('message'),
-            'variant' => $variant,
-        ];
-
-        DB::table('contact_form_inputs')->insert([
-            'fullname' => $details['name'],
-            'email' => $details['email'],
-            'telephone' => $details['phone'],
-            'message' => $details['message'],
-            'variant' => $details['variant'],
-        ]);
-
-        Mail::to('info@cisteni-kondrac.cz')->send(new FormEmail($details));
-
-        return back();
-    }
-
-    public function sendFeedbackEmail(Request $request): RedirectResponse
-    {
-        Mail::to($request->get('email'))->send(new FeedbackEmail($request->get('variant')));
-        DB::table('contact_form_inputs')->where('email', $request->get('email'))->update([
-            'feedbackSent' => 1,
-        ]);
-
-        return back()->with('success', 'Feedback email odeslán!');
-    }
-
-    public function newFeedback(Request $request): View
-    {
-        return view('feedback', [
-            'hash' => $request->get('id'),
-            'variant' => $request->get('variant'),
-        ]);
-    }
-
-    public function storeFeedback(Request $request)
-    {
-        if ($request->get('variant') == 1) {
-            $variant = 'Lehký start';
-        } elseif ($request->get('variant') == 2) {
-            $variant = 'Zlatá střední cesta';
-        } else {
-            $variant = 'Deluxe';
-        }
-
-        DB::table('feedback')->insert([
-            'hash' => $request->get('hash'),
-            'fullname' => $request->get('fullname'),
-            'message' => $request->get('message'),
-            'rating' => $request->get('stars'),
-            'variant' => $variant,
-        ]);
-
-        return redirect(route('homepage'));
-    }
-
-    public function deleteFeedback(int $id): RedirectResponse
-    {
-        DB::table('feedback')->where('id', $id)->delete();
-
-        return back();
-    }
-
-    public function showDashboard()
+    public function showDashboard(): View
     {
         return view('admin.dashboard', [
             'contactFormMembers' => DB::table('contact_form_inputs')->where('isArchived', 0)->get(),
@@ -124,7 +25,7 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function showCalendar()
+    public function showCalendar(): View
     {
         return view('admin.calendar', [
             'orders' => DB::table('calendar')->orderBy('date')->get()->where('isDone', 0),
@@ -262,10 +163,12 @@ class FrontendController extends Controller
                 'price' => $voucher->price,
             ]]);
         } else {
-            return view('admin.vouchers', ['checkedVoucher' => [
-                'status' => 'red',
-                'message' => 'Voucher není platný nebo neexistuje!',
-            ]]);
+            return view('admin.vouchers', [
+                'checkedVoucher' => [
+                    'status' => 'red',
+                    'message' => 'Voucher není platný nebo neexistuje!',
+                ]
+            ]);
         }
     }
 
@@ -275,7 +178,9 @@ class FrontendController extends Controller
             'isAccepted' => 1,
         ]);
 
-        return view('admin.vouchers')->with('success', 'Voucher byl úspěšně použit!');
+        return view('admin.vouchers', [
+            'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
+        ])->with('success', 'Voucher byl úspěšně použit!');
     }
 
     public function generateVoucher(Request $request)

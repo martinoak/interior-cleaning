@@ -1,0 +1,52 @@
+{layout '../layout.latte'}
+
+{block content}
+
+{include '../partials/admin_header.latte'}
+<section class="ud-hero" id="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ud-hero-content">
+                    <h1 class="ud-hero-title">
+                        Admin panel
+                    </h1>
+                    <p class="ud-hero-desc">
+                        Recenze
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="ratings" class="container w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    {foreach $feedbacks as $feedback}
+        <div class="p-6 bg-white rounded-lg shadow mt-4">
+            <p class="fw-bold text-black">{$feedback->fullname}</p>
+            <p>{$feedback->message}</p>
+            <p class="text-[#FF9119]">
+                {for $i = 1; $i <= 5; $i++}
+                    {if $i <= $feedback->rating}
+                    <i class="fa-solid fa-star"></i>
+                    {else}
+                    <i class="text-black fa-regular fa-star"></i>
+                    {/if}
+                {/for}
+            </p>
+            <p>{$feedback->variant}</p>
+            <div class="d-flex justify-content-between mt-3">
+                <a href="/delete-feedback/{$feedback->id}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>
+            </div>
+        </div>
+    {/foreach}
+</section>
+
+{include '../partials/footer.latte'}
+
+{/block}
+
+{block bottomscripts}
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <script src="{asset('js/main.js')}"></script>
+{/block}

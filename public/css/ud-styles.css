@@ -1283,6 +1283,7 @@ p {
   position: relative;
   z-index: 1;
   overflow: hidden;
+  width: 100%;
 }
 
 .ud-footer .shape {
