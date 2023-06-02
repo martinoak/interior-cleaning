@@ -30,6 +30,6 @@ class FormEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Nová poptávka')->view('emails.content')->replyTo($this->details['email']);
+        return $this->subject('Nová poptávka')->view('emails.newDemand')->replyTo($this->details['email']);
     }
 }

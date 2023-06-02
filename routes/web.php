@@ -67,3 +67,7 @@ Route::any('/!/validateVoucher', [AdminController::class, 'validateVoucher']);
 Route::any('/!/useVoucher', [AdminController::class, 'useVoucher']);
 Route::any('/admin/showVoucher', [AdminController::class, 'generateVoucher'])->middleware('auth');
 Route::any('/!/saveMiniVoucher/{hex}', [AdminController::class, 'saveMiniVoucher']);
+
+Route::get('/test', function () {
+    return view('emails.feedback');
+});
