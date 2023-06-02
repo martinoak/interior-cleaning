@@ -231,7 +231,7 @@
                             <li>Vyčištění koberečků a umytí disků</li>
                             <li>Ošetření plastů proti poškrábání</li>
                             <li>Důkladné vyčištění párou</li>
-                            <li>Vyleštění oken a zrcátek</li>
+                            <li>Vyleštění oken a zrcátek zevnitř</li>
                             <li>Tepování sedaček a koberečků</li>
                             <li>Desinfekce klimatizace</li>
                             <li>&nbsp;</li>
