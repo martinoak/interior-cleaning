@@ -177,7 +177,7 @@
 
         <div class="row g-0 align-items-center justify-content-center">
             {foreach $pricelist as $item => $values}
-                <div class="col-lg-4 col-md-6 col-sm-10">
+                <div class="col-lg-4 col-md-10 col-sm-10">
                     <div class="ud-single-pricing {if $iterator->first}first-item me-2{elseif $iterator->even}active{elseif $iterator->last}last-item ms-2{/if}">
                         {if $iterator->even} <span class="ud-popular-tag">Populární</span> {/if}
                         <div class="ud-pricing-header">
