@@ -17,11 +17,11 @@
 
         // === logo change
         if (ud_header.classList.contains("ud-sticky")) {
-            logo.src = "../images/logo/logo-2.png";
+            logo.src = "../images/logo/logo-car2.png";
             logoText.style.color = "#3056d3";
             burger.className = "fa-solid fa-bars text-primary";
         } else {
-            logo.src = "../images/logo/logo.png";
+            logo.src = "../images/logo/logo-car.png";
             logoText.style.color = "#fff";
             burger.className= "fa-solid fa-bars text-white";
         }

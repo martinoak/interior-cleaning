@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CleaningPrices;
 use App\Mail\FeedbackEmail;
 use App\Mail\FormEmail;
+use App\Models\Facades\DatabaseFacade;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,11 +14,23 @@ use Illuminate\Support\Facades\Mail;
 
 class HomepageController extends Controller
 {
-    public function index(Request $request): View
+    public function __construct(
+        private readonly DatabaseFacade $dbFacade,
+    ) {
+    }
+
+    public function index(): View
     {
+        foreach (CleaningPrices::cases() as $case) {
+            $pricelist[$case->value] = [
+                'price' => $case->getVariantPrice(),
+                'description' => $case->getVariantDescription(),
+            ];
+        }
+
         return view('home', [
-            'feedbacks' => DB::table('feedback')->where([['rating', '>', 3]])->get(),
-            'dev' => preg_match('#dev\.#', url()->current()),
+            'feedbacks' => $this->dbFacade->getFeedbacks(),
+            'pricelist' => $pricelist,
         ]);
     }
 

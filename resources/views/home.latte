@@ -18,7 +18,7 @@
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg">
                     <span class="navbar-brand">
-                        <img src="{asset('images/logo/logo.png')}" alt="Logo" class="w-100"/>
+                        <img src="{asset('images/logo/logo-car.png')}" alt="Logo" class="w-100"/>
                     </span>
                     <a class="ud-logo-text navbar-brand-text fw-bold" href="/" style="color: white">
                         Čištění interiérů
@@ -153,8 +153,11 @@
                     <p>Na čištění interiéru používáme šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
                 </div>
             </div>
-            <div class="ud-about-image" style="width: 30%; background-color: #3056d3">
-                {*<img src="{{asset('images/logo.png')}}" alt="about-image" />*}
+            <div class="ud-about-image-desktop" style="background-color: #3056d3">
+                <img src="{asset('images/logo/typography.png')}" alt="about-image" style="margin-top: 25px;padding: 50px" />
+            </div>
+            <div class="ud-about-image-mobile" style="background-color: #3056d3">
+                <img src="{asset('images/logo/logo-car.png')}" alt="about-image" style="padding: 20px 0;width: 20%" />
             </div>
         </div>
     </div>
@@ -173,88 +176,33 @@
         </div>
 
         <div class="row g-0 align-items-center justify-content-center">
-            <div class="col-lg-4 col-md-6 col-sm-10">
-                <div class="ud-single-pricing first-item me-2">
-                    <div class="ud-pricing-header">
-                        <h3>LEHKÝ START</h3>
-                        <h4>699,- Kč</h4>
-                    </div>
-                    <div class="ud-pricing-body">
-                        <ul>
-                            <li>Základní luxování interiéru</li>
-                            <li>Vyluxování zavazadlového prostoru</li>
-                            <li>Vyluxování koberečků</li>
-                            <li>Ošetření plastů proti poškrábání</li>
-                            <li>Vyleštění čelního skla</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                        </ul>
-                    </div>
-                    <div class="ud-pricing-footer">
-                        <a href="#kontakt" class="ud-main-btn ud-border-btn">
-                            To beru!
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-10">
-                <div class="ud-single-pricing active">
-                    <span class="ud-popular-tag">Populární</span>
-                    <div class="ud-pricing-header">
-                        <h3>ZLATÁ STŘEDNÍ CESTA</h3>
-                        <h4>1 999,- Kč</h4>
-                    </div>
-                    <div class="ud-pricing-body">
-                        <ul>
-                            <li><strong>Detailní</strong> luxování interiéru</li>
-                            <li>Vyluxování zavazadlového prostoru</li>
-                            <li>Vyčištění koberečků a umytí disků</li>
-                            <li>Ošetření plastů proti poškrábání</li>
-                            <li>Důkladné vyčištění párou</li>
-                            <li>Vyleštění oken a zrcátek zevnitř</li>
-                            <li>Tepování sedaček a koberečků</li>
-                            <li>Desinfekce klimatizace</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                        </ul>
-                    </div>
-                    <div class="ud-pricing-footer">
-                        <a href="#kontakt" class="ud-main-btn ud-white-btn">
-                            To beru!
-                        </a>
+            {foreach $pricelist as $item => $values}
+                <div class="col-lg-4 col-md-6 col-sm-10">
+                    <div class="ud-single-pricing {if $iterator->first}first-item me-2{elseif $iterator->even}active{elseif $iterator->last}last-item ms-2{/if}">
+                        {if $iterator->even} <span class="ud-popular-tag">Populární</span> {/if}
+                        <div class="ud-pricing-header">
+                            <h3>{$item|upper}</h3>
+                            <h4>{$values['price']}</h4>
+                        </div>
+                        <div class="ud-pricing-body">
+                            <ul>
+                                {for $i = 0; $i <= 9; $i++}
+                                    {if isset($values['description'][$i])}
+                                        <li>{$values['description'][$i]|noescape}</li>
+                                    {else}
+                                        <li>&nbsp;</li>
+                                    {/if}
+                                {/for}
+                            </ul>
+                        </div>
+                        <div class="ud-pricing-footer">
+                            <a href="#kontakt" class="ud-main-btn ud-border-btn">
+                                To beru!
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-10">
-                <div class="ud-single-pricing last-item ms-2">
-                    <div class="ud-pricing-header">
-                        <h3>DELUXE</h3>
-                        <h4>3 299,- Kč</h4>
-                    </div>
-                    <div class="ud-pricing-body">
-                        <ul>
-                            <li><strong>Detailní</strong> luxování celého interiéru</li>
-                            <li>Vyluxování zavazadlového prostoru</li>
-                            <li>Vyčištění koberečků a umytí disků</li>
-                            <li>Vyčištění a ošetření plastů proti poškrábání</li>
-                            <li>Důkladné vyčištění párou</li>
-                            <li>Vyleštění všech skel z obou stran</li>
-                            <li>Tepování sedaček a koberečků</li>
-                            <li>Základní čištění kožených částí</li>
-                            <li>Vyčištění klimatizace s vůní po citrónu</li>
-                            <li>Navoskování čelního skla</li>
-                        </ul>
-                    </div>
-                    <div class="ud-pricing-footer">
-                        <a href="#kontakt" class="ud-main-btn ud-border-btn">
-                            To beru!
-                        </a>
-                    </div>
-                </div>
-            </div>
+            {/foreach}
         </div>
     </div>
 </section>
@@ -274,7 +222,7 @@
         <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-inner w-50 mx-auto">
                 {foreach $feedbacks as $feedback}
-                <div class="carousel-item @if ($loop->first) active @endif">
+                <div class="carousel-item {if $iterator->first}active{/if}">
                     <div class="d-block w-100">
                         <div class="ud-single-testimonial">
                             <div class="ud-testimonial-ratings">
@@ -333,32 +281,6 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        {*
-        <div class="row d-flex justify-content-center">
-        <div class="col-lg-4 col-md-6">
-        <div class="ud-single-testimonial">
-        <div class="ud-testimonial-ratings">
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star-half-stroke"></i>
-        <i class="fa-regular fa-star"></i>
-        <i class="fa-regular fa-star"></i>
-        </div>
-        <div class="ud-testimonial-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies.</p>
-        </div>
-        <div class="ud-testimonial-info">
-        <div class="ud-testimonial-image">
-        <img src="{{ asset('images/testimonials/author-01.png') }}" alt=""/>
-        </div>
-        <div class="ud-testimonial-meta">
-        <h4>Martin Dub</h4>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        *}
     </div>
 </section>
 
@@ -375,79 +297,32 @@
         </div>
 
         <div class="row justify-content-around">
-            <div class="col-xl-3 col-lg-3 col-sm-6">
-                <div class="ud-single-team">
-                    <div class="ud-team-image-wrapper">
-                        <div class="ud-team-image">
-                            <img src="{asset('images/team/team-01.png')}" alt="team" />
+            {foreach config('web.team') as $worker}
+                <div class="col-xl-3 col-lg-3 col-sm-6">
+                    <div class="ud-single-team">
+                        <div class="ud-team-image-wrapper">
+                            <div class="ud-team-image">
+                                <img src="{asset('images/team/team-01.png')}" alt="team" />
+                            </div>
+                            <img src="{asset('images/team/dotted-shape.svg')}" alt="shape" class="shape shape-1" />
+                            <img src="{asset('images/team/shape-2.svg')}" alt="shape" class="shape shape-2" />
                         </div>
-                        <img
-                                src="{asset('images/team/dotted-shape.svg')}"
-                                alt="shape"
-                                class="shape shape-1"
-                        />
-                        <img
-                                src="{asset('images/team/shape-2.svg')}"
-                                alt="shape"
-                                class="shape shape-2"
-                        />
-                    </div>
-                    <div class="ud-team-info">
-                        <h5>Štěpán Dub</h5>
-                        <h6>Majitel</h6>
-                        <a href="tel:+420602352402">+420 602 352 402</a>
-                    </div>
-                    <ul class="ud-team-socials">
-                        <li>
-                            <a href="/">
-                                <i class="fa-brands fa-facebook-f"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <i class="fa-brands fa-instagram"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-3 col-sm-6">
-                <div class="ud-single-team">
-                    <div class="ud-team-image-wrapper">
-                        <div class="ud-team-image">
-                            <img src="{asset('images/team/team-01.png')}" alt="team" />
+                        <div class="ud-team-info">
+                            <h5>{$worker['name']}</h5>
+                            <h6>{$worker['position']}</h6>
+                            <a href="tel:{str_replace(' ','', $worker['tel'])}">{$worker['tel']}</a>
                         </div>
-                        <img
-                                src="{asset('images/team/dotted-shape.svg')}"
-                                alt="shape"
-                                class="shape shape-1"
-                        />
-                        <img
-                                src="{asset('images/team/shape-2.svg')}"
-                                alt="shape"
-                                class="shape shape-2"
-                        />
+                        <ul class="ud-team-socials">
+                            <li>
+                                <a href="{$worker['facebook']}"><i class="fa-brands fa-facebook-f"></i></a>
+                            </li>
+                            <li>
+                                <a href="{$worker['instagram']}"><i class="fa-brands fa-instagram"></i></a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="ud-team-info">
-                        <h5>Daniel Pohorský</h5>
-                        <h6>Pracovník</h6>
-                        <a href="tel:+420732790409">+420 732 790 409</a>
-                    </div>
-                    <ul class="ud-team-socials">
-                        <li>
-                            <a href="/">
-                                <i class="fa-brands fa-facebook-f"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <i class="fa-brands fa-instagram"></i>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
-            </div>
+            {/foreach}
         </div>
     </div>
 </section>
