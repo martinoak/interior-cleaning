@@ -1,5 +1,10 @@
 {layout '../layout.latte'}
 
+{block head}
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+{/block}
+
 {block content}
 {include '../partials/admin_header.latte'}
 
@@ -42,32 +47,32 @@
                     Feedback odeslán
                 </button>
                 {else}
-                <button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="feedbackModal-{{$member->email}}">
+                <button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="feedbackModal-{$member->id}">
                     Feedback
                 </button>
                 {/if}
             </div>
         </div>
 
-        <div id="feedbackModal-{$member->email}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+        <div id="feedbackModal-{$member->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
             <div class="relative w-75">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <!-- Modal body -->
                     <div class="p-6 space-y-6">
-                        <a href="/feedback?email={$member->email}&variant=1" class="w-100">
+                        <a href="/feedback?id={$member->id}&email={$member->email}&variant=1" class="w-100">
                             <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                 <i class="fa-solid fa-1 mr-5"></i>
                                 Základ
                             </button>
                         </a>
-                        <a href="/feedback?email={$member->email}&variant=2" class="w-100">
+                        <a href="/feedback?id={$member->id}&email={$member->email}&variant=2" class="w-100">
                             <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                 <i class="fa-solid fa-2 mr-5"></i>
                                 Střed
                             </button>
                         </a>
-                        <a href="/feedback?email={$member->email}&variant=3" class="w-100">
+                        <a href="/feedback?id={$member->id}&email={$member->email}&variant=3" class="w-100">
                             <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                 <i class="fa-solid fa-3 mr-5"></i>
                                 Deluxe

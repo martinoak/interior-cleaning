@@ -48,7 +48,7 @@ class HomepageController extends Controller
             'variant' => $details['variant'],
         ]);
 
-        Mail::to('info@cisteni-kondrac.cz')->send(new FormEmail($details));
+        Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($details));
 
         return back();
     }
@@ -56,7 +56,7 @@ class HomepageController extends Controller
     public function sendFeedbackEmail(Request $request): RedirectResponse
     {
         Mail::to($request->get('email'))->send(new FeedbackEmail($request->get('variant')));
-        DB::table('contact_form_inputs')->where('email', $request->get('email'))->update([
+        DB::table('contact_form_inputs')->where('id', $request->get('id'))->update([
             'feedbackSent' => 1,
         ]);
 

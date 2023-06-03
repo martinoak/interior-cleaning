@@ -501,7 +501,7 @@
             <div class="col-xl-4 col-lg-5">
                 <div class="ud-contact-form-wrapper">
                     <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
-                    <form class="ud-contact-form" method="post" action="{route('sendEmail')}">
+                    <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail')}">
                         {csrf_field()|noescape}
                         <div class="ud-form-group">
                             <label for="name">Celé jméno <i class="fa-solid fa-star-of-life text-danger"></i></label>
@@ -551,7 +551,7 @@
                         />
                         {/if}
                         <div class="ud-form-group mb-0">
-                            <button type="submit" class="ud-main-btn w-100" role="button">
+                            <button type="submit" class="ud-main-btn w-100" role="button" id="sendDemandButton">
                                 Odeslat poptávku
                             </button>
                             <p class="text-white text-center rounded-3 my-2 w-100" id="mailSuccess"></p>
@@ -570,4 +570,12 @@
 {block bottomscripts}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="{asset('js/main.js')}"></script>
+    <script type="text/javascript">
+        document.getElementById("demandForm").addEventListener("submit", function() {
+            document.getElementById("sendDemandButton").setAttribute("disabled", "disabled");
+            setTimeout(function() {
+                document.getElementById("sendDemandButton").removeAttribute("disabled");
+            }, 2000);
+        });
+    </script>
 {/block}
