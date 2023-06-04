@@ -64,15 +64,13 @@ class HomepageController extends Controller
 
         Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($details));
 
-        return back();
+        return back()->with('success', 'Email odeslán!');
     }
 
     public function sendFeedbackEmail(Request $request): RedirectResponse
     {
         Mail::to($request->get('email'))->send(new FeedbackEmail($request->get('variant')));
-        DB::table('contact_form_inputs')->where('id', $request->get('id'))->update([
-            'feedbackSent' => 1,
-        ]);
+        $this->dbFacade->setFeedbackSent($request->get('id'));
 
         return back()->with('success', 'Feedback email odeslán!');
     }

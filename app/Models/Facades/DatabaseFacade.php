@@ -11,4 +11,9 @@ class DatabaseFacade
     {
         return DB::table('feedback')->where([['rating', '>', 3]])->get();
     }
+
+    public function setFeedbackSent(int $id): void
+    {
+        DB::table('feedback')->where('id', $id)->update(['sent' => 1]);
+    }
 }

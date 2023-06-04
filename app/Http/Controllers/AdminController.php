@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
         DB::table('contact_form_inputs')->where('id', $id)->update(['isArchived' => 1]);
 
-        return back();
+        return back()->with('success', 'Zákazník byl archivován');
     }
 
     public function showDashboard(): View

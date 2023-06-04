@@ -10,6 +10,8 @@
 {/block}
 
 {block content}
+
+{include 'partials/alerts_bs.latte'}
 <!-- ====== Header Start ====== -->
 <header class="ud-header">
     {include 'partials/dev.latte'}
@@ -203,6 +205,7 @@
                     </div>
                 </div>
             {/foreach}
+            <span class="text-center">Za extra znečištěné auto může být účtován příplatek.</span>
         </div>
     </div>
 </section>
@@ -219,7 +222,7 @@
             </div>
         </div>
 
-        <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" class="d-flex carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-inner w-50 mx-auto">
                 {foreach $feedbacks as $feedback}
                 <div class="carousel-item {if $iterator->first}active{/if}">
