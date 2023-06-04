@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class ExcelController extends Controller
+class ExportController extends Controller
 {
     public function exportCustomers(): StreamedResponse
     {

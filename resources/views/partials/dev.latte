@@ -1,0 +1,9 @@
+{if str_contains(url()->current(), 'mad.dek.cz') || str_contains(url()->current(), 'localhost')}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-danger text-center fw-bold">
+            Developer verze Laravel {Illuminate\Foundation\Application::VERSION}
+        </div>
+    </div>
+</div>
+{/if}

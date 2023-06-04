@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\FrontendController;
-use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\HomepageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,34 +17,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::any('/', [FrontendController::class, 'index'])->name('homepage');
-Route::any('/variant/{id}', [FrontendController::class, 'formWithVariant']);
-Route::any('/feedback', [FrontendController::class, 'sendFeedbackEmail']);
-Route::any('/add-feedback', [FrontendController::class, 'newFeedback']);
-Route::any('/delete-feedback/{id}', [FrontendController::class, 'deleteFeedback']);
+Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
-Route::any('/!/save-feedback', [FrontendController::class, 'storeFeedback']);
-Route::any('/sendEmail', [FrontendController::class, 'sendEmail'])->name('sendEmail');
+Route::any('/sendEmail', [HomepageController::class, 'sendEmail'])->name('sendEmail');
+Route::any('/feedback', [HomepageController::class, 'sendFeedbackEmail'])->name('feedback');
+Route::any('/add-feedback', [HomepageController::class, 'newFeedback'])->name('addFeedback');
+Route::any('/!/save-feedback', [HomepageController::class, 'storeFeedback'])->name('saveFeedback');
+Route::any('/delete-feedback/{id}', [HomepageController::class, 'deleteFeedback'])->name('deleteFeedback');
 
-Route::any('/archive-member/{id}', [FrontendController::class, 'archiveMember']);
+Route::get('/login', [AuthController::class, 'loginView'])->name('login');
+Route::get('/authenticate', [AuthController::class, 'login'])->name('authLogin');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::any('/admin', [FrontendController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
-Route::any('/login', [AuthController::class, 'showLoginPage'])->name('login');
-Route::any('/!/login', [AuthController::class, 'login']);
-Route::any('/!/logout', [AuthController::class, 'logout']); /* TODO: logout */
+Route::get('/admin', [AdminController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
 
-Route::any('/admin/calendar', [FrontendController::class, 'showCalendar'])->name('calendar')->middleware('auth');
-Route::any('/admin/invoices', [FrontendController::class, 'showInvoices'])->name('invoices')->middleware('auth');
-Route::any('/admin/customers', [FrontendController::class, 'showCustomers'])->name('customers')->middleware('auth');
-Route::any('/admin/feedback', [FrontendController::class, 'showFeedback'])->name('feedback')->middleware('auth');
-Route::any('/admin/vouchers', [FrontendController::class, 'showVouchers'])->name('vouchers')->middleware('auth');
+Route::get('/admin/calendar', [AdminController::class, 'showCalendar'])->name('calendar')->middleware('auth');
+Route::any('/!/deleteCalendarNote/{id}', function ($id) {
+    \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->delete();
 
-Route::any('/newOrder', [FrontendController::class, 'newOrder'])->name('newOrder');
-Route::any('/!/saveCustomer', [FrontendController::class, 'saveCustomer'])->name('saveCustomer');
-Route::any('/!/saveInvoice', [FrontendController::class, 'saveInvoice'])->name('saveInvoice');
-Route::any('/!/makeInvoice/{id}', [FrontendController::class, 'makeInvoice'])->name('exportInvoice');
-Route::any('/!/exportCustomers', [ExcelController::class, 'exportCustomers']);
-
+    return redirect(route('calendar'));
+});
+Route::any('/!/saveCalendarEvent', [AdminController::class, 'saveCalendarEvent']);
 Route::any('/!/finishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
 
@@ -54,14 +48,26 @@ Route::any('/!/unfinishOrder/{id}', function ($id) {
 
     return redirect(route('calendar'));
 });
-Route::any('/!/deleteCalendarNote/{id}', function ($id) {
-    \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->delete();
 
-    return redirect(route('calendar'));
+Route::get('/admin/invoices', [AdminController::class, 'showInvoices'])->name('invoices')->middleware('auth');
+Route::any('/!/makeInvoice/{id}', [AdminController::class, 'makeInvoice'])->name('exportInvoice');
+Route::any('/!/saveInvoice', [AdminController::class, 'saveInvoice'])->name('saveInvoice');
+
+Route::get('/admin/customers', [AdminController::class, 'showCustomers'])->name('customers')->middleware('auth');
+Route::any('/!/saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
+Route::any('/!/exportCustomers', [ExportController::class, 'exportCustomers']);
+Route::any('/archive-member/{id}', [AdminController::class, 'archiveMember']);
+Route::any('/newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
+
+Route::get('/admin/feedback', [AdminController::class, 'showFeedback'])->name('feedback')->middleware('auth');
+
+Route::get('/admin/vouchers', [AdminController::class, 'showVouchers'])->name('vouchers')->middleware('auth');
+Route::any('/!/storeVoucher', [AdminController::class, 'storeVoucher']);
+Route::any('/!/validateVoucher', [AdminController::class, 'validateVoucher']);
+Route::any('/!/useVoucher', [AdminController::class, 'useVoucher']);
+Route::any('/admin/showVoucher', [AdminController::class, 'generateVoucher'])->middleware('auth');
+Route::any('/!/saveMiniVoucher/{hex}', [AdminController::class, 'saveMiniVoucher']);
+
+Route::get('/test', function () {
+    return view('emails.feedback');
 });
-Route::any('/!/saveCalendarEvent', [FrontendController::class, 'saveCalendarEvent']);
-Route::any('/!/storeVoucher', [FrontendController::class, 'storeVoucher']);
-Route::any('/!/validateVoucher', [FrontendController::class, 'validateVoucher']);
-Route::any('/!/useVoucher', [FrontendController::class, 'useVoucher']);
-Route::any('/admin/showVoucher', [FrontendController::class, 'generateVoucher'])->middleware('auth');
-Route::any('/!/saveMiniVoucher/{hex}', [FrontendController::class, 'saveMiniVoucher']);

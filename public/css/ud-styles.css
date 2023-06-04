@@ -235,7 +235,7 @@ p {
 }
 
 .navbar-brand img {
-  max-width: 30px;
+  max-width: 60px;
 }
 
 .navbar-toggler {
@@ -779,10 +779,25 @@ p {
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
-  .ud-about-image {
+.ud-about-image-desktop {
+  display: block;
+  width: 30%;
+  position: relative;
+}
+
+.ud-about-image-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 991px) {
+  .ud-about-image-mobile {
+    display: block;
     text-align: center;
+      width: 100%;
   }
+    .ud-about-image-desktop {
+        display: none;
+    }
 }
 
 /* ===== Pricing CSS ===== */
@@ -1283,6 +1298,7 @@ p {
   position: relative;
   z-index: 1;
   overflow: hidden;
+  width: 100%;
 }
 
 .ud-footer .shape {
