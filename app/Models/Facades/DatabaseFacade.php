@@ -14,6 +14,6 @@ class DatabaseFacade
 
     public function setFeedbackSent(int $id): void
     {
-        DB::table('feedback')->where('id', $id)->update(['sent' => 1]);
+        DB::table('contact_form_inputs')->where('id', $id)->update(['feedbackSent' => 1]);
     }
 }

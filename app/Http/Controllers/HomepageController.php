@@ -85,23 +85,29 @@ class HomepageController extends Controller
 
     public function storeFeedback(Request $request): RedirectResponse
     {
-        if ($request->get('variant') == 1) {
-            $variant = 'Lehký start';
-        } elseif ($request->get('variant') == 2) {
-            $variant = 'Zlatá střední cesta';
+        $duplicity = DB::table('feedback')->where('hash', $request->get('hash'))->get();
+
+        if (count($duplicity) > 0) {
+            return back()->with('error', 'Tento feedback již byl odeslán!');
         } else {
-            $variant = 'Deluxe';
+            if ($request->get('variant') == 1) {
+                $variant = 'Lehký start';
+            } elseif ($request->get('variant') == 2) {
+                $variant = 'Zlatá střední cesta';
+            } else {
+                $variant = 'Deluxe';
+            }
+
+            DB::table('feedback')->insert([
+                'hash' => $request->get('hash'),
+                'fullname' => $request->get('fullname'),
+                'message' => $request->get('message'),
+                'rating' => $request->get('stars'),
+                'variant' => $variant,
+            ]);
+
+            return redirect(route('homepage'));
         }
-
-        DB::table('feedback')->insert([
-            'hash' => $request->get('hash'),
-            'fullname' => $request->get('fullname'),
-            'message' => $request->get('message'),
-            'rating' => $request->get('stars'),
-            'variant' => $variant,
-        ]);
-
-        return redirect(route('homepage'));
     }
 
     public function deleteFeedback(int $id): RedirectResponse
