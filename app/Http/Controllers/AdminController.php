@@ -113,11 +113,12 @@ class AdminController extends Controller
             'isInvoiceCreated' => 1,
         ]);
 
-        return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
+        return back()->with('success', 'Faktura byla úspěšně vytvořena');
     }
 
     public function makeInvoice(int $id)
     {
+        /* TODO */
         $img = imagecreatefromjpeg(asset('images/invoice/template.jpg'));
 
         return asset('images/invoice/template.jpg');

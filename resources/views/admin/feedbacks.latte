@@ -42,7 +42,7 @@
             </p>
             <p>{$feedback->variant}</p>
             <div class="d-flex justify-content-between mt-3">
-                <a href="/delete-feedback/{$feedback->id}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>
+                <a href="{route('deleteFeedback', ['id' => $feedback->id])}"><button type="button" class="text-white bg-red-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Smazat</button></a>
             </div>
         </div>
     {/foreach}

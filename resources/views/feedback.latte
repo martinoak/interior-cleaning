@@ -13,9 +13,9 @@
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg">
                     <span class="navbar-brand">
-                        <img src="{asset('images/logo/logo.png')}" alt="Logo" class="w-100"/>
+                        <img src="{asset('images/logo/logo-car.png')}" alt="Logo" class="w-100"/>
                     </span>
-                    <a class="ud-logo-text navbar-brand-text fw-bold" href="/" style="color: white">
+                    <a class="ud-logo-text navbar-brand-text fw-bold" href="{route('homepage')}" style="color: white">
                         Čištění interiérů
                     </a>
                     <button class="navbar-toggler">
@@ -64,7 +64,7 @@
 </section>
 
 <section id="feedback-form" class="container my-5">
-    <form method="post" action="/!/save-feedback">
+    <form method="post" action="{route('storeFeedback')}">
         {csrf_field()|noescape}
         <div class="form-group my-2">
             <label for="name">Jméno a příjmení</label>

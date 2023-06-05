@@ -33,7 +33,7 @@
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <!-- Modal body -->
-                <form action="/!/saveCalendarEvent" method="post">
+                <form action="{route('saveCalendarEvent')}" method="post">
                     {csrf_field()|noescape}
                     <div class="p-6 space-y-6">
                         <div class="flex flex-col">
@@ -46,14 +46,14 @@
                         </div>
                         <div class="flex flex-col">
                             <label for="message" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Poznámka k úkolu</label>
-                            <textarea rows="4" name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg" required></textarea>
+                            <textarea rows="4" name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg"></textarea>
                         </div>
                         <div class="flex flex-col">
                             <label for="variant" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Varianta <i class="fa-solid fa-asterisk text-red-600"></i></label>
                             <select id="variant" name="variant" class="border border-gray-300 px-4 py-2 rounded-lg">
-                                <option value="1">Základ</option>
-                                <option value="2">Zlatá střední cesta</option>
-                                <option value="3">Deluxe</option>
+                                <option value="{\App\Enums\CleaningTypes::START->value}">Základ</option>
+                                <option value="{\App\Enums\CleaningTypes::MIDDLE->value}">Zlatá střední cesta</option>
+                                <option value="{\App\Enums\CleaningTypes::DELUXE->value}">Deluxe</option>
                             </select>
                         </div>
                         <button type="submit" class="text-white bg-orange-500 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Vytvořit úkol</button>
@@ -73,8 +73,8 @@
             <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">{$order->name}&nbsp;|&nbsp;<span class="text-gray-400">{$order->variant}</span></h3>
             <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{date('d.m.Y',strtotime($order->date))}</time>
             <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">{$order->description}</p>
-            <a href="/!/finishOrder/{$order->id}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-green-800 rounded-lg"><i class="fa-solid fa-check text-green-800 pe-2"></i> Hotovo</a>
-            <a href="/!/deleteCalendarNote/{$order->id}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Zrušit</a>
+            <a href="{route('finishOrder', ['id' => $order->id])}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-green-800 rounded-lg"><i class="fa-solid fa-check text-green-800 pe-2"></i> Hotovo</a>
+            <a href="{route('deleteCalendarNote', ['id' => $order->id])}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Zrušit</a>
         </li>
         {/foreach}
     </ol>
@@ -88,7 +88,7 @@
             <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{date('d.m.Y',strtotime($fOrder->date))}</time>
             <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">{$fOrder->description}</p>
             {*
-            <a href="/!/unfinishOrder/{$fOrder->id}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Není hotovo</a>
+            <a href="{route('unfinishOrder', ['id' => $order->id])}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border-2 border-red-800 rounded-lg"><i class="fa-solid fa-xmark text-red-800 pe-2"></i> Není hotovo</a>
             *}
             {if $fOrder->isInvoiceCreated}
             <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border-2 border-gray-500 rounded-lg" disabled><i class="fa-solid fa-file-invoice text-gray-500 pe-2"></i> Fakturováno</button>
@@ -102,7 +102,7 @@
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <!-- Modal body -->
-                    <form action="/!/saveInvoice" method="post">
+                    <form action="{route('saveInvoice')}" method="post">
                         {csrf_field()|noescape}
                         <div class="p-6 space-y-6">
                             <input type="hidden" name="type" id="type" value="T">

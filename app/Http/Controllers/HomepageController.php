@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\CleaningPrices;
+use App\Enums\CleaningTypes;
 use App\Mail\FeedbackEmail;
 use App\Mail\FormEmail;
 use App\Models\Facades\DatabaseFacade;
@@ -21,7 +21,7 @@ class HomepageController extends Controller
 
     public function index(): View
     {
-        foreach (CleaningPrices::cases() as $case) {
+        foreach (CleaningTypes::cases() as $case) {
             $pricelist[$case->value] = [
                 'price' => $case->getVariantPrice(),
                 'description' => $case->getVariantDescription(),

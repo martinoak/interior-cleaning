@@ -29,14 +29,14 @@
 <section id="invoices" class="container">
     <div class="flex flex-col sm:flex-row justify-center items-center gap-x-4">
         <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2" data-modal-toggle="invoice-modal">Vytvořit fakturu mimo kontaktní formulář</button>
-        <a href="/!/exportCustomers"><button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 my-2"><i class="fa-regular fa-file-excel"></i> Excel export</button></a>
+        <a href="{route('export')}"><button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 my-2"><i class="fa-regular fa-file-excel"></i> Excel export</button></a>
     </div>
     <div id="invoice-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-75">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <!-- Modal body -->
-                <form action="/!/saveInvoice" method="post">
+                <form action="{route('saveInvoice')}" method="post">
                     {{ csrf_field() }}
                     <div class="p-6 space-y-6">
                         <div class="flex flex-col">

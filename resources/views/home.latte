@@ -14,7 +14,6 @@
 {include 'partials/alerts_bs.latte'}
 <!-- ====== Header Start ====== -->
 <header class="ud-header">
-    {include 'partials/dev.latte'}
     <div class="container container-nav">
         <div class="row">
             <div class="col-lg-12">
@@ -22,7 +21,7 @@
                     <span class="navbar-brand">
                         <img src="{asset('images/logo/logo-car.png')}" alt="Logo" class="w-100"/>
                     </span>
-                    <a class="ud-logo-text navbar-brand-text fw-bold" href="/" style="color: white">
+                    <a class="ud-logo-text navbar-brand-text fw-bold" href="{route('homepage')}" style="color: white">
                         Čištění interiérů
                     </a>
                     <button class="navbar-toggler">

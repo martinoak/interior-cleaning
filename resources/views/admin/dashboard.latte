@@ -18,7 +18,7 @@
                         Admin panel
                     </h1>
                     <p class="ud-hero-desc">
-                        <a href="/" style="color: white !important">Na domovskou stránku</a>
+                        <a href="{route('homepage')}" style="color: white !important">Na domovskou stránku</a>
                     </p>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     {else}
                     <button class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" data-modal-toggle="order-{$member->fullname}">Objednat</button>
                     {/if}
-                    <a href="/archive-member/{$member->id}"><button type="button" class="text-white bg-amber-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Archivovat</button></a>
+                    <a href="{route('archiveMember', ['id' => $member->id])}"><button type="button" class="text-white bg-amber-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Archivovat</button></a>
                 </div>
                 {if $member->feedbackSent}
                 <button class="text-white bg-gray-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2" disabled>
@@ -61,19 +61,19 @@
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <!-- Modal body -->
                     <div class="p-6 space-y-6">
-                        <a href="/feedback?id={$member->id}&email={$member->email}&variant=1" class="w-100">
+                        <a href="{route('feedback', ['id' => $member->id, 'email' => $member->email, 'variant' => 1])}" class="w-100">
                             <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                 <i class="fa-solid fa-1 mr-5"></i>
                                 Základ
                             </button>
                         </a>
-                        <a href="/feedback?id={$member->id}&email={$member->email}&variant=2" class="w-100">
+                        <a href="{route('feedback', ['id' => $member->id, 'email' => $member->email, 'variant' => 1])}" class="w-100">
                             <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                 <i class="fa-solid fa-2 mr-5"></i>
                                 Střed
                             </button>
                         </a>
-                        <a href="/feedback?id={$member->id}&email={$member->email}&variant=3" class="w-100">
+                        <a href="{route('feedback', ['id' => $member->id, 'email' => $member->email, 'variant' => 1])}" class="w-100">
                             <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                 <i class="fa-solid fa-3 mr-5"></i>
                                 Deluxe
@@ -89,7 +89,7 @@
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <!-- Modal body -->
-                    <form action="/!/saveCustomer" method="post">
+                    <form action="{route('saveCustomer')}" method="post">
                         {csrf_field()|noescape}
                         <div class="p-6 space-y-6">
                             <div class="flex flex-col">
