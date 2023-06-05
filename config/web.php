@@ -39,6 +39,16 @@ return [
     ],
 
     /*
+     * Seznam služeb na webu u ceníku, je potřeba první změnit tady a změna se projeví na webu
+     */
+
+    'prices' => [
+        'start' => 699,
+        'middle' => 1999,
+        'deluxe' => 3299,
+    ],
+
+    /*
      * Tým čistění interiérů Kondrac, plnění na web zleva
      */
 
