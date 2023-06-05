@@ -8,6 +8,14 @@ enum CleaningTypes: string
     case MIDDLE = 'Zlatá střední cesta';
     case DELUXE = 'Deluxe';
 
+    public function getRawPrice(): int
+    {
+        return match ($this) {
+            self::START => config('web.prices.start'),
+            self::MIDDLE => config('web.prices.middle'),
+            self::DELUXE => config('web.prices.deluxe'),
+        };
+    }
     public function getVariantPrice(): string
     {
         return match ($this) {
