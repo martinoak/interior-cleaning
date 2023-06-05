@@ -35,18 +35,18 @@ Route::get('admin/calendar', [AdminController::class, 'showCalendar'])->name('ad
 Route::any('deleteCalendarNote/{id}', function ($id) {
     \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->delete();
 
-    return redirect(route('calendar'));
+    return to_route('admin.calendar');
 })->name('deleteCalendarNote');
 Route::post('saveCalendarEvent', [AdminController::class, 'saveCalendarEvent'])->name('saveCalendarEvent');
 Route::any('finishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
 
-    return redirect(route('calendar'));
+    return to_route('admin.calendar');
 })->name('finishOrder');
 Route::any('unfinishOrder/{id}', function ($id) {
     Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 0]);
 
-    return redirect(route('calendar'));
+    return to_route('admin.calendar');
 })->name('unfinishOrder');
 
 Route::get('admin/invoices', [AdminController::class, 'showInvoices'])->name('admin.invoices')->middleware('auth');
