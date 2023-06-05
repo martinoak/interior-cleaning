@@ -57,7 +57,7 @@ class HomepageController extends Controller
             'variant' => 'Nebyla vybrána varianta'
         ];
 
-        DB::table('contact_form_inputs')->insert([
+        DB::table('customers')->insert([
             'fullname' => $details['name'],
             'email' => $details['email'],
             'telephone' => $details['phone'],

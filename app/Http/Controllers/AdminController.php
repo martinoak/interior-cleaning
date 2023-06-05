@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function archiveMember($id): RedirectResponse
     {
-        DB::table('contact_form_inputs')->where('id', $id)->update(['isArchived' => 1]);
+        DB::table('customers')->where('id', $id)->update(['isArchived' => 1]);
 
         return back()->with('success', 'Zákazník byl archivován');
     }
@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function showDashboard(): View
     {
         return view('admin.dashboard', [
-            'contactFormMembers' => DB::table('contact_form_inputs')->where('isArchived', 0)->get(),
+            'contactFormMembers' => DB::table('customers')->where('isArchived', 0)->get(),
             'dev' => preg_match('#dev\.#', url()->current()),
         ]);
     }
@@ -50,7 +50,7 @@ class AdminController extends Controller
     public function showCustomers()
     {
         return view('admin.customers', [
-            'customers' => DB::table('contact_form_inputs')->where('isArchived', 1)->orderBy('id', 'desc')->get(),
+            'customers' => DB::table('customers')->where('isArchived', 1)->orderBy('id', 'desc')->get(),
         ]);
     }
 
@@ -93,7 +93,7 @@ class AdminController extends Controller
             'description' => $request->get('message'),
             'isDone' => 0,
         ]);
-        DB::table('contact_form_inputs')->where('fullname', $request->get('name'))->update([
+        DB::table('customers')->where('fullname', $request->get('name'))->update([
             'hasTerm' => $request->get('date'),
         ]);
 
