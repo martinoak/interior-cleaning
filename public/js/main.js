@@ -100,7 +100,7 @@ pageLink.forEach((elem) => {
         e.preventDefault();
         document.querySelector(elem.getAttribute("href")).scrollIntoView({
             behavior: "smooth",
-            offsetTop: 1 - 60,
+            block: "start",
         });
     });
 });
