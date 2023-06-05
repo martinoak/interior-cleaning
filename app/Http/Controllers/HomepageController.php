@@ -21,6 +21,8 @@ class HomepageController extends Controller
 
     public function index(): View
     {
+        $pricelist = [];
+
         foreach (CleaningTypes::cases() as $case) {
             $pricelist[$case->value] = [
                 'price' => $case->getVariantPrice(),

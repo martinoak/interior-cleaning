@@ -20,7 +20,8 @@ class FeedbackEmail extends Mailable
      *
      * @return void
      */
-    public function __construct(string $variant) {
+    public function __construct(string $variant)
+    {
         $this->hash = md5(time());
         $this->variant = $variant;
     }
