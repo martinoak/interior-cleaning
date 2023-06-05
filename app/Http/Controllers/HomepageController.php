@@ -114,6 +114,6 @@ class HomepageController extends Controller
     {
         DB::table('feedback')->where('id', $id)->delete();
 
-        return back();
+        return back()->with('success', 'Feedback smazán!');
     }
 }
