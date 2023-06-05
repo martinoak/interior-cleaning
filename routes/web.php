@@ -31,7 +31,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('admin', [AdminController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
 
-Route::get('admin/calendar', [AdminController::class, 'showCalendar'])->name('calendar')->middleware('auth');
+Route::get('admin/calendar', [AdminController::class, 'showCalendar'])->name('admin.calendar')->middleware('auth');
 Route::any('deleteCalendarNote/{id}', function ($id) {
     \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->delete();
 
@@ -49,11 +49,11 @@ Route::any('unfinishOrder/{id}', function ($id) {
     return redirect(route('calendar'));
 })->name('unfinishOrder');
 
-Route::get('admin/invoices', [AdminController::class, 'showInvoices'])->name('invoices')->middleware('auth');
+Route::get('admin/invoices', [AdminController::class, 'showInvoices'])->name('admin.invoices')->middleware('auth');
 Route::any('makeInvoice/{id}', [AdminController::class, 'makeInvoice'])->name('exportInvoice');
 Route::post('saveInvoice', [AdminController::class, 'saveInvoice'])->name('saveInvoice');
 
-Route::get('admin/customers', [AdminController::class, 'showCustomers'])->name('customers')->middleware('auth');
+Route::get('admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
 Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
 Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
 Route::any('archive-member/{id}', [AdminController::class, 'archiveMember'])->name('archiveMember');
@@ -61,7 +61,7 @@ Route::any('newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
 
 Route::get('admin/feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback')->middleware('auth');
 
-Route::get('admin/vouchers', [AdminController::class, 'showVouchers'])->name('vouchers')->middleware('auth');
+Route::get('admin/vouchers', [AdminController::class, 'showVouchers'])->name('admin.vouchers')->middleware('auth');
 Route::any('storeVoucher', [AdminController::class, 'storeVoucher'])->name('storeVoucher');
 Route::post('validateVoucher', [AdminController::class, 'validateVoucher'])->name('validateVoucher');
 Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVoucher');
