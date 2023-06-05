@@ -10,16 +10,6 @@ use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    public function register(Request $request): RedirectResponse
-    {
-        User::create([
-            'name' => $request->get('name'),
-            'password' => bcrypt($request->get('password')),
-        ]);
-
-        return back()->with('success', 'Registrace proběhla úspěšně');
-    }
-
     public function loginView(): View
     {
         return view('auth.login');
