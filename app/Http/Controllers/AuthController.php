@@ -9,12 +9,12 @@ use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    public function loginView(): View
+    public function login(): View
     {
         return view('auth.login');
     }
 
-    public function login(Request $request): RedirectResponse
+    public function authenticate(Request $request): RedirectResponse
     {
         if (Auth::attempt($request->only('name', 'password'))) {
             return redirect()->route('dashboard');
