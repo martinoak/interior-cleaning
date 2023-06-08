@@ -7,7 +7,7 @@
 
 {block content}
 {include '../partials/alerts_tw.latte'}
-{include '../partials/admin_header.latte'}
+{include '../partials/admin_header.latte', 'isDev' => $isDev}
 
 <section class="ud-hero" id="home">
     <div class="container">
@@ -28,7 +28,7 @@
 
 <section id="customers" class="container my-4">
     <h4 class="font-bold text-xl py-2">Zákazníci z kontaktního formuláře:</h4>
-    {foreach $contactFormMembers as $member}
+    {foreach $customers as $member}
         <div class="border border-gray-100 p-3 mb-3">
             <p class="fw-bold text-black">{$member->fullname}{if $member->variant} | <span class="text-gray-400"> {$member->variant}</span>{/if}</p>
             <a href="mailto:{$member->email}" class="mb-2 underline font-medium text-blue-600">{$member->email}</a><br>

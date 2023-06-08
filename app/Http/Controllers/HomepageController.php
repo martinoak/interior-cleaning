@@ -78,6 +78,13 @@ class HomepageController extends Controller
         return back()->with('success', 'Feedback email odeslán!');
     }
 
+    public function setVariant(Request $request): RedirectResponse
+    {
+        $this->dbFacade->setVariant($request->get('id'), $request->get('variant'));
+
+        return back()->with('success', 'Feedback nastaven!');
+    }
+
     public function newFeedback(Request $request): \Illuminate\View\View
     {
         return view('feedback', [

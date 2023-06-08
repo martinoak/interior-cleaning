@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,11 +19,19 @@ class AdminController extends Controller
         return back()->with('success', 'Zákazník byl archivován');
     }
 
+    /**
+     * @throws Exception
+     */
     public function showDashboard(): View
     {
-        return view('admin.dashboard', [
-            'contactFormMembers' => DB::table('customers')->where('isArchived', 0)->get(),
-            'dev' => preg_match('#dev\.#', url()->current()),
+        $event = new DateTime(DB::table('calendar')->where('isDone', 0)->orderBy('date')->first()->date);
+
+
+        return view('admin.admin', [
+            'customers' => DB::table('customers')->where('isArchived', 0)->get(),
+            'calendar' => $event->format('j.n.'),
+            'annualEarnings' => DB::table('invoices')->whereYear('date', date('Y'))->sum('price'),
+            'monthlyEarnings' => DB::table('invoices')->whereMonth('date', date('m'))->sum('price'),
         ]);
     }
 
@@ -40,21 +50,22 @@ class AdminController extends Controller
         ]);
     }
 
-    public function showInvoices()
+    public function showInvoices(): View
     {
         return view('admin.invoices', [
             'invoices' => DB::table('invoices')->orderBy('date', 'desc')->get(),
         ]);
     }
 
-    public function showCustomers()
+    public function showCustomers(): View
     {
         return view('admin.customers', [
-            'customers' => DB::table('customers')->where('isArchived', 1)->orderBy('id', 'desc')->get(),
+            'customers' => DB::table('customers')->where('isArchived', 0)->orderBy('id', 'desc')->get(),
+            'archived' => DB::table('customers')->where('isArchived', 1)->orderBy('id', 'desc')->get(),
         ]);
     }
 
-    public function showVouchers()
+    public function showVouchers(): View
     {
         return view('admin.vouchers', [
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),

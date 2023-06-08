@@ -21,6 +21,7 @@ Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
 Route::any('sendEmail', [HomepageController::class, 'sendEmail'])->name('sendEmail');
 Route::any('feedback', [HomepageController::class, 'sendFeedbackEmail'])->name('feedback');
+Route::match(['get', 'post'],'setVariant', [HomepageController::class, 'setVariant'])->name('setVariant');
 Route::any('add-feedback', [HomepageController::class, 'newFeedback'])->name('addFeedback');
 Route::post('save-feedback', [HomepageController::class, 'storeFeedback'])->name('storeFeedback');
 Route::any('delete-feedback/{id}', [HomepageController::class, 'deleteFeedback'])->name('deleteFeedback');
@@ -39,12 +40,12 @@ Route::any('deleteCalendarNote/{id}', function ($id) {
 })->name('deleteCalendarNote');
 Route::post('saveCalendarEvent', [AdminController::class, 'saveCalendarEvent'])->name('saveCalendarEvent');
 Route::any('finishOrder/{id}', function ($id) {
-    Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
+    \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 1]);
 
     return to_route('admin.calendar');
 })->name('finishOrder');
 Route::any('unfinishOrder/{id}', function ($id) {
-    Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 0]);
+    \Illuminate\Support\Facades\DB::table('calendar')->where('id', $id)->update(['isDone' => 0]);
 
     return to_route('admin.calendar');
 })->name('unfinishOrder');
@@ -53,7 +54,7 @@ Route::get('admin/invoices', [AdminController::class, 'showInvoices'])->name('ad
 Route::any('makeInvoice/{id}', [AdminController::class, 'makeInvoice'])->name('exportInvoice');
 Route::post('saveInvoice', [AdminController::class, 'saveInvoice'])->name('saveInvoice');
 
-Route::get('admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
+Route::get('/admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
 Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
 Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
 Route::any('archive-member/{id}', [AdminController::class, 'archiveMember'])->name('archiveMember');

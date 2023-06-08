@@ -12,8 +12,13 @@ class DatabaseFacade
         return DB::table('feedback')->where([['rating', '>', 3]])->get();
     }
 
-    public function setFeedbackSent(int $id): void
+    public function setVariant(int $id, string $variant): int
     {
-        DB::table('customers')->where('id', $id)->update(['feedbackSent' => 1]);
+        return DB::table('customers')->where('id', $id)->update(['variant' => $variant]);
+    }
+
+    public function setFeedbackSent(int $id): int
+    {
+        return DB::table('customers')->where('id', $id)->update(['feedbackSent' => 1]);
     }
 }
