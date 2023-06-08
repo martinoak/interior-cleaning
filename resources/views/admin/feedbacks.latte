@@ -12,12 +12,26 @@
     {include '../partials/_admin_header.latte'}
     <div class="p-4 sm:ml-64">
         <h1 class="text-3xl font-bold text-gray-500 mb-4">Administrace</h1>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div class="flex justify-around text-black text-center">
+            <div class="flex flex-col">
+                <h2 class="text-black text-3xl font-black">{count($feedbacks)}</h2>
+                <span class="text-center text-gray-900 text-xl">Recenze</span>
+            </div>
+            <div class="flex flex-col">
+                <h2 class="text-black text-3xl font-black">{DB::table('feedback')->avg('rating')|number:2,'.'}</h2>
+                <span class="text-center text-gray-900 text-xl">Průměrné hodnocení</span>
+            </div>
+        </div>
+        <hr class="w-46 lg:w-96 h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700 my-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
             {foreach $feedbacks as $feedback}
                 <div class="flex flex-col rounded border-l-8 border-yellow-500 bg-gray-100 mr-4">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold text-black m-4 items-center">{$feedback->fullname} {if str_contains($feedback->variant, 'Nebyla') || !$feedback->variant}<button data-modal-toggle="variant-{$feedback->id}" class="px-2 bg-[#3056d3] rounded mx-2"><i class="fa-solid fa-gear text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {$feedback->variant}</span>{/if}</h2>
-                        <p class="text-yellow-500 mr-2">
+                        <h3 class="text-2xl font-bold text-black m-4 items-center">{$feedback->fullname} {if str_contains($feedback->variant, 'Nebyla') || !$feedback->variant}<button data-modal-toggle="variant-{$feedback->id}" class="px-2 bg-[#3056d3] rounded mx-2"><i class="fa-solid fa-gear text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {$feedback->variant}</span>{/if}</h3>
+                        <p class="flex items-center xl:hidden text-black font-black mr-2">
+                            {$feedback->rating}<i class="text-yellow-500 fa-solid fa-star"></i>
+                        </p>
+                        <p class="hidden xl:block text-yellow-500 mr-2">
                             {for $i = 1; $i <= 5; $i++}
                                 {if $i <= $feedback->rating}
                                     <i class="fa-solid fa-star"></i>
@@ -35,10 +49,6 @@
                 </div>
             {/foreach}
         </div>
-    </div>
-    <div class="inline-flex items-center justify-center w-full" id="archiv" style="margin-top: 100px">
-        <hr class="w-96 h-1 my-8 bg-gray-300 border-0">
-        <span class="absolute px-3 font-black text-gray-900 text-xl -translate-x-1/2 bg-white left-1/2">Archiv</span>
     </div>
 {/block}
 
