@@ -2,36 +2,38 @@
 
 {block head}
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
 {/block}
 
 {block content}
     {include '../partials/alerts_tw.latte'}
     {include '../partials/_admin_sidebar.latte'}
 
-    {include '../partials/_admin_header.latte'}
-    <div class="p-4 sm:ml-64">
-        <h1 class="text-3xl font-bold text-gray-500 mb-4">Administrace</h1>
-        <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-4">
-            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-yellow-500 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Roční v.</h2>
-                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-yellow-500 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
-            </div>
-            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Měsíční v.</h2>
-                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
-            </div>
-            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Zákazníci</h2>
-                <p class="flex justify-end items-center font-bold text-2xl text-black m-2">{count(\Illuminate\Support\Facades\DB::table('customers')->get())}</p>
-            </div>
-            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-sky-600 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Kalendář</h2>
-                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-sky-600 fa-regular fa-calendar fa-md mr-2"></i>{$calendar}</p>
-            </div>
-            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-orange-600 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Faktury</h2>
-                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"></p>
+    <div class="bg-gray-50 dark:bg-gray-900 h-screen">
+        {include '../partials/_admin_header.latte'}
+        <div class="p-4 sm:ml-64">
+            <h1 class="text-3xl font-bold text-gray-500 mb-4">Administrace</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-4">
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-yellow-500 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Roční v.</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-yellow-500 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
+                </div>
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Měsíční v.</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
+                </div>
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Zákazníci</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2">{count(\Illuminate\Support\Facades\DB::table('customers')->get())}</p>
+                </div>
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-sky-600 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Kalendář</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-sky-600 fa-regular fa-calendar fa-md mr-2"></i>{$calendar}</p>
+                </div>
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-orange-600 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Faktury</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -39,4 +41,5 @@
 
 {block bottomscripts}
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <script src="{asset('js/tailwind.config.js')}"></script>
 {/block}

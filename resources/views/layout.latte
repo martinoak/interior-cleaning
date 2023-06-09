@@ -38,7 +38,29 @@
     {include content, 'isDev' => $isDev}
 
 </body>
+<script>
+    const moonButton = document.querySelector('#moonButton')
+    const sunButton = document.querySelector('#sunButton')
 
+    const theme = window.localStorage.getItem('theme')
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+    if (theme === 'dark' || (!('theme' in localStorage) && prefersDarkScheme.matches)) {
+        document.documentElement.classList.add('dark')
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+
+    moonButton.addEventListener('click', () => {
+        document.documentElement.classList.add('dark')
+        localStorage.setItem('theme', 'dark')
+    })
+
+    sunButton.addEventListener('click', () => {
+        document.documentElement.classList.remove('dark')
+        localStorage.setItem('theme', 'light')
+    })
+</script>
     {block bottomscripts}{/block}
 
 </html>
