@@ -82,7 +82,7 @@ class HomepageController extends Controller
     {
         $this->dbFacade->setVariant($request->get('id'), $request->get('variant'));
 
-        return back()->with('success', 'Feedback nastaven!');
+        return back()->with('success', 'Varianta nastavena!');
     }
 
     public function newFeedback(Request $request): \Illuminate\View\View

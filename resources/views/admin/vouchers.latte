@@ -61,7 +61,7 @@
             </div>
             <div class="flex flex-col justify-between rounded border-l-8 border-yellow-500 bg-gray-100">
                 <h2 class="text-2xl font-bold text-black m-2">10% slevy</h2>
-                <p class="flex justify-end items-center text-md text-gray-500 p-2">
+                <p class="flex text-right items-center text-md text-gray-500 p-2">
                     {foreach $vouchers as $voucher}
                         {if str_starts_with($voucher->hash, 'x')}
                             {$voucher->hash}&nbsp;

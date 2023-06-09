@@ -9,7 +9,7 @@
     {include '../partials/alerts_tw.latte'}
     {include '../partials/_admin_sidebar.latte'}
 
-    <div class="bg-gray-50 dark:bg-gray-900 h-screen">
+    <div class="bg-gray-50 dark:bg-gray-900">
         {include '../partials/_admin_header.latte'}
         <div class="p-4 sm:ml-64">
             <div class="flex gap-4 mb-4">
@@ -31,26 +31,8 @@
                                 {else}
                                     <button data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white mr-1"></i> Objednat</button>
                                 {/if}
-                                {if !$customer->feedbackSent}
-                                    <button data-modal-toggle="feedbackModal-{$customer->id}" class="p-1 px-2 bg-blue-600 rounded text-white"><i class="fa-solid fa-paper-plane fa-lg text-white mr-2"></i>Feedback</button>
-                                    <div id="feedbackModal-{$customer->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-                                        <div class="relative w-75">
-                                            <!-- Modal content -->
-                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                <!-- Modal body -->
-                                                <div class="p-6 space-y-6">
-                                                    {foreach App\Enums\CleaningTypes::cases() as $case}
-                                                        <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $case->value])}" class="w-100">
-                                                            <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
-                                                                <i class="fa-solid fa-{$iterator->counter} mr-5"></i>
-                                                                {$case->value}
-                                                            </button>
-                                                        </a>
-                                                    {/foreach}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                {if !$customer->feedbackSent && $customer->variant}
+                                    <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant])}"><button class="p-1 px-2 bg-blue-600 rounded text-white"><i class="fa-solid fa-paper-plane fa-lg text-white mr-2"></i>Feedback</button></a>
                                 {/if}
                                 <button class="p-1 px-2 bg-orange-600 rounded text-white mr-2"><i class="fa-solid fa-inbox fa-xl text-white"></i></button>
                             </div>
@@ -129,26 +111,8 @@
                             <p><i class="fa-solid fa-at fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="mailto:{$customer->email}">{$customer->email}</a></p>
                         </div>
                         <div class="flex items-center gap-4">
-                            {if !$customer->feedbackSent}
-                                <button data-modal-toggle="feedbackModal-{$customer->id}" class="p-1 px-2 bg-blue-600 rounded text-white mr-2"><i class="fa-solid fa-paper-plane fa-lg text-white mr-2"></i>Feedback</button>
-                                <div id="feedbackModal-{$customer->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-                                    <div class="relative w-75">
-                                        <!-- Modal content -->
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                            <!-- Modal body -->
-                                            <div class="p-6 space-y-6">
-                                                {foreach App\Enums\CleaningTypes::cases() as $case}
-                                                    <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $case->value])}" class="w-100">
-                                                        <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
-                                                            <i class="fa-solid fa-{$iterator->counter} mr-5"></i>
-                                                            {$case->value}
-                                                        </button>
-                                                    </a>
-                                                {/foreach}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            {if !$customer->feedbackSent && $customer->variant}
+                                <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant])}"><button class="p-1 px-2 bg-blue-600 rounded text-white mr-2"><i class="fa-solid fa-paper-plane fa-lg text-white mr-2"></i>Feedback</button></a>
                             {/if}
                         </div>
                     </div>
