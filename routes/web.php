@@ -21,7 +21,7 @@ Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
 Route::any('sendEmail', [HomepageController::class, 'sendEmail'])->name('sendEmail');
 Route::any('feedback', [HomepageController::class, 'sendFeedbackEmail'])->name('feedback');
-Route::match(['get', 'post'],'setVariant', [HomepageController::class, 'setVariant'])->name('setVariant');
+Route::match(['get', 'post'], 'setVariant', [HomepageController::class, 'setVariant'])->name('setVariant');
 Route::any('add-feedback', [HomepageController::class, 'newFeedback'])->name('addFeedback');
 Route::post('save-feedback', [HomepageController::class, 'storeFeedback'])->name('storeFeedback');
 Route::any('delete-feedback/{id}', [HomepageController::class, 'deleteFeedback'])->name('deleteFeedback');
