@@ -68,29 +68,12 @@ class AdminController extends Controller
     public function showVouchers(): View
     {
         return view('admin.vouchers', [
+            'vouchers' => DB::table('vouchers')->where('isAccepted', 0)->orderBy('date', 'desc')->get(),
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ]);
     }
 
-    public function checkVoucher(Request $request): JsonResponse
-    {
-        $hash = md5($request->get('date').$request->get('price'));
-        $voucher = DB::table('vouchers')->where('hash', $hash)->first();
-        if ($voucher) {
-            return response()->json([
-                'status' => 'green',
-                'message' => 'Voucher je platný!',
-                'price' => $voucher->price,
-            ]);
-        } else {
-            return response()->json([
-                'status' => 'red',
-                'message' => 'Voucher není platný!',
-            ]);
-        }
-    }
-
-    public function newOrder()
+    public function newOrder(): View
     {
         return view('admin.newOrder');
     }
@@ -127,8 +110,10 @@ class AdminController extends Controller
         return back()->with('success', 'Faktura byla úspěšně vytvořena');
     }
 
-    public function makeInvoice(int $id)
+    public function generateInvoice(int $id): string
     {
+        $data = DB::table('invoices')->where('id', $id)->first();
+
         /* TODO */
         $img = imagecreatefromjpeg(asset('images/invoice/template.jpg'));
 
@@ -148,39 +133,63 @@ class AdminController extends Controller
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 
-    public function storeVoucher(Request $request): View
+    public function generateVoucher(Request $request): RedirectResponse
     {
         $hash = substr(md5(date('d. m. Y H:i:s')), 0, 6);
         DB::table('vouchers')->insert([
             'hash' => $hash,
-            'date' => date('d-m-Y', strtotime('+6 months')) /* TODO expirace 6 mesicu? */,
+            'date' => date('d-m-Y', strtotime('+1 year')),
             'price' => $request->get('price'),
         ]);
 
-        return view('admin.vouchers', ['voucher' => [
-            'hash' => $hash,
-            'date' => date('d-m-Y', strtotime('+6 months')),
-            'price' => $request->get('price'),
-        ]]);
+        return back()->with('success', 'Dárkový poukaz <strong>'.$hash.'</strong> byl úspěšně vygenerován');
     }
 
+    /**
+     * @throws Exception
+     */
     public function validateVoucher(Request $request): View
     {
         $voucher = DB::table('vouchers')->where('hash', $request->get('hash'))->first();
-        if ($voucher && $request->get('hash') === substr($voucher->hash, 0, 6) && $voucher->price === (int) $request->get('price') && ! $voucher->isAccepted) {
-            return view('admin.vouchers', ['checkedVoucher' => [
-                'status' => 'green',
-                'message' => 'Voucher je platný!',
-                'hash' => $voucher->hash,
-                'price' => $voucher->price,
-            ]]);
-        } else {
+        if (!$voucher) {
             return view('admin.vouchers', [
                 'checkedVoucher' => [
                     'status' => 'red',
-                    'message' => 'Voucher není platný nebo neexistuje!',
+                    'message' => 'Voucher neexistuje!',
+                    'hash' => '',
+                    'price' => 0,
+                    'issuer' => '',
+                    'dateFrom' => '',
+                    'dateTo' => '',
                 ]
             ]);
+        } else {
+            $dateFrom = str_starts_with($voucher->hash, 'x') ? (new DateTime($voucher->date))->modify('-3 months') : (new DateTime($voucher->date))->modify('-1 year');
+            if ($request->get('hash') === substr($voucher->hash, 0, 6) && ! $voucher->isAccepted) {
+                return view('admin.vouchers', [
+                    'checkedVoucher' => [
+                        'status' => 'green',
+                        'message' => 'Voucher je platný!',
+                        'hash' => $voucher->hash,
+                        'price' => $voucher->price,
+                        'issuer' => $voucher->issuer,
+                        'dateFrom' => $dateFrom,
+                        'dateTo' => (new DateTime($voucher->date)),
+                    ]
+                ]);
+            } else {
+                return view('admin.vouchers', [
+                    'checkedVoucher' => [
+                        'status' => 'red',
+                        'message' => 'Voucher již není platný!',
+                        'hash' => $voucher->hash,
+                        'price' => $voucher->price,
+                        'issuer' => $voucher->issuer,
+                        'dateFrom' => $dateFrom,
+                        'dateTo' => (new DateTime($voucher->date)),
+                    ]
+                ]);
+            }
         }
     }
 
@@ -191,17 +200,18 @@ class AdminController extends Controller
         ]);
 
         return view('admin.vouchers', [
+            'vouchers' => DB::table('vouchers')->where('isAccepted', 0)->orderBy('date', 'desc')->get(),
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ])->with('success', 'Voucher byl úspěšně použit!');
     }
 
-    public function generateVoucher(Request $request)
+    public function showVoucher(Request $request): RedirectResponse
     {
         /* TODO dodelat FPDI komponentu na vepisovani do voucheru */
         return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
     }
 
-    public function saveMiniVoucher(string $hex): RedirectResponse
+    public function generateMiniVoucher(string $hex): RedirectResponse
     {
         DB::table('vouchers')->insert([
             'hash' => $hex,
@@ -209,6 +219,6 @@ class AdminController extends Controller
             'price' => 0,
         ]);
 
-        return back()->with('success', 'Voucher byl úspěšně vytvořen!');
+        return back()->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
     }
 }

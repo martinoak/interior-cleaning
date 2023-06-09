@@ -51,7 +51,7 @@ Route::any('unfinishOrder/{id}', function ($id) {
 })->name('unfinishOrder');
 
 Route::get('admin/invoices', [AdminController::class, 'showInvoices'])->name('admin.invoices')->middleware('auth');
-Route::any('makeInvoice/{id}', [AdminController::class, 'makeInvoice'])->name('exportInvoice');
+Route::any('generateInvoice/{id}', [AdminController::class, 'generateInvoice'])->name('generateInvoice');
 Route::post('saveInvoice', [AdminController::class, 'saveInvoice'])->name('saveInvoice');
 
 Route::get('/admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
@@ -63,8 +63,8 @@ Route::any('newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
 Route::get('admin/feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback')->middleware('auth');
 
 Route::get('admin/vouchers', [AdminController::class, 'showVouchers'])->name('admin.vouchers')->middleware('auth');
-Route::any('storeVoucher', [AdminController::class, 'storeVoucher'])->name('storeVoucher');
+Route::any('generateVoucher', [AdminController::class, 'generateVoucher'])->name('generateVoucher');
 Route::post('validateVoucher', [AdminController::class, 'validateVoucher'])->name('validateVoucher');
 Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVoucher');
-Route::any('admin/showVoucher', [AdminController::class, 'generateVoucher'])->name('showVoucher')->middleware('auth');
-Route::any('saveMiniVoucher/{hex}', [AdminController::class, 'saveMiniVoucher'])->name('saveMiniVoucher');
+Route::any('admin/showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher')->middleware('auth');
+Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');

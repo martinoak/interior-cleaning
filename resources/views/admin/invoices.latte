@@ -2,7 +2,7 @@
 
 {block head}
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.css" />
-    <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
+    <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
 {/block}
 
 {block content}
@@ -12,29 +12,60 @@
     <div class="bg-gray-50 dark:bg-gray-900 h-screen">
         {include '../partials/_admin_header.latte'}
         <div class="p-4 sm:ml-64">
-            <h1 class="text-3xl font-bold text-gray-500 mb-4 dark:text-white">Administrace</h1>
+            <div class="flex gap-4 mb-4">
+                <h1 class="text-3xl font-bold text-gray-500 dark:text-white">Administrace</h1>
+                <a href="{route('export')}"><button class="p-1 px-2 bg-green-800 rounded text-white"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
+            </div>
             <div class="grid grid-cols-1 gap-4 mb-4">
                 {foreach $invoices as $invoice}
-                    <div class="flex flex-col rounded border-l-8 border-[#3056d3] bg-gray-100 mr-4">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-2xl font-bold text-black m-2 items-center">{$invoice->name}</h2>
-                            <div class="flex items-center gap-4">
-                                <button class="p-1 px-2 bg-orange-600 rounded text-white mr-2"><i class="fa-solid fa-inbox fa-xl text-white"></i></button>
+                    {switch $invoice->type}
+                        {case 'T'}
+                            <div class="flex flex-col rounded border-l-8 border-green-600 bg-gray-100 mr-4">
+                                <div class="flex justify-between items-center">
+                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-file-invoice-dollar fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
+                                    <div class="flex items-center gap-4">
+                                        <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
+                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
+                                        <a href="{route('generateInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        {if !empty($invoice->message)}
-                            <div class="flex justify-between items-center ml-2 mb-4">
-                                <p><i class="fa-regular fa-comment fa-xl text-[#3056d3] mr-2"></i>{$invoice->message}</p>
+                        {case 'N'}
+                            <div class="flex flex-col rounded border-l-8 border-red-600 bg-gray-100 mr-4">
+                                <div class="flex justify-between items-center">
+                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-receipt fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
+                                    <div class="flex items-center gap-4">
+                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
+                                        <button class="p-1 px-2 bg-red-600 rounded text-white mr-2" disabled>{$invoice->date|date:'j. n. Y'}</button>
+                                    </div>
+                                </div>
                             </div>
-                        {/if}
-                    </div>
+                        {case 'P'}
+                            <div class="flex flex-col rounded border-l-8 border-[#3056d3] bg-gray-100 mr-4">
+                                <div class="flex justify-between items-center">
+                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-gift fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
+                                    <div class="flex items-center gap-4">
+                                        <button class="p-1 px-2 bg-[#3056d3] rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
+                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
+                                        <a href="{route('generateInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {default}
+                            <div class="flex flex-col rounded border-l-8 border-gray-500 bg-gray-100 mr-4">
+                                <div class="flex justify-between items-center">
+                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-dollar-sign fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
+                                    <div class="flex items-center gap-4">
+                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
+                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
+                                        <a href="{route('generateInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                    {/switch}
                 {/foreach}
             </div>
         </div>
-    </div>
-    <div class="inline-flex items-center justify-center w-full" id="archiv" style="margin-top: 100px">
-        <hr class="w-96 h-1 my-8 bg-gray-300 border-0">
-        <span class="absolute px-3 font-black text-gray-900 text-xl -translate-x-1/2 bg-white left-1/2">Archiv</span>
     </div>
 {/block}
 
