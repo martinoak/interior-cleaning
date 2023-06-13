@@ -109,11 +109,11 @@
             <div class="grid grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Cron</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-timeline fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-timeline fa-md mr-2"></i>Nenastaven</p>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Debugging</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-bug fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-bug fa-md mr-2"></i>{env('APP_DEBUG')}</p>
                 </div>
             </div>
         </div>
