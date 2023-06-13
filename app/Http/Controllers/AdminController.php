@@ -38,11 +38,20 @@ class AdminController extends Controller
             }
         }
 
+        $monthlyEarnings = 0;
+        foreach (DB::table('invoices')->whereMonth('date', date('m'))->get() as $invoice) {
+            if ($invoice->type === 'N') {
+                $monthlyEarnings -= $invoice->price;
+            } else {
+                $monthlyEarnings += $invoice->price;
+            }
+        }
+
         return view('admin.admin', [
             'customers' => DB::table('customers')->where('isArchived', 0)->get(),
             'calendar' => $event->format('j.n.'),
             'annualEarnings' => DB::table('invoices')->whereYear('date', date('Y'))->sum('price'),
-            'monthlyEarnings' => DB::table('invoices')->whereMonth('date', date('m'))->sum('price'),
+            'monthlyEarnings' => $monthlyEarnings,
             'variants' => [
                 CleaningTypes::START->value => DB::table('customers')->where('variant', CleaningTypes::START)->count(),
                 CleaningTypes::MIDDLE->value => DB::table('customers')->where('variant', CleaningTypes::MIDDLE)->count(),
