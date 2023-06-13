@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CleaningTypes;
 use DateTime;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -26,12 +27,28 @@ class AdminController extends Controller
     {
         $event = new DateTime(DB::table('calendar')->where('isDone', 0)->orderBy('date')->first()->date);
 
+        /* TODO pridat i dalsi roky */
+        $invoices = DB::table('invoices')->get();
+        $earningsByMonth = ['01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0];
+        foreach ($invoices as $invoice) {
+            if ($invoice->type === 'N') {
+                $earningsByMonth[date('m', strtotime($invoice->date))] += -$invoice->price;
+            } else {
+                $earningsByMonth[date('m', strtotime($invoice->date))] += $invoice->price;
+            }
+        }
 
         return view('admin.admin', [
             'customers' => DB::table('customers')->where('isArchived', 0)->get(),
             'calendar' => $event->format('j.n.'),
             'annualEarnings' => DB::table('invoices')->whereYear('date', date('Y'))->sum('price'),
             'monthlyEarnings' => DB::table('invoices')->whereMonth('date', date('m'))->sum('price'),
+            'variants' => [
+                CleaningTypes::START->value => DB::table('customers')->where('variant', CleaningTypes::START)->count(),
+                CleaningTypes::MIDDLE->value => DB::table('customers')->where('variant', CleaningTypes::MIDDLE)->count(),
+                CleaningTypes::DELUXE->value => DB::table('customers')->where('variant', CleaningTypes::DELUXE)->count()
+            ],
+            'earnings' => $earningsByMonth,
         ]);
     }
 

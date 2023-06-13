@@ -3,6 +3,9 @@
 {block head}
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
     <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
+
+    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js "></script>
+    <script src="{asset('js/utils.js')}"></script>
 {/block}
 
 {block content}
@@ -20,7 +23,7 @@
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Měsíční v.</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$monthlyEarnings|number:0,',', ' '},-</p>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Zákazníci</h2>
@@ -38,9 +41,79 @@
             <div class="flex justify-between gap-4 mb-4">
                 <div class="flex flex-col w-full rounded border-l-8 border-yellow-500 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
+                    <canvas id="earningChart" class="p-2" style="max-width: 100% !important"></canvas>
+                    <script>
+                        const earning = document.getElementById('earningChart');
+                        const profit = '#3056d3';
+                        const loss = '#d33030';
+                        earning.height = 600;
+
+                        new Chart(earning, {
+                            type: 'line',
+                            data: {
+                                labels: ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
+                                datasets: [
+                                    {
+                                    label: '2023',
+                                    data: [{implode(', ', $earnings)|noescape}],
+                                    fill: true,
+                                    borderColor: function(context) {
+                                        const value = context.dataset.data[context.dataIndex];
+                                        return value < 0 ? loss : profit
+                                    },
+                                    tension: 0.2
+                                    }
+                                ]
+                            }})
+                    </script>
                 </div>
                 <div class="flex flex-col w-1/3 rounded border-l-8 border-green-600 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
+                    <canvas id="variantCharts" class="p-2"></canvas>
+                    <script>
+                        const ctx = document.getElementById('variantCharts');
+
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: [
+                                    {foreach $variants as $variant => $count}
+                                        {$variant},
+                                    {/foreach}
+                                ],
+                                datasets: [{
+                                    data: [
+                                        {foreach $variants as $count}
+                                            {$count},
+                                        {/foreach}
+                                    ],
+                                    backgroundColor: [
+                                        'rgb(54, 162, 235)',
+                                        '#3056d3',
+                                        'rgb(255, 205, 86)',
+                                    ],
+                                    hoverOffset: 6
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Cron</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-timeline fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
+                </div>
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Debugging</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-bug fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
                 </div>
             </div>
         </div>
