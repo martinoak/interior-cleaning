@@ -38,34 +38,15 @@ class HomepageController extends Controller
 
     public function sendEmail(Request $request): RedirectResponse
     {
-        /*if ($request->get('variant') == 1) {
-            $variant = "Lehký start";
-        } elseif ($request->get('variant') == 2) {
-            $variant = "Zlatá střední cesta";
-        } elseif ($request->get('variant') == 3) {
-            $variant = "Deluxe";
-        } else {
-            $variant = 'Nebyla vybrána varianta';
-        }*/
-        $details = [
-            'title' => 'Přišla nová poptávka!',
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
-            'message' => $request->get('message'),
-            /*'variant' => $variant,*/
-            'variant' => 'Nebyla vybrána varianta'
-        ];
-
         DB::table('customers')->insert([
-            'fullname' => $details['name'],
-            'email' => $details['email'],
-            'telephone' => $details['phone'],
-            'message' => $details['message'],
-            'variant' => $details['variant'],
+            'fullname' => $request->get('name'),
+            'email' => $request->get('email'),
+            'telephone' => $request->get('phone'),
+            'message' => $request->get('message'),
+            'variant' => $request->get('variant'),
         ]);
 
-        Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($details));
+        Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($request->all()));
 
         return back()->with('success', 'Email odeslán!');
     }

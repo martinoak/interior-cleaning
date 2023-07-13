@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        MarvelousMartin\LaravelLatte\ServiceProvider::class,
 
         /*
          * Application Service Providers...

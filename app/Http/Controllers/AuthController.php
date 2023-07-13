@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     public function authenticate(Request $request): RedirectResponse
     {
-        if (Auth::attempt($request->only('login', 'password'))) {
+        if (Auth::attempt($request->only('name', 'password'))) {
             return to_route('dashboard')->with('success', 'Přihlášení proběhlo úspěšně');
         } else {
             return back()->with('error', 'Nesprávné přihlašovací údaje');

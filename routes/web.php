@@ -27,7 +27,7 @@ Route::post('save-feedback', [HomepageController::class, 'storeFeedback'])->name
 Route::any('delete-feedback/{id}', [HomepageController::class, 'deleteFeedback'])->name('deleteFeedback');
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
-Route::get('authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+Route::post('authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('admin', [AdminController::class, 'showDashboard'])->name('dashboard')->middleware('auth');

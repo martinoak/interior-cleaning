@@ -7,438 +7,441 @@
     <meta property="og:title" content="Čištění interiérů Kondrac">
     <meta property="og:description" content="Vaše auto vyčistíme rychle, levně a kvalitně! Čištíme osobní automobily a používáme šetrné, ale účinné prostředky, aby se Vaše auto blyštilo.">
     <meta property="og:image" content="{asset('images/logo/logo-car2.png')}">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
 {/block}
 
 {block content}
 
 {include 'partials/alerts_bs.latte'}
-<!-- ====== Header Start ====== -->
-<header class="ud-header">
-    <div class="container container-nav">
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg">
+<div id="vue-control">
+    <!-- ====== Header Start ====== -->
+    <header class="ud-header">
+        <div class="container container-nav">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
                     <span class="navbar-brand">
                         <img src="{asset('images/logo/logo-car.png')}" alt="Logo" class="w-100"/>
                     </span>
-                    <a class="ud-logo-text navbar-brand-text fw-bold" href="{route('homepage')}" style="color: white">
-                        Čištění interiérů
-                    </a>
-                    <button class="navbar-toggler">
-                        <i class="fa-solid fa-bars text-white"></i>
-                    </button>
-                    <div class="navbar-collapse">
-                        <ul id="nav" class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#about">O nás</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#cenik">Ceník</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#reference">Reference</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll" href="#tym">Tým</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="ud-menu-scroll fw-bold" href="#kontakt">Kontakty</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-
-<section class="ud-hero" id="home">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ud-hero-content">
-                    <h1 class="ud-hero-title">
-                        Čištění interiérů Kondrac
-                    </h1>
-                    <p class="ud-hero-desc">
-                        Vaše auto vyčistíme rychle, levně a kvalitně!
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="features" class="ud-features">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ud-section-title">
-                    <span>Služby</span>
-                    <h2>Tohle vše dokážeme zařídit</h2>
-                    <hr />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-3 col-lg-3 col-sm-6">
-                <div class="ud-single-feature">
-                    <div class="ud-feature-icon">
-                        <i class="fa-solid fa-car"></i>
-                    </div>
-                    <div class="ud-feature-content">
-                        <h3 class="ud-feature-title">Vnitřní úklid auta</h3>
-                        <p class="ud-feature-desc">
-                            Detailní luxování včetně zavazadlového prostoru a koberečků
-                        </p>
-                    </div>
-                </div>
-                <hr style="width: 50%">
-            </div>
-            <div class="col-xl-3 col-lg-3 col-sm-6">
-                <div class="ud-single-feature">
-                    <div class="ud-feature-icon">
-                        <i class="fa-solid fa-soap"></i>
-                    </div>
-                    <div class="ud-feature-content">
-                        <h3 class="ud-feature-title">Hloubkové čištění sedaček</h3>
-                        <p class="ud-feature-desc">
-                            Výkonným tepovačem a účinnými přípravky
-                        </p>
-                    </div>
-                </div>
-                <hr style="width: 50%">
-            </div>
-            <div class="col-xl-3 col-lg-3 col-sm-6">
-                <div class="ud-single-feature">
-                    <div class="ud-feature-icon">
-                        <i class="fa-solid fa-shield-heart"></i>
-                    </div>
-                    <div class="ud-feature-content">
-                        <h3 class="ud-feature-title">Oživení plastů</h3>
-                        <p class="ud-feature-desc">
-                            Očištění plastů v interiéru a jejich následné oživení
-                        </p>
-                        <hr style="width: 50%">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-sm-6">
-                <div class="ud-single-feature">
-                    <div class="ud-feature-icon">
-                        <i class="fa-solid fa-plus"></i>
-                    </div>
-                    <div class="ud-feature-content">
-                        <h3 class="ud-feature-title">A mnohem více!</h3>
-                        <p class="ud-feature-desc">
-                            Stačí kliknout na tlačítko níže a podívat se na ceník
-                        </p>
-                        <a href="#cenik" class="ud-feature-link text-primary">
-                            Na ceník <i class="fa-solid fa-clipboard-list"></i>
+                        <a class="ud-logo-text navbar-brand-text fw-bold" href="{route('homepage')}" style="color: white">
+                            Čištění interiérů
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="about" class="ud-about">
-    <div class="container">
-        <div class="ud-about-wrapper">
-            <div class="ud-about-content-wrapper">
-                <div class="ud-about-content">
-                    <span class="tag">O nás</span>
-                    <h2>Mladí kluci s citem pro detail</h2>
-                    <p>Svou dílnu máme v Kondraci, zastavte se!</p>
-                    <p>Na čištění interiéru používáme šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
-                </div>
-            </div>
-            <div class="ud-about-image-desktop" style="background-color: #3056d3">
-                <img src="{asset('images/logo/typography.png')}" alt="about-image" style="margin-top: 25px;padding: 50px" />
-            </div>
-            <div class="ud-about-image-mobile" style="background-color: #3056d3">
-                <img src="{asset('images/logo/logo-car.png')}" alt="about-image" style="padding: 20px 0;width: 20%" />
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="cenik" class="ud-pricing">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ud-section-title mx-auto text-center">
-                    <span>Ceník</span>
-                    <h2>Tak jak to dneska bude?</h2>
-                    <hr />
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-0 align-items-center justify-content-center">
-            {foreach $pricelist as $item => $values}
-                <div class="col-lg-4 col-md-10 col-sm-10">
-                    <div class="ud-single-pricing {if $iterator->first}first-item me-2{elseif $iterator->even}active{elseif $iterator->last}last-item ms-2{/if}">
-                        {if $iterator->even} <span class="ud-popular-tag">Populární</span> {/if}
-                        <div class="ud-pricing-header">
-                            <h3>{$item|upper}</h3>
-                            <h4>{$values['price']}</h4>
-                        </div>
-                        <div class="ud-pricing-body">
-                            <ul>
-                                {for $i = 0; $i <= 9; $i++}
-                                    {if isset($values['description'][$i])}
-                                        <li>{$values['description'][$i]|noescape}</li>
-                                    {else}
-                                        <li>&nbsp;</li>
-                                    {/if}
-                                {/for}
+                        <button class="navbar-toggler">
+                            <i class="fa-solid fa-bars text-white"></i>
+                        </button>
+                        <div class="navbar-collapse">
+                            <ul id="nav" class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a class="ud-menu-scroll" href="#about">O nás</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="ud-menu-scroll" href="#cenik">Ceník</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="ud-menu-scroll" href="#reference">Reference</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="ud-menu-scroll" href="#tym">Tým</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="ud-menu-scroll fw-bold" href="#kontakt">Kontakty</a>
+                                </li>
                             </ul>
                         </div>
-                        <div class="ud-pricing-footer">
-                            <a href="#kontakt" class="ud-main-btn ud-border-btn">
-                                To beru!
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="ud-hero" id="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ud-hero-content">
+                        <h1 class="ud-hero-title">
+                            Čištění interiérů Kondrac
+                        </h1>
+                        <p class="ud-hero-desc">
+                            Vaše auto vyčistíme rychle, levně a kvalitně!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="ud-features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ud-section-title">
+                        <span>Služby</span>
+                        <h2>Tohle vše dokážeme zařídit</h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-sm-6">
+                    <div class="ud-single-feature">
+                        <div class="ud-feature-icon">
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <div class="ud-feature-content">
+                            <h3 class="ud-feature-title">Vnitřní úklid auta</h3>
+                            <p class="ud-feature-desc">
+                                Detailní luxování včetně zavazadlového prostoru a koberečků
+                            </p>
+                        </div>
+                    </div>
+                    <hr style="width: 50%">
+                </div>
+                <div class="col-xl-3 col-lg-3 col-sm-6">
+                    <div class="ud-single-feature">
+                        <div class="ud-feature-icon">
+                            <i class="fa-solid fa-soap"></i>
+                        </div>
+                        <div class="ud-feature-content">
+                            <h3 class="ud-feature-title">Hloubkové čištění sedaček</h3>
+                            <p class="ud-feature-desc">
+                                Výkonným tepovačem a účinnými přípravky
+                            </p>
+                        </div>
+                    </div>
+                    <hr style="width: 50%">
+                </div>
+                <div class="col-xl-3 col-lg-3 col-sm-6">
+                    <div class="ud-single-feature">
+                        <div class="ud-feature-icon">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <div class="ud-feature-content">
+                            <h3 class="ud-feature-title">Oživení plastů</h3>
+                            <p class="ud-feature-desc">
+                                Očištění plastů v interiéru a jejich následné oživení
+                            </p>
+                            <hr style="width: 50%">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-sm-6">
+                    <div class="ud-single-feature">
+                        <div class="ud-feature-icon">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="ud-feature-content">
+                            <h3 class="ud-feature-title">A mnohem více!</h3>
+                            <p class="ud-feature-desc">
+                                Stačí kliknout na tlačítko níže a podívat se na ceník
+                            </p>
+                            <a href="#cenik" class="ud-feature-link text-primary">
+                                Na ceník <i class="fa-solid fa-clipboard-list"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-            {/foreach}
-            <span class="text-center">Za extra znečištěné auto může být účtován příplatek.</span>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="reference" class="ud-testimonials">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ud-section-title mx-auto text-center">
-                    <span>Reference</span>
-                    <h2>Co o nás píší zákazníci</h2>
-                    <hr />
+    <section id="about" class="ud-about">
+        <div class="container">
+            <div class="ud-about-wrapper">
+                <div class="ud-about-content-wrapper">
+                    <div class="ud-about-content">
+                        <span class="tag">O nás</span>
+                        <h2>Mladí kluci s citem pro detail</h2>
+                        <p>Svou dílnu máme v Kondraci, zastavte se!</p>
+                        <p>Na čištění interiéru používáme šetrné, ale intenzivní prostředky, aby se Vaše auto blyštilo.</p>
+                    </div>
+                </div>
+                <div class="ud-about-image-desktop" style="background-color: #3056d3">
+                    <img src="{asset('images/logo/typography.png')}" alt="about-image" style="margin-top: 25px;padding: 50px" />
+                </div>
+                <div class="ud-about-image-mobile" style="background-color: #3056d3">
+                    <img src="{asset('images/logo/logo-car.png')}" alt="about-image" style="padding: 20px 0;width: 20%" />
                 </div>
             </div>
         </div>
+    </section>
 
-        <div id="carouselExampleIndicators" class="d-flex carousel carousel-dark slide" data-bs-ride="carousel">
-            <div class="carousel-inner w-50 mx-auto">
-                {foreach $feedbacks as $feedback}
-                <div class="carousel-item {if $iterator->first}active{/if}">
-                    <div class="d-block w-100">
-                        <div class="ud-single-testimonial">
-                            <div class="ud-testimonial-ratings">
-                                {if $feedback->rating == 1}
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                {elseif $feedback->rating == 2}
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                {elseif $feedback->rating == 3}
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                {elseif $feedback->rating == 4}
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                {else}
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                {/if}
+    <section id="cenik" class="ud-pricing">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ud-section-title mx-auto text-center">
+                        <span>Ceník</span>
+                        <h2>Tak jak to dneska bude?</h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-0 align-items-center justify-content-center">
+                {foreach $pricelist as $item => $values}
+                    <div class="col-lg-4 col-md-10 col-sm-10">
+                        <div class="ud-single-pricing {if $iterator->first}first-item me-2{elseif $iterator->even}active{elseif $iterator->last}last-item ms-2{/if}">
+                            {if $iterator->even} <span class="ud-popular-tag">Populární</span> {/if}
+                            <div class="ud-pricing-header">
+                                <h3>{$item|upper}</h3>
+                                <h4>{$values['price']}</h4>
                             </div>
-                            <div class="ud-testimonial-content">
-                                <p>{$feedback->message}</p>
+                            <div class="ud-pricing-body">
+                                <ul>
+                                    {for $i = 0; $i <= 9; $i++}
+                                        {if isset($values['description'][$i])}
+                                            <li>{$values['description'][$i]|noescape}</li>
+                                        {else}
+                                            <li>&nbsp;</li>
+                                        {/if}
+                                    {/for}
+                                </ul>
                             </div>
-                            <div class="ud-testimonial-info">
-                                <div class="ud-testimonial-meta">
-                                    <h4>{$feedback->fullname}</h4>
-                                    <p>Varianta: {$feedback->variant}</p>
+                            <div class="ud-pricing-footer">
+                                <a href="#kontakt" class="ud-main-btn ud-border-btn" v-on:click="setVariant" data-variant="{$item}">
+                                    To beru!
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {/foreach}
+                <span class="text-center">Za extra znečištěné auto může být účtován příplatek.</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="reference" class="ud-testimonials">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ud-section-title mx-auto text-center">
+                        <span>Reference</span>
+                        <h2>Co o nás píší zákazníci</h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselExampleIndicators" class="d-flex carousel carousel-dark slide" data-bs-ride="carousel">
+                <div class="carousel-inner w-50 mx-auto">
+                    {foreach $feedbacks as $feedback}
+                        <div class="carousel-item {if $iterator->first}active{/if}">
+                            <div class="d-block w-100">
+                                <div class="ud-single-testimonial">
+                                    <div class="ud-testimonial-ratings">
+                                        {if $feedback->rating == 1}
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        {elseif $feedback->rating == 2}
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        {elseif $feedback->rating == 3}
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        {elseif $feedback->rating == 4}
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        {else}
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        {/if}
+                                    </div>
+                                    <div class="ud-testimonial-content">
+                                        <p>{$feedback->message}</p>
+                                    </div>
+                                    <div class="ud-testimonial-info">
+                                        <div class="ud-testimonial-meta">
+                                            <h4>{$feedback->fullname}</h4>
+                                            <p>Varianta: {$feedback->variant}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {/foreach}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="tym" class="ud-team">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ud-section-title mx-auto text-center">
+                        <span>Tým</span>
+                        <h2>Ahoj!</h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-around">
+                {foreach config('web.team') as $worker}
+                    <div class="col-xl-3 col-lg-3 col-sm-6">
+                        <div class="ud-single-team">
+                            <div class="ud-team-image-wrapper">
+                                <div class="ud-team-image">
+                                    <img src="{asset('images/team/team-01.png')}" alt="team" />
+                                </div>
+                                <img src="{asset('images/team/dotted-shape.svg')}" alt="shape" class="shape shape-1" />
+                                <img src="{asset('images/team/shape-2.svg')}" alt="shape" class="shape shape-2" />
+                            </div>
+                            <div class="ud-team-info">
+                                <h5>{$worker['name']}</h5>
+                                <h6>{$worker['position']}</h6>
+                                <a href="tel:{str_replace(' ','', $worker['tel'])}">{$worker['tel']}</a>
+                            </div>
+                            <ul class="ud-team-socials">
+                                <li>
+                                    <a href="{$worker['facebook']}"><i class="fa-brands fa-facebook-f"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{$worker['instagram']}"><i class="fa-brands fa-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="ud-contact">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="ud-contact-content-wrapper">
+                        <div class="ud-section-title">
+                            <span>Kontakt</span>
+                            <h2>
+                                Máte dotazy? <br />
+                                Napište nebo zavolejte! Jsme tu pro Vás!
+                            </h2>
+                        </div>
+                        <div class="ud-contact-info-wrapper">
+                            <div class="ud-single-info">
+                                <div class="ud-info-icon">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div class="ud-info-meta">
+                                    <h5>Adresa</h5>
+                                    <p>Kondrac 115, 258 01 Vlašim</p>
+                                    <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=49.665563,14.884062" class="py-1" target="_blank"><i class="fa-solid fa-location-arrow"></i> Pustit GPS</a>
+                                </div>
+                            </div>
+                            <div class="ud-single-info">
+                                <div class="ud-info-icon">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div class="ud-info-meta">
+                                    <h5>Spojme se!</h5>
+                                    <a href="mailto:info@cisteni-kondrac.cz">info@cisteni-kondrac.cz</a>
+                                    <a href="tel:+420602352402">+420 602 352 402</a>
+                                </div>
+                            </div>
+                            <div class="ud-single-info">
+                                <div class="ud-info-icon">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                </div>
+                                <div class="ud-info-meta">
+                                    <h5></h5>
+                                    <p><strong>IČO:</strong> 18026087</p>
+                                    <p><strong>Sídlo:</strong> Kondrac 115</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/foreach}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-</section>
-
-<section id="tym" class="ud-team">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ud-section-title mx-auto text-center">
-                    <span>Tým</span>
-                    <h2>Ahoj!</h2>
-                    <hr />
-                </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-around">
-            {foreach config('web.team') as $worker}
-                <div class="col-xl-3 col-lg-3 col-sm-6">
-                    <div class="ud-single-team">
-                        <div class="ud-team-image-wrapper">
-                            <div class="ud-team-image">
-                                <img src="{asset('images/team/team-01.png')}" alt="team" />
+                <div class="col-xl-4 col-lg-5">
+                    <div class="ud-contact-form-wrapper">
+                        <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
+                        <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail')}">
+                            {csrf_field()|noescape}
+                            <div class="ud-form-group">
+                                <label for="name">Celé jméno <i class="fa-solid fa-star-of-life text-danger"></i></label>
+                                <input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        placeholder="Jan Novák"
+                                        required
+                                />
                             </div>
-                            <img src="{asset('images/team/dotted-shape.svg')}" alt="shape" class="shape shape-1" />
-                            <img src="{asset('images/team/shape-2.svg')}" alt="shape" class="shape shape-2" />
-                        </div>
-                        <div class="ud-team-info">
-                            <h5>{$worker['name']}</h5>
-                            <h6>{$worker['position']}</h6>
-                            <a href="tel:{str_replace(' ','', $worker['tel'])}">{$worker['tel']}</a>
-                        </div>
-                        <ul class="ud-team-socials">
-                            <li>
-                                <a href="{$worker['facebook']}"><i class="fa-brands fa-facebook-f"></i></a>
-                            </li>
-                            <li>
-                                <a href="{$worker['instagram']}"><i class="fa-brands fa-instagram"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            {/foreach}
-        </div>
-    </div>
-</section>
-
-<section id="kontakt" class="ud-contact">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-xl-8 col-lg-7">
-                <div class="ud-contact-content-wrapper">
-                    <div class="ud-section-title">
-                        <span>Kontakt</span>
-                        <h2>
-                            Máte dotazy? <br />
-                            Napište nebo zavolejte! Jsme tu pro Vás!
-                        </h2>
-                    </div>
-                    <div class="ud-contact-info-wrapper">
-                        <div class="ud-single-info">
-                            <div class="ud-info-icon">
-                                <i class="fa-solid fa-location-dot"></i>
+                            <div class="ud-form-group">
+                                <label for="email">E-mail <i class="fa-solid fa-star-of-life text-danger"></i></label>
+                                <input
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        placeholder="jan@novak.cz"
+                                        required
+                                />
                             </div>
-                            <div class="ud-info-meta">
-                                <h5>Adresa</h5>
-                                <p>Kondrac 115, 258 01 Vlašim</p>
-                                <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=49.665563,14.884062" class="py-1" target="_blank"><i class="fa-solid fa-location-arrow"></i> Pustit GPS</a>
+                            <div class="ud-form-group">
+                                <label for="phone">Telefon <i class="fa-solid fa-star-of-life text-danger"></i></label>
+                                <input
+                                        type="text"
+                                        name="phone"
+                                        id="phone"
+                                        placeholder="+420 123 456 789"
+                                        required
+                                />
                             </div>
-                        </div>
-                        <div class="ud-single-info">
-                            <div class="ud-info-icon">
-                                <i class="fa-solid fa-envelope"></i>
+                            <div class="ud-form-group">
+                                <label for="message">Text zprávy</label>
+                                <textarea
+                                        name="message"
+                                        id="message"
+                                        rows="1"
+                                        placeholder="Dobrý den..."
+                                ></textarea>
                             </div>
-                            <div class="ud-info-meta">
-                                <h5>Spojme se!</h5>
-                                <a href="mailto:info@cisteni-kondrac.cz">info@cisteni-kondrac.cz</a>
-                                <a href="tel:+420602352402">+420 602 352 402</a>
+                            <input
+                                    n:syntax="off"
+                                    type="hidden"
+                                    name="variant"
+                                    :value="variant"
+                                    placeholder=""
+                            />
+                            <div class="ud-form-group mb-0">
+                                <button type="submit" class="ud-main-btn w-100" role="button" id="sendDemandButton">
+                                    Odeslat poptávku
+                                </button>
+                                <p class="text-white text-center rounded-3 my-2 w-100" id="mailSuccess"></p>
                             </div>
-                        </div>
-                        <div class="ud-single-info">
-                            <div class="ud-info-icon">
-                                <i class="fa-solid fa-briefcase"></i>
-                            </div>
-                            <div class="ud-info-meta">
-                                <h5></h5>
-                                <p><strong>IČO:</strong> 18026087</p>
-                                <p><strong>Sídlo:</strong> Kondrac 115</p>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-5">
-                <div class="ud-contact-form-wrapper">
-                    <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
-                    <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail')}">
-                        {csrf_field()|noescape}
-                        <div class="ud-form-group">
-                            <label for="name">Celé jméno <i class="fa-solid fa-star-of-life text-danger"></i></label>
-                            <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    placeholder="Jan Novák"
-                                    required
-                            />
-                        </div>
-                        <div class="ud-form-group">
-                            <label for="email">E-mail <i class="fa-solid fa-star-of-life text-danger"></i></label>
-                            <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    placeholder="jan@novak.cz"
-                                    required
-                            />
-                        </div>
-                        <div class="ud-form-group">
-                            <label for="phone">Telefon <i class="fa-solid fa-star-of-life text-danger"></i></label>
-                            <input
-                                    type="text"
-                                    name="phone"
-                                    id="phone"
-                                    placeholder="+420 123 456 789"
-                                    required
-                            />
-                        </div>
-                        <div class="ud-form-group">
-                            <label for="message">Text zprávy</label>
-                            <textarea
-                                    name="message"
-                                    id="message"
-                                    rows="1"
-                                    placeholder="Dobrý den..."
-                            ></textarea>
-                        </div>
-                        {*{if session()->has('variant')}
-                        <input
-                                type="hidden"
-                                name="variant"
-                                value="{session('variant')}"
-                                placeholder=""
-                        />
-                        {/if}*}
-                        <div class="ud-form-group mb-0">
-                            <button type="submit" class="ud-main-btn w-100" role="button" id="sendDemandButton">
-                                Odeslat poptávku
-                            </button>
-                            <p class="text-white text-center rounded-3 my-2 w-100" id="mailSuccess"></p>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 {include 'partials/footer.latte'}
 
@@ -454,5 +457,21 @@
                 document.getElementById("sendDemandButton").removeAttribute("disabled");
             }, 2000);
         });
+    </script>
+    <script>
+        (function(){
+            let vue = new Vue({
+                el: '#vue-control',
+                data: {
+                    variant: 'Nebyla vybrána žádná varianta',
+                },
+                methods: {
+                    setVariant: function (e) {
+                        this.variant = e.target.dataset.variant;
+                        console.log(this.variant)
+                    }
+                }
+            });
+        })();
     </script>
 {/block}
