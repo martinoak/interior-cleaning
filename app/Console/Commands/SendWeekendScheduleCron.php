@@ -42,7 +42,7 @@ class SendWeekendScheduleCron extends Command
         if(count($customers) === 0) {
             fwrite($file, date('Y-m-d H:i:s') . " [CRON] No customers for weekend schedule\n");
         } else {
-            fwrite($file, date('Y-m-d H:i:s') . " [CRON] Customers for weekend schedule: " . count($customers) . "\n");
+            fwrite($file, date('Y-m-d H:i:s') . " [CRON] Weekend schedule customers: " . count($customers) . "\n");
             Mail::to($recipient)->send(new SendWeekendScheduleMail($customers));
             fwrite($file, date('Y-m-d H:i:s') . ' [CRON] Weekend schedule sent to ' . $recipient . "\n");
         }

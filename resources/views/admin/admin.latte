@@ -12,7 +12,7 @@
     {include '../partials/alerts_tw.latte'}
     {include '../partials/_admin_sidebar.latte'}
 
-    <div class="bg-gray-50 dark:bg-gray-900 h-screen">
+    <div class="bg-gray-50 dark:bg-gray-900">
         {include '../partials/_admin_header.latte'}
         <div class="p-4 sm:ml-64">
             <h1 class="text-3xl font-bold text-gray-500 mb-4 dark:text-white">Administrace</h1>
@@ -107,9 +107,10 @@
                 </div>
             </div>
             <div class="grid grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
+                <div class="flex flex-col justify-between rounded border-l-8 border-gray-500 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Cron</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-timeline fa-md mr-2"></i>Nenastaven</p>
+                    {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron-weekend-schedule.log')) ?? ''), 0, 10))}
+                    <pre class="m-2">{$content|noescape}</pre>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Debugging</h2>
