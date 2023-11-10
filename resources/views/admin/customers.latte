@@ -34,7 +34,7 @@
                                 {if !$customer->feedbackSent && $customer->variant}
                                     <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant])}"><button class="p-1 px-2 bg-blue-600 rounded text-white"><i class="fa-solid fa-paper-plane fa-lg text-white mr-2"></i>Feedback</button></a>
                                 {/if}
-                                <button class="p-1 px-2 bg-orange-600 rounded text-white mr-2"><i class="fa-solid fa-inbox fa-xl text-white"></i></button>
+                                <a href="{route('archiveMember', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
                             </div>
                         </div>
                         {if !empty($customer->message)}
@@ -79,6 +79,10 @@
                                         <div class="flex flex-col">
                                             <label for="telephone" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Telefon <i class="fa-solid fa-asterisk text-red-600"></i></label>
                                             <input type="text" name="telephone" id="telephone" value="{$customer->telephone}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label for="variant" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Varianta <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                                            <input type="text" name="variant" id="variant" value="{$customer->variant}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="message" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Zpráva</label>
