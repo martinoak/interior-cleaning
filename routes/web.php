@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CronController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomepageController;
 use Illuminate\Support\Facades\Route;
@@ -54,7 +55,7 @@ Route::get('admin/invoices', [AdminController::class, 'showInvoices'])->name('ad
 Route::any('generateInvoice/{id}', [AdminController::class, 'generateInvoice'])->name('generateInvoice');
 Route::post('saveInvoice', [AdminController::class, 'saveInvoice'])->name('saveInvoice');
 
-Route::get('/admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
+Route::get('admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
 Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
 Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
 Route::any('archive-member/{id}', [AdminController::class, 'archiveMember'])->name('archiveMember');
@@ -68,3 +69,6 @@ Route::post('validateVoucher', [AdminController::class, 'validateVoucher'])->nam
 Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVoucher');
 Route::any('admin/showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher')->middleware('auth');
 Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');
+
+/* CRONY */
+Route::any('cron/weekend', [CronController::class, 'weekend'])->name('cron.weekend');
