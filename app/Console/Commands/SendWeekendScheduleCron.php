@@ -29,7 +29,7 @@ class SendWeekendScheduleCron extends Command
     public function handle(): void
     {
         $recipient = 'stepan@cisteni-kondrac.cz';
-        $file = fopen(storage_path('logs/cron-weekend-schedule.log'), 'a');
+        $file = fopen(storage_path('logs/cron.log'), 'a');
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Weekend schedule started\n");
 
         $customers = DB::table('customers')

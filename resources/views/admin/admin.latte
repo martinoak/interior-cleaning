@@ -109,7 +109,7 @@
             <div class="grid grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
                 <div class="flex flex-col justify-between rounded border-l-8 border-gray-500 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Cron</h2>
-                    {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron-weekend-schedule.log')) ?? ''), 0, 10))}
+                    {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron.log')) ?? ''), 0, 10))}
                     <pre class="m-2">{$content|noescape}</pre>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
