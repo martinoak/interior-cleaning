@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\CleaningTypes;
 use DateTime;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +24,9 @@ class AdminController extends Controller
      */
     public function showDashboard(): View
     {
-        $event = new DateTime(DB::table('calendar')->where('isDone', 0)->orderBy('date')->first()->date);
+        if (!file_exists(storage_path('logs/cron.log'))) {
+            file_put_contents(storage_path('logs/cron.log'), '');
+        }
 
         /* TODO pridat i dalsi roky */
         $invoices = DB::table('invoices')->get();
@@ -49,7 +50,7 @@ class AdminController extends Controller
 
         return view('admin.admin', [
             'customers' => DB::table('customers')->where('isArchived', 0)->get(),
-            'calendar' => $event->format('j.n.'),
+            'calendar' => (new DateTime(DB::table('calendar')->where('isDone', 0)->orderBy('date')->first()->date))->format('j.n.'),
             'annualEarnings' => DB::table('invoices')->whereYear('date', date('Y'))->sum('price'),
             'monthlyEarnings' => $monthlyEarnings,
             'variants' => [
