@@ -106,15 +106,18 @@
                     </script>
                 </div>
             </div>
-            <div class="grid grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+            <div class="grid grid-cols-2 gap-4 mb-4">
                 <div class="flex flex-col justify-between rounded border-l-8 border-gray-500 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Cron</h2>
                     {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron.log'))), -6))}
                     <pre class="m-2">{$content|noescape}</pre>
                 </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-gray-500 bg-gray-100">
-                    <h2 class="text-2xl font-bold text-black m-2">Debugging</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-gray-500 fa-solid fa-bug fa-md mr-2"></i>{env('APP_DEBUG')}</p>
+                <div class="flex flex-col rounded border-l-8 border-gray-500 bg-gray-100">
+                    <h2 class="text-2xl font-bold text-black m-2">Produkční logy</h2>
+                    <div class="grid grid-cols-1 gap-4 p-4">
+                        <a href="{route('admin.errorlog', ['type' => 'laravel'])}"><button class="py-2 bg-[#FB503B] rounded text-white w-full"><i class="fa-brands fa-laravel fa-lg text-white mr-2"></i>Laravel</button></a>
+                        <a href="{route('admin.errorlog', ['type' => 'cron'])}"><button class="py-2 bg-blue-600 rounded text-white w-full"><i class="fa-regular fa-hourglass fa-lg text-white mr-2"></i>Cron</button></a>
+                    </div>
                 </div>
             </div>
         </div>

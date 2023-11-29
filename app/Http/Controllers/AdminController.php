@@ -195,7 +195,7 @@ class AdminController extends Controller
 
         imagepng($image, storage_path('app/public/voucher/'.$hash.'.png'));
 
-        return response()->download(storage_path('app/public/voucher/'.$hash.'.png'));
+        return response()->file(storage_path('app/public/voucher/'.$hash.'.png'));
     }
 
     /**
@@ -273,5 +273,14 @@ class AdminController extends Controller
         ]);
 
         return back()->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
+    }
+
+    public function showErrorLog(string $type): View
+    {
+        $log = file_get_contents(storage_path('logs/'.$type.'.log'));
+
+        return view('admin.errorlog', [
+            'log' => $log,
+        ]);
     }
 }

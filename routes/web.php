@@ -70,6 +70,8 @@ Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVouch
 Route::any('admin/showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher')->middleware('auth');
 Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');
 
+Route::get('admin/log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog')->middleware('auth');
+
 /* CRONY */
 Route::any('cron/weekend', [CronController::class, 'weekend'])->name('cron.weekend');
 Route::any('cron/bill', [CronController::class, 'bill'])->name('cron.bill');
