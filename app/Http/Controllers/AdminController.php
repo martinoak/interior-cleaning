@@ -175,7 +175,7 @@ class AdminController extends Controller
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 
-    public function generateVoucher(Request $request): RedirectResponse
+    public function generateVoucher(Request $request): BinaryFileResponse
     {
         $hash = substr(md5(date('d. m. Y H:i:s')), 0, 6);
         DB::table('vouchers')->insert([
@@ -184,7 +184,18 @@ class AdminController extends Controller
             'price' => $request->get('price'),
         ]);
 
-        return back()->with('success', 'Dárkový poukaz <strong>'.$hash.'</strong> byl úspěšně vygenerován');
+        if (!file_exists(storage_path('app/public/voucher'))) {
+            mkdir(storage_path('app/public/voucher'));
+        }
+        $image = imagecreatefrompng(public_path('images/vouchers/template.png'));
+        $color = imagecolorallocate($image, 0, 0, 0);
+        $font = public_path('fonts/Rubik.ttf');
+        imagettftext($image, 32, 0, 800, 740, $color, $font, date('d. m. Y', strtotime('+1 year')));
+        imagettftext($image, 32, 0, 1410, 740, $color, $font, $hash);
+
+        imagepng($image, storage_path('app/public/voucher/'.$hash.'.png'));
+
+        return response()->download(storage_path('app/public/voucher/'.$hash.'.png'));
     }
 
     /**

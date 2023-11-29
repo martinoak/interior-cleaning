@@ -10,15 +10,13 @@
             <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{route('homepage')}" class="flex items-center p-2 text-white rounded-lg text-xl">
-                        <img src="{asset('images/logo/logo-car.png')}" class="h-10">
-                        {* TODO logo s textem Admin Panel ve Photoshopu *}
+                        <img src="{asset('images/logo/logo-car.png')}" class="h-10" alt="">
                     </a>
                 </li>
                 <li>
                     <a href="{route('dashboard')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-regular fa-rectangle-list"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Přehled</span>
-                        {*<span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>*}
                     </a>
                 </li>
                 <li>
@@ -62,6 +60,7 @@
             </ul>
             <ul class="space-y-2 font-medium">
                 <li class="mt-auto">
+                    <span class="text-xs text-gray-300 p-0 m-0 ml-2">v1.9.0</span>
                     <a href="{route('logout')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-right-from-bracket"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Odhlásit se</span>
