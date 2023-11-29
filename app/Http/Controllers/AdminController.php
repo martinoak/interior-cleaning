@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Enums\CleaningTypes;
 use DateTime;
 use Exception;
+use GdImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AdminController extends Controller
 {
@@ -137,14 +139,27 @@ class AdminController extends Controller
         return back()->with('success', 'Faktura byla úspěšně vytvořena');
     }
 
-    public function generateInvoice(int $id): string
+    public function generateInvoice(int $id): BinaryFileResponse
     {
         $data = DB::table('invoices')->where('id', $id)->first();
 
-        /* TODO */
-        $img = imagecreatefromjpeg(asset('images/invoice/template.jpg'));
+        if (!file_exists(storage_path('app/public/invoice'))) {
+            mkdir(storage_path('app/public/invoice'));
+        }
+        $image = imagecreatefromjpeg(public_path('images/invoice/template.jpg'));
+        $color = imagecolorallocate($image, 0, 0, 0);
+        $font = public_path('fonts/Rubik.ttf');
+        imagettftext($image, 20, 0, 800, 100, $color, $font, $data->id);
+        imagettftext($image, 20, 0, 500, 150, $color, $font, date_create_from_format('Y-m-d', $data->date)->format('d. n.'));
+        imagettftext($image, 20, 0, 800, 150, $color, $font, substr(date_create_from_format('Y-m-d', $data->date)->format('Y'), -2));
+        imagettftext($image, 20, 0, 250, 200, $color, $font, $data->name);
+        imagettftext($image, 20, 0, 250, 340, $color, $font, 'Čištění interiéru auta');
+        imagettftext($image, 20, 0, 200, 410, $color, $font, $data->price);
+        imagettftext($image, 20, 0, 500, 540, $color, $font, 'Štěpán Dub, '. date('d. m. Y'));
 
-        return asset('images/invoice/template.jpg');
+        imagepng($image, storage_path('app/public/invoice/'.$id.'.png'));
+
+        return response()->download(storage_path('app/public/invoice/'.$id.'.png'));
     }
 
     public function saveCalendarEvent(Request $request): RedirectResponse
