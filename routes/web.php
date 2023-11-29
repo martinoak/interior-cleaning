@@ -73,7 +73,3 @@ Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVo
 /* CRONY */
 Route::any('cron/weekend', [CronController::class, 'weekend'])->name('cron.weekend');
 Route::any('cron/bill', [CronController::class, 'bill'])->name('cron.bill');
-
-Route::any('/mad', function () {
-    return view('emails.monthly-bill', ['total' => 1000]);
-})->name('mad');
