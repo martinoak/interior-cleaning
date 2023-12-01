@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Facades\DatabaseFacade;
 use Illuminate\Console\Command;
 use App\Domain\Services\GuzzleService;
 
-class GetGoogleMapsReviewsCron extends Command
+class GetGoogleMapsReviews extends Command
 {
     /**
      * The name and signature of the console command.
@@ -22,7 +23,8 @@ class GetGoogleMapsReviewsCron extends Command
     protected $description = 'Get Google Maps Reviews with API';
 
     public function __construct(
-        private readonly GuzzleService $guzzleService
+        private readonly GuzzleService  $guzzleService,
+        private readonly DatabaseFacade $facade,
     )
     {
         parent::__construct();
@@ -31,22 +33,22 @@ class GetGoogleMapsReviewsCron extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $reviews = $this->guzzleService->getGoogleMapsReviews();
 
-        $info = [];
         foreach ($reviews as $review) {
             $info = [
                 'hash' => md5($review['author_name'] . $review['text']),
                 'fullname' => $review['author_name'],
                 'message' => $review['text'],
-                'rating' => $review['rating'],
-                'variant' => NULL,
+                'stars' => $review['rating'],
                 'isGoogle' => true
             ];
 
-            $this->guzzleService->saveReview($info); /* TODO */
+            $this->facade->saveFeedback($info);
         }
+
+        return Command::SUCCESS;
     }
 }

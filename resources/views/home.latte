@@ -266,11 +266,16 @@
                                     <div class="ud-testimonial-content">
                                         <p>{$feedback->message}</p>
                                     </div>
-                                    <div class="ud-testimonial-info">
+                                    <div class="ud-testimonial-info" style="justify-content: space-between">
                                         <div class="ud-testimonial-meta">
                                             <h4>{$feedback->fullname}</h4>
-                                            <p>Varianta: {$feedback->variant}</p>
+                                            {ifset $feedback->variant}
+                                                <p>Varianta: {$feedback->variant}</p>
+                                            {/ifset}
                                         </div>
+                                        {if $feedback->isGoogle}
+                                            <img src="{asset('images/maps.svg')}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
+                                        {/if}
                                     </div>
                                 </div>
                             </div>

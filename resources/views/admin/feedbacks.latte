@@ -2,7 +2,7 @@
 
 {block head}
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.css" />
-    <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
+    <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
 {/block}
 
 {block content}
@@ -12,8 +12,11 @@
     <div class="bg-gray-50 dark:bg-gray-900 h-screen">
         {include '../partials/_admin_header.latte'}
         <div class="p-4 sm:ml-64">
-            <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
-            <div class="flex justify-around text-black text-center">
+            <div class="flex items-center gap-4 mb-4">
+                <h1 class="text-3xl font-bold text-black dark:text-white">Administrace</h1>
+                <a href="{route('admin.feedbacks.refresh')}"><button class="p-1 px-2 rounded border-2 dark:border-white dark:text-white border-black text-black"><i class="fa-brands fa-google fa-lg dark:text-white text-black mr-1"></i> Import recenzí </button></a>
+            </div>
+           <div class="flex justify-around text-black text-center">
                 <div class="flex flex-col">
                     <h2 class="text-black text-3xl font-black dark:text-white">{count($feedbacks)}</h2>
                     <span class="text-center text-gray-900 text-xl dark:text-white">Recenze</span>
@@ -28,7 +31,7 @@
                 {foreach $feedbacks as $feedback}
                     <div class="flex flex-col rounded border-l-8 border-yellow-500 bg-gray-100 mr-4">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-2xl font-bold text-black m-4 items-center">{$feedback->fullname} {if str_contains($feedback->variant, 'Nebyla') || !$feedback->variant}<button data-modal-toggle="variant-{$feedback->id}" class="px-2 bg-[#3056d3] rounded mx-2"><i class="fa-solid fa-gear text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {$feedback->variant}</span>{/if}</h3>
+                            <h3 class="text-2xl font-bold text-black m-4 items-center">{$feedback->fullname} {if !$feedback->variant}<button class="px-2 bg-black rounded mx-2" disabled><i class="fa-brands fa-google text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {$feedback->variant}</span>{/if}</h3>
                             <p class="flex items-center xl:hidden text-black font-black mr-2">
                                 {$feedback->rating}<i class="text-yellow-500 fa-solid fa-star"></i>
                             </p>

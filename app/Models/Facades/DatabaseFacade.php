@@ -24,13 +24,18 @@ class DatabaseFacade
 
     public function saveFeedback(array $data, ?string $variant = null): void
     {
-        DB::table('feedbacks')->insert([
-            'hash' => $data['hash'],
-            'fullname' => $data['fullname'],
-            'message' => $data['message'],
-            'rating' => $data['stars'],
-            'variant' => $variant,
-        ]);
+        $isDuplicity = $this->getFeedbackByHash($data['hash']);
+
+        if (!$isDuplicity) {
+            DB::table('feedbacks')->insert([
+                'hash' => $data['hash'],
+                'fullname' => $data['fullname'],
+                'message' => $data['message'],
+                'rating' => $data['stars'],
+                'variant' => $variant,
+                'isGoogle' => $data['isGoogle'] ?? false,
+            ]);
+        }
     }
 
     public function setVariant(int $id, string $variant): int
@@ -174,5 +179,4 @@ class DatabaseFacade
     {
         DB::table('vouchers')->where('hash', $hash)->update(['isAccepted' => 1]);
     }
-
 }

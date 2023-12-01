@@ -8,6 +8,7 @@ use DateTime;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -93,6 +94,13 @@ class AdminController extends Controller
         return view('admin.feedbacks', [
             'feedbacks' => $this->facade->getFeedbacks(),
         ]);
+    }
+
+    public function refreshFeedbacks(): RedirectResponse
+    {
+        Artisan::call('app:get-reviews');
+
+        return back()->with('success', 'Recenze z Google Map importovány!');
     }
 
     public function showInvoices(): View

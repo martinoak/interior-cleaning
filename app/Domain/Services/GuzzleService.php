@@ -13,15 +13,15 @@ class GuzzleService
 
     public function getGoogleMapsReviews(): array
     {
-        $response = $this->guzzleClient->get('https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJ56G-hWSJDEcREctIevUbpDo&key=AIzaSyB_yimuufG5LKyQhrH7GB2SUxCwUIxZEiw&reviews_no_translations=true&fields=review', [
+        $response = $this->guzzleClient->get('https://maps.googleapis.com/maps/api/place/details/json', [
             'query' => [
                 'placeid' => 'ChIJ56G-hWSJDEcREctIevUbpDo',
-                'key' => 'AIzaSyB_yimuufG5LKyQhrH7GB2SUxCwUIxZEiw',
+                'key' => env('GOOGLE_MAPS_API_KEY'),
                 'reviews_no_translations' => true,
                 'fields' => 'review'
             ],
         ]);
 
-        return json_decode($response->getBody(), true);
+        return json_decode($response->getBody()->getContents(), true)['result']['reviews'];
     }
 }
