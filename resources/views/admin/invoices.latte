@@ -26,7 +26,7 @@
                                     <div class="flex items-center gap-4">
                                         <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
                                         <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
-                                        <a href="{route('generateInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
+                                        <a href="{route('showInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                     <div class="flex items-center gap-4">
                                         <button class="p-1 px-2 bg-[#3056d3] rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
                                         <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
-                                        <a href="{route('generateInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
+                                        <a href="{route('showInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                     <div class="flex items-center gap-4">
                                         <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
                                         <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
-                                        <a href="{route('generateInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
+                                        <a href="{route('showInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
                                     </div>
                                 </div>
                             </div>

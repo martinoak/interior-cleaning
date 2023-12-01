@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Facades\DatabaseFacade;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportController extends Controller
 {
+    public function __construct(
+        private readonly DatabaseFacade $facade,
+    ) {
+    }
+
     public function exportCustomers(): StreamedResponse
     {
-        $invoices = DB::table('invoices')->get();
+        $invoices = $this->facade->getInvoices();
 
         $file = fopen('php://temp', 'w');
 

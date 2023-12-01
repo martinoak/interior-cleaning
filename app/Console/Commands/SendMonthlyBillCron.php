@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\SendMonthlyBillMail;
 use App\Mail\SendWeekendScheduleMail;
+use App\Models\Facades\DatabaseFacade;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -24,6 +25,13 @@ class SendMonthlyBillCron extends Command
      */
     protected $description = 'Cron to send bill on a monthly basis every 31st of the month';
 
+    public function __construct(
+        private readonly DatabaseFacade $facade
+    )
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      */
@@ -33,10 +41,7 @@ class SendMonthlyBillCron extends Command
         $file = fopen(storage_path('logs/cron.log'), 'a');
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Monthly Bill started\n");
 
-        $invoices = DB::table('invoices')
-            ->whereBetween('date', [date('Y-m-01'), date('Y-m-t')])
-            ->get()
-            ->toArray();
+        $invoices = $this->facade->getThisMonthInvoices();
 
         $total = 0;
         foreach ($invoices as $invoice) {

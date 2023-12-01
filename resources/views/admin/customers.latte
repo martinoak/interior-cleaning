@@ -37,7 +37,7 @@
                                 {if !$customer->variant}
                                     <button data-modal-toggle="variant-{$customer->id}" class="px-2 bg-[#3056d3] rounded mx-2"><i class="fa-solid fa-gear text-white fa-xs"></i></button>
                                 {/if}
-                                <a href="{route('archiveMember', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
+                                <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
                             </div>
                         </div>
                         {if !empty($customer->message)}

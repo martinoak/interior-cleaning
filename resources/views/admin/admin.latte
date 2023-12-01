@@ -18,19 +18,19 @@
             <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
             <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-4">
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-yellow-500 bg-gray-100">
-                    <h2 class="text-2xl font-bold text-black m-2">Roční zisk</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-yellow-500 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annualEarnings|number:0,',', ' '},-</p>
+                    <h2 class="text-2xl font-bold text-black m-2">Roční {$annual >= 0 ? 'zisk' : 'ztráta'}</h2>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-yellow-500 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annual|number:0,',', ' '},-</p>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Měsíční zisk</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$monthlyEarnings|number:0,',', ' '},-</p>
+                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$month|number:0,',', ' '},-</p>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100">
                     <h2 class="text-2xl font-bold text-black m-2">Zákazníci</h2>
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2">{count(\Illuminate\Support\Facades\DB::table('customers')->get())}</p>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-sky-600 bg-gray-100">
-                    <h2 class="text-2xl font-bold text-black m-2">Kalendář</h2>
+                    <h2 class="text-2xl font-bold text-black m-2">Další čištění</h2>
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-sky-600 fa-regular fa-calendar fa-md mr-2"></i>{$calendar}</p>
                 </div>
                 <div class="flex flex-col justify-between h-24 rounded border-l-8 border-orange-600 bg-gray-100">

@@ -29,13 +29,7 @@
                     <a href="{route('admin.feedback')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-star"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Recenze</span>
-                        <span class="inline-flex items-center justify-center py-0.5 px-2 ml-3 text-sm font-medium text-yellow-100 bg-yellow-700 rounded-full">{DB::table('feedback')->avg('rating')|number:2,'.'}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{route('admin.calendar')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
-                        <i class="text-white fa-regular fa-calendar"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Kalendář</span>
+                        <span class="inline-flex items-center justify-center py-0.5 px-2 ml-3 text-sm font-medium text-yellow-100 bg-yellow-500 rounded-full">{DB::table('feedbacks')->avg('rating')|number:2,'.'}</span>
                     </a>
                 </li>
                 <li>

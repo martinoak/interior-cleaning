@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\SendWeekendScheduleMail;
+use App\Models\Facades\DatabaseFacade;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -23,6 +24,13 @@ class SendWeekendScheduleCron extends Command
      */
     protected $description = 'Send weekend Schedule on Saturday.';
 
+    public function __construct(
+        private readonly DatabaseFacade $facade
+    )
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      */
@@ -32,12 +40,7 @@ class SendWeekendScheduleCron extends Command
         $file = fopen(storage_path('logs/cron.log'), 'a');
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Weekend schedule started\n");
 
-        $customers = DB::table('customers')
-            ->whereBetween('hasTerm', [date('Y-m-d'), date('Y-m-d', strtotime('+1 day'))])
-            ->get()
-            ->sortBy('hasTerm')
-            ->groupBy('hasTerm')
-            ->toArray();
+        $customers = $this->facade->getThisWeekendCustomers();
 
         if(count($customers) === 0) {
             fwrite($file, date('Y-m-d H:i:s') . " [CRON] No customers for weekend schedule\n");
