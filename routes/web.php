@@ -64,7 +64,7 @@ Route::any('newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
 Route::get('admin/feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback')->middleware('auth');
 
 Route::get('admin/vouchers', [AdminController::class, 'showVouchers'])->name('admin.vouchers')->middleware('auth');
-Route::any('generateVoucher', [AdminController::class, 'generateVoucher'])->name('generateVoucher');
+Route::any('generateVoucher/{price}', [AdminController::class, 'generateVoucher'])->name('generateVoucher');
 Route::post('validateVoucher', [AdminController::class, 'validateVoucher'])->name('validateVoucher');
 Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVoucher');
 Route::any('admin/showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher')->middleware('auth');

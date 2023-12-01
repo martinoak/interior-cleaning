@@ -30,23 +30,34 @@ class AdminController extends Controller
             file_put_contents(storage_path('logs/cron.log'), '');
         }
 
-        /* TODO pridat i dalsi roky */
-        $invoices = DB::table('invoices')->get();
-        $earningsByMonth = ['01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0];
-        foreach ($invoices as $invoice) {
-            if ($invoice->type === 'N') {
-                $earningsByMonth[date('m', strtotime($invoice->date))] += -$invoice->price;
-            } else {
-                $earningsByMonth[date('m', strtotime($invoice->date))] += $invoice->price;
-            }
+        $invoices = DB::table('invoices')->get()->toArray();
+        $earnings = [];
+
+        foreach ($invoices as $i) {
+            $year = date('Y', strtotime($i->date));
+            $earnings[$year] = [
+                '01' => 0,
+                '02' => 0,
+                '03' => 0,
+                '04' => 0,
+                '05' => 0,
+                '06' => 0,
+                '07' => 0,
+                '08' => 0,
+                '09' => 0,
+                '10' => 0,
+                '11' => 0,
+                '12' => 0,
+                ];
         }
 
-        $monthlyEarnings = 0;
-        foreach (DB::table('invoices')->whereMonth('date', date('m'))->get() as $invoice) {
-            if ($invoice->type === 'N') {
-                $monthlyEarnings -= $invoice->price;
+        foreach ($invoices as $i) {
+            $year = date('Y', strtotime($i->date));
+            $month = date('m', strtotime($i->date));
+            if ($i->type === 'N') {
+                $earnings[$year][date('m', strtotime($i->date))] -= $i->price;
             } else {
-                $monthlyEarnings += $invoice->price;
+                $earnings[$year][date('m', strtotime($i->date))] += $i->price;
             }
         }
 
@@ -54,13 +65,13 @@ class AdminController extends Controller
             'customers' => DB::table('customers')->where('isArchived', 0)->get(),
             'calendar' => (new DateTime(DB::table('calendar')->where('isDone', 0)->orderBy('date')->first()->date))->format('j.n.'),
             'annualEarnings' => DB::table('invoices')->whereYear('date', date('Y'))->sum('price'),
-            'monthlyEarnings' => $monthlyEarnings,
+            'monthlyEarnings' => DB::table('invoices')->whereMonth('date', date('m'))->sum('price'),
             'variants' => [
                 CleaningTypes::START->value => DB::table('customers')->where('variant', CleaningTypes::START)->count(),
                 CleaningTypes::MIDDLE->value => DB::table('customers')->where('variant', CleaningTypes::MIDDLE)->count(),
                 CleaningTypes::DELUXE->value => DB::table('customers')->where('variant', CleaningTypes::DELUXE)->count()
             ],
-            'earnings' => $earningsByMonth,
+            'earnings' => $earnings,
         ]);
     }
 
@@ -175,13 +186,13 @@ class AdminController extends Controller
         return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
     }
 
-    public function generateVoucher(Request $request): BinaryFileResponse
+    public function generateVoucher(int $price): BinaryFileResponse
     {
         $hash = substr(md5(date('d. m. Y H:i:s')), 0, 6);
         DB::table('vouchers')->insert([
             'hash' => $hash,
             'date' => date('d-m-Y', strtotime('+1 year')),
-            'price' => $request->get('price'),
+            'price' => $price,
         ]);
 
         if (!file_exists(storage_path('app/public/voucher'))) {

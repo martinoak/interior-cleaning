@@ -67,6 +67,19 @@ return [
             'facebook' => '',
             'instagram' => '',
         ]
-    ]
+    ],
+
+    /*
+     *  Administrace webu
+     */
+    'admin' => [
+        'chartColors' => [
+            '2022' => '#750fd9',
+            '2023' => '#e39e49',
+            '2024' => '#0ca1ca',
+            '2025' => '#0d68f3',
+            '2026' => '#729718',
+        ]
+    ],
 
 ];
