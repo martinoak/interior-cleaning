@@ -63,14 +63,16 @@ class DatabaseFacade
         return DB::table('invoices')->whereMonth('date', date('m'))->get()->toArray();
     }
 
-    public function saveInvoice(array $data): void
+    public function saveInvoice(int $customerId): void
     {
+        $customer = $this->getCustomerById($customerId);
+
         DB::table('invoices')->insert([
-            'type' => $data['type'],
-            'date' => $data['date'],
-            'name' => $data['name'],
-            'price' => $data['price'],
-            'worker' => $data['worker'],
+            'type' => 'T',
+            'date' => $customer->hasTerm,
+            'name' => $customer->fullname,
+            'price' => CleaningTypes::from($customer->variant)->getRawPrice(),
+            'worker' => 'S',
         ]);
     }
 
@@ -83,9 +85,9 @@ class DatabaseFacade
         }
     }
 
-    public function getCustomerById(int $id): array
+    public function getCustomerById(int $id): object
     {
-        return DB::table('customers')->where('id', $id)->first()->toArray();
+        return DB::table('customers')->where('id', $id)->first();
     }
 
     public function getThisWeekendCustomers(): array
@@ -103,9 +105,24 @@ class DatabaseFacade
         DB::table('customers')->insert([
             'fullname' => $data['name'],
             'email' => $data['email'],
-            'telephone' => $data['phone'],
+            'telephone' => $data['telephone'],
             'message' => $data['message'],
             'variant' => $data['variant'],
+            'hasTerm' => $data['date'] ?? null
+        ]);
+    }
+
+    public function updateCustomer(array $data): void
+    {
+        $customer = $this->getCustomerById($data['id']);
+
+        DB::table('customers')->where('id', $data['id'])->update([
+            'fullname' => $data['name'] ?? $customer->fullname,
+            'email' => $data['email'] ?? $customer->email,
+            'telephone' => $data['telephone'] ?? $customer->telephone,
+            'variant' => $data['variant'] ?? $customer->variant,
+            'message' => $data['message'] ?? $customer->message,
+            'hasTerm' => $data['date'] ?? $customer->hasTerm,
         ]);
     }
 
@@ -139,22 +156,6 @@ class DatabaseFacade
     public function getTotalVariants(CleaningTypes $type): int
     {
         return DB::table('customers')->where('variant', $type)->count();
-    }
-
-    public function addToCalendar(array $data): void
-    {
-        DB::table('calendar')->insert([
-            'name' => $data['name'],
-            'date' => $data['date'],
-            'variant' => $data['variant'],
-            'description' => $data['message'],
-            'isDone' => 0,
-        ]);
-    }
-
-    public function assignTermToCustomer(string $name, string $date): void
-    {
-        DB::table('customers')->where('fullname', $name)->update(['hasTerm' => $date]);
     }
 
     public function getVouchers(?array $where = []): array

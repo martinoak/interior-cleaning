@@ -23,10 +23,7 @@ class AdminController extends Controller
     public function archiveCustomer($id): RedirectResponse
     {
         $this->facade->archiveCustomer($id);
-
-        $customer = $this->facade->getCustomerById($id);
-        $customer['type'] = 'T';
-        $this->facade->saveInvoice($customer); /* TODO tohle je potreba dodelat */
+        $this->facade->saveInvoice($id);
 
         return back()->with('success', 'Zákazník byl archivován');
     }
@@ -133,10 +130,9 @@ class AdminController extends Controller
 
     public function saveCustomer(Request $request): RedirectResponse
     {
-        $this->facade->addToCalendar($request->all());
-        $this->facade->assignTermToCustomer($request->get('name'), $request->get('date'));
+        $this->facade->updateCustomer($request->all());
 
-        return back()->with('success', 'Zákazník byl úspěšně přidán do kalendáře');
+        return back()->with('success', 'Zákazník byl úspěšně aktualizován!');
     }
 
     public function showInvoice(int $id): BinaryFileResponse

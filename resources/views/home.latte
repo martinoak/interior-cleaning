@@ -409,11 +409,11 @@
                                 />
                             </div>
                             <div class="ud-form-group">
-                                <label for="phone">Telefon <i class="fa-solid fa-star-of-life text-danger"></i></label>
+                                <label for="telephone">Telefon <i class="fa-solid fa-star-of-life text-danger"></i></label>
                                 <input
                                         type="text"
-                                        name="phone"
-                                        id="phone"
+                                        name="telephone"
+                                        id="telephone"
                                         placeholder="+420 123 456 789"
                                         required
                                 />
@@ -468,7 +468,7 @@
             let vue = new Vue({
                 el: '#vue-control',
                 data: {
-                    variant: 'Nebyla vybrána žádná varianta',
+                    variant: null,
                 },
                 methods: {
                     setVariant: function (e) {
