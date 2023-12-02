@@ -111,7 +111,12 @@ class DatabaseFacade
 
     public function getFirstFutureCustomer(): string
     {
-        $customer = DB::table('customers')->where('hasTerm', '>=', date('Y-m-d'))->orderBy('hasTerm')->first();
+        $customer = DB::table('customers')
+            ->where('isArchived', 0)
+            ->where('hasTerm', '>=', date('Y-m-d'))
+            ->orderBy('hasTerm')
+            ->first();
+
         if ($customer) {
             $term = \DateTime::createFromFormat('Y-m-d', $customer->hasTerm);
             return $term->format('j.n.');
