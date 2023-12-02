@@ -54,7 +54,9 @@
             </ul>
             <ul class="space-y-2 font-medium">
                 <li class="mt-auto">
+                    {if !str_contains(url()->current(), 'cisteni-kondrac.cz')}
                     <span class="text-xs text-gray-300 p-0 m-0 ml-2">v{exec("git describe --tags ".exec("git rev-list --tags --max-count=1"))} build {exec('git log -1 --format=%at 3.0.0')|date:'F j'}</span>
+                    {/if}
                     <a href="{route('logout')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-right-from-bracket"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Odhlásit se</span>
