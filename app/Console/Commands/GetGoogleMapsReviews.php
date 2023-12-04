@@ -25,8 +25,7 @@ class GetGoogleMapsReviews extends Command
     public function __construct(
         private readonly GuzzleService  $guzzleService,
         private readonly DatabaseFacade $facade,
-    )
-    {
+    ) {
         parent::__construct();
     }
 

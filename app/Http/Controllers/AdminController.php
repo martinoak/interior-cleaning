@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -195,7 +194,7 @@ class AdminController extends Controller
             ]);
         } else {
             $dateFrom = str_starts_with($voucher->hash, 'x') ? (new DateTime($voucher->date))->modify('-3 months') : (new DateTime($voucher->date))->modify('-1 year');
-            if ($request->get('hash') === substr($voucher->hash, 0, 6) && ! $voucher->isAccepted) {
+            if ($request->get('hash') === substr($voucher->hash, 0, 6) && !$voucher->isAccepted) {
                 return view('admin.vouchers', [
                     'checkedVoucher' => [
                         'status' => 'green',

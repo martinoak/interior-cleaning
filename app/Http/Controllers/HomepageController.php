@@ -9,7 +9,6 @@ use App\Models\Facades\DatabaseFacade;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class HomepageController extends Controller
@@ -40,14 +39,18 @@ class HomepageController extends Controller
     {
         $this->facade->saveCustomer($request->all());
 
-        Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($request->all()));
+        Mail::to('stepan@cisteni-kondrac.cz')
+            ->bcc('martin.dub@dek-cz.com')
+            ->send(new FormEmail($request->all()));
 
         return back()->with('success', 'Email odeslán!');
     }
 
     public function sendFeedbackEmail(Request $request): RedirectResponse
     {
-        Mail::to($request->get('email'))->send(new FeedbackEmail(CleaningTypes::from($request->get('variant'))->value));
+        Mail::to($request->get('email'))
+            ->bcc('martin.dub@dek-cz.com')
+            ->send(new FeedbackEmail(CleaningTypes::from($request->get('variant'))->value));
         $this->facade->setFeedbackSent($request->get('id'));
 
         return back()->with('success', 'Feedback email odeslán!');
