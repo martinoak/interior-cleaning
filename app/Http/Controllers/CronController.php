@@ -10,4 +10,9 @@ class CronController extends Controller
     {
         Artisan::call('app:weekend-schedule');
     }
+
+    public function bill(): void
+    {
+        Artisan::call('app:monthly-bill');
+    }
 }
