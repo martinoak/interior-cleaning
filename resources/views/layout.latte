@@ -33,7 +33,7 @@
 
     {block head}{/block}
 </head>
-<body {if str_contains(url()->current(), 'admin')}class="bg-gray-50 dark:bg-gray-900"{/if}>
+<body {if str_contains(url()->current(), 'admin')}class="bg-gray-50 dark:bg-gray-900"{/if} style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
 
     {include content, 'isDev' => $isDev}
 

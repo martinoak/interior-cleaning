@@ -27,6 +27,13 @@ class AdminController extends Controller
         return back()->with('success', 'Zákazník byl archivován');
     }
 
+    public function deleteCustomer(int $id): RedirectResponse
+    {
+        $this->facade->deleteCustomer($id);
+
+        return back()->with('success', 'Zákazník byl smazán');
+    }
+
     /**
      * @throws Exception
      */

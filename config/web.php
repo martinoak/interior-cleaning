@@ -43,9 +43,9 @@ return [
      */
 
     'prices' => [
-        'start' => 699,
-        'middle' => 1999,
-        'deluxe' => 3299,
+        'start' => 999,
+        'middle' => 2499,
+        'deluxe' => 3999,
     ],
 
     /*
@@ -56,16 +56,16 @@ return [
         [
             'name' => 'Štěpán Dub',
             'position' => 'Majitel',
-            'tel' => '+420 302 352 402',
+            'tel' => '+420 602 352 402',
             'facebook' => '',
-            'instagram' => '',
+            'instagram' => 'https://www.instagram.com/cisteni_interieru_kondrac',
         ],
         [
             'name' => 'Daniel Pohorský',
             'position' => 'Pracovník',
             'tel' => '+420 732 790 409',
             'facebook' => '',
-            'instagram' => '',
+            'instagram' => 'https://www.instagram.com/cisteni_interieru_kondrac',
         ]
     ],
 

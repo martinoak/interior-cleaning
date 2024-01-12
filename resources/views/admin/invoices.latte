@@ -22,7 +22,7 @@
                         {case 'T'}
                             <div class="flex flex-col rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-700 mr-4">
                                 <div class="flex justify-between items-center">
-                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-file-invoice-dollar fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
+                                    <h2 class="text-2xl font-bold text-black dark:text-white m-2 items-center"><i class="fa-solid fa-file-invoice-dollar fa-md mx-2 text-gray-500 dark:text-white"></i>{$invoice->name}</h2>
                                     <div class="flex items-center gap-4">
                                         <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
                                         <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
@@ -33,7 +33,7 @@
                         {case 'N'}
                             <div class="flex flex-col rounded border-l-8 border-red-600 bg-gray-100 dark:bg-gray-700 mr-4">
                                 <div class="flex justify-between items-center">
-                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-receipt fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
+                                    <h2 class="text-2xl font-bold text-black dark:text-white m-2 items-center"><i class="fa-solid fa-receipt fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
                                     <div class="flex items-center gap-4">
                                         <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
                                         <button class="p-1 px-2 bg-red-600 rounded text-white mr-2" disabled>{$invoice->date|date:'j. n. Y'}</button>

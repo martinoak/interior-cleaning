@@ -59,7 +59,7 @@
             </div>
             <div class="grid grid-cols-1 gap-4 mb-4">
                 {foreach $customers as $customer}
-                    <div class="flex flex-col rounded border-l-8 border-[#3056d3] bg-gray-100 mr-4">
+                    <div class="flex flex-col rounded border-l-8 border-[#3056d3] bg-gray-100 dark:bg-gray-400 mr-4">
                         <div class="flex justify-between items-center">
                             <h2 class="text-2xl w-1/3 font-bold text-black m-2 items-center">{$customer->fullname} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
                             <div class="flex items-center w-1/3 justify-start space-x-8">
@@ -81,6 +81,7 @@
                                 {if $customer->hasTerm}
                                     <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
                                 {/if}
+                                <a href="{route('deleteCustomer', [id => $customer->id])}" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white mr-1"></i> Trvale smazat</a>
                             </div>
                         </div>
                         {if !empty($customer->message)}
@@ -160,7 +161,7 @@
         <div class="p-4 sm:ml-64">
             <div class="grid grid-cols-1 gap-4 mb-4">
                 {foreach $archived as $customer}
-                    <div class="flex justify-between items-center rounded border-l-8 border-[#3056d3] bg-gray-100 mr-4">
+                    <div class="flex justify-between items-center rounded border-l-8 border-[#3056d3] bg-gray-100 dark:bg-gray-400 mr-4">
                         <h2 class="text-2xl w-1/3 font-bold text-black m-2 items-center">{$customer->fullname} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
                         <div class="flex w-1/3 items-center">
                             <p class="w-1/2"><i class="fa-solid fa-mobile-screen fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="tel:{$customer->telephone}">{$customer->telephone}</a></p>

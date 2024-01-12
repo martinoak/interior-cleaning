@@ -148,6 +148,11 @@ class DatabaseFacade
         DB::table('customers')->where('id', $id)->update(['isArchived' => 1]);
     }
 
+    public function deleteCustomer(int $id): void
+    {
+        DB::table('customers')->where('id', $id)->delete();
+    }
+
     public function getNotArchivedCustomers(): array
     {
         return DB::table('customers')->where('isArchived', 0)->get()->toArray();
