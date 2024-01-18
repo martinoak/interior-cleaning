@@ -193,20 +193,18 @@
                                             <tr>
                                                 <td align="center" valign="middle" style="color:#191919;font-size:32px;line-height:42px;font-weight:700;letter-spacing:0;padding: 0 0 10px;">Itinerář</td>
                                             </tr>
-                                            {foreach $customers as $date => $dateCustomers}
-                                                <tr>
-                                                    <td style="color:#191919;font-size:24px;line-height:40px;font-weight:700;letter-spacing:0">{\DateTime::createFromFormat('Y-m-d', $date)->format('d.m.Y')}</td>
+                                            <tr>
+                                                <td align="center" valign="middle" style="color:#191919;font-size:18px;line-height:0;font-weight:700;letter-spacing:0;padding: 0 0 10px;">{date('j. n. Y')}</td>
+                                            </tr>
+                                            {foreach $customers as $customer}
+                                                <tr style="border-bottom: 1px solid #aaa">
+                                                    <td style="color:black;font-size:14px;line-height:24px;font-weight:400;letter-spacing:0; padding: 10px">
+                                                        <strong>Jméno: </strong> {$customer->fullname}<br>
+                                                        <strong>Telefon: </strong> <a href="tel:{$customer->telephone}">{$customer->telephone}</a><br>
+                                                        <strong>Varianta: </strong> {$customer->variant}<br>
+                                                        <strong>Zpráva: </strong> {$customer->message ?? ''}<br>
+                                                    </td>
                                                 </tr>
-                                                {foreach $dateCustomers as $customer}
-                                                    <tr style="border-bottom: 1px solid #aaa">
-                                                        <td style="color:black;font-size:14px;line-height:24px;font-weight:400;letter-spacing:0; padding: 10px">
-                                                            <strong>Jméno: </strong> {$customer->fullname}<br>
-                                                            <strong>Telefon: </strong> <a href="tel:{$customer->telephone}">{$customer->telephone}</a><br>
-                                                            <strong>Varianta: </strong> {$customer->variant}<br>
-                                                            <strong>Zpráva: </strong> {$customer->message ?? ''}<br>
-                                                        </td>
-                                                    </tr>
-                                                {/foreach}
                                             {/foreach}
                                         </table>
                                     </td>

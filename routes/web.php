@@ -55,5 +55,5 @@ Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVo
 Route::get('admin/log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog')->middleware('auth');
 
 /* CRONY */
-Route::any('cron/weekend', [CronController::class, 'weekend'])->name('cron.weekend');
+Route::any('cron/today', [CronController::class, 'today'])->name('cron.today');
 Route::any('cron/bill', [CronController::class, 'bill'])->name('cron.bill');

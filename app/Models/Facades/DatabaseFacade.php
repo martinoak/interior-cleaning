@@ -90,13 +90,11 @@ class DatabaseFacade
         return DB::table('customers')->where('id', $id)->first();
     }
 
-    public function getThisWeekendCustomers(): array
+    public function getTodayCustomers(): array
     {
         return DB::table('customers')
-            ->whereBetween('hasTerm', [date('Y-m-d'), date('Y-m-d', strtotime('+1 day'))])
+            ->where('hasTerm', date('Y-m-d'))
             ->get()
-            ->sortBy('hasTerm')
-            ->groupBy('hasTerm')
             ->toArray();
     }
 
