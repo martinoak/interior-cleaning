@@ -38,7 +38,7 @@
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2"></p>
                 </div>
             </div>
-            <div class="flex justify-between gap-4 mb-4">
+            <div class="flex justify-between gap-4 mb-4 hidden sm:block">
                 <div class="flex flex-col w-full rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
                     <canvas id="earningChart" class="p-2" style="max-width: 100% !important"></canvas>
@@ -118,7 +118,7 @@
                     </script>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="grid grid-cols-2 gap-4 mb-4 hidden sm:block">
                 <div class="flex flex-col justify-between rounded border-l-8 border-gray-500 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Cron</h2>
                     {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron.log'))), -6))}
