@@ -29,7 +29,7 @@
                     <a href="{route('admin.feedback')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-star"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Recenze</span>
-                        <span class="inline-flex items-center justify-center py-0.5 px-2 ml-3 text-sm font-medium text-yellow-100 bg-yellow-500 rounded-full">{DB::table('feedbacks')->avg('rating')|number:2,'.'}</span>
+                        <span class="inline-flex items-center justify-center py-0.5 px-2 ml-3 text-sm font-medium text-black bg-amber-300 rounded-full">{DB::table('feedbacks')->avg('rating')|number:2,'.'}</span>
                     </a>
                 </li>
                 <li>
@@ -49,6 +49,12 @@
                     <a href="{route('admin.customers')}#archiv" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-archive"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Archiv</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{route('admin.development')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
+                        <i class="text-white fa-solid fa-bug"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Vývoj</span>
                     </a>
                 </li>
             </ul>

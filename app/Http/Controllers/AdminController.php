@@ -9,6 +9,9 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Testing\Fakes\MailFake;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -252,6 +255,18 @@ class AdminController extends Controller
         return back()->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
     }
 
+    public function showDevelopment(): View
+    {
+        $tests = $this->doTest();
+        return view('admin.development', compact('tests'));
+    }
+
+    public function rerun(): RedirectResponse
+    {
+        $tests = $this->doTest();
+        return to_route('admin.development', compact('tests'));
+    }
+
     public function showErrorLog(string $type): View
     {
         $log = file_get_contents(storage_path('logs/'.$type.'.log'));
@@ -259,5 +274,10 @@ class AdminController extends Controller
         return view('admin.errorlog', [
             'log' => $log,
         ]);
+    }
+
+    protected function doTest(): array
+    {
+        return ['mail' => true];
     }
 }

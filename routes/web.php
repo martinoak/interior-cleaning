@@ -52,6 +52,8 @@ Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVouch
 Route::any('admin/showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher')->middleware('auth');
 Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');
 
+Route::get('admin/development', [AdminController::class, 'showDevelopment'])->name('admin.development')->middleware('auth');
+
 Route::get('admin/log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog')->middleware('auth');
 
 /* CRONY */
