@@ -34,7 +34,7 @@ class SendDayScheduleCron extends Command
      */
     public function handle(): void
     {
-        $recipients = ['stepan@cisteni-kondrac.cz', 'dubs813@gmail.com'];
+        $recipients = ['stepan@cisteni-kondrac.cz'];
         $file = fopen(storage_path('logs/cron.log'), 'a');
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Today schedule started\n");
 
