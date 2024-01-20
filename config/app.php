@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        MartinOak\LaravelLatte\ServiceProvider::class,
 
         /*
          * Application Service Providers...

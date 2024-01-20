@@ -39,6 +39,7 @@ Route::get('admin/customers', [AdminController::class, 'showCustomers'])->name('
 Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
 Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
 Route::any('archive-customer/{id}', [AdminController::class, 'archiveCustomer'])->name('archiveCustomer');
+Route::get('deleteCustomer/{id}', [AdminController::class, 'deleteCustomer'])->name('deleteCustomer');
 Route::any('newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
 
 Route::get('admin/feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback')->middleware('auth');
@@ -51,8 +52,10 @@ Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVouch
 Route::any('admin/showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher')->middleware('auth');
 Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');
 
+Route::get('admin/development', [AdminController::class, 'showDevelopment'])->name('admin.development')->middleware('auth');
+
 Route::get('admin/log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog')->middleware('auth');
 
 /* CRONY */
-Route::any('cron/weekend', [CronController::class, 'weekend'])->name('cron.weekend');
+Route::any('cron/today', [CronController::class, 'today'])->name('cron.today');
 Route::any('cron/bill', [CronController::class, 'bill'])->name('cron.bill');

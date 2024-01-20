@@ -1,0 +1,122 @@
+{layout '../layout.latte'}
+
+{block head}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
+
+    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js "></script>
+    <script src="{asset('js/utils.js')}"></script>
+{/block}
+
+{block content}
+    {include '../partials/alerts_tw.latte'}
+    {include '../partials/_admin_sidebar.latte'}
+
+    <div>
+        {include '../partials/_admin_header.latte'}
+        <div class="p-4 sm:ml-64">
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div class="flex items-center justify-center h-24 rounded bg-gray-100 dark:bg-gray-800">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        PHP {phpversion()}
+                    </p>
+                </div>
+                <div class="flex items-center justify-center h-24 rounded bg-gray-100 dark:bg-gray-800">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        Laravel {\Illuminate\Foundation\Application::VERSION}
+                    </p>
+                </div>
+                <div class="flex items-center justify-center h-24 rounded bg-gray-100 dark:bg-gray-800">
+                    <a class="text-2xl text-gray-400 dark:text-gray-500" href="https://github.com/martinoak/interior-cleaning" target="_blank">
+                        <i class="fa-brands fa-github fa-xl hover:text-[#3056d3]"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="grid grid-cols-1 mb-4 flex" style="width: calc(66.666% + 20px)">
+                    <div class="flex flex-col items-center justify-center rounded bg-gray-100 dark:bg-gray-800">
+                        <p class="text-2xl font-bold text-gray-400 dark:text-gray-500 mt-4">
+                            CRON log
+                        </p>
+                        {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron.log'))), -15))}
+                        <pre class="p-4 w-full">{$content|noescape}</pre>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 mb-4 ml-4 flex w-1/3">
+                    <div class="flex flex-col items-center justify-center rounded bg-gray-100 dark:bg-gray-800">
+                        <div class="flex flex-col space-y-8 text-center text-gray-400 dark:text-gray-500">
+                            <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">Error log</p>
+                            <a href="{route('admin.errorlog', ['type' => 'laravel'])}"><i class="fa-brands fa-laravel fa-xl mr-2"></i>Laravel</a>
+                            <a href="{route('admin.errorlog', ['type' => 'cron'])}"><i class="fa-regular fa-hourglass fa-xl mr-2"></i>Cron</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-6 gap-4 mb-4">
+                <div class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        Mail test
+                    </p>
+                    <p>
+                        {if $tests['mail']}
+                            <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                        {else}
+                            <i class="fa-solid fa-xmark fa-xl" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
+                            <div id="tooltip-db" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                {$tests['mail']|noescape}
+                                <div class="tooltip-arrow" data-popper-arrow></div>
+                            </div>
+                        {/if}
+                    </p>
+                </div>
+                <div class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        Database test
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    </p>
+                </div>
+                <div class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        New customer test
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    </p>
+                </div>
+                <div class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        Feedback test
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    </p>
+                </div>
+                <div class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        Cron test
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    </p>
+                </div>
+                <a href="{route('admin.development')}" class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2 hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer">
+                    <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                        RERUN
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-arrows-spin fa-xl" style="color: #FFD43B;"></i>
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+{/block}
+
+{block bottomscripts}
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <script src="{asset('js/tailwind.config.js')}"></script>
+{/block}

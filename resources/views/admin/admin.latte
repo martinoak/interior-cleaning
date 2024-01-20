@@ -1,6 +1,8 @@
 {layout '../layout.latte'}
 
 {block head}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
     <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
 
@@ -17,29 +19,29 @@
         <div class="p-4 sm:ml-64">
             <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
             <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-4">
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-yellow-500 bg-gray-100">
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Roční {$annual >= 0 ? 'zisk' : 'ztráta'}</h2>
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-yellow-500 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annual|number:0,',', ' '},-</p>
                 </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100">
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Měsíční zisk</h2>
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$month|number:0,',', ' '},-</p>
                 </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100">
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Zákazníci</h2>
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2">{count(\Illuminate\Support\Facades\DB::table('customers')->get())}</p>
                 </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-sky-600 bg-gray-100">
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-sky-600 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Další čištění</h2>
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-sky-600 fa-regular fa-calendar fa-md mr-2"></i>{$calendar}</p>
                 </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-orange-600 bg-gray-100">
+                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-orange-600 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Faktury</h2>
                     <p class="flex justify-end items-center font-bold text-2xl text-black m-2"></p>
                 </div>
             </div>
-            <div class="flex justify-between gap-4 mb-4">
-                <div class="flex flex-col w-full rounded border-l-8 border-yellow-500 bg-gray-100">
+            <div class="hidden sm:flex justify-between gap-4 mb-4">
+                <div class="flex flex-col w-full sm:w-2/3 rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
                     <canvas id="earningChart" class="p-2" style="max-width: 100% !important"></canvas>
                     <script>
@@ -79,7 +81,7 @@
                             }})
                     </script>
                 </div>
-                <div class="flex flex-col w-1/3 rounded border-l-8 border-green-600 bg-gray-100">
+                <div class="flex flex-col w-1/3 rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-400">
                     <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
                     <canvas id="variantCharts" class="p-2"></canvas>
                     <script>
@@ -116,20 +118,6 @@
                             }
                         });
                     </script>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div class="flex flex-col justify-between rounded border-l-8 border-gray-500 bg-gray-100">
-                    <h2 class="text-2xl font-bold text-black m-2">Cron</h2>
-                    {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron.log'))), -6))}
-                    <pre class="m-2">{$content|noescape}</pre>
-                </div>
-                <div class="flex flex-col rounded border-l-8 border-gray-500 bg-gray-100">
-                    <h2 class="text-2xl font-bold text-black m-2">Produkční logy</h2>
-                    <div class="grid grid-cols-1 gap-4 p-4">
-                        <a href="{route('admin.errorlog', ['type' => 'laravel'])}"><button class="py-2 bg-[#FB503B] rounded text-white w-full"><i class="fa-brands fa-laravel fa-lg text-white mr-2"></i>Laravel</button></a>
-                        <a href="{route('admin.errorlog', ['type' => 'cron'])}"><button class="py-2 bg-blue-600 rounded text-white w-full"><i class="fa-regular fa-hourglass fa-lg text-white mr-2"></i>Cron</button></a>
-                    </div>
                 </div>
             </div>
         </div>

@@ -19,6 +19,10 @@
   --white: #ffffff;
 }
 
+.text-primary {
+    color: #3056d3
+}
+
 body {
   font-family: var(--font);
   font-weight: normal;

@@ -3,10 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Mail\SendMonthlyBillMail;
-use App\Mail\SendWeekendScheduleMail;
 use App\Models\Facades\DatabaseFacade;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class SendMonthlyBillCron extends Command
@@ -27,8 +25,7 @@ class SendMonthlyBillCron extends Command
 
     public function __construct(
         private readonly DatabaseFacade $facade
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -37,7 +34,7 @@ class SendMonthlyBillCron extends Command
      */
     public function handle(): void
     {
-        $recipient = 'stepan@cisteni-kondrac.cz';
+        ;
         $file = fopen(storage_path('logs/cron.log'), 'a');
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Monthly Bill started\n");
 
@@ -48,7 +45,9 @@ class SendMonthlyBillCron extends Command
             $invoice->type === 'N' ? $total -= $invoice->price : $total += $invoice->price;
         }
 
-        Mail::to($recipient)->send(new SendMonthlyBillMail($total));
+        Mail::to('stepan@cisteni-kondrac.cz')
+            ->bcc('martin.dub@dek-cz.com')
+            ->send(new SendMonthlyBillMail($total));
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Monthly Bill finished\n");
     }
 }

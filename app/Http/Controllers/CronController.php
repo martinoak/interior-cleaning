@@ -6,9 +6,14 @@ use Illuminate\Support\Facades\Artisan;
 
 class CronController extends Controller
 {
-    public function weekend(): void
+    public function today(): void
     {
-        Artisan::call('app:weekend-schedule');
+        Artisan::call('app:today');
+    }
+
+    public function bill(): void
+    {
+        Artisan::call('app:monthly-bill');
     }
 
     public function bill(): void

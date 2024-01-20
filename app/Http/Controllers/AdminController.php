@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Testing\Fakes\MailFake;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -26,6 +28,13 @@ class AdminController extends Controller
         $this->facade->saveInvoice($id);
 
         return back()->with('success', 'Zákazník byl archivován');
+    }
+
+    public function deleteCustomer(int $id): RedirectResponse
+    {
+        $this->facade->deleteCustomer($id);
+
+        return back()->with('success', 'Zákazník byl smazán');
     }
 
     /**
@@ -145,13 +154,13 @@ class AdminController extends Controller
         $image = imagecreatefromjpeg(public_path('images/invoice/template.jpg'));
         $color = imagecolorallocate($image, 0, 0, 0);
         $font = public_path('fonts/Rubik.ttf');
-        imagettftext($image, 20, 0, 800, 100, $color, $font, $data->id);
+        imagettftext($image, 20, 0, 800, 100, $color, $font, utf8_decode($data->id));
         imagettftext($image, 20, 0, 500, 150, $color, $font, date_create_from_format('Y-m-d', $data->date)->format('d. n.'));
         imagettftext($image, 20, 0, 800, 150, $color, $font, substr(date_create_from_format('Y-m-d', $data->date)->format('Y'), -2));
-        imagettftext($image, 20, 0, 250, 200, $color, $font, $data->name);
+        imagettftext($image, 20, 0, 250, 200, $color, $font, utf8_decode($data->name));
         imagettftext($image, 20, 0, 250, 340, $color, $font, 'Čištění interiéru auta');
-        imagettftext($image, 20, 0, 200, 410, $color, $font, $data->price);
-        imagettftext($image, 20, 0, 500, 540, $color, $font, 'Štěpán Dub, '. date('d. m. Y'));
+        imagettftext($image, 20, 0, 200, 410, $color, $font, utf8_decode($data->price));
+        imagettftext($image, 20, 0, 500, 540, $color, $font, utf8_decode('Štěpán Dub, '. date('d. m. Y')));
 
         imagepng($image, storage_path('app/public/invoice/'.$id.'.png'));
 
@@ -195,7 +204,7 @@ class AdminController extends Controller
             ]);
         } else {
             $dateFrom = str_starts_with($voucher->hash, 'x') ? (new DateTime($voucher->date))->modify('-3 months') : (new DateTime($voucher->date))->modify('-1 year');
-            if ($request->get('hash') === substr($voucher->hash, 0, 6) && ! $voucher->isAccepted) {
+            if ($request->get('hash') === substr($voucher->hash, 0, 6) && !$voucher->isAccepted) {
                 return view('admin.vouchers', [
                     'checkedVoucher' => [
                         'status' => 'green',
@@ -246,6 +255,18 @@ class AdminController extends Controller
         return back()->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
     }
 
+    public function showDevelopment(): View
+    {
+        $tests = $this->doTest();
+        return view('admin.development', compact('tests'));
+    }
+
+    public function rerun(): RedirectResponse
+    {
+        $tests = $this->doTest();
+        return to_route('admin.development', compact('tests'));
+    }
+
     public function showErrorLog(string $type): View
     {
         $log = file_get_contents(storage_path('logs/'.$type.'.log'));
@@ -253,5 +274,10 @@ class AdminController extends Controller
         return view('admin.errorlog', [
             'log' => $log,
         ]);
+    }
+
+    protected function doTest(): array
+    {
+        return ['mail' => true];
     }
 }

@@ -90,13 +90,11 @@ class DatabaseFacade
         return DB::table('customers')->where('id', $id)->first();
     }
 
-    public function getThisWeekendCustomers(): array
+    public function getTodayCustomers(): array
     {
         return DB::table('customers')
-            ->whereBetween('hasTerm', [date('Y-m-d'), date('Y-m-d', strtotime('+1 day'))])
+            ->where('hasTerm', date('Y-m-d'))
             ->get()
-            ->sortBy('hasTerm')
-            ->groupBy('hasTerm')
             ->toArray();
     }
 
@@ -104,11 +102,11 @@ class DatabaseFacade
     {
         DB::table('customers')->insert([
             'fullname' => $data['name'],
-            'email' => $data['email'],
-            'telephone' => $data['telephone'],
+            'email' => $data['email'] ?? 'dev@cisteni-kondrac.cz',
+            'telephone' => $data['telephone'] ?? '',
             'message' => $data['message'],
             'variant' => $data['variant'],
-            'hasTerm' => $data['date'] ?? null
+            'hasTerm' => $data['date']
         ]);
     }
 
@@ -146,6 +144,11 @@ class DatabaseFacade
     public function archiveCustomer(int $id): void
     {
         DB::table('customers')->where('id', $id)->update(['isArchived' => 1]);
+    }
+
+    public function deleteCustomer(int $id): void
+    {
+        DB::table('customers')->where('id', $id)->delete();
     }
 
     public function getNotArchivedCustomers(): array

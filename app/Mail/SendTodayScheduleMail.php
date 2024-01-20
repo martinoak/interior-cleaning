@@ -3,15 +3,15 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendWeekendScheduleMail extends Mailable
+class SendTodayScheduleMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     private array $customers;
 
@@ -29,7 +29,7 @@ class SendWeekendScheduleMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Víkendový itinerář - Čištění Kondrac',
+            subject: 'Denní itinerář - Čištění Kondrac',
         );
     }
 
@@ -39,7 +39,7 @@ class SendWeekendScheduleMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.weekendSchedule',
+            view: 'emails.todaySchedule',
             with: [
                 'customers' => $this->customers,
             ],
