@@ -56,6 +56,8 @@ Route::get('admin/development', [AdminController::class, 'showDevelopment'])->na
 
 Route::get('admin/log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog')->middleware('auth');
 
+Route::get('admin/calendar', [AdminController::class, 'showCalendar'])->name('admin.calendar')->middleware('auth');
+
 /* CRONY */
 Route::any('cron/today', [CronController::class, 'today'])->name('cron.today');
 Route::any('cron/bill', [CronController::class, 'bill'])->name('cron.bill');

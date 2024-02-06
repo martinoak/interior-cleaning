@@ -1,0 +1,51 @@
+{layout '../layout.latte'}
+
+{block head}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
+
+    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js "></script>
+    <script src="{asset('js/utils.js')}"></script>
+{/block}
+
+{block content}
+    {include '../partials/alerts_tw.latte'}
+    {include '../partials/_admin_sidebar.latte'}
+
+    <div>
+        {include '../partials/_admin_header.latte'}
+        <div class="p-4 sm:ml-64">
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-md shadow-md">
+                <h1 class="text-2xl font-bold mb-4">Calendar</h1>
+
+                <div class="grid grid-cols-8 gap-4">
+                    <!-- Time labels column -->
+                    <div class="col-span-1">
+                        {foreach ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'] as $time}
+                            <div class="text-right py-2 pr-2 border-b border-gray-200">
+                                {{$time}}
+                            </div>
+                        {/foreach}
+                    </div>
+
+                    <!-- Calendar grid -->
+                    {foreach $calendar as $week}
+                        {foreach $week as $day}
+                            <div class="col-span-1 border border-gray-200 py-4">
+                                {$day}
+                                <!-- You can add more content here, such as events for the day -->
+                            </div>
+                        {/foreach}
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}
+
+{block bottomscripts}
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <script src="{asset('js/tailwind.config.js')}"></script>
+{/block}

@@ -280,4 +280,17 @@ class AdminController extends Controller
     {
         return ['mail' => true];
     }
+
+    public function showCalendar(): View
+    {
+        $calendar = [];
+        for ($i = 0; $i < 6; $i++) {
+            $calendar[$i] = [];
+            for ($j = 0; $j < 7; $j++) {
+                $calendar[$i][$j] = '';
+            }
+        }
+
+        return view('admin.calendar', compact('calendar'));
+    }
 }
