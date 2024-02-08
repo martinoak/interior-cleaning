@@ -39,9 +39,7 @@ class HomepageController extends Controller
     {
         $this->facade->saveCustomer($request->all());
 
-        Mail::to('stepan@cisteni-kondrac.cz')
-            ->bcc('martin.dub@dek-cz.com')
-            ->send(new FormEmail($request->all()));
+        Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($request->all()));
 
         return back()->with('success', 'Email odeslán!');
     }
@@ -49,8 +47,7 @@ class HomepageController extends Controller
     public function sendFeedbackEmail(Request $request): RedirectResponse
     {
         Mail::to($request->get('email'))
-            ->bcc('martin.dub@dek-cz.com')
-            ->send(new FeedbackEmail(CleaningTypes::from($request->get('variant'))->value));
+            ->send(new FeedbackEmail($request->get('id'), CleaningTypes::from($request->get('variant'))->value));
         $this->facade->setFeedbackSent($request->get('id'));
 
         return back()->with('success', 'Feedback email odeslán!');
@@ -67,6 +64,7 @@ class HomepageController extends Controller
     {
         return view('feedback', [
             'hash' => $request->get('id'),
+            'customer' => $request->get('customer'),
             'variant' => $request->get('variant'),
         ]);
     }
@@ -78,9 +76,10 @@ class HomepageController extends Controller
         if ($isDuplicity) {
             return back()->with('error', 'Tento feedback již byl odeslán, děkujeme.');
         } else {
-            $this->facade->saveFeedback($request->all(), $request->get('variant'));
+            $this->facade->saveFeedback($request->all());
+            $this->facade->linkCustomerToFeedback($request->input('customer'), $request->input('hash'));
 
-            return redirect(route('homepage'));
+            return to_route('homepage')->with('success', 'Feedback odeslán, děkujeme.');
         }
     }
 }

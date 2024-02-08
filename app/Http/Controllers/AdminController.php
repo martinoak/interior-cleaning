@@ -25,7 +25,9 @@ class AdminController extends Controller
     public function archiveCustomer($id): RedirectResponse
     {
         $this->facade->archiveCustomer($id);
-        $this->facade->saveInvoice($id);
+        $invoice_id = $this->facade->saveInvoice($id);
+
+        $this->facade->linkCustomerToInvoice($id, $invoice_id);
 
         return back()->with('success', 'Zákazník byl archivován');
     }
@@ -119,8 +121,8 @@ class AdminController extends Controller
     public function showCustomers(): View
     {
         return view('admin.customers', [
-            'customers' => $this->facade->getCustomers(['isArchived' => 0]),
-            'archived' => $this->facade->getCustomers(['isArchived' => 1]),
+            'customers' => $this->facade->getCustomers(['archived' => 0]),
+            'archived' => $this->facade->getCustomers(['archived' => 1]),
         ]);
     }
 
@@ -137,11 +139,18 @@ class AdminController extends Controller
         return view('admin.newOrder');
     }
 
-    public function saveCustomer(Request $request): RedirectResponse
+    public function updateCustomer(Request $request): RedirectResponse
     {
         $this->facade->updateCustomer($request->all());
 
         return back()->with('success', 'Zákazník byl úspěšně aktualizován!');
+    }
+
+    public function saveCustomer(Request $request): RedirectResponse
+    {
+        $this->facade->saveCustomer($request->all());
+
+        return back()->with('success', 'Zákazník byl úspěšně přidán!');
     }
 
     public function showInvoice(int $id): BinaryFileResponse
@@ -197,21 +206,19 @@ class AdminController extends Controller
                     'message' => 'Voucher neexistuje!',
                     'hash' => '',
                     'price' => 0,
-                    'issuer' => '',
                     'dateFrom' => '',
                     'dateTo' => '',
                 ]
             ]);
         } else {
             $dateFrom = str_starts_with($voucher->hash, 'x') ? (new DateTime($voucher->date))->modify('-3 months') : (new DateTime($voucher->date))->modify('-1 year');
-            if ($request->get('hash') === substr($voucher->hash, 0, 6) && !$voucher->isAccepted) {
+            if ($request->get('hash') === substr($voucher->hash, 0, 6) && !$voucher->accepted) {
                 return view('admin.vouchers', [
                     'checkedVoucher' => [
                         'status' => 'green',
                         'message' => 'Voucher je platný!',
                         'hash' => $voucher->hash,
                         'price' => $voucher->price,
-                        'issuer' => $voucher->issuer,
                         'dateFrom' => $dateFrom,
                         'dateTo' => (new DateTime($voucher->date)),
                     ]
@@ -223,7 +230,6 @@ class AdminController extends Controller
                         'message' => 'Voucher již není platný!',
                         'hash' => $voucher->hash,
                         'price' => $voucher->price,
-                        'issuer' => $voucher->issuer,
                         'dateFrom' => $dateFrom,
                         'dateTo' => (new DateTime($voucher->date)),
                     ]
@@ -237,7 +243,7 @@ class AdminController extends Controller
         $this->facade->useVoucher($request->get('hash'));
 
         return view('admin.vouchers', [
-            'vouchers' => $this->facade->getVouchers(['isAccepted' => 0]),
+            'vouchers' => $this->facade->getVouchers(['accepted' => 0]),
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ])->with('success', 'Voucher byl úspěšně použit!');
     }

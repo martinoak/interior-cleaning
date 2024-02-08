@@ -3,24 +3,22 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use function Sodium\compare;
 
-class SendMonthlyBillMail extends Mailable
+class ExceptionOccuredMail extends Mailable
 {
-    use Queueable;
-    use SerializesModels;
+    use Queueable, SerializesModels;
 
-    public int $total;
+    public array $content;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(int $total)
+    public function __construct(array $content)
     {
-        $this->total = $total;
+        $this->content = $content;
     }
 
     /**
@@ -29,7 +27,7 @@ class SendMonthlyBillMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Měsíční vyúčtování '.date('m/Y'),
+            subject: 'Vyskytla se chyba na webu',
         );
     }
 
@@ -39,10 +37,10 @@ class SendMonthlyBillMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.monthly-bill',
+            view: 'emails.exception',
             with: [
-                'total' => $this->total,
-            ],
+                'content' => $this->content,
+            ]
         );
     }
 

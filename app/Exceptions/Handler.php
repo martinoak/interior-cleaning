@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Mail\ExceptionOccuredMail;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -32,10 +34,28 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
+            $this->sendEmail($e);
         });
+    }
+
+    protected function sendEmail(Throwable $exception): void
+    {
+        try {
+            $content['message'] = $exception->getMessage();
+            $content['file'] = $exception->getFile();
+            $content['line'] = $exception->getLine();
+            $content['trace'] = $exception->getTrace();
+            $content['url'] = request()->url();
+            $content['body'] = request()->all();
+            $content['ip'] = request()->ip();
+
+            Mail::to('martin.dub@dek-cz.com')->send(new ExceptionOccuredMail($content));
+
+        } catch (Throwable $exception) {
+            Log::error($exception);
+        }
     }
 }

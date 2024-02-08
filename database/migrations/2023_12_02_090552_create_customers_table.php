@@ -20,8 +20,6 @@ return new class () extends Migration {
             $table->string('hasTerm', 10)->nullable();
             $table->boolean('feedbackSent')->default(false);
             $table->boolean('isArchived')->default(false);
-            $table->unsignedBigInteger('invoice_id')->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices');
         });
     }
 

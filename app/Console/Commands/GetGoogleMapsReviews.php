@@ -39,10 +39,10 @@ class GetGoogleMapsReviews extends Command
         foreach ($reviews as $review) {
             $info = [
                 'hash' => md5($review['author_name'] . $review['text']),
-                'fullname' => $review['author_name'],
+                'name' => $review['author_name'],
                 'message' => $review['text'],
                 'stars' => $review['rating'],
-                'isGoogle' => true
+                'fromGoogle' => true
             ];
 
             $this->facade->saveFeedback($info);

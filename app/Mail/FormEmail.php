@@ -4,12 +4,13 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class FormEmail extends Mailable
 {
-    use Queueable;
-    use SerializesModels;
+    use Queueable, SerializesModels;
 
     public array $details;
 
@@ -23,13 +24,25 @@ class FormEmail extends Mailable
         $this->details = $details;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build(): static
+    public function envelope(): Envelope
     {
-        return $this->subject('Nová poptávka')->view('emails.newDemand')->replyTo($this->details['email']);
+        return new Envelope(
+            from: config('mail.from.address'),
+            replyTo: $this->details['email'],
+            subject: 'Nová poptávka'
+        );
+    }
+
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.newDemand',
+            with: [
+                'name' => $this->details['name'],
+                'email' => $this->details['email'],
+                'telephone' => $this->details['telephone'],
+                'message' => $this->details['message'],
+            ]
+        );
     }
 }
