@@ -79,11 +79,10 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('vouchers');
-        Schema::dropIfExists('invoices');
-        Schema::dropIfExists('feedbacks');
-//        Schema::dropIfExists('calendar');
         Schema::dropIfExists('customers');
+        Schema::dropIfExists('feedbacks');
+        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('vouchers');
         Schema::rename('old_customers', 'customers');
         Schema::rename('old_feedbacks', 'feedbacks');
         Schema::rename('old_invoices', 'invoices');
