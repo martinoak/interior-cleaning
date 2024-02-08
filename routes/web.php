@@ -37,6 +37,7 @@ Route::any('showInvoice/{id}', [AdminController::class, 'showInvoice'])->name('s
 
 Route::get('admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
 Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
+Route::any('updateCustomer/{id}', [AdminController::class, 'updateCustomer'])->name('updateCustomer');
 Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
 Route::any('archive-customer/{id}', [AdminController::class, 'archiveCustomer'])->name('archiveCustomer');
 Route::get('deleteCustomer/{id}', [AdminController::class, 'deleteCustomer'])->name('deleteCustomer');

@@ -13,6 +13,8 @@ class SendMonthlyBillMail extends Mailable
     use Queueable;
     use SerializesModels;
 
+    public int $total;
+
     /**
      * Create a new message instance.
      */

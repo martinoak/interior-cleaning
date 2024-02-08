@@ -3,6 +3,7 @@
 namespace App\Models\Facades;
 
 use App\Enums\CleaningTypes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseFacade
@@ -67,7 +68,7 @@ class DatabaseFacade
         return DB::table('invoices')->whereMonth('date', date('m'))->get()->toArray();
     }
 
-    public function saveInvoice(int $customerId): void
+    public function saveInvoice(int $customerId): string|false
     {
         $customer = $this->getCustomerById($customerId);
 
@@ -78,6 +79,13 @@ class DatabaseFacade
             'price' => CleaningTypes::from($customer->variant)->getRawPrice(),
             'worker' => 'S',
         ]);
+
+        return DB::getPdo()->lastInsertId();
+    }
+
+    public function linkCustomerToInvoice(int $customerId, int $invoiceId): void
+    {
+        DB::table('customers')->where('id', $customerId)->update(['invoice_id' => $invoiceId]);
     }
 
     public function getCustomers(?array $where = []): array
@@ -110,7 +118,7 @@ class DatabaseFacade
             'telephone' => $data['telephone'],
             'message' => $data['message'],
             'variant' => $data['variant'],
-            'term' => $data['date'] ?? null
+            'term' => $data['date']
         ]);
     }
 
@@ -136,13 +144,7 @@ class DatabaseFacade
             ->orderBy('term')
             ->first();
 
-        if ($customer) {
-            $term = \DateTime::createFromFormat('Y-m-d', $customer->term);
-            return $term->format('j.n.');
-        } else {
-            return 'Žádný';
-        }
-
+        return $customer ? date('j.n.', strtotime($customer->term)) : 'Žádný';
     }
 
     public function archiveCustomer(int $id): void
@@ -174,27 +176,27 @@ class DatabaseFacade
         }
     }
 
-    public function getVoucherByHash(string $hash): bool
+    public function getVoucherByHash(string $hash): ?object
     {
-        return DB::table('vouchers')->where('hash', $hash)->exists();
+        return DB::table('vouchers')->where('hash', $hash)->first();
     }
 
     public function getNotAcceptedVouchers(): array
     {
-        return DB::table('vouchers')->where('isAccepted', 0)->orderBy('date', 'desc')->get()->toArray();
+        return DB::table('vouchers')->where('accepted', 0)->orderBy('date', 'desc')->get()->toArray();
     }
 
     public function saveVoucher(string $hash, string $dateOffset, int $price = 0): void
     {
         DB::table('vouchers')->insert([
             'hash' => $hash,
-            'date' => date('d-m-Y', strtotime($dateOffset)),
+            'date' => \DateTime::createFromFormat('Y-m-d', date('Y-m-d'))->modify($dateOffset)->format('Y-m-d'),
             'price' => $price,
         ]);
     }
 
     public function useVoucher(string $hash): void
     {
-        DB::table('vouchers')->where('hash', $hash)->update(['isAccepted' => 1]);
+        DB::table('vouchers')->where('hash', $hash)->update(['accepted' => 1]);
     }
 }

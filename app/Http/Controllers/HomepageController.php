@@ -49,7 +49,6 @@ class HomepageController extends Controller
     public function sendFeedbackEmail(Request $request): RedirectResponse
     {
         Mail::to($request->get('email'))
-            ->bcc('martin.dub@dek-cz.com')
             ->send(new FeedbackEmail($request->get('id'), CleaningTypes::from($request->get('variant'))->value));
         $this->facade->setFeedbackSent($request->get('id'));
 

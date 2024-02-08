@@ -410,7 +410,7 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="ud-contact-form-wrapper">
                         <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
-                        <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail')}">
+                        <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail', [sendEmail => true])}">
                             {csrf_field()|noescape}
                             <div class="ud-form-group">
                                 <label for="name">Celé jméno <i class="fa-solid fa-star-of-life text-danger"></i></label>

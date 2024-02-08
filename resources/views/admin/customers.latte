@@ -21,7 +21,7 @@
                 <div id="new-customer" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                     <div class="relative w-75">
                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <form action="{route('sendEmail')}" method="post">
+                            <form action="{route('saveCustomer')}" method="post">
                                 {csrf_field()|noescape}
                                 <div class="p-6 space-y-6">
                                     <div class="flex flex-col">
@@ -123,9 +123,8 @@
                     <div id="order-{$customer->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                         <div class="relative w-75">
                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                <form action="{route('saveCustomer')}" method="post">
+                                <form action="{route('updateCustomer', [id => $customer->id])}" method="post">
                                     {csrf_field()|noescape}
-                                    <input type="hidden" name="id" value="{$customer->id}">
                                     <div class="p-6 space-y-6">
                                         <div class="flex flex-col">
                                             <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>

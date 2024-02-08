@@ -4,20 +4,20 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class FeedbackEmail extends Mailable
 {
-    use Queueable;
-    use SerializesModels;
+    use Queueable, SerializesModels;
+
     public string $customerId;
 
     public string $variant;
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct(int $customerId, string $variant)
     {
@@ -25,13 +25,39 @@ class FeedbackEmail extends Mailable
         $this->variant = $variant;
     }
 
-    public function build()
+    /**
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
     {
-        $this->subject('Děkuji za návštěvu!')->view('emails.feedback')->with([
-            'id' => $this->customerId,
-            'variant' => $this->variant,
-        ]);
+        return new Envelope(
+            from: config('mail.from.address'),
+            bcc: 'martin.dub@dek-cz.com',
+            subject: 'Děkuji za návštěvu!'
+        );
+    }
 
-        return redirect(route('dashboard'));
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.feedback',
+            with: [
+                'id' => $this->customerId,
+                'variant' => $this->variant,
+            ]
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
+    public function attachments(): array
+    {
+        return [];
     }
 }
