@@ -41,7 +41,7 @@ class FormEmail extends Mailable
             with: [
                 'name' => $this->details['name'],
                 'email' => $this->details['email'],
-                'phone' => $this->details['phone'],
+                'telephone' => $this->details['telephone'],
                 'message' => $this->details['message'],
             ]
         );

@@ -15,12 +15,15 @@ return new class () extends Migration {
         Schema::rename('invoices', 'old_invoices');
         Schema::rename('vouchers', 'old_vouchers');
 
+        Schema::dropIfExists('calendar');
+        Schema::dropIfExists('contact_form_inputs');
+
 
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
             $table->string('email', 255)->nullable();
-            $table->string('telephone', 15)->nullable();
+            $table->string('telephone', 20)->nullable();
             $table->text('message')->nullable();
             $table->string('variant', 255)->nullable();
             $table->dateTime('term')->nullable();
