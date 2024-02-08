@@ -10,8 +10,7 @@ class FeedbackEmail extends Mailable
 {
     use Queueable;
     use SerializesModels;
-
-    public string $hash;
+    public string $customerId;
 
     public string $variant;
 
@@ -20,15 +19,16 @@ class FeedbackEmail extends Mailable
      *
      * @return void
      */
-    public function __construct(string $variant)
+    public function __construct(int $customerId, string $variant)
     {
-        $this->hash = md5(time());
+        $this->customerId = $customerId;
         $this->variant = $variant;
     }
 
     public function build()
     {
         $this->subject('Děkuji za návštěvu!')->view('emails.feedback')->with([
+            'id' => $this->customerId,
             'variant' => $this->variant,
         ]);
 

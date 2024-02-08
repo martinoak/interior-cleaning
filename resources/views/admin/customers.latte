@@ -63,7 +63,7 @@
                 {foreach $customers as $customer}
                     <div class="flex flex-col rounded border-l-8 border-[#3056d3] bg-gray-100 dark:bg-gray-400 mr-4">
                         <div class="flex flex-col sm:flex-row sm:justify-between">
-                            <h2 class="text-2xl sm:w-1/3 font-bold text-black m-2 items-center">{$customer->fullname} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
+                            <h2 class="text-2xl sm:w-1/3 font-bold text-black m-2 items-center">{$customer->name} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
                             <div class="flex flex-col sm:flex-row sm:items-center sm:w-1/3 justify-start space-y-4 sm:space-x-8 sm:space-y-0 m-2">
                                 <p><i class="fa-solid fa-mobile-screen fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="tel:{$customer->telephone}">{$customer->telephone}</a></p>
                                 <p><i class="fa-solid fa-at fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="mailto:{$customer->email}">{$customer->email}</a></p>
@@ -72,15 +72,12 @@
                                 {if !$customer->variant}
                                     <button data-modal-toggle="variant-{$customer->id}" class="p-1 px-3 bg-red-600 rounded text-white"><i class="fa-solid fa-gear fa-lg text-white mr-1"></i> Varianta</button>
                                 {/if}
-                                {if $customer->hasTerm}
-                                    <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->hasTerm|date:'j. n. Y'}</button>
+                                {if $customer->term}
+                                    <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->term|date:'j. n. Y'}</button>
                                 {else}
                                     <button data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white mr-1"></i> Objednat</button>
                                 {/if}
-                                {if !$customer->feedbackSent && $customer->variant}
-                                    <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant])}"><button class="p-1 px-2 bg-blue-600 rounded text-white"><i class="fa-solid fa-paper-plane fa-lg text-white mr-2"></i>Feedback</button></a>
-                                {/if}
-                                {if $customer->hasTerm}
+                                {if $customer->term}
                                     <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
                                 {/if}
                                 <a href="{route('deleteCustomer', [id => $customer->id])}" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white mr-1"></i> Trvale smazat</a>
@@ -95,15 +92,12 @@
                             {if !$customer->variant}
                                 <button data-modal-toggle="variant-{$customer->id}" class="p-1 px-3 bg-red-600 rounded text-white"><i class="fa-solid fa-gear fa-lg text-white mr-1"></i> Varianta</button>
                             {/if}
-                                {if $customer->hasTerm}
-                                <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->hasTerm|date:'j. n. Y'}</button>
+                                {if $customer->term}
+                                <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->term|date:'j. n. Y'}</button>
                             {else}
                                 <button data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white"></i></button>
                             {/if}
-                                {if !$customer->feedbackSent && $customer->variant}
-                                <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant])}"><button class="p-1 px-2 bg-blue-600 rounded text-white"><i class="fa-solid fa-paper-plane fa-lg text-white"></i></button></a>
-                            {/if}
-                                {if $customer->hasTerm}
+                            {if $customer->term}
                                 <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
                             {/if}
                             <a href="{route('deleteCustomer', [id => $customer->id])}" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white"></i></a>
@@ -135,7 +129,7 @@
                                     <div class="p-6 space-y-6">
                                         <div class="flex flex-col">
                                             <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                                            <input type="text" name="name" id="name" value="{$customer->fullname}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                                            <input type="text" name="name" id="name" value="{$customer->name}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="email" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Email</label>
@@ -181,7 +175,7 @@
             <div class="grid grid-cols-1 gap-4 mb-4">
                 {foreach $archived as $customer}
                     <div class="flex flex-col sm:flex-row justify-between items-center rounded border-l-8 border-[#3056d3] bg-gray-100 dark:bg-gray-400 mr-4">
-                        <h2 class="pl-2 sm:pl-0 text-2xl w-full sm:w-1/3 font-bold text-black m-2 items-center">{$customer->fullname} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
+                        <h2 class="pl-2 sm:pl-0 text-2xl w-full sm:w-1/3 font-bold text-black m-2 items-center">{$customer->name} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
                         <div class="hidden sm:flex w-1/3 items-center">
                             <p class="w-1/2"><i class="fa-solid fa-mobile-screen fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="tel:{$customer->telephone}">{$customer->telephone}</a></p>
                             <p class="w-1/2"><i class="fa-solid fa-at fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="mailto:{$customer->email}">{$customer->email}</a></p>

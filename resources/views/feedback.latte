@@ -21,18 +21,18 @@
                     <form class="space-y-4" method="post" action="{route('storeFeedback')}">
                         {csrf_field()|noescape}
                         <input type="hidden" name="hash" value="{$hash}">
+                        <input type="hidden" name="customer" value="{$customer}">
                         <div>
                             <label for="variant" class="block mb-2 text-sm font-medium text-gray-900">Varianta</label>
                             <input type="text" id="variant" name="variant" class="bg-gray-100 text-gray-500 sm:text-sm rounded-lg block w-full p-2.5" value="{$variant}" readonly>
                         </div>
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Jméno a příjmení <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                            <input type="text" name="fullname" id="name" class="bg-gray-100 sm:text-sm rounded-lg block w-full p-2.5 text-black" required>
-                            <small id="emailHelp" class="form-text text-muted text-sm opacity-50">Vyplněním jména souhlasíte se zveřejněním na webu.</small>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Jméno a příjmení</label>
+                            <input type="text" name="name" id="name" value="{\Illuminate\Support\Facades\DB::table('customers')->where('id', $customer)->value('name')}" class="bg-gray-100 sm:text-sm rounded-lg block w-full p-2.5 text-black" readonly>
                         </div>
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Text recenze <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                            <textarea type="text" name="message" id="name" class="bg-gray-100 sm:text-sm rounded-lg block w-full p-2.5 text-black" required></textarea>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Text recenze</label>
+                            <textarea type="text" name="message" id="name" class="bg-gray-100 sm:text-sm rounded-lg block w-full p-2.5 text-black"></textarea>
                         </div>
                         <label for="rating" class="block text-sm font-medium text-gray-900">Hodnocení <i class="fa-solid fa-asterisk text-red-600"></i></label>
                         <div class="rating">

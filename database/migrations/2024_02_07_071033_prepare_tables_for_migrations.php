@@ -28,16 +28,16 @@ return new class () extends Migration {
             $table->boolean('archived')->default(false);
         });
 
-        Schema::create('calendar', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('date');
-            $table->boolean('done')->default(false);
-        });
+//        Schema::create('calendar', function (Blueprint $table) {
+//            $table->id();
+//            $table->dateTime('date');
+//            $table->boolean('done')->default(false);
+//        });
 
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->string('hash', 255)->primary();
             $table->string('name', 255);
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->integer('rating');
             $table->boolean('fromGoogle')->default(false);
         });
@@ -59,8 +59,8 @@ return new class () extends Migration {
         });
 
         Schema::table('customers', function (Blueprint $table) {
-            $table->unsignedBigInteger('calendar_id')->nullable();
-            $table->foreign('calendar_id')->references('id')->on('calendar');
+//            $table->unsignedBigInteger('calendar_id')->nullable();
+//            $table->foreign('calendar_id')->references('id')->on('calendar');
             $table->string('feedback_hash')->nullable();
             $table->foreign('feedback_hash')->references('hash')->on('feedbacks');
             $table->unsignedBigInteger('invoice_id')->nullable();
@@ -68,10 +68,10 @@ return new class () extends Migration {
         });
 
 
-        Schema::table('calendar', function (Blueprint $table) {
-            $table->unsignedBigInteger('invoice_id')->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices');
-        });
+//        Schema::table('calendar', function (Blueprint $table) {
+//            $table->unsignedBigInteger('invoice_id')->nullable();
+//            $table->foreign('invoice_id')->references('id')->on('invoices');
+//        });
     }
 
     /**
@@ -82,7 +82,7 @@ return new class () extends Migration {
         Schema::dropIfExists('vouchers');
         Schema::dropIfExists('invoices');
         Schema::dropIfExists('feedbacks');
-        Schema::dropIfExists('calendar');
+//        Schema::dropIfExists('calendar');
         Schema::dropIfExists('customers');
         Schema::rename('old_customers', 'customers');
         Schema::rename('old_feedbacks', 'feedbacks');

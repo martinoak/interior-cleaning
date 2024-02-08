@@ -22,20 +22,24 @@ class DatabaseFacade
         return DB::table('customers')->where('id', $id)->update(['feedbackSent' => 1]);
     }
 
-    public function saveFeedback(array $data, ?string $variant = null): void
+    public function saveFeedback(array $data): void
     {
         $isDuplicity = $this->getFeedbackByHash($data['hash']);
 
         if (!$isDuplicity) {
             DB::table('feedbacks')->insert([
                 'hash' => $data['hash'],
-                'fullname' => $data['fullname'],
+                'name' => $data['name'],
                 'message' => $data['message'],
                 'rating' => $data['stars'],
-                'variant' => $variant,
-                'isGoogle' => $data['isGoogle'] ?? false,
+                'fromGoogle' => $data['fromGoogle'] ?? false,
             ]);
         }
+    }
+
+    public function linkCustomerToFeedback(int $customerId, string $feedbackHash): void
+    {
+        DB::table('customers')->where('id', $customerId)->update(['feedback_hash' => $feedbackHash]);
     }
 
     public function setVariant(int $id, string $variant): int
@@ -69,8 +73,8 @@ class DatabaseFacade
 
         DB::table('invoices')->insert([
             'type' => 'T',
-            'date' => $customer->hasTerm,
-            'name' => $customer->fullname,
+            'date' => $customer->term,
+            'name' => $customer->name,
             'price' => CleaningTypes::from($customer->variant)->getRawPrice(),
             'worker' => 'S',
         ]);
@@ -93,7 +97,7 @@ class DatabaseFacade
     public function getTodayCustomers(): array
     {
         return DB::table('customers')
-            ->where('hasTerm', date('Y-m-d'))
+            ->where('term', date('Y-m-d'))
             ->get()
             ->toArray();
     }
@@ -101,12 +105,12 @@ class DatabaseFacade
     public function saveCustomer(array $data): void
     {
         DB::table('customers')->insert([
-            'fullname' => $data['name'],
+            'name' => $data['name'],
             'email' => $data['email'] ?? 'dev@cisteni-kondrac.cz',
             'telephone' => $data['telephone'] ?? '',
             'message' => $data['message'],
             'variant' => $data['variant'],
-            'hasTerm' => $data['date']
+            'term' => $data['date'] ?? null
         ]);
     }
 
@@ -115,25 +119,25 @@ class DatabaseFacade
         $customer = $this->getCustomerById($data['id']);
 
         DB::table('customers')->where('id', $data['id'])->update([
-            'fullname' => $data['name'] ?? $customer->fullname,
+            'name' => $data['name'] ?? $customer->name,
             'email' => $data['email'] ?? $customer->email,
             'telephone' => $data['telephone'] ?? $customer->telephone,
             'variant' => $data['variant'] ?? $customer->variant,
             'message' => $data['message'] ?? $customer->message,
-            'hasTerm' => $data['date'] ?? $customer->hasTerm,
+            'term' => $data['date'] ?? $customer->term,
         ]);
     }
 
     public function getFirstFutureCustomer(): string
     {
         $customer = DB::table('customers')
-            ->where('isArchived', 0)
-            ->where('hasTerm', '>=', date('Y-m-d'))
-            ->orderBy('hasTerm')
+            ->where('archived', 0)
+            ->where('term', '>=', date('Y-m-d'))
+            ->orderBy('term')
             ->first();
 
         if ($customer) {
-            $term = \DateTime::createFromFormat('Y-m-d', $customer->hasTerm);
+            $term = \DateTime::createFromFormat('Y-m-d', $customer->term);
             return $term->format('j.n.');
         } else {
             return 'Žádný';
@@ -143,7 +147,7 @@ class DatabaseFacade
 
     public function archiveCustomer(int $id): void
     {
-        DB::table('customers')->where('id', $id)->update(['isArchived' => 1]);
+        DB::table('customers')->where('id', $id)->update(['archived' => 1]);
     }
 
     public function deleteCustomer(int $id): void
@@ -153,7 +157,7 @@ class DatabaseFacade
 
     public function getNotArchivedCustomers(): array
     {
-        return DB::table('customers')->where('isArchived', 0)->get()->toArray();
+        return DB::table('customers')->where('archived', 0)->get()->toArray();
     }
 
     public function getTotalVariants(CleaningTypes $type): int

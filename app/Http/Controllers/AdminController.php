@@ -119,8 +119,8 @@ class AdminController extends Controller
     public function showCustomers(): View
     {
         return view('admin.customers', [
-            'customers' => $this->facade->getCustomers(['isArchived' => 0]),
-            'archived' => $this->facade->getCustomers(['isArchived' => 1]),
+            'customers' => $this->facade->getCustomers(['archived' => 0]),
+            'archived' => $this->facade->getCustomers(['archived' => 1]),
         ]);
     }
 

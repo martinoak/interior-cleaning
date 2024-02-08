@@ -33,7 +33,7 @@
                 {foreach $feedbacks as $feedback}
                     <div class="flex flex-col rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400 mr-4">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-2xl font-bold text-black m-4 items-center">{$feedback->fullname} {if !$feedback->variant}<button class="px-2 bg-black rounded mx-2" disabled><i class="fa-brands fa-google text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {$feedback->variant}</span>{/if}</h3>
+                            <h3 class="text-2xl font-bold text-black m-4 items-center">{$feedback->name} {if $feedback->fromGoogle}<button class="px-2 bg-black rounded mx-2" disabled><i class="fa-brands fa-google text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {\Illuminate\Support\Facades\DB::table('customers')->where('feedback_hash', $feedback->hash)->value('variant')}</span>{/if}</h3>
                             <p class="flex items-center xl:hidden text-black font-black mr-2">
                                 {$feedback->rating}<i class="text-yellow-500 fa-solid fa-star"></i>
                             </p>

@@ -199,7 +199,7 @@
                                             {foreach $customers as $customer}
                                                 <tr style="border-bottom: 1px solid #aaa">
                                                     <td style="color:black;font-size:14px;line-height:24px;font-weight:400;letter-spacing:0; padding: 10px">
-                                                        <strong>Jméno: </strong> {$customer->fullname}<br>
+                                                        <strong>Jméno: </strong> {$customer->name}<br>
                                                         <strong>Telefon: </strong> <a href="tel:{$customer->telephone}">{$customer->telephone}</a><br>
                                                         <strong>Varianta: </strong> {$customer->variant}<br>
                                                         <strong>Zpráva: </strong> {$customer->message ?? ''}<br>
