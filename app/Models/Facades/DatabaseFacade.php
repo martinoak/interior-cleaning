@@ -106,8 +106,8 @@ class DatabaseFacade
     {
         DB::table('customers')->insert([
             'name' => $data['name'],
-            'email' => $data['email'] ?? 'dev@cisteni-kondrac.cz',
-            'telephone' => $data['telephone'] ?? '',
+            'email' => $data['email'],
+            'telephone' => $data['telephone'],
             'message' => $data['message'],
             'variant' => $data['variant'],
             'term' => $data['date'] ?? null
