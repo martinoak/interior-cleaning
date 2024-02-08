@@ -46,9 +46,7 @@ class SendDayScheduleCron extends Command
             fwrite($file, date('Y-m-d H:i:s') . " [CRON] Customers today: " . count($customers) . "\n");
 
             foreach ($recipients as $recipient) {
-                Mail::to($recipient)
-                    ->bcc('martin.dub@dek-cz.com')
-                    ->send(new SendTodayScheduleMail($customers));
+                Mail::to($recipient)->send(new SendTodayScheduleMail($customers));
 
                 fwrite($file, date('Y-m-d H:i:s') . ' [CRON] Today schedule sent to ' . $recipient . "\n");
             }

@@ -45,9 +45,8 @@ class SendMonthlyBillCron extends Command
             $invoice->type === 'N' ? $total -= $invoice->price : $total += $invoice->price;
         }
 
-        Mail::to('stepan@cisteni-kondrac.cz')
-            ->bcc('martin.dub@dek-cz.com')
-            ->send(new SendMonthlyBillMail($total));
+        Mail::to('stepan@cisteni-kondrac.cz')->send(new SendMonthlyBillMail($total));
+
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Monthly Bill finished\n");
     }
 }

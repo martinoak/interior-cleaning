@@ -39,9 +39,7 @@ class HomepageController extends Controller
     {
         $this->facade->saveCustomer($request->all());
 
-        Mail::to('stepan@cisteni-kondrac.cz')
-            ->bcc('martin.dub@dek-cz.com')
-            ->send(new FormEmail($request->all()));
+        Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($request->all()));
 
         return back()->with('success', 'Email odeslán!');
     }

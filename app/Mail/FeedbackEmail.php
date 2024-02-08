@@ -32,7 +32,6 @@ class FeedbackEmail extends Mailable
     {
         return new Envelope(
             from: config('mail.from.address'),
-            bcc: 'martin.dub@dek-cz.com',
             subject: 'Děkuji za návštěvu!'
         );
     }

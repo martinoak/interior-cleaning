@@ -28,7 +28,6 @@ class FormEmail extends Mailable
     {
         return new Envelope(
             from: config('mail.from.address'),
-            bcc: 'martin.dub@dek-cz.com',
             replyTo: $this->details['email'],
             subject: 'Nová poptávka'
         );
