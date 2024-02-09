@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8cbf99b52729326976ec3d04b710f46b",
+    "content-hash": "c5c98b6abb831bc00380db727b807296",
     "packages": [
         {
             "name": "brick/math",
@@ -3389,6 +3389,76 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "sunrise/vin",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/vin.git",
+                "reference": "721e36239d001d89a6f6a02b8c2a79b2655c79cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/vin/zipball/721e36239d001d89a6f6a02b8c2a79b2655c79cf",
+                "reference": "721e36239d001d89a6f6a02b8c2a79b2655c79cf",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "data/manufacturers.php",
+                    "data/regions.php",
+                    "data/years.php"
+                ],
+                "psr-4": {
+                    "Sunrise\\Vin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "afenric@gmail.com",
+                    "homepage": "https://github.com/fenric"
+                },
+                {
+                    "name": "李昀陞 (Peter)",
+                    "email": "peter279k@gmail.com",
+                    "homepage": "https://github.com/peter279k"
+                },
+                {
+                    "name": "Saud bin Mohammed",
+                    "email": "saud@samaphp.com",
+                    "homepage": "https://github.com/samaphp"
+                }
+            ],
+            "description": "VIN decoder for PHP 7.1+ based on ISO-3779",
+            "homepage": "https://github.com/sunrise-php/vin",
+            "keywords": [
+                "PHP7",
+                "decoder",
+                "fenric",
+                "iso-3779",
+                "php8",
+                "sunrise",
+                "vin"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/vin/issues",
+                "source": "https://github.com/sunrise-php/vin/tree/v1.2.1"
+            },
+            "time": "2022-04-20T13:34:29+00:00"
         },
         {
             "name": "symfony/console",
@@ -8292,5 +8362,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

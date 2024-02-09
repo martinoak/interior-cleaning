@@ -17,7 +17,7 @@ return [
         'middle' => [
             '<strong>Detailní</strong> luxování interiéru',
             'Vyluxování zavazadlového prostoru',
-            'Vyčištění koberečků a umytí disků',
+            'Vyčištění koberečků',
             'Ošetření plastů proti poškrábání',
             'Důkladné vyčištění párou',
             'Vyleštění oken a zrcátek',
@@ -27,7 +27,7 @@ return [
         'deluxe' => [
             '<strong>Detailní</strong> luxování interiéru',
             'Vyluxování zavazadlového prostoru',
-            'Vyčištění koberečků a umytí disků',
+            'Vyčištění koberečků',
             'Ošetření plastů proti poškrábání',
             'Důkladné vyčištění párou',
             'Vyleštění všech oken z obou stran',

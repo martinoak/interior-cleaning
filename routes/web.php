@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\VinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,8 +58,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('development', [AdminController::class, 'showDevelopment'])->name('admin.development');
 
     Route::get('log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog');
+
+    Route::resource('vin', VinController::class)->except('show');
 });
 
 /* CRONY */
-Route::any('cron/today', [CronController::class, 'today'])->name('cron.today');
-Route::any('cron/bill', [CronController::class, 'bill'])->name('cron.bill');
+Route::group(['prefix' => 'cron'], function () {
+    Route::any('today', [CronController::class, 'today'])->name('cron.today');
+    Route::any('bill', [CronController::class, 'bill'])->name('cron.bill');
+});
