@@ -30,32 +30,34 @@ Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('admin', [AdminController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+    Route::get('/', [AdminController::class, 'showDashboard'])->name('dashboard');
 
-Route::get('admin/invoices', [AdminController::class, 'showInvoices'])->name('admin.invoices')->middleware('auth');
-Route::any('showInvoice/{id}', [AdminController::class, 'showInvoice'])->name('showInvoice')->middleware('auth');
+    Route::get('invoices', [AdminController::class, 'showInvoices'])->name('admin.invoices');
+    Route::any('showInvoice/{id}', [AdminController::class, 'showInvoice'])->name('showInvoice');
 
-Route::get('admin/customers', [AdminController::class, 'showCustomers'])->name('admin.customers')->middleware('auth');
-Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
-Route::any('updateCustomer/{id}', [AdminController::class, 'updateCustomer'])->name('updateCustomer');
-Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
-Route::any('archive-customer/{id}', [AdminController::class, 'archiveCustomer'])->name('archiveCustomer');
-Route::get('deleteCustomer/{id}', [AdminController::class, 'deleteCustomer'])->name('deleteCustomer');
-Route::any('newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
+    Route::get('customers', [AdminController::class, 'showCustomers'])->name('admin.customers');
+    Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
+    Route::any('updateCustomer/{id}', [AdminController::class, 'updateCustomer'])->name('updateCustomer');
+    Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
+    Route::any('archive-customer/{id}', [AdminController::class, 'archiveCustomer'])->name('archiveCustomer');
+    Route::get('deleteCustomer/{id}', [AdminController::class, 'deleteCustomer'])->name('deleteCustomer');
+    Route::any('newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
 
-Route::get('admin/feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback')->middleware('auth');
-Route::any('admin/refresh-feedbacks', [AdminController::class, 'refreshFeedbacks'])->name('admin.feedbacks.refresh')->middleware('auth');
+    Route::get('feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback');
+    Route::any('refresh-feedbacks', [AdminController::class, 'refreshFeedbacks'])->name('admin.feedbacks.refresh');
 
-Route::get('admin/vouchers', [AdminController::class, 'showVouchers'])->name('admin.vouchers')->middleware('auth');
-Route::any('generateVoucher/{price}', [AdminController::class, 'generateVoucher'])->name('generateVoucher');
-Route::post('validateVoucher', [AdminController::class, 'validateVoucher'])->name('validateVoucher');
-Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVoucher');
-Route::any('admin/showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher')->middleware('auth');
-Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');
+    Route::get('vouchers', [AdminController::class, 'showVouchers'])->name('admin.vouchers');
+    Route::any('generateVoucher/{price}', [AdminController::class, 'generateVoucher'])->name('generateVoucher');
+    Route::post('validateVoucher', [AdminController::class, 'validateVoucher'])->name('validateVoucher');
+    Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVoucher');
+    Route::any('showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher');
+    Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');
 
-Route::get('admin/development', [AdminController::class, 'showDevelopment'])->name('admin.development')->middleware('auth');
+    Route::get('development', [AdminController::class, 'showDevelopment'])->name('admin.development');
 
-Route::get('admin/log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog')->middleware('auth');
+    Route::get('log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog');
+});
 
 /* CRONY */
 Route::any('cron/today', [CronController::class, 'today'])->name('cron.today');

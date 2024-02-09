@@ -15,9 +15,4 @@ class CronController extends Controller
     {
         Artisan::call('app:monthly-bill');
     }
-
-    public function bill(): void
-    {
-        Artisan::call('app:monthly-bill');
-    }
 }

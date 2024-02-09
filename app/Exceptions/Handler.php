@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Mail\ExceptionOccuredMail;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
 
