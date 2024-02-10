@@ -7,13 +7,14 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class SendTodayScheduleMail extends Mailable
 {
     use Queueable;
     use SerializesModels;
 
-    private array $customers;
+    private Collection $customers;
 
     /**
      * Create a new message instance.

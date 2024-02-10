@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
     Route::get('customers', [AdminController::class, 'showCustomers'])->name('admin.customers');
     Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
-    Route::any('updateCustomer/{id}', [AdminController::class, 'updateCustomer'])->name('updateCustomer');
+    Route::any('updateCustomer', [AdminController::class, 'updateCustomer'])->name('updateCustomer');
     Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
     Route::any('archive-customer/{id}', [AdminController::class, 'archiveCustomer'])->name('archiveCustomer');
     Route::get('deleteCustomer/{id}', [AdminController::class, 'deleteCustomer'])->name('deleteCustomer');
