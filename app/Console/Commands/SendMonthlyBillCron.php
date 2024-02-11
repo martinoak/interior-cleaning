@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\SendMonthlyBillMail;
 use App\Models\Facades\DatabaseFacade;
+use App\Models\Invoice;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -38,7 +39,7 @@ class SendMonthlyBillCron extends Command
         $file = fopen(storage_path('logs/cron.log'), 'a');
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Monthly Bill started\n");
 
-        $invoices = $this->facade->getThisMonthInvoices();
+        $invoices = Invoice::whereMonth('date', date('m'))->get();
 
         $total = 0;
         foreach ($invoices as $invoice) {

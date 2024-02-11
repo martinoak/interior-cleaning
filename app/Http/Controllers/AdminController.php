@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Facades\DatabaseFacade;
 use App\Models\Feedback;
 use App\Models\Invoice;
+use App\Models\Voucher;
 use Cassandra\Custom;
 use DateTime;
 use Exception;
@@ -56,7 +57,7 @@ class AdminController extends Controller
             file_put_contents(storage_path('logs/cron.log'), '');
         }
 
-        $invoices = $this->facade->getInvoices();
+        $invoices = Invoice::all();
         $earnings = [];
 
         foreach ($invoices as $i) {
@@ -74,7 +75,7 @@ class AdminController extends Controller
         }
 
         $annual = 0;
-        foreach ($this->facade->getThisYearInvoices() as $a) {
+        foreach (Invoice::whereYear('date', date('Y'))->get() as $a) {
             if ($a->type === 'N') {
                 $annual -= $a->price;
             } else {
@@ -83,7 +84,7 @@ class AdminController extends Controller
         }
 
         $month = 0;
-        foreach ($this->facade->getThisMonthInvoices() as $m) {
+        foreach (Invoice::whereMonth('date', date('m'))->get() as $m) {
             if ($m->type === 'N') {
                 $month -= $m->price;
             } else {
@@ -137,7 +138,7 @@ class AdminController extends Controller
     public function showVouchers(): View
     {
         return view('admin.vouchers', [
-            'vouchers' => $this->facade->getNotAcceptedVouchers(),
+            'vouchers' => Voucher::where(['accepted' => 0])->orderBy('date', 'desc')->get(),
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ]);
     }
@@ -206,7 +207,7 @@ class AdminController extends Controller
      */
     public function validateVoucher(Request $request): View
     {
-        $voucher = $this->facade->getVoucherByHash($request->get('hash'));
+        $voucher = Voucher::find($request->get('hash'));
         if (!$voucher) {
             return view('admin.vouchers', [
                 'checkedVoucher' => [
@@ -248,10 +249,10 @@ class AdminController extends Controller
 
     public function useVoucher(Request $request): View
     {
-        $this->facade->useVoucher($request->get('hash'));
+        Voucher::find($request->get('hash'))->update(['accepted' => 1]);
 
         return view('admin.vouchers', [
-            'vouchers' => $this->facade->getVouchers(['accepted' => 0]),
+            'vouchers' => Voucher::where(['accepted' => 0]),
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ])->with('success', 'Voucher byl úspěšně použit!');
     }
