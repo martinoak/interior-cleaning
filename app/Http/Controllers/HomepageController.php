@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Enums\CleaningTypes;
 use App\Mail\FeedbackEmail;
 use App\Mail\FormEmail;
+use App\Models\Customer;
 use App\Models\Facades\DatabaseFacade;
+use App\Models\Feedback;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,14 +32,14 @@ class HomepageController extends Controller
         }
 
         return view('home', [
-            'feedbacks' => $this->facade->getFeedbacks(),
+            'feedbacks' => Feedback::all(),
             'pricelist' => $pricelist,
         ]);
     }
 
     public function sendEmail(Request $request): RedirectResponse
     {
-        $this->facade->saveCustomer($request->all());
+        Customer::create($request->all());
 
         Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($request->all()));
 
@@ -48,14 +50,15 @@ class HomepageController extends Controller
     {
         Mail::to($request->get('email'))
             ->send(new FeedbackEmail($request->get('id'), CleaningTypes::from($request->get('variant'))->value));
-        $this->facade->setFeedbackSent($request->get('id'));
+
+        Customer::where('id', $request->get('id'))->update(['feedbackSent' => 1]);
 
         return back()->with('success', 'Feedback email odeslán!');
     }
 
     public function setVariant(Request $request): RedirectResponse
     {
-        $this->facade->setVariant($request->get('id'), $request->get('variant'));
+        Customer::find($request->get('id'))->update(['variant' => $request->get('variant')]);
 
         return back()->with('success', 'Varianta nastavena!');
     }
@@ -71,13 +74,13 @@ class HomepageController extends Controller
 
     public function storeFeedback(Request $request): RedirectResponse
     {
-        $isDuplicity = $this->facade->getFeedbackByHash($request->get('hash'));
-
-        if ($isDuplicity) {
+        if (Feedback::where('hash', $request->input('hash'))->exists()) {
             return back()->with('error', 'Tento feedback již byl odeslán, děkujeme.');
         } else {
-            $this->facade->saveFeedback($request->all());
-            $this->facade->linkCustomerToFeedback($request->input('customer'), $request->input('hash'));
+            $feedback = Feedback::create($request->all());
+            $feedback->save();
+
+            Customer::find($request->input('customer'))->update(['feedback_hash' => $feedback->hash]);
 
             return to_route('homepage')->with('success', 'Feedback odeslán, děkujeme.');
         }

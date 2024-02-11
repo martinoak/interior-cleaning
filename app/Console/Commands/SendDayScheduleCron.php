@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\SendTodayScheduleMail;
+use App\Models\Customer;
 use App\Models\Facades\DatabaseFacade;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -38,10 +39,12 @@ class SendDayScheduleCron extends Command
         $file = fopen(storage_path('logs/cron.log'), 'a');
         fwrite($file, date('Y-m-d H:i:s') . " [CRON] Today schedule started\n");
 
-        $customers = $this->facade->getTodayCustomers();
+        $customers = Customer::where('term', date('Y-m-d'))->get();
 
         if(count($customers) === 0) {
             fwrite($file, date('Y-m-d H:i:s') . " [CRON] No customers for weekend schedule\n");
+
+            echo "No customers for weekend schedule\n";
         } else {
             fwrite($file, date('Y-m-d H:i:s') . " [CRON] Customers today: " . count($customers) . "\n");
 
@@ -50,6 +53,8 @@ class SendDayScheduleCron extends Command
 
                 fwrite($file, date('Y-m-d H:i:s') . ' [CRON] Today schedule sent to ' . $recipient . "\n");
             }
+
+            echo "Today schedule sent\n";
         }
     }
 }

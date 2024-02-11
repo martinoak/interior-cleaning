@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CleaningTypes;
+use App\Models\Customer;
 use App\Models\Facades\DatabaseFacade;
+use App\Models\Feedback;
+use App\Models\Invoice;
+use App\Models\Voucher;
+use Cassandra\Custom;
 use DateTime;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Testing\Fakes\MailFake;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -24,17 +26,24 @@ class AdminController extends Controller
 
     public function archiveCustomer($id): RedirectResponse
     {
-        $this->facade->archiveCustomer($id);
-        $invoice_id = $this->facade->saveInvoice($id);
+        Customer::find($id)->update(['archived' => 1]);
+        $invoice = Invoice::create([
+            'type' => 'T',
+            'date' => Customer::find($id)->term,
+            'name' => Customer::find($id)->name,
+            'price' => CleaningTypes::from(Customer::find($id)->variant)->getRawPrice(),
+            'worker' => 'S',
+        ]);
+        $invoice->save();
 
-        $this->facade->linkCustomerToInvoice($id, $invoice_id);
+        Customer::find($id)->update(['invoice_id' => $invoice->id]);
 
         return back()->with('success', 'Zákazník byl archivován');
     }
 
     public function deleteCustomer(int $id): RedirectResponse
     {
-        $this->facade->deleteCustomer($id);
+        Customer::destroy($id);
 
         return back()->with('success', 'Zákazník byl smazán');
     }
@@ -48,7 +57,7 @@ class AdminController extends Controller
             file_put_contents(storage_path('logs/cron.log'), '');
         }
 
-        $invoices = $this->facade->getInvoices();
+        $invoices = Invoice::all();
         $earnings = [];
 
         foreach ($invoices as $i) {
@@ -66,7 +75,7 @@ class AdminController extends Controller
         }
 
         $annual = 0;
-        foreach ($this->facade->getThisYearInvoices() as $a) {
+        foreach (Invoice::whereYear('date', date('Y'))->get() as $a) {
             if ($a->type === 'N') {
                 $annual -= $a->price;
             } else {
@@ -75,7 +84,7 @@ class AdminController extends Controller
         }
 
         $month = 0;
-        foreach ($this->facade->getThisMonthInvoices() as $m) {
+        foreach (Invoice::whereMonth('date', date('m'))->get() as $m) {
             if ($m->type === 'N') {
                 $month -= $m->price;
             } else {
@@ -84,14 +93,14 @@ class AdminController extends Controller
         }
 
         return view('admin.admin', [
-            'customers' => $this->facade->getNotArchivedCustomers(),
+            'customers' => Customer::where('archived', 0)->get(),
             'calendar' => $this->facade->getFirstFutureCustomer(),
             'annual' => $annual,
             'month' => $month,
             'variants' => [
-                CleaningTypes::START->value => $this->facade->getTotalVariants(CleaningTypes::START),
-                CleaningTypes::MIDDLE->value => $this->facade->getTotalVariants(CleaningTypes::MIDDLE),
-                CleaningTypes::DELUXE->value => $this->facade->getTotalVariants(CleaningTypes::DELUXE),
+                CleaningTypes::START->value => Customer::where('variant', CleaningTypes::START)->count(),
+                CleaningTypes::MIDDLE->value => Customer::where('variant', CleaningTypes::MIDDLE)->count(),
+                CleaningTypes::DELUXE->value => Customer::where('variant', CleaningTypes::DELUXE)->count(),
             ],
             'earnings' => $earnings,
         ]);
@@ -100,7 +109,7 @@ class AdminController extends Controller
     public function showFeedback(): View
     {
         return view('admin.feedbacks', [
-            'feedbacks' => $this->facade->getFeedbacks(),
+            'feedbacks' => Feedback::all()
         ]);
     }
 
@@ -121,15 +130,15 @@ class AdminController extends Controller
     public function showCustomers(): View
     {
         return view('admin.customers', [
-            'customers' => $this->facade->getCustomers(['archived' => 0]),
-            'archived' => $this->facade->getCustomers(['archived' => 1]),
+            'customers' => Customer::where('archived', 0)->get(),
+            'archived' => Customer::where('archived', 1)->get(),
         ]);
     }
 
     public function showVouchers(): View
     {
         return view('admin.vouchers', [
-            'vouchers' => $this->facade->getNotAcceptedVouchers(),
+            'vouchers' => Voucher::where(['accepted' => 0])->orderBy('date', 'desc')->get(),
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ]);
     }
@@ -141,21 +150,21 @@ class AdminController extends Controller
 
     public function updateCustomer(Request $request): RedirectResponse
     {
-        $this->facade->updateCustomer($request->all());
+        Customer::find($request->input('id'))->update($request->all());
 
         return back()->with('success', 'Zákazník byl úspěšně aktualizován!');
     }
 
     public function saveCustomer(Request $request): RedirectResponse
     {
-        $this->facade->saveCustomer($request->all());
+        Customer::create($request->all());
 
         return back()->with('success', 'Zákazník byl úspěšně přidán!');
     }
 
     public function showInvoice(int $id): BinaryFileResponse
     {
-        $data = $this->facade->getInvoiceById($id);
+        $data = Invoice::find($id);
 
         if (!file_exists(storage_path('app/public/invoice'))) {
             mkdir(storage_path('app/public/invoice'));
@@ -198,7 +207,7 @@ class AdminController extends Controller
      */
     public function validateVoucher(Request $request): View
     {
-        $voucher = $this->facade->getVoucherByHash($request->get('hash'));
+        $voucher = Voucher::find($request->get('hash'));
         if (!$voucher) {
             return view('admin.vouchers', [
                 'checkedVoucher' => [
@@ -240,10 +249,10 @@ class AdminController extends Controller
 
     public function useVoucher(Request $request): View
     {
-        $this->facade->useVoucher($request->get('hash'));
+        Voucher::find($request->get('hash'))->update(['accepted' => 1]);
 
         return view('admin.vouchers', [
-            'vouchers' => $this->facade->getVouchers(['accepted' => 0]),
+            'vouchers' => Voucher::where(['accepted' => 0]),
             'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
         ])->with('success', 'Voucher byl úspěšně použit!');
     }

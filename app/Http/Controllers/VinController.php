@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use InvalidArgumentException;
-use Sunrise\Vin\Vin;
+use Sunrise\Vin\Vin as ParserVin;
 
 class VinController extends Controller
 {
@@ -16,7 +17,7 @@ class VinController extends Controller
      */
     public function index(): View
     {
-        $cars = DB::table('vin')->get();
+        $cars = Vin::all();
 
         return view('admin.vin.index', compact('cars'));
     }
@@ -35,9 +36,13 @@ class VinController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $vin = new Vin($request->input('vin'));
+            $vin = new ParserVin($request->input('vin'));
 
-            DB::table('vin')->insert([
+            if (Vin::find($vin->getVin())) {
+                return back()->with('error','VIN již existuje.')->withInput();
+            }
+
+            Vin::create([
                 'vin' => $vin->getVin(),
                 'name' => $request->input('name'),
                 'manufacturer' => $vin->getManufacturer(),
@@ -58,7 +63,7 @@ class VinController extends Controller
      */
     public function edit(string $vin): View
     {
-        $car = DB::table('vin')->where('vin', $vin)->first();
+        $car = Vin::find($vin);
 
         return view('admin.vin.edit', compact('car'));
     }
@@ -68,28 +73,15 @@ class VinController extends Controller
      */
     public function update(Request $request, string $vin): RedirectResponse
     {
-        DB::table('vin')->where('vin', $vin)->update([
-            'vin' => $request->input('vin'),
-            'name' => $request->input('name'),
-            'manufacturer' => $request->input('manufacturer'),
-            'model' => $request->input('model'),
-            'engine' => $request->input('engine'),
-            'year' => $request->input('year'),
-            'note' => $request->input('note'),
-        ]);
+        Vin::find($vin)->update($request->all());
 
         return to_route('vin.index')->with('success','VIN byl úspěšně upraven.');
     }
 
     public function destroy(string $vin): RedirectResponse
     {
-        DB::table('vin')->where('vin', $vin)->delete();
+        Vin::destroy($vin);
 
         return back()->with('success','VIN byl úspěšně smazán.');
-    }
-
-    protected function findCar(string $vin): ?object
-    {
-        return DB::table('vin')->where('vin', $vin)->first();
     }
 }
