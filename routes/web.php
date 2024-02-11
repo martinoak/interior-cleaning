@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\VinController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +35,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/', [AdminController::class, 'showDashboard'])->name('dashboard');
 
-    Route::get('invoices', [AdminController::class, 'showInvoices'])->name('admin.invoices');
-    Route::any('showInvoice/{id}', [AdminController::class, 'showInvoice'])->name('showInvoice');
+    Route::resource('invoices', InvoicesController::class)->except('create','store','destroy');
 
     Route::get('customers', [AdminController::class, 'showCustomers'])->name('admin.customers');
     Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');

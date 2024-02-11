@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Invoice;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class InvoicesController extends Controller
+{
+    public function index(): View
+    {
+        return view('admin.invoices', [
+            'invoices' => Invoice::orderBy('date', 'desc')->get(),
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id): RedirectResponse
+    {
+        $data = Invoice::find($id);
+
+        if (!file_exists(storage_path('app/public/invoice'))) {
+            mkdir(storage_path('app/public/invoice'));
+        }
+        $image = imagecreatefromjpeg(public_path('images/invoice/template.jpg'));
+        $color = imagecolorallocate($image, 0, 0, 0);
+        $font = public_path('fonts/Rubik.ttf');
+        imagettftext($image, 20, 0, 800, 100, $color, $font, utf8_decode($data->id));
+        imagettftext($image, 20, 0, 500, 150, $color, $font, date_create_from_format('Y-m-d', $data->date)->format('d. n.'));
+        imagettftext($image, 20, 0, 800, 150, $color, $font, substr(date_create_from_format('Y-m-d', $data->date)->format('Y'), -2));
+        imagettftext($image, 20, 0, 250, 200, $color, $font, utf8_decode($data->name));
+        imagettftext($image, 20, 0, 250, 340, $color, $font, 'Čištění interiéru auta');
+        imagettftext($image, 20, 0, 200, 410, $color, $font, utf8_decode($data->price));
+        imagettftext($image, 20, 0, 500, 540, $color, $font, utf8_decode('Štěpán Dub, '. date('d. m. Y')));
+
+        imagepng($image, storage_path('app/public/invoice/'.$id.'.png'));
+
+        return response()->download(storage_path('app/public/invoice/'.$id.'.png'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+}
