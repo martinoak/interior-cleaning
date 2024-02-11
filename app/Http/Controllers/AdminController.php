@@ -267,7 +267,7 @@ class AdminController extends Controller
     {
         $this->facade->saveVoucher($hex, '+3 months');
 
-        return back()->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
+        return to_route('admin.vouchers')->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
     }
 
     public function showDevelopment(): View

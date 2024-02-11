@@ -14,58 +14,66 @@
     <div class="bg-gray-50 dark:bg-gray-900 h-screen">
         {include '../partials/_admin_header.latte'}
         <div class="p-4 sm:ml-64">
-            <div class="flex gap-4 mb-4">
+            <div class="flex items-center gap-4 mb-4">
                 <h1 class="text-3xl font-bold text-black dark:text-white">Administrace</h1>
-                <a href="{route('export')}"><button class="p-1 px-2 bg-green-800 rounded text-white"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
+                <a href="{route('export')}"><button class="block text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
             </div>
-            <div class="grid grid-cols-1 gap-4 mb-4">
-                {foreach $invoices as $invoice}
-                    {switch $invoice->type}
-                        {case 'T'}
-                            <div class="flex flex-col rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-700 mr-4">
-                                <div class="flex justify-between items-center">
-                                    <h2 class="text-2xl font-bold text-black dark:text-white m-2 items-center"><i class="fa-solid fa-file-invoice-dollar fa-md mx-2 text-gray-500 dark:text-white"></i>{$invoice->name}</h2>
-                                    <div class="flex items-center gap-4">
-                                        <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
-                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
-                                        <a href="{route('showInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
-                                    </div>
-                                </div>
-                            </div>
-                        {case 'N'}
-                            <div class="flex flex-col rounded border-l-8 border-red-600 bg-gray-100 dark:bg-gray-700 mr-4">
-                                <div class="flex justify-between items-center">
-                                    <h2 class="text-2xl font-bold text-black dark:text-white m-2 items-center"><i class="fa-solid fa-receipt fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
-                                    <div class="flex items-center gap-4">
-                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
-                                        <button class="p-1 px-2 bg-red-600 rounded text-white mr-2" disabled>{$invoice->date|date:'j. n. Y'}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        {case 'P'}
-                            <div class="flex flex-col rounded border-l-8 border-[#3056d3] bg-gray-100 dark:bg-gray-700 mr-4">
-                                <div class="flex justify-between items-center">
-                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-gift fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
-                                    <div class="flex items-center gap-4">
-                                        <button class="p-1 px-2 bg-[#3056d3] rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
-                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
-                                        <a href="{route('showInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
-                                    </div>
-                                </div>
-                            </div>
-                        {default}
-                            <div class="flex flex-col rounded border-l-8 border-gray-500 bg-gray-100 mr-4">
-                                <div class="flex justify-between items-center">
-                                    <h2 class="text-2xl font-bold text-black m-2 items-center"><i class="fa-solid fa-dollar-sign fa-md mx-2 text-gray-500"></i>{$invoice->name}</h2>
-                                    <div class="flex items-center gap-4">
-                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->date|date:'j. n. Y'}</button>
-                                        <button class="p-1 px-2 bg-gray-500 rounded text-white" disabled>{$invoice->price|number:0,',', ' '},-</button>
-                                        <a href="{route('showInvoice', ['id' => $invoice->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white mr-2">Příjmový doklad</button></a>
-                                    </div>
-                                </div>
-                            </div>
-                    {/switch}
-                {/foreach}
+
+
+
+
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Zákazník
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Typ
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Datum
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Cena
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Akce
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $invoices as $invoice}
+                        <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-200 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {$invoice->name}
+                            </th>
+                            <td class="px-6 py-4">
+                                {switch $invoice->type}
+                                    {case 'T'}
+                                        <span class="bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 rounded-full px-3 py-1 text-xs font-semibold">T</span>
+                                    {case 'N'}
+                                        <span class="bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 rounded-full px-3 py-1 text-xs font-semibold">N</span>
+                                    {case 'P'}
+                                        <span class="bg-[#3056d3] text-white dark:bg-[#3056d3] dark:text-white rounded-full px-3 py-1 text-xs font-semibold">P</span>
+                                    {default}
+                                        <span class="bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100 rounded-full px-3 py-1 text-xs font-semibold">O</span>
+                                {/switch}
+                            </td>
+                            <td class="px-6 py-4">
+                                {$invoice->date|date:'j. n. Y'}
+                            </td>
+                            <td class="px-6 py-4 font-bold">
+                                {$invoice->price|number:0,',', ' '},-
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
