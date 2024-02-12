@@ -11,8 +11,13 @@ class InvoicesController extends Controller
 {
     public function index(): View
     {
-        return view('admin.invoices', [
+        $earnings = 0;
+        foreach (Invoice::all() as $invoice) {
+            $invoice->type === 'N' ? $earnings -= $invoice->price : $earnings += $invoice->price;
+        }
+        return view('admin.invoices.index', [
             'invoices' => Invoice::orderBy('date', 'desc')->get(),
+            'earnings' => $earnings,
         ]);
     }
 
@@ -45,16 +50,20 @@ class InvoicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        return view('admin.invoices.edit', [
+            'invoice' => Invoice::find($id),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        Invoice::find($id)->update($request->all());
+
+        return to_route('invoices.index');
     }
 }

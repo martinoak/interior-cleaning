@@ -1,22 +1,27 @@
-{layout '../layout.latte'}
+{layout '../../layout.latte'}
 
 {block head}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
 {/block}
 
 {block content}
-    {include '../partials/alerts_tw.latte'}
-    {include '../partials/_admin_sidebar.latte'}
+    {include '../../partials/alerts_tw.latte'}
+    {include '../../partials/_admin_sidebar.latte'}
 
     <div class="bg-gray-50 dark:bg-gray-900 h-screen">
-        {include '../partials/_admin_header.latte'}
+        {include '../../partials/_admin_header.latte'}
         <div class="p-4 sm:ml-64">
-            <div class="flex items-center gap-4 mb-4">
-                <h1 class="text-3xl font-bold text-black dark:text-white">Administrace</h1>
-                <a href="{route('export')}"><button class="block text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
+            <div class="flex justify-between items-center gap-4 mb-4">
+                <div class="flex">
+                    <h1 class="text-3xl font-bold text-black dark:text-white mr-3">Faktury</h1>
+                    <a href="{route('export')}"><button class="block text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
+                </div>
+                <div class="text-black dark:text-white">
+                    Celkem tržby: <span class="font-bold text-green-700 dark:text-green-400">{$earnings|number:0,',', ' '},-</span>
+                </div>
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -48,7 +53,7 @@
                             <td class="px-6 py-4">
                                 {switch $invoice->type}
                                     {case 'T'}
-                                        <span class="bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 rounded-full px-3 py-1 text-xs font-semibold">T</span>
+                                        <span class="bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 rounded-full px-3 py-1 text-xs font-semibold">{\App\Enums\InvoiceTypes::getName($invoice->type)->value}</span>
                                     {case 'N'}
                                         <span class="bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 rounded-full px-3 py-1 text-xs font-semibold">N</span>
                                     {case 'P'}
@@ -81,5 +86,5 @@
 {/block}
 
 {block bottomscripts}
-    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 {/block}
