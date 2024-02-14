@@ -1,64 +1,47 @@
 {layout '../layout.latte'}
 
-{block head}
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.css" />
-    <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
-{/block}
-
 {block content}
-    {include '../partials/alerts_tw.latte'}
-    {include '../partials/_admin_sidebar.latte'}
-
-    <div class="bg-gray-50 dark:bg-gray-900 h-screen">
-        {include '../partials/_admin_header.latte'}
-        <div class="p-4 sm:ml-64">
-            <div class="flex items-center gap-4 mb-4">
-                <h1 class="text-3xl font-bold text-black dark:text-white">Administrace</h1>
-                <a href="{route('admin.feedbacks.refresh')}"><button class="p-1 px-2 rounded border-2 dark:border-white dark:text-white border-black text-black"><i class="fa-brands fa-google fa-lg dark:text-white text-black mr-1"></i> Import recenzí </button></a>
+    <div class="p-4 sm:ml-64">
+        <div class="flex items-center gap-4 mb-4">
+            <h1 class="text-3xl font-bold text-black dark:text-white">Administrace</h1>
+            <a href="{route('admin.feedbacks.refresh')}"><button class="p-1 px-2 rounded border-2 dark:border-white dark:text-white border-black text-black"><i class="fa-brands fa-google fa-lg dark:text-white text-black mr-1"></i> Import recenzí </button></a>
+        </div>
+        <div class="flex justify-around text-black text-center">
+            <div class="flex flex-col">
+                <h2 class="text-black text-3xl font-black dark:text-white">{count($feedbacks)}</h2>
+                <span class="text-center text-gray-900 text-xl dark:text-white">Recenze</span>
             </div>
-           <div class="flex justify-around text-black text-center">
-                <div class="flex flex-col">
-                    <h2 class="text-black text-3xl font-black dark:text-white">{count($feedbacks)}</h2>
-                    <span class="text-center text-gray-900 text-xl dark:text-white">Recenze</span>
-                </div>
-                <div class="flex flex-col">
-                    <h2 class="text-black text-3xl font-black dark:text-white">{DB::table('feedbacks')->avg('rating')|number:2,'.'}</h2>
-                    <span class="text-center text-gray-900 text-xl dark:text-white">Průměrné hodnocení</span>
-                </div>
-            </div>
-            <hr class="w-46 lg:w-96 h-1 mx-auto bg-gray-300 border-0 rounded dark:bg-gray-50 my-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-                {foreach $feedbacks as $feedback}
-                    <div class="flex flex-col rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400 mr-4">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-2xl font-bold text-black m-4 items-center">{$feedback->name} {if $feedback->fromGoogle}<button class="px-2 bg-black rounded mx-2" disabled><i class="fa-brands fa-google text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {\Illuminate\Support\Facades\DB::table('customers')->where('feedback_hash', $feedback->hash)->value('variant')}</span>{/if}</h3>
-                            <p class="flex items-center xl:hidden text-black font-black mr-2">
-                                {$feedback->rating}<i class="text-yellow-500 fa-solid fa-star"></i>
-                            </p>
-                            <p class="hidden xl:block text-yellow-500 mr-2">
-                                {for $i = 1; $i <= 5; $i++}
-                                    {if $i <= $feedback->rating}
-                                        <i class="fa-solid fa-star"></i>
-                                    {else}
-                                        <i class="text-black fa-regular fa-star"></i>
-                                    {/if}
-                                {/for}
-                            </p>
-                        </div>
-                        {if !empty($feedback->message)}
-                            <div class="flex justify-between items-center ml-4 mb-4">
-                                <p><i class="fa-regular fa-comment fa-xl text-black mr-2"></i>{$feedback->message}</p>
-                            </div>
-                        {/if}
-                    </div>
-                {/foreach}
+            <div class="flex flex-col">
+                <h2 class="text-black text-3xl font-black dark:text-white">{DB::table('feedbacks')->avg('rating')|number:2,'.'}</h2>
+                <span class="text-center text-gray-900 text-xl dark:text-white">Průměrné hodnocení</span>
             </div>
         </div>
+        <hr class="w-46 lg:w-96 h-1 mx-auto bg-gray-300 border-0 rounded dark:bg-gray-50 my-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            {foreach $feedbacks as $feedback}
+                <div class="flex flex-col rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400 mr-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-black m-4 items-center">{$feedback->name} {if $feedback->fromGoogle}<button class="px-2 bg-black rounded mx-2" disabled><i class="fa-brands fa-google text-white fa-xs"></i></button>{else}<span class="text-lg text-gray-500">| {\App\Models\Customer::where('feedback_hash', $feedback->hash)->value('variant')}</span>{/if}</h3>
+                        <p class="flex items-center xl:hidden text-black font-black mr-2">
+                            {$feedback->rating}<i class="text-yellow-500 fa-solid fa-star"></i>
+                        </p>
+                        <p class="hidden xl:block text-yellow-500 mr-2">
+                            {for $i = 1; $i <= 5; $i++}
+                                {if $i <= $feedback->rating}
+                                    <i class="fa-solid fa-star"></i>
+                                {else}
+                                    <i class="text-black fa-regular fa-star"></i>
+                                {/if}
+                            {/for}
+                        </p>
+                    </div>
+                    {if !empty($feedback->message)}
+                        <div class="flex justify-between items-center ml-4 mb-4">
+                            <p><i class="fa-regular fa-comment fa-xl text-black mr-2"></i>{$feedback->message}</p>
+                        </div>
+                    {/if}
+                </div>
+            {/foreach}
+        </div>
     </div>
-{/block}
-
-{block bottomscripts}
-    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.js"></script>
 {/block}

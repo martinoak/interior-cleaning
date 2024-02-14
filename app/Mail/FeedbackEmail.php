@@ -12,16 +12,16 @@ class FeedbackEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public string $customerId;
+    public string $hash;
 
     public string $variant;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(int $customerId, string $variant)
+    public function __construct(string $hash, string $variant)
     {
-        $this->customerId = $customerId;
+        $this->hash = $hash;
         $this->variant = $variant;
     }
 
@@ -44,7 +44,7 @@ class FeedbackEmail extends Mailable
         return new Content(
             view: 'emails.feedback',
             with: [
-                'id' => $this->customerId,
+                'hash' => $this->hash,
                 'variant' => $this->variant,
             ]
         );

@@ -49,7 +49,7 @@ class HomepageController extends Controller
     public function sendFeedbackEmail(Request $request): RedirectResponse
     {
         Mail::to($request->get('email'))
-            ->send(new FeedbackEmail($request->get('id'), CleaningTypes::from($request->get('variant'))->value));
+            ->send(new FeedbackEmail(md5(time()), CleaningTypes::from($request->get('variant'))->value));
 
         Customer::where('id', $request->get('id'))->update(['feedbackSent' => 1]);
 
@@ -77,10 +77,7 @@ class HomepageController extends Controller
         if (Feedback::where('hash', $request->input('hash'))->exists()) {
             return back()->with('error', 'Tento feedback již byl odeslán, děkujeme.');
         } else {
-            $feedback = Feedback::create($request->all());
-            $feedback->save();
-
-            Customer::find($request->input('customer'))->update(['feedback_hash' => $feedback->hash]);
+            Feedback::create($request->all())->save();
 
             return to_route('homepage')->with('success', 'Feedback odeslán, děkujeme.');
         }

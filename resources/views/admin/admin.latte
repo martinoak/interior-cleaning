@@ -1,130 +1,113 @@
 {layout '../layout.latte'}
 
 {block head}
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
-    <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
-
     <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js "></script>
-    <script src="{asset('js/utils.js')}"></script>
 {/block}
 
 {block content}
-    {include '../partials/alerts_tw.latte'}
-    {include '../partials/_admin_sidebar.latte'}
-
-    <div>
-        {include '../partials/_admin_header.latte'}
-        <div class="p-4 sm:ml-64">
-            <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
-            <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-4">
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400">
-                    <h2 class="text-2xl font-bold text-black m-2">Roční {$annual >= 0 ? 'zisk' : 'ztráta'}</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-yellow-500 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annual|number:0,',', ' '},-</p>
-                </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-400">
-                    <h2 class="text-2xl font-bold text-black m-2">Měsíční zisk</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$month|number:0,',', ' '},-</p>
-                </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100 dark:bg-gray-400">
-                    <h2 class="text-2xl font-bold text-black m-2">Zákazníci</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2">{count(\Illuminate\Support\Facades\DB::table('customers')->get())}</p>
-                </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-sky-600 bg-gray-100 dark:bg-gray-400">
-                    <h2 class="text-2xl font-bold text-black m-2">Další čištění</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-sky-600 fa-regular fa-calendar fa-md mr-2"></i>{$calendar}</p>
-                </div>
-                <div class="flex flex-col justify-between h-24 rounded border-l-8 border-orange-600 bg-gray-100 dark:bg-gray-400">
-                    <h2 class="text-2xl font-bold text-black m-2">Faktury</h2>
-                    <p class="flex justify-end items-center font-bold text-2xl text-black m-2"></p>
-                </div>
+    <div class="p-4 sm:ml-64">
+        <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
+        <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-4">
+            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400">
+                <h2 class="text-2xl font-bold text-black m-2">Roční {$annual >= 0 ? 'zisk' : 'ztráta'}</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-yellow-500 fa-solid fa-dollar-sign fa-md mr-2"></i>{$annual|number:0,',', ' '},-</p>
             </div>
-            <div class="hidden sm:flex justify-between gap-4 mb-4">
-                <div class="flex flex-col w-full sm:w-2/3 rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400">
-                    <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
-                    <canvas id="earningChart" class="p-2" style="max-width: 100% !important"></canvas>
-                    <script>
-                        const earning = document.getElementById('earningChart');
-                        earning.height = 600;
+            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-400">
+                <h2 class="text-2xl font-bold text-black m-2">Měsíční zisk</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-green-600 fa-solid fa-dollar-sign fa-md mr-2"></i>{$month|number:0,',', ' '},-</p>
+            </div>
+            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-purple-600 bg-gray-100 dark:bg-gray-400">
+                <h2 class="text-2xl font-bold text-black m-2">Zákazníci</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2">{\App\Models\Customer::all()->count()}</p>
+            </div>
+            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-sky-600 bg-gray-100 dark:bg-gray-400">
+                <h2 class="text-2xl font-bold text-black m-2">Další čištění</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-sky-600 fa-regular fa-calendar fa-md mr-2"></i>{$calendar}</p>
+            </div>
+            <div class="flex flex-col justify-between h-24 rounded border-l-8 border-orange-600 bg-gray-100 dark:bg-gray-400">
+                <h2 class="text-2xl font-bold text-black m-2">Faktury</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"></p>
+            </div>
+        </div>
+        <div class="hidden sm:flex justify-between gap-4 mb-4">
+            <div class="flex flex-col w-full sm:w-2/3 rounded border-l-8 border-yellow-500 bg-gray-100 dark:bg-gray-400">
+                <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
+                <canvas id="earningChart" class="p-2" style="max-width: 100% !important"></canvas>
+                <script>
+                    const earning = document.getElementById('earningChart');
+                    earning.height = 600;
 
-                        new Chart(earning, {
-                            type: 'line',
-                            data: {
-                                labels: ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
-                                datasets: [
-                                    {foreach $earnings as $year => $yearEarning}
-                                        {
-                                            label: {$year},
-                                            data: [
-                                                {foreach $yearEarning as $monthEarning}
-                                                    {$monthEarning},
-                                                {/foreach}
-                                            ],
-                                            hidden: {$year === (int)date('Y') ? false : true},
-                                            borderColor: {config('web.admin.chartColors.'.$year)},
-                                            backgroundColor: 'transparent',
-                                            pointStyle: 'circle',
-                                            pointRadius: function (context) {
-                                                const value = context.dataset.data[context.dataIndex];
-                                                return value === 0 ? 0 : 8
-                                            },
-                                            pointBackgroundColor: function (context) {
-                                                const value = context.dataset.data[context.dataIndex];
-                                                return value < 0 ? 'red' : {config('web.admin.chartColors.'.$year)}
-                                            },
-                                            pointBorderWidth: 0,
-                                            tension: 0.1
-                                        },
-                                    {/foreach}
-                                ]
-                            }})
-                    </script>
-                </div>
-                <div class="flex flex-col w-1/3 rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-400">
-                    <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
-                    <canvas id="variantCharts" class="p-2"></canvas>
-                    <script>
-                        const ctx = document.getElementById('variantCharts');
-
-                        new Chart(ctx, {
-                            type: 'doughnut',
-                            data: {
-                                labels: [
-                                    {foreach $variants as $variant => $count}
-                                        {$variant},
-                                    {/foreach}
-                                ],
-                                datasets: [{
+                    new Chart(earning, {
+                        type: 'line',
+                        data: {
+                            labels: ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
+                            datasets: [
+                                {foreach $earnings as $year => $yearEarning}
+                                {
+                                    label: {$year},
                                     data: [
-                                        {foreach $variants as $count}
-                                            {$count},
+                                        {foreach $yearEarning as $monthEarning}
+                                        {$monthEarning},
                                         {/foreach}
                                     ],
-                                    backgroundColor: [
-                                        'rgb(54, 162, 235)',
-                                        '#3056d3',
-                                        'rgb(255, 205, 86)',
-                                    ],
-                                    hoverOffset: 6
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
+                                    hidden: {$year === (int)date('Y') ? false : true},
+                                    borderColor: {config('web.admin.chartColors.'.$year)},
+                                    backgroundColor: 'transparent',
+                                    pointStyle: 'circle',
+                                    pointRadius: function (context) {
+                                        const value = context.dataset.data[context.dataIndex];
+                                        return value === 0 ? 0 : 8
+                                    },
+                                    pointBackgroundColor: function (context) {
+                                        const value = context.dataset.data[context.dataIndex];
+                                        return value < 0 ? 'red' : {config('web.admin.chartColors.'.$year)}
+                                    },
+                                    pointBorderWidth: 0,
+                                    tension: 0.1
+                                },
+                                {/foreach}
+                            ]
+                        }})
+                </script>
+            </div>
+            <div class="flex flex-col w-1/3 rounded border-l-8 border-green-600 bg-gray-100 dark:bg-gray-400">
+                <h2 class="text-2xl font-bold text-black m-2">Graf</h2>
+                <canvas id="variantCharts" class="p-2"></canvas>
+                <script>
+                    const ctx = document.getElementById('variantCharts');
+
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: [
+                                {foreach $variants as $variant => $count}
+                                {$variant},
+                                {/foreach}
+                            ],
+                            datasets: [{
+                                data: [
+                                    {foreach $variants as $count}
+                                    {$count},
+                                    {/foreach}
+                                ],
+                                backgroundColor: [
+                                    'rgb(54, 162, 235)',
+                                    '#3056d3',
+                                    'rgb(255, 205, 86)',
+                                ],
+                                hoverOffset: 6
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
                                 }
                             }
-                        });
-                    </script>
-                </div>
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>
-{/block}
-
-{block bottomscripts}
-    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
-    <script src="{asset('js/tailwind.config.js')}"></script>
 {/block}

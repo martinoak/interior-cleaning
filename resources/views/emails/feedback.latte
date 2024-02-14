@@ -169,7 +169,7 @@
                                                 <td  style="font-size:40px;height:40px;line-height:40px;">&nbsp;</td>
                                             </tr>
                                             <tr>
-                                                <td align="center" valign="middle"><a href="{\Illuminate\Support\Facades\URL::to('/')}" style="text-decoration:none;border:0"><img src="https://raw.githubusercontent.com/MarvelousMartin/interior-cleaning/master/public/images/logo/logo-car2.png" width="140" alt="logo" style="width:60px;border:0px;display:inline!important;"></a></td>
+                                                <td align="center" valign="middle"><a href="{\Illuminate\Support\Facades\URL::to('/')}" style="text-decoration:none;border:0"><img src="{asset('images/logo/logo-car2.png')}" width="140" alt="logo" style="width:60px;border:0;display:inline!important;"></a></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -195,13 +195,13 @@
                                                 <td align="center" valign="middle" style="color:#191919;font-size:32px;line-height:42px;font-weight:700;letter-spacing:0;padding: 0 0 10px;">Děkuji za návštěvu!</td>
                                             </tr>
                                             <tr>
-                                                <td align="center" valign="middle" style="color:#939393;font-size:14px;line-height:24px;font-weight:400;letter-spacing:0px;padding:0;padding-bottom:30px;">Nedávno jste nás poctil/a svou návštěvou a my bychom Vám tímto chtěli ještě jednou poděkovat za důvěru. Zároveň posíláme i odkaz na recenzi, budeme moc rádi, pokud si najdete pár minut Vašeho času a dotazník nám vyplníte.<br><strong>Mnohokrát děkujeme a příště naviděnou!</strong></td>
+                                                <td align="center" valign="middle" style="color:#939393;font-size:14px;line-height:24px;font-weight:400;letter-spacing:0;padding: 0 0 30px;">Nedávno jste nás poctil/a svou návštěvou a my bychom Vám tímto chtěli ještě jednou poděkovat za důvěru. Zároveň posíláme i odkaz na recenzi, budeme moc rádi, pokud si najdete pár minut Vašeho času a dotazník nám vyplníte.<br><strong>Mnohokrát děkujeme a příště naviděnou!</strong></td>
                                             </tr>
                                             <tr>
                                                 <td align="center" valign="middle">
                                                     <table border="0" align="center" cellpadding="0" cellspacing="0">
                                                         <tr>
-                                                            <td align="center" style="background-color:#3056d3;display:block;mso-padding-alt:14px 40px 14px 40px;border-radius:45px;"><a href="{\Illuminate\Support\Facades\URL::to('/')}/add-feedback?id={md5(time())}&variant={$variant}&customer={$id}" style="color:#FFFFFF;font-size:14px;font-weight:600;letter-spacing:0;line-height:24px;display:block;padding:14px 40px;text-decoration:none;white-space:nowrap;">Napsat recenzi</a></td>
+                                                            <td align="center" style="background-color:#3056d3;display:block;mso-padding-alt:14px 40px 14px 40px;border-radius:45px;"><a href="{\Illuminate\Support\Facades\URL::to('/')}/add-feedback?id={$hash}&variant={$variant}" style="color:#FFFFFF;font-size:14px;font-weight:600;letter-spacing:0;line-height:24px;display:block;padding:14px 40px;text-decoration:none;white-space:nowrap;">Napsat recenzi</a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -233,7 +233,7 @@
                                                 <td  style="font-size:40px;height:40px;line-height:40px;">&nbsp;</td>
                                             </tr>
                                             <tr>
-                                                <td align="center" valign="middle" style="color:#939393;font-size:14px;line-height:24px;font-weight:400;letter-spacing:0px;padding:0;padding-bottom:30px;">Odesláno {date('d. m. Y \v H:i')} z webu <a href="{\Illuminate\Support\Facades\URL::to('/')}">{\Illuminate\Support\Facades\URL::to('/')}</a></td>
+                                                <td align="center" valign="middle" style="color:#939393;font-size:14px;line-height:24px;font-weight:400;letter-spacing:0;padding: 0 0 30px;">Odesláno {date('d. m. Y \v H:i')} z webu <a href="{\Illuminate\Support\Facades\URL::to('/')}">{\Illuminate\Support\Facades\URL::to('/')}</a></td>
                                             </tr>
                                             <tr>
                                                 <td  style="font-size:40px;height:40px;line-height:40px;">&nbsp;</td>

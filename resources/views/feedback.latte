@@ -1,13 +1,12 @@
 {layout 'layout.latte'}
 
 {block head}
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
-    <link rel="stylesheet" href="{asset('css/style.css')}?m={filemtime(public_path('css/style.css'))}" />
+    <link rel="stylesheet" href="{asset('css/style.css')}?m={filemtime(public_path('css/style.css'))}"/>
 {/block}
 
 {block content}
-    {include 'partials/alerts_tw.latte'}
     <section class="bg-[#3056d3]">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a class="flex flex-col items-center mb-6 text-2xl">
@@ -21,14 +20,13 @@
                     <form class="space-y-4" method="post" action="{route('storeFeedback')}">
                         {csrf_field()|noescape}
                         <input type="hidden" name="hash" value="{$hash}">
-                        <input type="hidden" name="customer" value="{$customer}">
                         <div>
                             <label for="variant" class="block mb-2 text-sm font-medium text-gray-900">Varianta</label>
                             <input type="text" id="variant" name="variant" class="bg-gray-100 text-gray-500 sm:text-sm rounded-lg block w-full p-2.5" value="{$variant}" readonly>
                         </div>
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Jméno a příjmení</label>
-                            <input type="text" name="name" id="name" value="{\Illuminate\Support\Facades\DB::table('customers')->where('id', $customer)->value('name')}" class="bg-gray-100 sm:text-sm rounded-lg block w-full p-2.5 text-black" readonly>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Jméno a příjmení <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                            <input type="text" name="name" id="name" class="bg-gray-100 sm:text-sm rounded-lg block w-full p-2.5 text-black" required>
                         </div>
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Text recenze</label>

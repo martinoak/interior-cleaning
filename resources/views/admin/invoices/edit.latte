@@ -1,62 +1,45 @@
 {layout '../../layout.latte'}
 
-{block head}
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
-{/block}
-
 {block content}
-    {include '../../partials/alerts_tw.latte'}
-    {include '../../partials/_admin_sidebar.latte'}
-
-    <div class="bg-gray-50 dark:bg-gray-900 h-screen">
-        {include '../../partials/_admin_header.latte'}
-        <div class="p-4 sm:ml-64">
-            <div class="flex items-center gap-4 mb-4">
-                <button onclick="history.back()" class="block text-white bg-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700" type="button">
-                    <i class="fa-solid fa-arrow-left fa-lg text-white mr-1"></i> Zpět
-                </button>
-                <h1 class="text-3xl font-bold text-black dark:text-white">Faktury</h1>
-            </div>
-
-            <form method="post" action="{route('invoices.update', [invoice => $invoice->id])}">
-                {csrf_field()|noescape}
-                {method_field('PUT')|noescape}
-                <div class="mb-5">
-                    <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID faktury</label>
-                    <input type="text" id="id" name="id" value="{old('id', $invoice->id)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" readonly>
-                </div>
-                <div class="mb-5">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zákazník</label>
-                    <input type="text" id="name" name="name" value="{old('name', $invoice->name)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-                </div>
-                <div class="mb-5">
-                    <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Typ faktury</label>
-                    <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <option value="T" {if $invoice->type === 'T'}selected{/if} class="text-green-600">Tržba</option>
-                        <option value="N" {if $invoice->type === 'N'}selected{/if} class="text-red-600">Náklad</option>
-                        <option value="P" {if $invoice->type === 'P'}selected{/if} class="text-blue-600">Poukaz</option>
-                    </select>
-                </div>
-                <div class="mb-5">
-                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Datum</label>
-                    <input type="text" id="date" name="date" value="{old('date', $invoice->date)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                </div>
-                <div class="mb-5">
-                    <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cena</label>
-                    <input type="text" id="price" name="price" value="{old('price', $invoice->price)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                </div>
-                <div class="flex items-center p-5 pl-0 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Odeslat</button>
-                    <button data-modal-hide="new-vin" type="reset" class="ms-3 text-gray-500 bg-white hover:bg-gray-100 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Vymazat</button>
-                </div>
-            </form>
+    <div class="p-4 sm:ml-64">
+        <div class="flex items-center gap-4 mb-4">
+            <button onclick="history.back()" class="block text-white bg-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700" type="button">
+                <i class="fa-solid fa-arrow-left fa-lg text-white mr-1"></i> Zpět
+            </button>
+            <h1 class="text-3xl font-bold text-black dark:text-white">Faktury</h1>
         </div>
-    </div>
-{/block}
 
-{block bottomscripts}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+        <form method="post" action="{route('invoices.update', [invoice => $invoice->id])}">
+            {csrf_field()|noescape}
+                {method_field('PUT')|noescape}
+            <div class="mb-5">
+                <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID faktury</label>
+                <input type="text" id="id" name="id" value="{old('id', $invoice->id)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" readonly>
+            </div>
+            <div class="mb-5">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zákazník</label>
+                <input type="text" id="name" name="name" value="{old('name', $invoice->name)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+            </div>
+            <div class="mb-5">
+                <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Typ faktury</label>
+                <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="T" {if $invoice->type === 'T'}selected{/if} class="text-green-600">Tržba</option>
+                    <option value="N" {if $invoice->type === 'N'}selected{/if} class="text-red-600">Náklad</option>
+                    <option value="P" {if $invoice->type === 'P'}selected{/if} class="text-blue-600">Poukaz</option>
+                </select>
+            </div>
+            <div class="mb-5">
+                <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Datum</label>
+                <input type="text" id="date" name="date" value="{old('date', $invoice->date)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            </div>
+            <div class="mb-5">
+                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cena</label>
+                <input type="text" id="price" name="price" value="{old('price', $invoice->price)}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            </div>
+            <div class="flex items-center p-5 pl-0 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Odeslat</button>
+                <button data-modal-hide="new-vin" type="reset" class="ms-3 text-gray-500 bg-white hover:bg-gray-100 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Vymazat</button>
+            </div>
+        </form>
+    </div>
 {/block}
