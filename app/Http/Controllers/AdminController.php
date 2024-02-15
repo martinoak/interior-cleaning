@@ -128,14 +128,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function showVouchers(): View
-    {
-        return view('admin.vouchers', [
-            'vouchers' => Voucher::where(['accepted' => 0])->orderBy('date', 'desc')->get(),
-            'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
-        ]);
-    }
-
     public function newOrder(): View
     {
         return view('admin.newOrder');
@@ -153,91 +145,6 @@ class AdminController extends Controller
         Customer::create($request->all());
 
         return back()->with('success', 'Zákazník byl úspěšně přidán!');
-    }
-
-    public function generateVoucher(int $price): BinaryFileResponse
-    {
-        $hash = substr(md5(time()), 0, 6);
-        $this->facade->saveVoucher($hash, '+1 year', $price);
-
-        file_exists(storage_path('app/public/voucher')) || mkdir(storage_path('app/public/voucher'));
-        $image = imagecreatefrompng(public_path('images/vouchers/template.png'));
-        $color = imagecolorallocate($image, 0, 0, 0);
-        $font = public_path('fonts/Rubik.ttf');
-        imagettftext($image, 32, 0, 800, 740, $color, $font, date('d. m. Y', strtotime('+1 year')));
-        imagettftext($image, 32, 0, 1410, 740, $color, $font, $hash);
-
-        imagepng($image, storage_path('app/public/voucher/'.$hash.'.png'));
-
-        return response()->download(storage_path('app/public/voucher/'.$hash.'.png'));
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function validateVoucher(Request $request): View
-    {
-        $voucher = Voucher::find($request->get('hash'));
-        if (!$voucher) {
-            return view('admin.vouchers', [
-                'checkedVoucher' => [
-                    'status' => 'red',
-                    'message' => 'Voucher neexistuje!',
-                    'hash' => '',
-                    'price' => 0,
-                    'dateFrom' => '',
-                    'dateTo' => '',
-                ]
-            ]);
-        } else {
-            $dateFrom = str_starts_with($voucher->hash, 'x') ? (new DateTime($voucher->date))->modify('-3 months') : (new DateTime($voucher->date))->modify('-1 year');
-            if ($request->get('hash') === substr($voucher->hash, 0, 6) && !$voucher->accepted) {
-                return view('admin.vouchers', [
-                    'checkedVoucher' => [
-                        'status' => 'green',
-                        'message' => 'Voucher je platný!',
-                        'hash' => $voucher->hash,
-                        'price' => $voucher->price,
-                        'dateFrom' => $dateFrom,
-                        'dateTo' => (new DateTime($voucher->date)),
-                    ]
-                ]);
-            } else {
-                return view('admin.vouchers', [
-                    'checkedVoucher' => [
-                        'status' => 'red',
-                        'message' => 'Voucher již není platný!',
-                        'hash' => $voucher->hash,
-                        'price' => $voucher->price,
-                        'dateFrom' => $dateFrom,
-                        'dateTo' => (new DateTime($voucher->date)),
-                    ]
-                ]);
-            }
-        }
-    }
-
-    public function useVoucher(Request $request): View
-    {
-        Voucher::find($request->get('hash'))->update(['accepted' => 1]);
-
-        return view('admin.vouchers', [
-            'vouchers' => Voucher::where(['accepted' => 0]),
-            'hex' => 'x'.strtoupper(substr(md5(rand()), 0, 5)),
-        ])->with('success', 'Voucher byl úspěšně použit!');
-    }
-
-    public function showVoucher(Request $request): RedirectResponse
-    {
-        /* TODO dodelat FPDI komponentu na vepisovani do voucheru */
-        return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
-    }
-
-    public function generateMiniVoucher(string $hex): RedirectResponse
-    {
-        $this->facade->saveVoucher($hex, '+3 months');
-
-        return to_route('admin.vouchers')->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
     }
 
     public function showDevelopment(): View

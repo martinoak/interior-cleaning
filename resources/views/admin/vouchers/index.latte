@@ -1,0 +1,72 @@
+{layout '../../layout.latte'}
+
+{block content}
+    <div class="p-4 sm:ml-64">
+        <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="flex flex-col justify-between rounded border-l-8 border-[#3056d3] bg-gray-100">
+                <h2 class="text-2xl font-bold text-black m-2">Aktivní vouchery</h2>
+                <p class="flex text-right items-center text-md text-[#3056d3] font-bold p-2">
+                    {foreach $vouchers as $voucher}
+                        {if !str_starts_with($voucher->hash, 'x')}
+                            {$voucher->hash}&nbsp;
+                        {/if}
+                    {/foreach}
+                </p>
+            </div>
+            <div class="flex flex-col justify-between rounded border-l-8 border-yellow-500 bg-gray-100">
+                <h2 class="text-2xl font-bold text-black m-2">10% slevy</h2>
+                <p class="flex text-right items-center text-md text-gray-500 p-2">
+                    {foreach $vouchers as $voucher}
+                        {if str_starts_with($voucher->hash, 'x')}
+                            {$voucher->hash}&nbsp;
+                        {/if}
+                    {/foreach}
+                </p>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="flex justify-between items-center rounded border-l-8 border-green-600 bg-gray-200">
+                <h2 class="text-2xl font-bold text-black ml-2">Generování voucheru</h2>
+                <div class="pt-3">
+                    {foreach App\Enums\CleaningTypes::cases() as $case}
+                        <a href="{route('vouchers.create', ['price' => $case->getRawPrice()])}" class="w-100">
+                            <button type="button" class="flex items-center w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                                <i class="fa-solid fa-{$iterator->counter} mr-5"></i>
+                                {$case->value}
+                            </button>
+                        </a>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="flex justify-between items-center rounded border-l-8 border-green-600 bg-gray-200">
+                <h2 class="text-2xl font-bold text-black ml-2">Generování slevy</h2>
+                <div class="pt-3">
+                    <a href="{route('vouchers.create', ['type' => 'mini'])}" class="w-100">
+                        <button type="button" class="flex items-center w-100 text-white bg-[#3056d3] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                            <i class="fa-solid fa-percent mr-5"></i>
+                            10% sleva
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 gap-4 mb-4">
+            <div class="flex flex-col justify-between rounded border-l-8 border-red-600 bg-gray-100">
+                <h2 class="text-2xl font-bold text-black m-2">Verifikace voucheru</h2>
+                <form action="{route('vouchers.validate')}" method="post">
+                    {csrf_field()|noescape}
+                    <div class="p-6 space-y-6">
+                        <div class="flex flex-col">
+                            <label for="hash" class="mb-2 text-sm font-medium text-gray-600">Kód voucheru <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                            <input type="text" name="hash" id="hash" class="border border-gray-300 px-4 py-2 rounded-lg" required>
+                        </div>
+                        <div class="flex justify-center">
+                            <button type="submit" class="text-white bg-red-600 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Ověřit voucher</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{/block}

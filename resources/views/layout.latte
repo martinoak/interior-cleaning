@@ -35,14 +35,14 @@
     {if $inAdmin}
         <meta name="viewport" content="user-scalable=no">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="{asset('css/tailwind.css')}" />
+        <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
     {/if}
     {block head}{/block}
 </head>
 <body {if $inAdmin}class="bg-gray-50 dark:bg-gray-900"{/if} style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
     {if $inAdmin}
         {include 'partials/alerts_tw.latte'}
-        {include 'partials/_admin_sidebar.latte'}
+        {include 'partials/_admin_sidebar.latte', isDev => $isDev}
         <div>
             {include 'partials/_admin_header.latte'}
             {include content, 'isDev' => $isDev}

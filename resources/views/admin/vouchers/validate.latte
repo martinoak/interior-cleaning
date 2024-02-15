@@ -1,0 +1,35 @@
+{layout '../../layout.latte'}
+
+{block content}
+    <div class="p-4 sm:ml-64">
+        <div class="grid grid-cols-1 gap-4 mb-4">
+            <div class="flex justify-between rounded border-l-8 border-{$voucher['status']}-800 bg-{$voucher['status']}-300">
+                <h2 class="text-2xl font-bold text-black m-2">{$voucher['message']}</h2>
+                <div class="flex justify-center gap-x-8 mr-2">
+                    {if $voucher['status'] == 'green'}
+                        <div>
+                            <a href="{route('vouchers.use', ['hash' => $voucher['hash']])}"><button class="text-white bg-green-900 font-medium rounded-lg text-sm py-2 px-3 my-2">Uplatnit voucher</button></a>
+                        </div>
+                        <div>
+                            <a href="{route('vouchers.index')}"><button class="text-white bg-blue-700 font-medium rounded-lg text-sm py-2 px-3 my-2">Neuplatňovat voucher</button></a>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="flex flex-col justify-between rounded border-l-8 border-[#3056d3] bg-gray-100">
+                <h2 class="text-2xl font-bold text-black m-2">Kód</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-[#3056d3] fa-solid fa-hashtag fa-md mr-2"></i>{$voucher['hash']}</p>
+            </div>
+            <div class="flex flex-col justify-between rounded border-l-8 border-[#3056d3] bg-gray-100">
+                <h2 class="text-2xl font-bold text-black m-2">Cena</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="text-[#3056d3] fa-solid fa-dollar-sign fa-md mr-2"></i>{$voucher['price']|number:0,',', ' '},-</p>
+            </div>
+            <div class="flex flex-col justify-between rounded border-l-8 border-[#3056d3] bg-gray-100">
+                <h2 class="text-2xl font-bold text-black m-2">Platnost</h2>
+                <p class="flex justify-end items-center font-bold text-2xl text-black m-2"><i class="fa-regular fa-clock text-[#3056d3] fa-md mr-2"></i>{$voucher['dateFrom']|date:'j. n. Y'} - {$voucher['dateTo']|date:'j. n. Y'}</p>
+            </div>
+        </div>
+    </div>
+{/block}

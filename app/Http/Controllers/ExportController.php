@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Facades\DatabaseFacade;
+use App\Models\Invoice;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportController extends Controller
 {
-    public function __construct(
-        private readonly DatabaseFacade $facade,
-    ) {
-    }
-
     public function exportCustomers(): StreamedResponse
     {
-        $invoices = $this->facade->getInvoices();
+        $invoices = Invoice::orderBy('date', 'desc')->get();
 
         $file = fopen('php://temp', 'w');
 

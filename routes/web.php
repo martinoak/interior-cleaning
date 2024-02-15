@@ -7,6 +7,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\VinController;
+use App\Http\Controllers\VouchersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,12 +49,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback');
     Route::any('refresh-feedbacks', [AdminController::class, 'refreshFeedbacks'])->name('admin.feedbacks.refresh');
 
-    Route::get('vouchers', [AdminController::class, 'showVouchers'])->name('admin.vouchers');
-    Route::any('generateVoucher/{price}', [AdminController::class, 'generateVoucher'])->name('generateVoucher');
-    Route::post('validateVoucher', [AdminController::class, 'validateVoucher'])->name('validateVoucher');
-    Route::any('useVoucher', [AdminController::class, 'useVoucher'])->name('useVoucher');
-    Route::any('showVoucher', [AdminController::class, 'showVoucher'])->name('showVoucher');
-    Route::any('generateMiniVoucher/{hex}', [AdminController::class, 'generateMiniVoucher'])->name('generateMiniVoucher');
+    Route::resource('vouchers', VouchersController::class)->except('store');
+    Route::group(['prefix' => 'vouchers'], function () {
+        Route::post('validate', [VouchersController::class, 'validateVoucher'])->name('vouchers.validate');
+        Route::any('validate/use', [VouchersController::class, 'useVoucher'])->name('vouchers.use');
+    });
 
     Route::get('development', [AdminController::class, 'showDevelopment'])->name('admin.development');
 
