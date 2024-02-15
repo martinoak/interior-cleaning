@@ -922,6 +922,62 @@ p {
   color: var(--primary-color);
 }
 
+/* ===== Testimonials CSS ===== */
+.ud-testimonials {
+  padding-top: 120px;
+}
+
+@media (max-width: 767px) {
+  .ud-testimonials {
+    padding-top: 80px;
+  }
+}
+
+.ud-single-testimonial {
+  padding: 30px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  background: var(--white);
+  margin-bottom: 50px;
+}
+
+.ud-single-testimonial .ud-testimonial-ratings {
+  margin-bottom: 10px;
+}
+
+.ud-single-testimonial .ud-testimonial-ratings i {
+  color: #fbb040;
+}
+
+.ud-single-testimonial .ud-testimonial-content {
+  margin-bottom: 25px;
+}
+
+.ud-single-testimonial .ud-testimonial-content p {
+  font-size: 16px;
+  line-height: 30px;
+  color: #637381;
+}
+
+.ud-single-testimonial .ud-testimonial-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.ud-single-testimonial .ud-testimonial-info .ud-testimonial-meta h4 {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ud-single-testimonial .ud-testimonial-info .ud-testimonial-meta p {
+  font-size: 12px;
+  color: #969696;
+}
+
 /* ===== Contact CSS ===== */
 .ud-contact {
   padding: 120px 0;
