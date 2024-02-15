@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Mail\SendTodayScheduleMail;
 use App\Models\Customer;
-use App\Models\Facades\DatabaseFacade;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -23,12 +22,6 @@ class SendDayScheduleCron extends Command
      * @var string
      */
     protected $description = 'Send today schedule.';
-
-    public function __construct(
-        private readonly DatabaseFacade $facade
-    ) {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

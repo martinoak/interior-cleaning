@@ -3,14 +3,18 @@
 namespace App\Domain\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
-class GuzzleService
+readonly class GuzzleService
 {
     public function __construct(
-        private readonly Client $guzzleClient
+        private Client $guzzleClient
     ) {
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getGoogleMapsReviews(): array
     {
         $response = $this->guzzleClient->get('https://maps.googleapis.com/maps/api/place/details/json', [

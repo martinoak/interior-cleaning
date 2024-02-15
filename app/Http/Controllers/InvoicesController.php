@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class InvoicesController extends Controller
 {
@@ -24,7 +25,7 @@ class InvoicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): RedirectResponse
+    public function show(string $id): BinaryFileResponse
     {
         $data = Invoice::find($id);
 

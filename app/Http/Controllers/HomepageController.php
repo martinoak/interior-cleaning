@@ -6,7 +6,6 @@ use App\Enums\CleaningTypes;
 use App\Mail\FeedbackEmail;
 use App\Mail\FormEmail;
 use App\Models\Customer;
-use App\Models\Facades\DatabaseFacade;
 use App\Models\Feedback;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -15,11 +14,6 @@ use Illuminate\Support\Facades\Mail;
 
 class HomepageController extends Controller
 {
-    public function __construct(
-        private readonly DatabaseFacade $facade,
-    ) {
-    }
-
     public function index(): View
     {
         $pricelist = [];

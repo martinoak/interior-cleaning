@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\Facades\DatabaseFacade;
+use App\Models\Feedback;
 use Illuminate\Console\Command;
 use App\Domain\Services\GuzzleService;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class GetGoogleMapsReviews extends Command
 {
@@ -41,13 +43,15 @@ class GetGoogleMapsReviews extends Command
                 'hash' => md5($review['author_name'] . $review['text']),
                 'name' => $review['author_name'],
                 'message' => $review['text'],
-                'stars' => $review['rating'],
+                'rating' => $review['rating'],
                 'fromGoogle' => true
             ];
 
-            $this->facade->saveFeedback($info);
+            if (! Feedback::exists($info['hash'])) {
+                Feedback::create($info);
+            }
         }
 
-        return Command::SUCCESS;
+        return CommandAlias::SUCCESS;
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Vin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use InvalidArgumentException;
 use Sunrise\Vin\Vin as ParserVin;

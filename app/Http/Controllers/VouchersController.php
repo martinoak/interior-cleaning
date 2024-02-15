@@ -53,7 +53,7 @@ class VouchersController extends Controller
         }
     }
 
-    public function show(string $id): RedirectResponse
+    public function show(Request $request, string $id): RedirectResponse
     {
         /* TODO */
         return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));

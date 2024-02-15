@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Customer extends Model
 {
@@ -24,12 +25,12 @@ class Customer extends Model
     ];
 
     // Define relationships if needed
-    public function invoice()
+    public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);
     }
 
-    public function feedback()
+    public function feedback(): BelongsTo
     {
         return $this->belongsTo(Feedback::class, 'feedback_hash', 'hash');
     }

@@ -9,12 +9,12 @@
         abbr[title] { border-bottom: none; cursor: help; text-decoration: none; }
         code, pre { font: 13px/1.5 Consolas, Monaco, Menlo, "Ubuntu Mono", "Liberation Mono", monospace; }
         table, tr, th, td { background: #FFF; border-collapse: collapse; vertical-align: top; }
-        table { background: #FFF; border: 1px solid #E0E0E0; box-shadow: 0px 0px 1px rgba(128, 128, 128, .2); margin: 1em 0; width: 100%; }
+        table { background: #FFF; border: 1px solid #E0E0E0; box-shadow: 0 0 1px rgba(128, 128, 128, .2); margin: 1em 0; width: 100%; }
         table th, table td { border: solid #E0E0E0; border-width: 1px 0; padding: 8px 10px; }
         table th { background-color: #E0E0E0; font-weight: bold; text-align: left; }
         .hidden-xs-down { display: none; }
         .block { display: block; }
-        .break-long-words { -ms-word-break: break-all; word-break: break-all; word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; }
+        .break-long-words { word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; }
         .text-muted { color: #999; }
         .container { max-width: 1024px; margin: 0 auto; padding: 0 15px; }
         .container::after { content: ""; display: table; clear: both; }

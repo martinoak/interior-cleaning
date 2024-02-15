@@ -47,7 +47,7 @@
                                     label: {$year},
                                     data: [
                                         {foreach $yearEarning as $monthEarning}
-                                        {$monthEarning},
+                                            {$monthEarning},
                                         {/foreach}
                                     ],
                                     hidden: {$year === (int)date('Y') ? false : true},
@@ -81,13 +81,13 @@
                         data: {
                             labels: [
                                 {foreach $variants as $variant => $count}
-                                {$variant},
+                                    {$variant},
                                 {/foreach}
                             ],
                             datasets: [{
                                 data: [
                                     {foreach $variants as $count}
-                                    {$count},
+                                        {$count},
                                     {/foreach}
                                 ],
                                 backgroundColor: [

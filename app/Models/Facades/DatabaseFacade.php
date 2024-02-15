@@ -4,6 +4,7 @@ namespace App\Models\Facades;
 
 use App\Models\Customer;
 use App\Models\Voucher;
+use DateTime;
 
 class DatabaseFacade
 {
@@ -21,7 +22,7 @@ class DatabaseFacade
     {
         Voucher::create([
             'hash' => $hash,
-            'date' => \DateTime::createFromFormat('Y-m-d', date('Y-m-d'))->modify($dateOffset)->format('Y-m-d'),
+            'date' => DateTime::createFromFormat('Y-m-d', date('Y-m-d'))->modify($dateOffset)->format('Y-m-d'),
             'price' => $price,
         ]);
     }
