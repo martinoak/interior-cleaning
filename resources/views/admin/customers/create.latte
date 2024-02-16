@@ -1,0 +1,48 @@
+{layout '../../layout.latte'}
+
+{block content}
+    <div class="p-4 sm:ml-64">
+        <div class="flex items-center gap-4 mb-4">
+            <button onclick="history.back()" class="block text-white bg-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700" type="button">
+                <i class="fa-solid fa-arrow-left fa-lg text-white mr-1"></i> Zpět
+            </button>
+            <h1 class="text-3xl font-bold text-black dark:text-white">Nový zákazník</h1>
+        </div>
+
+        <form method="post" action="{route('customers.store')}">
+            {csrf_field()|noescape}
+            <div class="mb-5">
+                <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="text" name="name" id="name" value="{old('name')}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+            </div>
+            <div class="mb-5">
+                <label for="email" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Email</label>
+                <input type="email" name="email" id="email" value="{old('email')}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            </div>
+            <div class="mb-5">
+                <label for="telephone" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Telefon</label>
+                <input type="text" name="telephone" id="telephone" value="{old('telephone')}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            </div>
+            <div class="mb-5">
+                <label for="variant" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Varianta <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <select name="variant" id="variant" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+                    {foreach App\Enums\CleaningTypes::cases() as $case}
+                        <option value="{$case->value}" {if old('variant') === $case->value}selected{/if}>{$case->value}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="mb-5">
+                <label for="message" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Zpráva</label>
+                <textarea name="message" id="message" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" rows="2"></textarea>
+            </div>
+            <div class="mb-5">
+                <label for="date" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Datum</label>
+                <input type="date" name="term" id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            </div>
+            <div class="flex items-center p-5 pl-0 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Odeslat</button>
+                <button data-modal-hide="new-vin" type="reset" class="ms-3 text-gray-500 bg-white hover:bg-gray-100 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Vymazat</button>
+            </div>
+        </form>
+    </div>
+{/block}

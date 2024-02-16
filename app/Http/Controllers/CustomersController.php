@@ -28,7 +28,7 @@ class CustomersController extends Controller
     {
         Customer::create($request->all());
 
-        return back()->with('success', 'Zákazník byl úspěšně přidán!');
+        return to_route('customers.index')->with('success', 'Zákazník byl úspěšně přidán!');
     }
 
     public function show(string $id)
