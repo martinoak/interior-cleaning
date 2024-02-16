@@ -45,13 +45,13 @@
                     Mail
                 </p>
                 <p>
-                    {if $tests['mail']}
+                    {if $tests['mail'] === 'OK'}
                         <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
                     {else}
                         <i class="fa-solid fa-xmark fa-xl" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
                     {/if}
                 </p>
-                <div id="tooltip-db" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     {$tests['mail']|noescape}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
@@ -61,16 +61,32 @@
                     Database
                 </p>
                 <p>
-                    <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    {if $tests['db'] === 'OK'}
+                        <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    {else}
+                        <i class="fa-solid fa-xmark fa-xl" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
+                    {/if}
                 </p>
+                <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    {$tests['db']|noescape}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
             </div>
             <div class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2">
                 <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">
                     Customer
                 </p>
                 <p>
-                    <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    {if $tests['customer'] === 'OK'}
+                        <i class="fa-solid fa-check-to-slot fa-xl" style="color: #33d17a;"></i>
+                    {else}
+                        <i class="fa-solid fa-xmark fa-xl" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
+                    {/if}
                 </p>
+                <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    {$tests['customer']|noescape}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
             </div>
             <div class="flex flex-col items-center rounded bg-gray-100 dark:bg-gray-800 p-4 space-y-2">
                 <p class="text-2xl font-bold text-gray-400 dark:text-gray-500">

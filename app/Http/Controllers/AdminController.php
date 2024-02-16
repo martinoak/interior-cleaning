@@ -8,6 +8,7 @@ use App\Models\Facades\DatabaseFacade;
 use App\Models\Feedback;
 use App\Models\Invoice;
 use Exception;
+use Illuminate\Database\LostConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -166,6 +167,31 @@ class AdminController extends Controller
 
     protected function doTest(): array
     {
-        return ['mail' => true];
+        try {
+            \Illuminate\Support\Facades\Mail::to('dev@cisteni-kondrac.cz')->send(new \App\Mail\SendMonthlyBillMail(12345));
+
+            $output['mail'] = 'OK';
+        } catch (Exception $e) {
+            $output['mail'] = $e->getMessage();
+        }
+
+        try {
+            \Illuminate\Support\Facades\DB::connection()->getPdo();
+
+            $output['db'] = 'OK';
+        } catch (Exception $e) {
+            $output['db'] = $e->getMessage();
+        }
+
+        try {
+            Customer::all();
+
+            $output['customer'] = 'OK';
+        } catch (Exception $e) {
+            $output['customer'] = $e->getMessage();
+        }
+
+
+        return $output;
     }
 }
