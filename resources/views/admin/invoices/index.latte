@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center gap-4 mb-4">
             <div class="flex">
                 <h1 class="text-3xl font-bold text-black dark:text-white mr-3">Faktury</h1>
-                <a href="{route('export')}"><button class="block text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
+                <a href="{route('invoices.export')}"><button class="block text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
             </div>
             <div class="text-black dark:text-white">
                 Celkem tržby: <span class="font-bold text-green-700 dark:text-green-400">{$earnings|number:0,',', ' '},-</span>

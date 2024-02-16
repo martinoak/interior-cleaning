@@ -1,4 +1,4 @@
-{layout '../layout.latte'}
+{layout '../../layout.latte'}
 
 {block content}
     <div class="p-4 sm:ml-64">
@@ -9,7 +9,7 @@
             <div id="new-customer" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                 <div class="relative w-75">
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <form action="{route('saveCustomer')}" method="post">
+                        <form action="{route('customers.store')}" method="post">
                             {csrf_field()|noescape}
                             <div class="p-6 space-y-6">
                                 <div class="flex flex-col">
@@ -60,15 +60,19 @@
                             {if !$customer->variant}
                                 <button data-modal-toggle="variant-{$customer->id}" class="p-1 px-3 bg-red-600 rounded text-white"><i class="fa-solid fa-gear fa-lg text-white mr-1"></i> Varianta</button>
                             {/if}
-                                {if $customer->term}
+                            {if $customer->term}
                                 <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->term|date:'j. n. Y'}</button>
                             {else}
-                                <button data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white mr-1"></i> Objednat</button>
+                                <button data-modal-target="order-{$customer->id}" data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white mr-1"></i> Objednat</button>
                             {/if}
-                                {if $customer->term}
+                            {if $customer->term}
                                 <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
                             {/if}
-                            <a href="{route('deleteCustomer', [id => $customer->id])}" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white"></i></a>
+                            <form action="{route('customers.destroy', [customer => $customer->id])}" method="post">
+                                {csrf_field()|noescape}
+                                {method_field('DELETE')|noescape}
+                                <button type="submit" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white"></i></button>
+                            </form>
                         </div>
                     </div>
                     {if !empty($customer->message)}
@@ -80,15 +84,19 @@
                         {if !$customer->variant}
                             <button data-modal-toggle="variant-{$customer->id}" class="p-1 px-3 bg-red-600 rounded text-white"><i class="fa-solid fa-gear fa-lg text-white mr-1"></i> Varianta</button>
                         {/if}
-                                {if $customer->term}
+                        {if $customer->term}
                             <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->term|date:'j. n. Y'}</button>
                         {else}
-                            <button data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white"></i></button>
+                            <button data-modal-target="order-{$customer->id}" data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white"></i></button>
                         {/if}
-                            {if $customer->term}
+                        {if $customer->term}
                             <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
                         {/if}
-                        <a href="{route('deleteCustomer', [id => $customer->id])}" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white"></i></a>
+                        <form action="{route('customers.destroy', [customer => $customer->id])}" method="post">
+                            {csrf_field()|noescape}
+                            {method_field('DELETE')|noescape}
+                            <button type="submit" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white"></i></button>
+                        </form>
                     </div>
                 </div>
 
@@ -111,9 +119,9 @@
                 <div id="order-{$customer->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                     <div class="relative w-75">
                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <form action="{route('updateCustomer')}" method="post">
+                            <form action="{route('customers.update', [customer => $customer->id])}" method="post">
                                 {csrf_field()|noescape}
-                                <input type="hidden" name="id" value="{$customer->id}">
+                                {method_field('PUT')|noescape}
                                 <div class="p-6 space-y-6">
                                     <div class="flex flex-col">
                                         <label for="name" class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>

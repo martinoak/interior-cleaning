@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CronController;
+use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InvoicesController;
@@ -34,17 +35,15 @@ Route::post('authenticate', [AuthController::class, 'authenticate'])->name('auth
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
-    Route::get('/', [AdminController::class, 'showDashboard'])->name('dashboard');
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('invoices', InvoicesController::class)->except('create','store','destroy');
 
-    Route::get('customers', [AdminController::class, 'showCustomers'])->name('admin.customers');
-    Route::post('saveCustomer', [AdminController::class, 'saveCustomer'])->name('saveCustomer');
-    Route::any('updateCustomer', [AdminController::class, 'updateCustomer'])->name('updateCustomer');
-    Route::any('exportCustomers', [ExportController::class, 'exportCustomers'])->name('export');
-    Route::any('archive-customer/{id}', [AdminController::class, 'archiveCustomer'])->name('archiveCustomer');
-    Route::get('deleteCustomer/{id}', [AdminController::class, 'deleteCustomer'])->name('deleteCustomer');
-    Route::any('newOrder', [AdminController::class, 'newOrder'])->name('newOrder');
+    Route::resource('customers', CustomersController::class)->except('show');
+    Route::group(['prefix' => 'customers'], function () {
+        Route::any('export', [ExportController::class, 'exportCustomers'])->name('invoices.export');
+        Route::any('archive/{id}', [CustomersController::class, 'archive'])->name('archiveCustomer');
+    });
 
     Route::get('feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback');
     Route::any('refresh-feedbacks', [AdminController::class, 'refreshFeedbacks'])->name('admin.feedbacks.refresh');

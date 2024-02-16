@@ -21,34 +21,10 @@ class AdminController extends Controller
     ) {
     }
 
-    public function archiveCustomer($id): RedirectResponse
-    {
-        Customer::find($id)->update(['archived' => 1]);
-        $invoice = Invoice::create([
-            'type' => 'T',
-            'date' => Customer::find($id)->term,
-            'name' => Customer::find($id)->name,
-            'price' => CleaningTypes::from(Customer::find($id)->variant)->getRawPrice(),
-            'worker' => 'S',
-        ]);
-        $invoice->save();
-
-        Customer::find($id)->update(['invoice_id' => $invoice->id]);
-
-        return back()->with('success', 'Zákazník byl archivován');
-    }
-
-    public function deleteCustomer(int $id): RedirectResponse
-    {
-        Customer::destroy($id);
-
-        return back()->with('success', 'Zákazník byl smazán');
-    }
-
     /**
      * @throws Exception
      */
-    public function showDashboard(): View
+    public function dashboard(): View
     {
         if (!file_exists(storage_path('logs/cron.log'))) {
             file_put_contents(storage_path('logs/cron.log'), '');
@@ -115,33 +91,6 @@ class AdminController extends Controller
         Artisan::call('app:get-reviews');
 
         return back()->with('success', 'Recenze z Google Map importovány!');
-    }
-
-    public function showCustomers(): View
-    {
-        return view('admin.customers', [
-            'customers' => Customer::where('archived', 0)->get(),
-            'archived' => Customer::where('archived', 1)->get(),
-        ]);
-    }
-
-    public function newOrder(): View
-    {
-        return view('admin.newOrder');
-    }
-
-    public function updateCustomer(Request $request): RedirectResponse
-    {
-        Customer::find($request->input('id'))->update($request->all());
-
-        return back()->with('success', 'Zákazník byl úspěšně aktualizován!');
-    }
-
-    public function saveCustomer(Request $request): RedirectResponse
-    {
-        Customer::create($request->all());
-
-        return back()->with('success', 'Zákazník byl úspěšně přidán!');
     }
 
     public function showDevelopment(): View
