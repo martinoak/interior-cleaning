@@ -48,10 +48,15 @@
                             {$invoice->price|number:0,',', ' '},-
                         </td>
                         <td class="px-6 py-4">
-                            <a href="{route('invoices.show', [invoice => $invoice->id])}" type="button" class="cursor-pointer text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700">
+                            {if $invoice->type === 'P' && file_exists(storage_path('app/public/voucher/').$invoice->name.'.png')}
+                                <a href="{route('vouchers.show', [voucher => $invoice->name])}" aria-valuemax="storage_path('app/public/voucher').$invoice->name.'.png'" class="cursor-pointer text-white bg-amber-700 hover:bg-amber-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-amber-600 dark:hover:bg-amber-700" {if !file_exists(storage_path('app/public/voucher/').$invoice->name.'png')}disabled{/if}>
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            {/if}
+                            <a href="{route('invoices.show', [invoice => $invoice->id])}" class="cursor-pointer text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700">
                                 <i class="fa-solid fa-download"></i>
                             </a>
-                            <a href="{route('invoices.edit', [invoice => $invoice->id])}" type="button" class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700">
+                            <a href="{route('invoices.edit', [invoice => $invoice->id])}" class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700">
                                 <i class="fa-solid fa-pencil"></i>
                             </a>
                         </td>

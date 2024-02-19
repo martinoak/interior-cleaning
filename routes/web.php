@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('feedback', [AdminController::class, 'showFeedback'])->name('admin.feedback');
     Route::any('refresh-feedbacks', [AdminController::class, 'refreshFeedbacks'])->name('admin.feedbacks.refresh');
 
-    Route::resource('vouchers', VouchersController::class)->except('store');
+    Route::resource('vouchers', VouchersController::class)->except('create');
     Route::group(['prefix' => 'vouchers'], function () {
         Route::post('validate', [VouchersController::class, 'validateVoucher'])->name('vouchers.validate');
         Route::any('validate/use', [VouchersController::class, 'useVoucher'])->name('vouchers.use');

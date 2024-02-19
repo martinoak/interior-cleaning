@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Facades\DatabaseFacade;
+use App\Enums\CleaningTypes;
+use App\Models\Invoice;
 use App\Models\Voucher;
 use DateTime;
 use Exception;
@@ -13,10 +14,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VouchersController extends Controller
 {
-    public function __construct(
-        private readonly DatabaseFacade $facade,
-    ) {
-    }
     public function index(): View
     {
         return view('admin.vouchers.index', [
@@ -24,39 +21,53 @@ class VouchersController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request): RedirectResponse|BinaryFileResponse
+    public function store(Request $request): RedirectResponse|BinaryFileResponse
     {
-        $code = md5(rand());
-
         if ($request->input('type') === 'mini') {
-            $hex = 'x'.strtoupper(substr($code, 0, 5));
-            $this->facade->saveVoucher($hex, '+3 months');
+            $hash = 'x'.strtoupper(substr(md5(rand()), 0, 5));
+            Voucher::create([
+                'hash' => $hash,
+                'date' => DateTime::createFromFormat('Y-m-d', date('Y-m-d'))->modify('+3 months')->format('Y-m-d'),
+                'price' => 0,
+            ]);
 
-            return to_route('vouchers.index')->with('success', 'Voucher <strong>'.$hex.'</strong> byl úspěšně vytvořen!');
-        } else {
-            $hash = substr($code, 0, 6);
-            $this->facade->saveVoucher($hash, '+1 year', $request->input('price'));
+            return to_route('vouchers.index')->with('success', "Voucher <strong>$hash</strong> byl úspěšně vytvořen!");
+        } elseif ($request->input('type') === 'regular') {
+            $hash = strtoupper(substr(md5(rand()), 0, 6));
+            $price = CleaningTypes::from($request->input('variant'))->getRawPrice();
+            Voucher::create([
+                'hash' => $hash,
+                'date' => DateTime::createFromFormat('Y-m-d', date('Y-m-d'))->modify('+1 year')->format('Y-m-d'),
+                'price' => $price,
+            ]);
+
+            Invoice::create([
+                'type' => 'P',
+                'date' => DateTime::createFromFormat('Y-m-d', date('Y-m-d'))->format('Y-m-d'),
+                'name' => $hash,
+                'price' => $price,
+                'worker' => 'S'
+            ]);
 
             file_exists(storage_path('app/public/voucher')) || mkdir(storage_path('app/public/voucher'));
             $image = imagecreatefrompng(public_path('images/vouchers/template.png'));
             $color = imagecolorallocate($image, 0, 0, 0);
-            $font = public_path('fonts/Rubik.ttf');
-            imagettftext($image, 32, 0, 800, 740, $color, $font, date('d. m. Y', strtotime('+1 year')));
-            imagettftext($image, 32, 0, 1410, 740, $color, $font, $hash);
+            $font = public_path('fonts/Ciutadella.ttf');
+            imagettftext($image, 40, 0, 820, 377, $color, $font, CleaningTypes::from($request->input('variant'))->value);
+            imagettftext($image, 32, 0, 780, 720, $color, $font, date('d. m. Y', strtotime('+1 year')));
+            imagettftext($image, 32, 0, 1460, 720, $color, $font, $hash);
 
-            imagepng($image, storage_path('app/public/voucher/'.$hash.'.png'));
+            imagepng($image, storage_path("app/public/voucher/$hash.png"));
 
-            return response()->download(storage_path('app/public/voucher/'.$hash.'.png'));
+            return response()->download(storage_path("app/public/voucher/$hash.png"));
         }
+
+        return to_route('vouchers.index')->with('success', 'Voucher byl úspěšně vytvořen!');
     }
 
-    public function show(Request $request, string $id): RedirectResponse
+    public function show(string $voucher): BinaryFileResponse
     {
-        /* TODO */
-        return redirect(asset('images/vouchers/poukaz_'.$request->get('price').'.pdf'));
+        return response()->download(storage_path("app/public/voucher/$voucher.png"));
     }
 
     /**
