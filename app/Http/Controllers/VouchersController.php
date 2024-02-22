@@ -65,25 +65,14 @@ class VouchersController extends Controller
         return to_route('vouchers.index')->with('success', 'Voucher byl úspěšně vytvořen!');
     }
 
-    public function show(string $voucher): BinaryFileResponse
+    public function show(string $voucher): BinaryFileResponse|RedirectResponse
     {
-        return response()->download(storage_path("app/public/voucher/$voucher.png"));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        // TODO
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        // TODO
+        $file = storage_path("app/public/voucher/$voucher.png");
+        if (file_exists($file)) {
+            return response()->download($file);
+        } else {
+            return back()->with('error', 'Náhled voucheru neexistuje!');
+        }
     }
 
     /**
