@@ -5,7 +5,7 @@
         <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="flex flex-col justify-between rounded border-l-8 border-[#3056d3] bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Aktivní vouchery</h2>
+                <h2 class="cell-title">Aktivní vouchery</h2>
                 <p class="text-right items-center text-md text-[#3056d3] font-bold p-2">
                     {foreach $vouchers as $voucher}
                         {if !str_starts_with($voucher->hash, 'x')}
@@ -15,7 +15,7 @@
                 </p>
             </div>
             <div class="flex flex-col justify-between rounded border-l-8 border-yellow-500 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">10% slevy</h2>
+                <h2 class="cell-title">10% slevy</h2>
                 <p class="flex text-right items-center text-md text-gray-500 p-2">
                     {foreach $vouchers as $voucher}
                         {if str_starts_with($voucher->hash, 'x')}
@@ -27,7 +27,7 @@
         </div>
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="flex justify-between items-center rounded border-l-8 border-green-600 bg-gray-200">
-                <h2 class="text-2xl font-bold text-black ml-2">Generování voucheru</h2>
+                <h2 class="cell-title ml-2">Generování voucheru</h2>
                 <div class="pt-3">
                     <form method="post" action="{route('vouchers.store', [type => 'regular'])}">
                         {csrf_field()|noescape}
@@ -55,7 +55,7 @@
         </div>
         <div class="grid grid-cols-1 gap-4 mb-4">
             <div class="flex flex-col justify-between rounded border-l-8 border-red-600 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Verifikace voucheru</h2>
+                <h2 class="cell-title">Verifikace voucheru</h2>
                 <form action="{route('vouchers.validate')}" method="post">
                     {csrf_field()|noescape}
                     <div class="p-6 space-y-6">
