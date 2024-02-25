@@ -4,8 +4,8 @@
     <div class="p-4 sm:ml-64">
         <div class="flex justify-between items-center gap-4 mb-4">
             <div class="flex">
-                <h1 class="text-3xl font-bold text-black dark:text-white mr-3">Faktury</h1>
-                <a href="{route('invoices.export')}"><button class="block text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
+                <h1 class="heading mr-3">Faktury</h1>
+                <a href="{route('invoices.export')}"><button class="heading-button-green"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
             </div>
             <div class="text-black dark:text-white">
                 Celkem tržby: <span class="font-bold text-green-700 dark:text-green-400">{$earnings|number:0,',', ' '},-</span>
@@ -48,10 +48,15 @@
                             {$invoice->price|number:0,',', ' '},-
                         </td>
                         <td class="px-6 py-4">
-                            <a href="{route('invoices.show', [invoice => $invoice->id])}" type="button" class="cursor-pointer text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700">
+                            {if $invoice->type === 'P' && file_exists(storage_path('app/public/voucher/').$invoice->name.'.png')}
+                                <a href="{route('vouchers.show', [voucher => $invoice->name])}" aria-valuemax="storage_path('app/public/voucher').$invoice->name.'.png'" class="cursor-pointer text-white bg-amber-700 hover:bg-amber-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-amber-600 dark:hover:bg-amber-700" {if !file_exists(storage_path('app/public/voucher/').$invoice->name.'png')}disabled{/if}>
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            {/if}
+                            <a href="{route('invoices.show', [invoice => $invoice->id])}" class="cursor-pointer text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700">
                                 <i class="fa-solid fa-download"></i>
                             </a>
-                            <a href="{route('invoices.edit', [invoice => $invoice->id])}" type="button" class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700">
+                            <a href="{route('invoices.edit', [invoice => $invoice->id])}" class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700">
                                 <i class="fa-solid fa-pencil"></i>
                             </a>
                         </td>

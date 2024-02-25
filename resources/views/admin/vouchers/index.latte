@@ -5,17 +5,17 @@
         <h1 class="text-3xl font-bold text-black mb-4 dark:text-white">Administrace</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="flex flex-col justify-between rounded border-l-8 border-[#3056d3] bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Aktivní vouchery</h2>
-                <p class="flex text-right items-center text-md text-[#3056d3] font-bold p-2">
+                <h2 class="cell-title">Aktivní vouchery</h2>
+                <p class="text-right items-center text-md text-[#3056d3] font-bold p-2">
                     {foreach $vouchers as $voucher}
                         {if !str_starts_with($voucher->hash, 'x')}
-                            {$voucher->hash}&nbsp;
+                            <a href="{route('vouchers.show', [voucher => $voucher->hash])}">{$voucher->hash}&nbsp;</a>
                         {/if}
                     {/foreach}
                 </p>
             </div>
             <div class="flex flex-col justify-between rounded border-l-8 border-yellow-500 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">10% slevy</h2>
+                <h2 class="cell-title">10% slevy</h2>
                 <p class="flex text-right items-center text-md text-gray-500 p-2">
                     {foreach $vouchers as $voucher}
                         {if str_starts_with($voucher->hash, 'x')}
@@ -27,33 +27,35 @@
         </div>
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="flex justify-between items-center rounded border-l-8 border-green-600 bg-gray-200">
-                <h2 class="text-2xl font-bold text-black ml-2">Generování voucheru</h2>
+                <h2 class="cell-title ml-2">Generování voucheru</h2>
                 <div class="pt-3">
-                    {foreach App\Enums\CleaningTypes::cases() as $case}
-                        <a href="{route('vouchers.create', ['price' => $case->getRawPrice()])}" class="w-100">
-                            <button type="button" class="flex items-center w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                    <form method="post" action="{route('vouchers.store', [type => 'regular'])}">
+                        {csrf_field()|noescape}
+                        {foreach App\Enums\CleaningTypes::cases() as $case}
+                            <button type="submit" name="variant" value="{$case->value}" class="flex items-center w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                                 <i class="fa-solid fa-{$iterator->counter} mr-5"></i>
                                 {$case->value}
                             </button>
-                        </a>
-                    {/foreach}
+                        {/foreach}
+                    </form>
                 </div>
             </div>
             <div class="flex justify-between items-center rounded border-l-8 border-green-600 bg-gray-200">
                 <h2 class="text-2xl font-bold text-black ml-2">Generování slevy</h2>
                 <div class="pt-3">
-                    <a href="{route('vouchers.create', ['type' => 'mini'])}" class="w-100">
-                        <button type="button" class="flex items-center w-100 text-white bg-[#3056d3] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
+                    <form method="post" action="{route('vouchers.store', [type => 'mini'])}" class="w-100">
+                        {csrf_field()|noescape}
+                        <button type="submit" class="flex items-center w-100 text-white bg-[#3056d3] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
                             <i class="fa-solid fa-percent mr-5"></i>
                             10% sleva
                         </button>
-                    </a>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="grid grid-cols-1 gap-4 mb-4">
             <div class="flex flex-col justify-between rounded border-l-8 border-red-600 bg-gray-100">
-                <h2 class="text-2xl font-bold text-black m-2">Verifikace voucheru</h2>
+                <h2 class="cell-title">Verifikace voucheru</h2>
                 <form action="{route('vouchers.validate')}" method="post">
                     {csrf_field()|noescape}
                     <div class="p-6 space-y-6">
