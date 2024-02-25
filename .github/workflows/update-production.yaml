@@ -16,8 +16,6 @@ jobs:
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.IC_SSH_KEY }}
 
       - name: SSH to server and pull from production branch
         run: |
