@@ -1,0 +1,24 @@
+name: Deploy repository to Production
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.IC_SSH_KEY }}
+
+      - name: SSH to server and pull from production branch
+        run: |
+          ${{ secrets.IC_SSH }} 'cd www/ && git pull origin production'
