@@ -4,7 +4,7 @@
     <div class="p-4 sm:ml-64">
         <div class="flex items-center gap-4 mb-4">
             <h1 class="heading">Administrace</h1>
-            <a href="{route('admin.feedbacks.refresh')}" class="heading-button-black"><i class="fa-brands fa-google fa-lg mr-1"></i> Import recenzí</a>
+            <a href="{route('admin.feedbacks.refresh')}" class="button-black"><i class="fa-brands fa-google fa-lg mr-1"></i> Import recenzí</a>
         </div>
         <div class="py-4 sm:py-3">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -23,24 +23,28 @@
         <hr class="w-46 lg:w-96 h-1 mx-auto bg-gray-300 border-0 rounded dark:bg-gray-50 my-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
             {foreach $feedbacks as $feedback}
-                <div class="cell justify-between">
-                    <h2 class="cell-title">
-                        {$feedback->name}
-                        {if $feedback->fromGoogle}
-                            <span class="px-2 bg-black rounded mx-2"><i class="fa-brands fa-google text-white fa-xs"></i></span>
-                        {else}
-                            <span class="text-lg text-gray-500">| {\App\Models\Customer::where('feedback_hash', $feedback->hash)->value('variant')}</span>
-                        {/if}
-                    </h2>
-                    <p class="cell-text space-x-2 text-lg">
-                        {for $i = 1; $i <= 5; $i++}
-                            {if $i <= $feedback->rating}
-                                <i class="text-yellow-500 fa-solid fa-star"></i>
-                            {else}
-                                <i class="fa-regular fa-star"></i>
+                <div class="cell {if !$feedback->message}flex justify-between{/if}">
+                    <div class="cell-content justify-between">
+                        <h2 class="cell-title">
+                            {if $feedback->fromGoogle}
+                                <span class="px-2 bg-black rounded mx-2"><i class="fa-brands fa-google text-white fa-xs"></i></span>
                             {/if}
-                        {/for}
-                    </p>
+                            {$feedback->name}
+                            {if \App\Models\Customer::where('feedback_hash', $feedback->hash)->exists()}
+                                <span class="text-lg text-gray-500">| {\App\Models\Customer::where('feedback_hash', $feedback->hash)->value('variant')}</span>
+                            {/if}
+                        </h2>
+                        <p class="cell-text space-x-2 text-lg">
+                            {for $i = 1; $i <= 5; $i++}
+                                {if $i <= $feedback->rating}
+                                    <i class="text-yellow-500 fa-solid fa-star"></i>
+                                {else}
+                                    <i class="fa-regular fa-star"></i>
+                                {/if}
+                            {/for}
+                        </p>
+                    </div>
+                    <p class="cell-note">{$feedback->message}</p>
                 </div>
             {/foreach}
         </div>

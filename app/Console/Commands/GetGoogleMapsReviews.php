@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Facades\DatabaseFacade;
 use App\Models\Feedback;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use App\Domain\Services\GuzzleService;
 use Symfony\Component\Console\Command\Command as CommandAlias;
@@ -26,13 +26,13 @@ class GetGoogleMapsReviews extends Command
 
     public function __construct(
         private readonly GuzzleService  $guzzleService,
-        private readonly DatabaseFacade $facade,
     ) {
         parent::__construct();
     }
 
     /**
      * Execute the console command.
+     * @throws GuzzleException
      */
     public function handle(): int
     {

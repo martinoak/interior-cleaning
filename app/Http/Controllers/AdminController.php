@@ -4,23 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Enums\CleaningTypes;
 use App\Models\Customer;
-use App\Models\Facades\DatabaseFacade;
 use App\Models\Feedback;
 use App\Models\Invoice;
 use Exception;
-use Illuminate\Database\LostConnectionException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\View\View;
 
 class AdminController extends Controller
 {
-    public function __construct(
-        private readonly DatabaseFacade $facade,
-    ) {
-    }
-
     /**
      * @throws Exception
      */
@@ -47,6 +39,9 @@ class AdminController extends Controller
             }
         }
 
+        $first = Customer::where('archived', 0)->where('term', '>=', date('Y-m-d'))->orderBy('term')->first();
+        $calendar = $first ? date('j.n.', strtotime($first->term)) : '-';
+
         $annual = 0;
         foreach (Invoice::whereYear('date', date('Y'))->get() as $a) {
             if ($a->type === 'N') {
@@ -67,7 +62,7 @@ class AdminController extends Controller
 
         return view('admin.admin', [
             'customers' => Customer::where('archived', 0)->get(),
-            'calendar' => $this->facade->getFirstFutureCustomer(),
+            'calendar' => $calendar,
             'annual' => $annual,
             'month' => $month,
             'variants' => [
@@ -140,6 +135,8 @@ class AdminController extends Controller
             $output['customer'] = $e->getMessage();
         }
 
+        $output['feedback'] = 'OK';
+        $output['cron'] = 'OK';
 
         return $output;
     }
