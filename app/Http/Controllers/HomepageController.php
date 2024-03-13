@@ -55,13 +55,6 @@ class HomepageController extends Controller
         }
     }
 
-    public function setVariant(Request $request): RedirectResponse
-    {
-        Customer::find($request->get('id'))->update(['variant' => $request->get('variant')]);
-
-        return back()->with('success', 'Varianta nastavena!');
-    }
-
     public function newFeedback(Request $request): View
     {
         return view('feedback', [

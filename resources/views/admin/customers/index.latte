@@ -4,162 +4,111 @@
     <div class="p-4 sm:ml-64">
         <div class="flex gap-4 mb-4 items-center">
             <h1 class="heading">Administrace</h1>
-            <a href="{route('customers.create')}" class="heading-button-green"><i class="fa-solid fa-plus fa-lg text-white"></i> Zákazník</a>
+            <a href="{route('customers.create')}" class="button-green"><i class="fa-solid fa-plus fa-lg text-white"></i> Zákazník</a>
         </div>
         <div class="grid grid-cols-1 gap-4 mb-4">
             {foreach $customers as $customer}
-                <div class="flex flex-col rounded border-l-8 border-[#3056d3] bg-gray-100 dark:bg-gray-400 mr-4">
-                    <div class="flex flex-col sm:flex-row sm:justify-between">
-                        <h2 class="text-2xl sm:w-1/3 font-bold text-black m-2 items-center">{$customer->name} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:w-1/3 justify-start space-y-4 sm:space-x-8 sm:space-y-0 m-2">
-                            {if $customer->telephone}<p><i class="fa-solid fa-mobile-screen fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="tel:{$customer->telephone}">Zavolat</a></p>{/if}
-                            {if $customer->email}<p><i class="fa-solid fa-at fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="mailto:{$customer->email}">Napsat e-mail</a></p>{/if}
-                        </div>
-                        <div class="hidden sm:flex flex-row justify-end items-center w-1/3 gap-4 mr-2">
+                <div class="cell">
+                    <div class="cell-content justify-between">
+                        <h2 class="cell-title">
+                            {$customer->name} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}
+                        </h2>
+                        <div class="hidden sm:flex flex-row justify-end items-center gap-4 mr-2">
+                            {if $customer->telephone}
+                                <a class="button-blue" href="tel:{$customer->telephone}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i>Zavolat</a>
+                            {/if}
+                            {if $customer->email}
+                                <a class="button-blue" href="mailto:{$customer->email}"><i class="fa-solid fa-at fa-xl icon"></i>Napsat e-mail</a>
+                            {/if}
                             {if !$customer->variant}
-                                <button data-modal-toggle="variant-{$customer->id}" class="p-1 px-3 bg-red-600 rounded text-white"><i class="fa-solid fa-gear fa-lg text-white mr-1"></i> Varianta</button>
+                                <form method="post" action="{route('customers.update', [customer => $customer->id])}" class="flex gap-4">
+                                    {csrf_field()|noescape}
+                                    {method_field('PUT')|noescape}
+                                    {foreach App\Enums\CleaningTypes::cases() as $case}
+                                        <button type="submit" name="variant" value="{$case->value}" class="button-yellow">
+                                            <i class="fa-solid fa-{$iterator->counter} icon"></i> {$case->value}
+                                        </button>
+                                    {/foreach}
+                                </form>
                             {/if}
                             {if $customer->term}
-                                <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->term|date:'j. n. Y'}</button>
+                                <a href="{route('customers.edit', [customer => $customer->id])}" class="button-green">{$customer->term|date:'j. n. Y'}</a>
                             {else}
-                                <button data-modal-target="order-{$customer->id}" data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white mr-1"></i> Objednat</button>
+                                <a href="{route('customers.edit', [customer => $customer->id])}" class="button-green"><i class="fa-solid fa-plus fa-xl icon"></i> Objednat</a>
                             {/if}
                             {if $customer->term}
-                                <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
+                                <a href="{route('archiveCustomer', ['id' => $customer->id])}" class="button-yellow"><i class="fa-solid fa-inbox fa-xl"></i></button></a>
                             {/if}
-                            <form action="{route('customers.destroy', [customer => $customer->id])}" method="post">
-                                {csrf_field()|noescape}
-                                {method_field('DELETE')|noescape}
-                                <button type="submit" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                    {if !empty($customer->message)}
-                        <div class="flex justify-between items-center ml-2 mb-4">
-                            <p><i class="fa-regular fa-comment fa-xl text-[#3056d3] mr-2"></i>{$customer->message}</p>
-                        </div>
-                    {/if}
-                    <div class="sm:hidden flex flex-row justify-evenly items-center gap-4 mb-2">
-                        {if !$customer->variant}
-                            <button data-modal-toggle="variant-{$customer->id}" class="p-1 px-3 bg-red-600 rounded text-white"><i class="fa-solid fa-gear fa-lg text-white mr-1"></i> Varianta</button>
-                        {/if}
-                        {if $customer->term}
-                            <button class="p-1 px-2 bg-green-800 rounded text-white" disabled>{$customer->term|date:'j. n. Y'}</button>
-                        {else}
-                            <button data-modal-target="order-{$customer->id}" data-modal-toggle="order-{$customer->id}" class="p-1 px-2 bg-green-600 rounded text-white"><i class="fa-solid fa-plus fa-xl text-white"></i></button>
-                        {/if}
-                        {if $customer->term}
-                            <a href="{route('archiveCustomer', ['id' => $customer->id])}"><button class="p-1 px-2 bg-orange-600 rounded text-white"><i class="fa-solid fa-inbox fa-xl text-white"></i></button></a>
-                        {/if}
-                        <form action="{route('customers.destroy', [customer => $customer->id])}" method="post">
-                            {csrf_field()|noescape}
-                            {method_field('DELETE')|noescape}
-                            <button type="submit" class="p-1 px-2 bg-red-600 rounded text-white"><i class="fa-solid fa-trash-can fa-xl text-white"></i></button>
-                        </form>
-                    </div>
-                </div>
+                            <button data-modal-target="destroy-prompt-{$customer->id}" data-modal-toggle="destroy-prompt-{$customer->id}" class="button-red">
+                                <i class="fa-solid fa-trash-can fa-xl"></i>
+                            </button>
 
-                <div id="variant-{$customer->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full">
-                    <div class="relative w-75">
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <div class="p-6 flex flex-col sm:flex-row gap-6">
-                                {foreach App\Enums\CleaningTypes::cases() as $case}
-                                    <a href="{route('setVariant', ['id' => $customer->id, 'variant' => $case->value])}" class="text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 flex items-center">
-                                        <i class="fa-solid fa-{$iterator->counter} mr-2"></i>
-                                        {$case->value}
-                                    </a>
-                                {/foreach}
+                            <div id="destroy-prompt-{$customer->id}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-md max-h-full">
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="destroy-prompt-{$customer->id}">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                        <div class="p-4 md:p-5 text-center">
+                                            <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                            </svg>
+                                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Opravdu kompletně smazat uživatele<br> <strong>{$customer->name}</strong>?</h3>
+                                            <form action="{route('customers.destroy', [customer => $customer->id])}" method="post" class="flex justify-around">
+                                                {csrf_field()|noescape}
+                                                {method_field('DELETE')|noescape}
+                                                <button type="submit" class="button-red w-[120px]"><i class="fa-solid fa-trash-can icon"></i> Smazat</button>
+                                                <button data-modal-hide="destroy-prompt-{$customer->id}" type="button" class="button-black w-[120px]"><i class="fa-solid fa-xmark icon"></i> Zrušit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                <div id="order-{$customer->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-                    <div class="relative w-75">
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <form action="{route('customers.update', [customer => $customer->id])}" method="post">
-                                {csrf_field()|noescape}
-                                {method_field('PUT')|noescape}
-                                <div class="p-6 space-y-6">
-                                    <div class="flex flex-col">
-                                        <label for="name" class="form-label">Jméno <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                                        <input type="text" name="name" id="name" value="{$customer->name}" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" name="email" id="email" value="{$customer->email}" class="border border-gray-300 px-4 py-2 rounded-lg">
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="telephone" class="form-label">Telefon</label>
-                                        <input type="text" name="telephone" id="telephone" value="{$customer->telephone}" class="border border-gray-300 px-4 py-2 rounded-lg">
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="variant" class="form-label">Varianta <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                                        <select name="variant" id="variant" class="border border-gray-300 px-4 py-2 rounded-lg" required>
-                                            <option value="{$customer->variant}" selected>{$customer->variant}</option>
-                                            {foreach App\Enums\CleaningTypes::cases() as $case}
-                                                {if $case->value != $customer->variant}
-                                                    <option value="{$case->value}">{$case->value}</option>
-                                                {/if}
-                                            {/foreach}
-                                        </select>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="message" class="form-label">Zpráva</label>
-                                        <textarea name="message" id="message" class="border border-gray-300 px-4 py-2 rounded-lg" rows="2">{$customer->message}</textarea>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="date" class="form-label">Datum</label>
-                                        <input type="date" name="term" id="date" class="border border-gray-300 px-4 py-2 rounded-lg">
-                                    </div>
-                                    <button type="submit" class="text-white bg-green-700 font-medium rounded-lg text-sm py-2 px-3 mr-2 mb-2">Objednat</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    {if !empty($customer->message)}
+                        <p class="cell-note">{$customer->message|breaklines}</p>
+                    {/if}
                 </div>
             {/foreach}
         </div>
     </div>
-    <div class="inline-flex items-center justify-center w-full" id="archiv" style="margin-top: 100px">
+    <div class="inline-flex items-center justify-center w-full mt-[100px]" id="archiv">
         <hr class="w-96 h-1 my-8 bg-gray-300 border-0">
         <span class="absolute px-3 font-black text-gray-900 text-xl -translate-x-1/2 bg-gray-50 dark:bg-gray-900 left-1/2 dark:text-white">Archiv</span>
     </div>
     <div class="p-4 sm:ml-64">
         <div class="grid grid-cols-1 gap-4 mb-4">
             {foreach $archived as $customer}
-                <div class="flex flex-col sm:flex-row justify-between items-center rounded border-l-8 border-[#3056d3] bg-gray-100 dark:bg-gray-400 mr-4">
-                    <h2 class="pl-2 sm:pl-0 text-2xl w-full sm:w-1/3 font-bold text-black m-2 items-center">{$customer->name} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}</h2>
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:w-1/3 justify-start space-y-4 sm:space-x-8 sm:space-y-0 m-2">
-                        {if $customer->telephone}<p><i class="fa-solid fa-mobile-screen fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="tel:{$customer->telephone}">Zavolat</a></p>{/if}
-                        {if $customer->email}<p><i class="fa-solid fa-at fa-xl text-[#3056d3] mr-2"></i><a class="text-[#3056d3]" href="mailto:{$customer->email}">Napsat e-mail</a></p>{/if}
-                    </div>
-                    <div class="p-2 sm:p-0 flex justify-end sm:w-1/3 items-center gap-4">
-                        {if !$customer->feedbackSent && $customer->variant}
-                            <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant])}"><button class="p-1 px-2 bg-[#3056d3] rounded text-white mr-2"><i class="fa-solid fa-paper-plane fa-lg text-white mr-2"></i>Feedback</button></a>
-                        {/if}
+                <div class="cell">
+                    <div class="cell-content justify-between">
+                        <h2 class="cell-title">
+                            {$customer->name} {if $customer->variant}<span class="text-lg text-gray-500">| {$customer->variant}</span>{/if}
+                        </h2>
+                        <div class="hidden sm:flex flex-row justify-end items-center gap-4 mr-2">
+                            {if $customer->telephone}
+                                <a class="button-blue" href="tel:{$customer->telephone}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i>Zavolat</a>
+                            {/if}
+                            {if $customer->email}
+                                <a class="button-blue" href="mailto:{$customer->email}"><i class="fa-solid fa-at fa-xl icon"></i>Napsat e-mail</a>
+                            {/if}
+                            {if !$customer->feedbackSent && $customer->variant}
+                                <a href="{route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant])}" class="button-indigo"><i class="fa-solid fa-paper-plane fa-lg text-white icon"></i>Feedback</a>
+                            {/if}
                             {if !$customer->variant}
-                            <button data-modal-toggle="variant-{$customer->id}" class="p-1 px-2 bg-red-600 rounded text-white mr-2"><i class="fa-solid fa-gear fa-lg text-white mr-2"></i>Varianta</button>
-                        {/if}
-                    </div>
-                </div>
-
-                <div id="variant-{$customer->id}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-                    <div class="relative w-75">
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <div class="p-6 space-y-6">
-                                {foreach App\Enums\CleaningTypes::cases() as $case}
-                                    <a href="{route('setVariant', ['id' => $customer->id, 'variant' => $case->value])}" class="w-100">
-                                        <button type="button" class="w-100 text-white bg-[#FF9119] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-end mr-2 mb-2">
-                                            <i class="fa-solid fa-{$iterator->counter} mr-5"></i>
-                                            {$case->value}
-                                        </button>
-                                    </a>
-                                {/foreach}
-                            </div>
+                                <button class="button-red"><i class="fa-solid fa-gear fa-lg text-white icon"></i>Varianta</button>
+                            {/if}
+                            {if $customer->variant && $customer->feedbackSent}
+                                <span class="button-green"><i class="fa-solid fa-user-check icon"></i> OK</span>
+                            {/if}
                         </div>
                     </div>
+                    {if !empty($customer->message)}
+                        <p class="cell-note">{$customer->message|breaklines}</p>
+                    {/if}
                 </div>
             {/foreach}
         </div>

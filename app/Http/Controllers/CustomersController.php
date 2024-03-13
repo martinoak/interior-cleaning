@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class CustomersController extends Controller
@@ -31,21 +32,18 @@ class CustomersController extends Controller
         return to_route('customers.index')->with('success', 'Zákazník byl úspěšně přidán!');
     }
 
-    public function show(string $id)
+    public function edit(string $id): View
     {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
+        return view('admin.customers.edit', [
+            'customer' => Customer::find($id),
+        ]);
     }
 
     public function update(Request $request, string $id): RedirectResponse
     {
         Customer::find($id)->update($request->all());
 
-        return back()->with('success', 'Zákazník byl úspěšně aktualizován!');
+        return to_route('customers.index')->with('success', 'Zákazník byl úspěšně aktualizován!');
     }
 
     public function destroy(string $id): RedirectResponse

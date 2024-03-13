@@ -4,7 +4,7 @@
     <div class="p-4 sm:ml-64">
         <div class="flex gap-4 mb-4">
             <h1 class="heading">VIN Check</h1>
-            <button data-modal-target="new-vin" data-modal-toggle="new-vin" class="heading-button-green" type="button">
+            <button data-modal-target="new-vin" data-modal-toggle="new-vin" class="button-green" type="button">
                 <i class="fa-regular fa-plus fa-lg text-white mr-1"></i> Nové VIN
             </button>
             <div id="new-vin" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -45,7 +45,7 @@
         <div id="accordion" data-accordion="collapse">
             {foreach $cars as $car}
                 <div id="accordion-collapse-heading-{$car->vin}" class="cursor-pointer">
-                    <div class="flex items-center justify-between w-full p-5 font-medium text-gray-500 border {if !$iterator->last}border-b-0{/if} border-gray-200 {if $iterator->first}rounded-t-xl{/if} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{$car->vin}" aria-expanded="true" aria-controls="accordion-collapse-body-{$car->vin}">
+                    <div class="flex items-center justify-between w-full p-5 font-medium text-gray-500 border {if !$iterator->last}border-b-0{/if} border-gray-200 {if $iterator->first}rounded-t-xl{/if} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{$car->vin}" aria-expanded="false">
                         <span><i class="me-2 fa-solid fa-car"></i> {$car->name} {$car->model}</span>
                         <div class="flex items-center gap-4">
                             <a href="{route('vin.edit', [vin => $car->vin])}" type="button" class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700">

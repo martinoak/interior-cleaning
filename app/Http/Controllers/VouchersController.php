@@ -17,7 +17,7 @@ class VouchersController extends Controller
     public function index(): View
     {
         return view('admin.vouchers.index', [
-            'vouchers' => Voucher::where(['accepted' => 0])->orderBy('date', 'desc')->get(),
+            'vouchers' => Voucher::where(['accepted' => 0])->get(),
         ]);
     }
 
@@ -31,7 +31,7 @@ class VouchersController extends Controller
                 'price' => 0,
             ]);
 
-            return to_route('vouchers.index')->with('success', "Voucher <strong>$hash</strong> byl úspěšně vytvořen!");
+            return to_route('vouchers.index')->with('success', "Voucher <strong>$hash</strong> byl úspěšně vytvořen!")->with('voucher', $hash);
         } elseif ($request->input('type') === 'regular') {
             $hash = strtoupper(substr(md5(rand()), 0, 6));
             $price = CleaningTypes::from($request->input('variant'))->getRawPrice();
