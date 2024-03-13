@@ -34,7 +34,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
             <div class="cell">
                 <div class="cell-content justify-between">
-                    <h2 class="cell-title">Nový voucher</h2>
+                    <h2 class="cell-title">Založit</h2>
                     <form class="cell-text flex space-x-2 text-lg" method="post" action="{route('vouchers.store', [type => 'regular'])}">
                         {csrf_field()|noescape}
                         {foreach App\Enums\CleaningTypes::cases() as $case}
