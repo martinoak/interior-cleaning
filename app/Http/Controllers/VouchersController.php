@@ -17,7 +17,7 @@ class VouchersController extends Controller
     public function index(): View
     {
         return view('admin.vouchers.index', [
-            'vouchers' => Voucher::where(['accepted' => 0])->get(),
+            'vouchers' => Voucher::where(['accepted' => 0, 'expired' => 0])->get(),
         ]);
     }
 

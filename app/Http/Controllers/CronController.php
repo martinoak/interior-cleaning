@@ -15,4 +15,9 @@ class CronController extends Controller
     {
         Artisan::call('app:monthly-bill');
     }
+
+    public function invalidateVouchers(): void
+    {
+        Artisan::call('app:invalidate-vouchers');
+    }
 }

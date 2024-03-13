@@ -64,4 +64,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 Route::group(['prefix' => 'cron'], function () {
     Route::any('today', [CronController::class, 'today'])->name('cron.today');
     Route::any('bill', [CronController::class, 'bill'])->name('cron.bill');
+    Route::any('invalidate-vouchers', [CronController::class, 'invalidateVouchers'])->name('cron.invalidate-vouchers');
 });
