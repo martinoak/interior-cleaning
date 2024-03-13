@@ -27,7 +27,7 @@
                     <div class="cell-content justify-between">
                         <h2 class="cell-title">
                             {if $feedback->fromGoogle}
-                                <span class="px-2 bg-black rounded mx-2"><i class="fa-brands fa-google text-white fa-xs"></i></span>
+                                <span class="px-2 bg-black rounded mr-2"><i class="fa-brands fa-google text-white fa-xs"></i></span>
                             {/if}
                             {$feedback->name}
                             {if \App\Models\Customer::where('feedback_hash', $feedback->hash)->exists()}
