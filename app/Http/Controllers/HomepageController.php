@@ -42,12 +42,17 @@ class HomepageController extends Controller
 
     public function sendFeedbackEmail(Request $request): RedirectResponse
     {
-        Mail::to($request->get('email'))
-            ->send(new FeedbackEmail(md5(time()), CleaningTypes::from($request->get('variant'))->value));
+        $to = $request->get('email');
+        if (!$to) {
+            return back()->with('error', 'Email není vyplněný!');
+        } else {
+            Mail::to($request->get('email'))
+                ->send(new FeedbackEmail(md5(time()), CleaningTypes::from($request->get('variant'))->value));
 
-        Customer::where('id', $request->get('id'))->update(['feedbackSent' => 1]);
+            Customer::where('id', $request->get('id'))->update(['feedbackSent' => 1]);
 
-        return back()->with('success', 'Feedback email odeslán!');
+            return back()->with('success', 'Feedback email odeslán!');
+        }
     }
 
     public function setVariant(Request $request): RedirectResponse
