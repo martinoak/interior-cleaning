@@ -36,7 +36,7 @@
         @apply w-full flex items-center;
     }
     .cell-title {
-        @apply text-2xl font-bold text-gray-400 dark:text-gray-300;
+        @apply text-2xl font-bold text-gray-800 dark:text-gray-300;
     }
     .cell-text {
         @apply text-2xl font-bold text-gray-800 dark:text-gray-300
