@@ -95,15 +95,9 @@
                             datasets: [{
                                 data: [{foreach $variants as $count}{$count},{/foreach}],
                                 backgroundColor: ['rgb(255 145 25)', 'rgb(48 86 211)', 'rgb(21 128 61)'],
+                                borderColor: 'transparent',
                                 hoverOffset: 6
                             }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
                         }
                     });
                 </script>
