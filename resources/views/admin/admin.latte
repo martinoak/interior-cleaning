@@ -6,10 +6,16 @@
 
 {block content}
     <div class="p-4 sm:ml-64">
-        <div class="flex items-center gap-4 mb-4">
-            <h1 class="heading">Administrace</h1>
+        <div class="heading">
+            <h1 class="heading-title">Administrace</h1>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-4">
+            <div class="cell flex">
+                <div class="cell-content justify-between">
+                    <h2 class="cell-title">Celkový zisk</h2>
+                    <p class="cell-text"><i class="text-[#3056d3] fa-solid fa-dollar-sign icon"></i>{$total|number:0,',', ' '},-</p>
+                </div>
+            </div>
             <div class="cell flex">
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Roční {$annual >= 0 ? 'zisk' : 'ztráta'}</h2>
@@ -35,8 +41,8 @@
                 </div>
             </div>
         </div>
-        <div class="hidden sm:flex justify-between gap-4 mb-4">
-            <div class="cell w-2/3">
+        <div class="flex justify-between gap-4 mb-4">
+            <div class="cell w-full sm:w-2/3 hidden sm:flex">
                 <h2 class="cell-title">Graf výdělků</h2>
                 <canvas id="earningChart" class="w-full"></canvas>
                 <script>
@@ -76,7 +82,7 @@
                         }})
                 </script>
             </div>
-            <div class="cell w-1/3">
+            <div class="cell w-full sm:w-1/3">
                 <h2 class="cell-title">Poměr variant</h2>
                 <canvas id="variantCharts"></canvas>
                 <script>

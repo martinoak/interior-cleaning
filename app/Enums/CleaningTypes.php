@@ -8,6 +8,14 @@ enum CleaningTypes: string
     case MIDDLE = 'Zlatá střední cesta';
     case DELUXE = 'Deluxe';
 
+    public function getShortenedTitle(): string
+    {
+        return match ($this) {
+            self::START => 'Základ',
+            self::MIDDLE => 'Střed',
+            self::DELUXE => 'Deluxe',
+        };
+    }
     public function getRawPrice(): int
     {
         return match ($this) {

@@ -24,6 +24,7 @@ class AdminController extends Controller
 
         $invoices = Invoice::all();
         $earnings = [];
+        $total = 0;
 
         foreach ($invoices as $i) {
             $year = date('Y', strtotime($i->date));
@@ -33,8 +34,10 @@ class AdminController extends Controller
         foreach ($invoices as $i) {
             $year = date('Y', strtotime($i->date));
             if ($i->type === 'N') {
+                $total -= $i->price;
                 $earnings[$year][date('m', strtotime($i->date))] -= $i->price;
             } else {
+                $total += $i->price;
                 $earnings[$year][date('m', strtotime($i->date))] += $i->price;
             }
         }
@@ -71,6 +74,7 @@ class AdminController extends Controller
                 CleaningTypes::DELUXE->value => Customer::where('variant', CleaningTypes::DELUXE)->count(),
             ],
             'earnings' => $earnings,
+            'total' => $total,
         ]);
     }
 

@@ -2,13 +2,10 @@
 
 {block content}
     <div class="p-4 sm:ml-64">
-        <div class="flex justify-between items-center gap-4 mb-4">
-            <div class="flex">
-                <h1 class="heading mr-3">Faktury</h1>
-                <a href="{route('invoices.export')}"><button class="button-green"><i class="fa-regular fa-file-excel fa-lg text-white mr-1"></i> Export do Excelu</button></a>
-            </div>
-            <div class="text-black dark:text-white">
-                Celkem tržby: <span class="font-bold text-green-700 dark:text-green-400">{$earnings|number:0,',', ' '},-</span>
+        <div class="heading">
+            <div>
+                <h1 class="heading-title">Faktury</h1>
+                <a href="{route('invoices.export')}"><button class="button-green"><i class="fa-regular fa-file-excel fa-lg text-white icon"></i>Export</button></a>
             </div>
         </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -38,16 +35,16 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {$invoice->name}
                         </th>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 whitespace-nowrap">
                             {\App\Enums\InvoiceTypes::getHtmlSpan($invoice->type)|noescape}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 whitespace-nowrap">
                             {$invoice->date|date:'j. n. Y'}
                         </td>
-                        <td class="px-6 py-4 font-bold">
+                        <td class="px-6 py-4 font-bold whitespace-nowrap">
                             {$invoice->price|number:0,',', ' '},-
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 flex gap-2">
                             {if $invoice->type === 'P' && file_exists(storage_path('app/public/voucher/').$invoice->name.'.png')}
                                 <a href="{route('vouchers.show', [voucher => $invoice->name])}" aria-valuemax="storage_path('app/public/voucher').$invoice->name.'.png'" class="cursor-pointer text-white bg-amber-700 hover:bg-amber-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-amber-600 dark:hover:bg-amber-700" {if !file_exists(storage_path('app/public/voucher/').$invoice->name.'png')}disabled{/if}>
                                     <i class="fa-solid fa-eye"></i>

@@ -2,8 +2,8 @@
 
 {block content}
     <div class="p-4 sm:ml-64">
-        <div class="flex items-center gap-4 mb-4">
-            <h1 class="heading">Administrace</h1>
+        <div class="heading">
+            <h1 class="heading-title">Vouchery</h1>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
             <div class="cell">
@@ -35,7 +35,7 @@
             <div class="cell">
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Založit</h2>
-                    <form class="cell-text flex space-x-2 text-lg" method="post" action="{route('vouchers.store', [type => 'regular'])}">
+                    <form class="cell-text hidden sm:flex space-x-2 text-lg" method="post" action="{route('vouchers.store', [type => 'regular'])}">
                         {csrf_field()|noescape}
                         {foreach App\Enums\CleaningTypes::cases() as $case}
                             <button type="submit" name="variant" value="{$case->value}" class="button-yellow">
@@ -44,14 +44,24 @@
                         {/foreach}
                     </form>
                 </div>
+                <div class="cell-note-mobile">
+                    <form class="cell-text flex space-x-2 text-lg" method="post" action="{route('vouchers.store', [type => 'regular'])}">
+                        {csrf_field()|noescape}
+                        {foreach App\Enums\CleaningTypes::cases() as $case}
+                            <button type="submit" name="variant" value="{$case->value}" style="{if $iterator->first}margin-left: 0 !important;{/if}" class="w-1/3 button-yellow">
+                                {$case->getShortenedTitle()}
+                            </button>
+                        {/foreach}
+                    </form>
+                </div>
             </div>
             <div class="cell">
                 <div class="cell-content justify-between">
-                    <h2 class="cell-title">Generování slevy</h2>
+                    <h2 class="cell-title">10% sleva</h2>
                     <form class="cell-text space-x-2 text-lg" method="post" action="{route('vouchers.store', [type => 'mini'])}">
                         {csrf_field()|noescape}
                         <button type="submit" class="button-green">
-                            <i class="fa-solid fa-percent mr-2"></i> Nová sleva
+                            <i class="fa-solid fa-percent mr-2"></i> Generovat
                         </button>
                     </form>
                 </div>
