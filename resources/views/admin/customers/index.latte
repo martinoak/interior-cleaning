@@ -18,9 +18,13 @@
                         <div class="hidden sm:flex flex-row justify-end items-center gap-4 mr-2">
                             {if $customer->telephone}
                                 <a class="button-blue" href="tel:{$customer->telephone}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i>Zavolat</a>
+                            {else}
+                                <span class="button-disabled"><i class="fa-solid fa-mobile-screen fa-xl icon"></i>Telefon</span>
                             {/if}
                             {if $customer->email}
                                 <a class="button-blue" href="mailto:{$customer->email}"><i class="fa-solid fa-at fa-xl icon"></i>Napsat e-mail</a>
+                            {else}
+                                <span class="button-disabled"><i class="fa-solid fa-at fa-xl icon"></i>E-mail</span>
                             {/if}
                             {if !$customer->variant}
                                 <form method="post" action="{route('customers.update', [customer => $customer->id])}" class="flex gap-4">
@@ -40,6 +44,8 @@
                             {/if}
                             {if $customer->term}
                                 <a href="{route('archiveCustomer', ['id' => $customer->id])}" class="button-yellow"><i class="fa-solid fa-inbox fa-xl"></i></button></a>
+                            {else}
+                                <span class="button-disabled"><i class="fa-solid fa-inbox fa-xl"></i></span>
                             {/if}
                             <button data-modal-target="destroy-{$customer->id}" data-modal-toggle="destroy-{$customer->id}" class="button-red">
                                 <i class="fa-solid fa-trash-can fa-xl"></i>
@@ -78,9 +84,13 @@
                         <section>
                             {if $customer->telephone}
                                 <a class="button-blue w-1/2" href="tel:{$customer->telephone}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i></a>
+                            {else}
+                                <span class="button-disabled w-1/2"><i class="fa-solid fa-mobile-screen fa-xl icon"></i></span>
                             {/if}
                             {if $customer->email}
                                 <a class="button-blue w-1/2" href="mailto:{$customer->email}"><i class="fa-solid fa-at fa-xl icon"></i></a>
+                            {else}
+                                <span class="button-disabled w-1/2"><i class="fa-solid fa-at fa-xl icon"></i></span>
                             {/if}
                         </section>
                         <section>
@@ -105,6 +115,8 @@
                             <div class="flex space-x-2">
                                 {if $customer->term}
                                     <a href="{route('archiveCustomer', ['id' => $customer->id])}" class="button-yellow"><i class="fa-solid fa-inbox fa-xl"></i></button></a>
+                                {else}
+                                    <span class="button-disabled w-1/2"><i class="fa-solid fa-inbox fa-xl"></i></span>
                                 {/if}
                                 <button data-modal-target="destroy-{$customer->id}" data-modal-toggle="destroy-{$customer->id}" class="button-red">
                                     <i class="fa-solid fa-trash-can fa-xl"></i>
