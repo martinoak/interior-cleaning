@@ -33,8 +33,17 @@
                             {/if}
                             {$feedback->name}
                         </h2>
-                        <p class="cell-text space-x-2 text-lg">
+                        <p class="sm:hidden cell-text space-x-2 text-lg">
                             {$feedback->rating|number:0} <i class="text-yellow-500 fa-solid fa-star"></i>
+                        </p>
+                        <p class="hidden sm:block cell-text space-x-2 text-lg">
+                            {for $i = 1; $i <= 5; $i++}
+                                {if $i <= $feedback->rating}
+                                    <i class="text-yellow-500 fa-solid fa-star"></i>
+                                {else}
+                                    <i class="fa-regular fa-star"></i>
+                                {/if}
+                            {/for}
                         </p>
                     </div>
                     <p class="cell-note">{$feedback->message}</p>
