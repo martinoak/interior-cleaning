@@ -16,7 +16,7 @@ class CustomersController extends Controller
     {
         return view('admin.customers.index', [
             'customers' => Customer::where('archived', 0)->get(),
-            'archived' => Customer::where('archived', 1)->get(),
+            'archived' => Customer::where('archived', 1)->orderBy('id', 'desc')->get(),
         ]);
     }
 

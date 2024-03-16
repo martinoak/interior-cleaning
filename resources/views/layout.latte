@@ -56,7 +56,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
         <script>
             const moonButton = document.querySelector('#moonButton')
+            const moonButtonMobile = document.querySelector('#moonButton-mobile')
             const sunButton = document.querySelector('#sunButton')
+            const sunButtonMobile = document.querySelector('#sunButton-mobile')
 
             const theme = window.localStorage.getItem('theme')
             const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
@@ -73,6 +75,16 @@
             })
 
             sunButton.addEventListener('click', () => {
+                document.documentElement.classList.remove('dark')
+                localStorage.setItem('theme', 'light')
+            })
+
+            moonButtonMobile.addEventListener('click', () => {
+                document.documentElement.classList.add('dark')
+                localStorage.setItem('theme', 'dark')
+            })
+
+            sunButtonMobile.addEventListener('click', () => {
                 document.documentElement.classList.remove('dark')
                 localStorage.setItem('theme', 'light')
             })
