@@ -2,13 +2,15 @@
 
 {block content}
     <div class="p-4 sm:ml-64">
-        <div class="flex items-center gap-4 mb-4">
-            <h1 class="heading">Administrace</h1>
-            <a href="{route('admin.feedbacks.refresh')}" class="button-black"><i class="fa-brands fa-google fa-lg mr-1"></i> Import recenzí</a>
+        <div class="heading">
+            <div>
+                <h1 class="heading-title">Recenze</h1>
+                <a href="{route('admin.feedbacks.refresh')}" class="button-black"><i class="fa-brands fa-google fa-lg mr-1"></i> Import</a>
+            </div>
         </div>
         <div class="py-4 sm:py-3">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-2">
+                <dl class="grid gap-x-8 gap-y-16 text-center grid-cols-2">
                     <div class="feedback-wrapper">
                         <dt class="feedback-title">Celkem recenzí</dt>
                         <dd class="feedback-value">{\App\Models\Feedback::count()}</dd>
@@ -27,21 +29,12 @@
                     <div class="cell-content justify-between">
                         <h2 class="cell-title">
                             {if $feedback->fromGoogle}
-                                <span class="px-2 bg-black rounded mr-2"><i class="fa-brands fa-google text-white fa-xs"></i></span>
+                                <span class="px-2 bg-black rounded icon"><i class="fa-brands fa-google text-white fa-xs"></i></span>
                             {/if}
                             {$feedback->name}
-                            {if \App\Models\Customer::where('feedback_hash', $feedback->hash)->exists()}
-                                <span class="text-lg text-gray-500">| {\App\Models\Customer::where('feedback_hash', $feedback->hash)->value('variant')}</span>
-                            {/if}
                         </h2>
                         <p class="cell-text space-x-2 text-lg">
-                            {for $i = 1; $i <= 5; $i++}
-                                {if $i <= $feedback->rating}
-                                    <i class="text-yellow-500 fa-solid fa-star"></i>
-                                {else}
-                                    <i class="fa-regular fa-star"></i>
-                                {/if}
-                            {/for}
+                            {$feedback->rating|number:0} <i class="text-yellow-500 fa-solid fa-star"></i>
                         </p>
                     </div>
                     <p class="cell-note">{$feedback->message}</p>

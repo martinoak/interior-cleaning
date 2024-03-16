@@ -4,6 +4,12 @@
 
 @layer components {
     .heading {
+        @apply flex justify-between items-center gap-4 mb-4;
+    }
+    .heading div {
+        @apply flex w-full justify-between;
+    }
+    .heading-title {
         @apply text-3xl font-bold text-black dark:text-white;
     }
     .button-blue {
@@ -43,6 +49,12 @@
     }
     .cell-note {
         @apply text-sm text-gray-500 dark:text-gray-400 mt-2;
+    }
+    .cell-note-mobile {
+        @apply mt-4 flex flex-col gap-y-2 sm:hidden;
+    }
+    .cell-note-mobile section {
+        @apply flex w-full space-x-2 justify-between;
     }
     .icon {
         @apply mr-2;

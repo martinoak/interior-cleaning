@@ -12,13 +12,8 @@ class InvoicesController extends Controller
 {
     public function index(): View
     {
-        $earnings = 0;
-        foreach (Invoice::all() as $invoice) {
-            $invoice->type === 'N' ? $earnings -= $invoice->price : $earnings += $invoice->price;
-        }
         return view('admin.invoices.index', [
             'invoices' => Invoice::orderBy('date', 'desc')->get(),
-            'earnings' => $earnings,
         ]);
     }
 

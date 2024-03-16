@@ -2,11 +2,11 @@
 
 {block content}
     <div class="p-4 sm:ml-64">
-        <div class="flex items-center gap-4 mb-4">
+        <div class="heading justify-start">
             <button onclick="history.back()" class="button-indigo" type="button">
                 <i class="fa-solid fa-arrow-left fa-lg text-white mr-1"></i> Zpět
             </button>
-            <h1 class="heading">Faktury</h1>
+            <h1 class="heading-title">Faktura</h1>
         </div>
 
         <form method="post" action="{route('invoices.update', [invoice => $invoice->id])}">
