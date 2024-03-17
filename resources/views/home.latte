@@ -21,9 +21,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
-                    <span class="navbar-brand">
-                        <img src="{asset('images/logo/logo-car.png')}" alt="Logo" class="w-100"/>
-                    </span>
+                        <span class="navbar-brand">
+                            <img src="{asset('images/logo/logo-car.png')}" alt="Logo" class="w-100"/>
+                        </span>
                         <a class="ud-logo-text navbar-brand-text fw-bold" href="{route('homepage')}" style="color: white">
                             Čištění interiérů
                         </a>
@@ -247,74 +247,112 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div id="carouselExampleIndicators" class="d-flex carousel carousel-dark slide" data-bs-ride="carousel">
-                <div class="carousel-inner w-50 mx-auto">
-                    {foreach $feedbacks as $feedback}
-                        <div class="carousel-item {if $iterator->first}active{/if}">
-                            <div class="d-block w-100">
-                                <div class="ud-single-testimonial">
-                                    <div class="ud-testimonial-ratings">
-                                        {if $feedback->rating == 1}
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        {elseif $feedback->rating == 2}
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        {elseif $feedback->rating == 3}
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        {elseif $feedback->rating == 4}
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        {else}
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        {/if}
+        <div id="carouselExampleIndicators" class="d-none d-md-flex carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-inner w-50 mx-auto">
+                {foreach $feedbacks as $feedback}
+                    <div class="carousel-item {if $iterator->first}active{/if}">
+                        <div class="d-block w-100">
+                            <div class="ud-single-testimonial">
+                                <div class="ud-testimonial-ratings">
+                                    {if $feedback->rating == 1}
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    {elseif $feedback->rating == 2}
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    {elseif $feedback->rating == 3}
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    {elseif $feedback->rating == 4}
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    {else}
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {/if}
+                                </div>
+                                <div class="ud-testimonial-content">
+                                    <p>{$feedback->message}</p>
+                                </div>
+                                <div class="ud-testimonial-info" style="justify-content: space-between">
+                                    <div class="ud-testimonial-meta">
+                                        <h4>{$feedback->name}</h4>
+                                        {ifset $feedback->variant}
+                                            <p>Varianta: {$feedback->variant}</p>
+                                        {/ifset}
                                     </div>
-                                    <div class="ud-testimonial-content">
-                                        <p>{$feedback->message}</p>
-                                    </div>
-                                    <div class="ud-testimonial-info" style="justify-content: space-between">
-                                        <div class="ud-testimonial-meta">
-                                            <h4>{$feedback->name}</h4>
-                                            {ifset $feedback->variant}
-                                                <p>Varianta: {$feedback->variant}</p>
-                                            {/ifset}
-                                        </div>
-                                        {if $feedback->fromGoogle}
-                                            <img src="{asset('images/maps.svg')}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
-                                        {/if}
-                                    </div>
+                                    {if $feedback->fromGoogle}
+                                        <img src="{asset('images/maps.svg')}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
+                                    {/if}
                                 </div>
                             </div>
                         </div>
-                    {/foreach}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                    </div>
+                {/foreach}
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div id="carouselExampleIndicatorsMobile" class="d-flex d-md-none carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-inner w-75 mx-auto">
+                {foreach $feedbacks as $feedback}
+                    <div class="carousel-item {if $iterator->first}active{/if}">
+                        <div class="d-block w-100">
+                            <div class="ud-single-testimonial" style="padding: 20px">
+                                <div class="ud-testimonial-ratings">
+                                    {$feedback->rating|number}<i class="ms-2 fa-solid fa-star"></i>
+                                </div>
+                                <div class="ud-testimonial-content">
+                                    <p>{$feedback->message}</p>
+                                </div>
+                                <div class="ud-testimonial-info" style="justify-content: space-between">
+                                    <div class="ud-testimonial-meta">
+                                        <h4>{$feedback->name}</h4>
+                                        {ifset $feedback->variant}
+                                            <p>Varianta: {$feedback->variant}</p>
+                                        {/ifset}
+                                    </div>
+                                    {if $feedback->fromGoogle}
+                                        <img src="{asset('images/maps.svg')}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicatorsMobile" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicatorsMobile" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </section>
 
@@ -478,7 +516,7 @@
 
 {block bottomscripts}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="{asset('js/main.js')}"></script>
+    <script src="{asset('js/main.js')}?m={filemtime(public_path('js/main.js'))}"></script>
     <script type="text/javascript">
         document.getElementById("demandForm").addEventListener("submit", function() {
             document.getElementById("sendDemandButton").setAttribute("disabled", "disabled");

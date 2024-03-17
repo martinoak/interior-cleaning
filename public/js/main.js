@@ -39,18 +39,23 @@
     };
 
     //===== close navbar-collapse when a  clicked
-    let navbarToggler = document.querySelector(".navbar-toggler");
-    const navbarCollapse = document.querySelector(".navbar-collapse");
+    document.addEventListener("DOMContentLoaded", function () {
+        let navbarToggler = document.querySelector(".navbar-toggler");
+        const navbarCollapse = document.querySelector(".navbar-collapse");
 
-    document.querySelectorAll(".ud-menu-scroll").forEach((e) =>
-        e.addEventListener("click", () => {
-            navbarToggler.classList.remove("active");
-            navbarCollapse.classList.remove("show");
-        })
-    );
-    navbarToggler.addEventListener("click", function () {
-        navbarToggler.classList.toggle("active");
-        navbarCollapse.classList.toggle("show");
+        // Add event listener to each menu item to close the navbar when clicked
+        document.querySelectorAll(".ud-menu-scroll").forEach((e) =>
+            e.addEventListener("click", () => {
+                navbarToggler.classList.remove("active");
+                navbarCollapse.classList.remove("show");
+            })
+        );
+
+        // Add event listener to toggle the active class on navbar-toggler click
+        navbarToggler.addEventListener("click", function () {
+            navbarToggler.classList.toggle("active");
+            navbarCollapse.classList.toggle("show");
+        });
     });
 
     // ===== submenu
