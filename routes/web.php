@@ -36,7 +36,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
-    Route::resource('invoices', InvoicesController::class)->except('create','store','destroy');
+    Route::resource('invoices', InvoicesController::class)->except('destroy');
 
     Route::resource('customers', CustomersController::class)->except('show');
     Route::group(['prefix' => 'customers'], function () {
