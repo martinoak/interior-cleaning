@@ -43,6 +43,18 @@ class InvoicesController extends Controller
         return response()->download(storage_path('app/public/invoice/'.$id.'.png'));
     }
 
+    public function create(): View
+    {
+        return view('admin.invoices.create');
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        Invoice::create($request->all());
+
+        return to_route('invoices.index')->with('success', 'Faktura byla úspěšně vytvořena.');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
