@@ -33,7 +33,7 @@ class AdminController extends Controller
 
         foreach ($invoices as $i) {
             $year = date('Y', strtotime($i->date));
-            if ($i->type === 'N') {
+            if ($i->type === 'V' || $i->type === 'M') {
                 $total -= $i->price;
                 $earnings[$year][date('m', strtotime($i->date))] -= $i->price;
             } else {
