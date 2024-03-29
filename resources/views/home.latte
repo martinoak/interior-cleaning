@@ -8,10 +8,11 @@
     <meta property="og:description" content="Vaše auto vyčistíme rychle, levně a kvalitně! Čištíme osobní automobily a používáme šetrné, ale účinné prostředky, aby se Vaše auto blyštilo.">
     <meta property="og:image" content="{asset('images/logo/logo-car2.png')}">
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14" defer></script>
 {/block}
 
 {block content}
+
 
 {include 'partials/alerts_bs.latte'}
 <div id="vue-control">
@@ -27,7 +28,7 @@
                         <a class="ud-logo-text navbar-brand-text fw-bold" href="{route('homepage')}" style="color: white">
                             Čištění interiérů
                         </a>
-                        <button class="navbar-toggler">
+                        <button class="navbar-toggler" aria-label="Menu" type="button">
                             <i class="fa-solid fa-bars text-white"></i>
                         </button>
                         <div class="navbar-collapse">
@@ -294,7 +295,7 @@
                                 </div>
                                 <div class="ud-testimonial-info" style="justify-content: space-between">
                                     <div class="ud-testimonial-meta">
-                                        <h4>{$feedback->name}</h4>
+                                        <h3>{$feedback->name}</h3>
                                         {ifset $feedback->variant}
                                             <p>Varianta: {$feedback->variant}</p>
                                         {/ifset}
@@ -332,7 +333,7 @@
                                 </div>
                                 <div class="ud-testimonial-info" style="justify-content: space-between">
                                     <div class="ud-testimonial-meta">
-                                        <h4>{$feedback->name}</h4>
+                                        <h3>{$feedback->name}</h3>
                                         {ifset $feedback->variant}
                                             <p>Varianta: {$feedback->variant}</p>
                                         {/ifset}
@@ -381,16 +382,16 @@
                                 <img src="{asset('images/team/shape-2.svg')}" alt="shape" class="shape shape-2" />
                             </div>
                             <div class="ud-team-info">
-                                <h5>{$worker['name']}</h5>
-                                <h6>{$worker['position']}</h6>
+                                <h3>{$worker['name']}</h3>
+                                <h4>{$worker['position']}</h4>
                                 <a href="tel:{str_replace(' ','', $worker['tel'])}">{$worker['tel']}</a>
                             </div>
                             <ul class="ud-team-socials">
                                 <li>
-                                    <a href="{$worker['facebook']}"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="{$worker['facebook']}" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                                 </li>
                                 <li>
-                                    <a href="{$worker['instagram']}"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="{$worker['instagram']}" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -418,7 +419,7 @@
                                     <i class="fa-solid fa-location-dot"></i>
                                 </div>
                                 <div class="ud-info-meta">
-                                    <h5>Adresa</h5>
+                                    <h3>Adresa</h3>
                                     <p>Kondrac 115, 258 01 Vlašim</p>
                                     <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=49.665563,14.884062" class="py-1" target="_blank"><i class="fa-solid fa-location-arrow"></i> Pustit GPS</a>
                                 </div>
@@ -428,7 +429,7 @@
                                     <i class="fa-solid fa-envelope"></i>
                                 </div>
                                 <div class="ud-info-meta">
-                                    <h5>Spojme se!</h5>
+                                    <h3>Spojme se!</h3>
                                     <a href="mailto:info@cisteni-kondrac.cz">info@cisteni-kondrac.cz</a>
                                     <a href="tel:+420602352402">+420 602 352 402</a>
                                 </div>
@@ -438,7 +439,7 @@
                                     <i class="fa-solid fa-briefcase"></i>
                                 </div>
                                 <div class="ud-info-meta">
-                                    <h5></h5>
+                                    <h3>Firemní údaje</h3>
                                     <p><strong>IČO:</strong> 18026087</p>
                                     <p><strong>Sídlo:</strong> Kondrac 115</p>
                                 </div>
@@ -517,7 +518,7 @@
 
 {block bottomscripts}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="{asset('js/main.js')}?m={filemtime(public_path('js/main.js'))}"></script>
+    <script src="{asset('js/main.js')}?m={filemtime(public_path('js/main.js'))}" defer></script>
     <script>
         let video = document.getElementById("hpVideo");
         video.style.maxHeight = window.innerHeight + "px";
@@ -534,19 +535,17 @@
             }, 2000);
         });
     </script>
-    <script>
-        (function(){
-            let vue = new Vue({
-                el: '#vue-control',
-                data: {
-                    variant: null,
-                },
-                methods: {
-                    setVariant: function (e) {
-                        this.variant = e.target.dataset.variant;
-                    }
+    <script type="module">
+        let vue = new Vue({
+            el: '#vue-control',
+            data: {
+                variant: null,
+            },
+            methods: {
+                setVariant: function (e) {
+                    this.variant = e.target.dataset.variant;
                 }
-            });
-        })();
+            }
+        });
     </script>
 {/block}
