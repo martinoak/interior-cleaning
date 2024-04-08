@@ -452,7 +452,7 @@
                         <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
                         <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail', [sendEmail => true])}">
                             {csrf_field()|noescape}
-                            <input type="text" name="_hpt" style="display: none"/>
+                            <input type="text" name="_hpt" style="display: none" aria-label=""/>
 
                             <div class="ud-form-group">
                                 <label for="name">Celé jméno <i class="fa-solid fa-star-of-life text-danger"></i></label>
