@@ -33,6 +33,10 @@ class HomepageController extends Controller
 
     public function sendEmail(Request $request): RedirectResponse
     {
+        if ($request->has('_hpt') && $request->get('_hpt') !== '') {
+            abort(403);
+        }
+
         Customer::create($request->all());
 
         Mail::to('stepan@cisteni-kondrac.cz')->send(new FormEmail($request->all()));
