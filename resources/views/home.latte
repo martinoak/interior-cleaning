@@ -9,6 +9,18 @@
     <meta property="og:image" content="{asset('images/logo/logo-car2.png')}">
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14" defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render={env('GOOGLE_RECAPTCHA_SITE_KEY')}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            document.getElementById('demandForm').addEventListener("submit", function(event) {
+                event.preventDefault();
+                grecaptcha.execute({env('GOOGLE_RECAPTCHA_SITE_KEY')}, { action: 'contact' }).then(function(token) {
+                    document.getElementById("recaptchaResponse").value= token;
+                    document.getElementById('demandForm').submit();
+                });
+            }, false);
+        });
+    </script>
 {/block}
 
 {block content}
@@ -450,10 +462,12 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="ud-contact-form-wrapper">
                         <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
+                        {foreach $errors->all() as $error}
+                            <p style="color: red;margin-bottom: 5px">{$error}</p>
+                        {/foreach}
                         <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail', [sendEmail => true])}">
                             {csrf_field()|noescape}
-                            <input type="text" name="_hpt" style="display: none"/>
-
+                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             <div class="ud-form-group">
                                 <label for="name">Celé jméno <i class="fa-solid fa-star-of-life text-danger"></i></label>
                                 <input
@@ -501,7 +515,7 @@
                                     placeholder=""
                             />
                             <div class="ud-form-group mb-0">
-                                <button type="submit" class="ud-main-btn w-100" role="button" id="sendDemandButton">
+                                <button type="submit" class="ud-main-btn w-100 g-recaptcha" role="button" id="sendDemandButton">
                                     Odeslat poptávku
                                 </button>
                                 <p class="text-white text-center rounded-3 my-2 w-100" id="mailSuccess"></p>
