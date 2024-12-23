@@ -9,6 +9,7 @@ use DateTime;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -23,8 +24,6 @@ class VouchersController extends Controller
 
     public function store(Request $request): RedirectResponse|BinaryFileResponse
     {
-        setlocale(LC_ALL, 'cs_CZ.UTF-8');
-
         if ($request->input('type') === 'mini') {
             $hash = 'x'.strtoupper(substr(md5(rand()), 0, 5));
             Voucher::create([
@@ -35,6 +34,7 @@ class VouchersController extends Controller
 
             return to_route('vouchers.index')->with('success', "Voucher <strong>$hash</strong> byl úspěšně vytvořen!")->with('voucher', $hash);
         } elseif ($request->input('type') === 'regular') {
+            $type = Str::slug(CleaningTypes::from($request->input('variant'))->getShortenedTitle());
             $hash = strtoupper(substr(md5(rand()), 0, 6));
             $price = CleaningTypes::from($request->input('variant'))->getRawPrice();
             Voucher::create([
@@ -52,14 +52,12 @@ class VouchersController extends Controller
             ]);
 
             file_exists(storage_path('app/public/voucher')) || mkdir(storage_path('app/public/voucher'));
-            $image = imagecreatefrompng(public_path('images/vouchers/template.png'));
+            $image = imagecreatefrompng(public_path("images/vouchers/$type.png"));
             $color = imagecolorallocate($image, 0, 0, 0);
             $font = public_path('fonts/Ciutadella.ttf');
 
-            $variant_text = mb_convert_encoding(CleaningTypes::from($request->input('variant'))->value, 'UTF-8', 'auto');
             $date_text = date('d. m. Y', strtotime('+1 year'));
 
-            imagettftext($image, 40, 0, 820, 377, $color, $font, $variant_text);
             imagettftext($image, 32, 0, 780, 720, $color, $font, $date_text);
             imagettftext($image, 32, 0, 1460, 720, $color, $font, $hash);
 

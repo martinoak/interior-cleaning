@@ -11,11 +11,12 @@ enum CleaningTypes: string
     public function getShortenedTitle(): string
     {
         return match ($this) {
-            self::START => 'Základ',
+            self::START => 'Start',
             self::MIDDLE => 'Střed',
             self::DELUXE => 'Deluxe',
         };
     }
+
     public function getRawPrice(): int
     {
         return match ($this) {
@@ -24,6 +25,7 @@ enum CleaningTypes: string
             self::DELUXE => config('web.prices.deluxe'),
         };
     }
+
     public function getVariantPrice(): string
     {
         return match ($this) {
@@ -35,7 +37,7 @@ enum CleaningTypes: string
 
     public function getFormattedPrice(int $price): string
     {
-        return number_format($price, 0, '', ' ') . ',- Kč';
+        return number_format($price, 0, '', ' ').',- Kč';
     }
 
     public function getVariantDescription(): array
