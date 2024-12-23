@@ -23,6 +23,8 @@ class VouchersController extends Controller
 
     public function store(Request $request): RedirectResponse|BinaryFileResponse
     {
+        setlocale(LC_ALL, 'cs_CZ.UTF-8');
+
         if ($request->input('type') === 'mini') {
             $hash = 'x'.strtoupper(substr(md5(rand()), 0, 5));
             Voucher::create([
@@ -46,15 +48,19 @@ class VouchersController extends Controller
                 'date' => DateTime::createFromFormat('Y-m-d', date('Y-m-d'))->format('Y-m-d'),
                 'name' => $hash,
                 'price' => $price,
-                'worker' => 'S'
+                'worker' => 'S',
             ]);
 
             file_exists(storage_path('app/public/voucher')) || mkdir(storage_path('app/public/voucher'));
             $image = imagecreatefrompng(public_path('images/vouchers/template.png'));
             $color = imagecolorallocate($image, 0, 0, 0);
             $font = public_path('fonts/Ciutadella.ttf');
-            imagettftext($image, 40, 0, 820, 377, $color, $font, CleaningTypes::from($request->input('variant'))->value);
-            imagettftext($image, 32, 0, 780, 720, $color, $font, date('d. m. Y', strtotime('+1 year')));
+
+            $variant_text = mb_convert_encoding(CleaningTypes::from($request->input('variant'))->value, 'UTF-8', 'auto');
+            $date_text = date('d. m. Y', strtotime('+1 year'));
+
+            imagettftext($image, 40, 0, 820, 377, $color, $font, $variant_text);
+            imagettftext($image, 32, 0, 780, 720, $color, $font, $date_text);
             imagettftext($image, 32, 0, 1460, 720, $color, $font, $hash);
 
             imagepng($image, storage_path("app/public/voucher/$hash.png"));
@@ -98,7 +104,7 @@ class VouchersController extends Controller
                     'price' => 0,
                     'dateFrom' => '',
                     'dateTo' => '',
-                ]
+                ],
             ]);
         } else {
             $dateFrom = str_starts_with($voucher->hash, 'x') ? (new DateTime($voucher->date))->modify('-3 months') : (new DateTime($voucher->date))->modify('-1 year');
@@ -111,7 +117,7 @@ class VouchersController extends Controller
                         'price' => $voucher->price,
                         'dateFrom' => $dateFrom,
                         'dateTo' => (new DateTime($voucher->date)),
-                    ]
+                    ],
                 ]);
             } else {
                 return view('admin.vouchers.validate', [
@@ -122,7 +128,7 @@ class VouchersController extends Controller
                         'price' => $voucher->price,
                         'dateFrom' => $dateFrom,
                         'dateTo' => (new DateTime($voucher->date)),
-                    ]
+                    ],
                 ]);
             }
         }
