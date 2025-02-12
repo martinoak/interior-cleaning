@@ -24,9 +24,11 @@ class VehicleController extends Controller
      */
     public function store(StoreVehicleRequest $request): JsonResponse
     {
-        $file = $request->file('image');
-        Storage::disk('api')->put($request->spz.$file->extension(), $file);
-        $request->vtp = asset('storage/api/'.$request->spz.$file->extension());
+        if ($request->hasFile('vtp')) {
+            $file = $request->file('vtp');
+            Storage::disk('api')->put($request->spz.$file->extension(), $file);
+            $request->vtp = asset('storage/api/'.$request->spz.$file->extension());
+        }
 
         $vehicle = Vehicle::create($request->except('token'));
 
