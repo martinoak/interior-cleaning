@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'api' => [
+            'driver' => 'local',
+            'root' => storage_path('app/api'),
+            'serve' => true,
+            'throw' => false,
+            'report' => false,
+        ],
     ],
 
     /*
