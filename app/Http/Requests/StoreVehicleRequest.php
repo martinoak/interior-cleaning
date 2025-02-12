@@ -27,7 +27,7 @@ class StoreVehicleRequest extends FormRequest
             'manufacturer' => 'required|string',
             'model' => 'required|string',
             'productionYear' => 'required|numeric',
-            'vin' => 'required|unique|regex:/^[A-HJ-NPR-Za-hj-npr-z\d]{8}[\dX][A-HJ-NPR-Za-hj-npr-z\d]{2}\d{6}$/',
+            'vin' => 'required|unique:vehicles|regex:/^[A-HJ-NPR-Za-hj-npr-z\d]{8}[\dX][A-HJ-NPR-Za-hj-npr-z\d]{2}\d{6}$/',
             'spz' => 'required|string|max:7',
             'driver' => 'nullable|string',
             'color' => 'required|string',
