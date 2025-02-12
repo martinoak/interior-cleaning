@@ -29,7 +29,7 @@ class SendMonthlyBillCron extends Command
     public function handle(): void
     {
         $file = fopen(storage_path('logs/cron.log'), 'a');
-        fwrite($file, date('Y-m-d H:i:s') . " [CRON] Monthly Bill started\n");
+        fwrite($file, date('Y-m-d H:i:s')." [CRON] Monthly Bill started\n");
 
         $invoices = Invoice::whereMonth('date', date('m'))->get();
 
@@ -40,6 +40,6 @@ class SendMonthlyBillCron extends Command
 
         Mail::to('stepan@cisteni-kondrac.cz')->send(new SendMonthlyBillMail($total));
 
-        fwrite($file, date('Y-m-d H:i:s') . " [CRON] Monthly Bill finished\n");
+        fwrite($file, date('Y-m-d H:i:s')." [CRON] Monthly Bill finished\n");
     }
 }

@@ -8,8 +8,8 @@ class MessageSendingListener
 {
     public function handle(MessageSending $event): void
     {
-        if(! env("DEBUG_EMAILS")) { return; }
-
-        $event->message->addBcc('martin.dub@dek-cz.com');
+        if (!env("APP_DEBUG")) {
+            $event->message->addBcc('martin.dub@dek-cz.com');
+        }
     }
 }

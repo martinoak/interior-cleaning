@@ -12,7 +12,7 @@ return [
             'Vyluxování zavazadlového prostoru',
             'Vyluxování koberečků',
             'Ošetření plastů proti poškrábání',
-            'Vyleštění čelního skla'
+            'Vyleštění čelního skla',
         ],
         'middle' => [
             '<strong>Detailní</strong> luxování interiéru',
@@ -22,7 +22,7 @@ return [
             'Důkladné vyčištění párou',
             'Vyleštění oken a zrcátek',
             'Tepování sedaček a koberečků',
-            'Desinfekce klimatizace'
+            'Desinfekce klimatizace',
         ],
         'deluxe' => [
             '<strong>Detailní</strong> luxování interiéru',
@@ -35,7 +35,7 @@ return [
             'Základní čištění kožených částí',
             'Vyčištění klimatizace s vůní po citrónu',
             'Navoskování čelního skla',
-        ]
+        ],
     ],
 
     /*
@@ -60,13 +60,6 @@ return [
             'facebook' => '',
             'instagram' => 'https://www.instagram.com/cisteni_interieru_kondrac',
         ],
-        [
-            'name' => 'Daniel Pohorský',
-            'position' => 'Pracovník',
-            'tel' => '+420 732 790 409',
-            'facebook' => '',
-            'instagram' => 'https://www.instagram.com/cisteni_interieru_kondrac',
-        ]
     ],
 
     /*
@@ -79,7 +72,7 @@ return [
             '2024' => '#0ca1ca',
             '2025' => '#0d68f3',
             '2026' => '#729718',
-        ]
+        ],
     ],
 
 ];

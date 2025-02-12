@@ -11,9 +11,8 @@
         "laravel/pint": "^1.13",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
-        "martinoak/laravel-latte": "^2.2",
-        "sunrise/vin": "^1.2",
-        "ext-gd": "*"
+        "martinoak/laravel-latte": "^2.0",
+        "sunrise/vin": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

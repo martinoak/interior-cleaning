@@ -25,7 +25,6 @@
 
 {block content}
 
-
 {include 'partials/alerts_bs.latte'}
 <div id="vue-control">
     <!-- ====== Header Start ====== -->
@@ -508,7 +507,6 @@
                                 ></textarea>
                             </div>
                             <input
-                                    n:syntax="off"
                                     type="hidden"
                                     name="variant"
                                     :value="variant"
@@ -534,7 +532,7 @@
 
 {block bottomscripts}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="{asset('js/main.js')}?m={filemtime(public_path('js/main.js'))}" defer></script>
+    <script src="{asset('/js/main.js')}" defer></script>
     <script>
         let video = document.getElementById("hpVideo");
         video.style.maxHeight = window.innerHeight + "px";
