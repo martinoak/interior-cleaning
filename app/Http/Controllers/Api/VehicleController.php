@@ -44,7 +44,7 @@ class VehicleController extends Controller
             return response()->json(['message' => 'Vozidlo nenalezeno'], 404);
         }
 
-        return response()->json(Vehicle::find($id));
+        return response()->json(Vehicle::find($id)->toArray());
     }
 
     /**
