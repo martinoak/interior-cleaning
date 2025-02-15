@@ -75,12 +75,14 @@ class VehicleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vehicle $id): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
-        if (!Vehicle::exists($id)) {
+        $vehicle = Vehicle::find($id);
+        
+        if (!$vehicle) {
             return response()->json(['message' => 'Vozidlo nenalezeno'], 404);
         } else {
-            $vehicle = Vehicle::find($id)->update($request->except('token'));
+            $vehicle->update($request->except('token'));
 
             return response()->json($vehicle);
         }
