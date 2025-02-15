@@ -12,6 +12,7 @@ class Vehicle extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'type',
         'manufacturer',
         'model',
         'productionYear',

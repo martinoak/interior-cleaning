@@ -7,6 +7,7 @@ use App\Http\Requests\StoreVehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -38,6 +39,7 @@ class VehicleController extends Controller
 
         // Create the Vehicle record with the updated $request data
         $vehicle = Vehicle::create([
+            'type' => $request->type,
             'manufacturer' => $request->manufacturer,
             'model' => $request->model,
             'productionYear' => $request->productionYear,
@@ -49,7 +51,7 @@ class VehicleController extends Controller
             'tachograph' => $request->tachograph,
             'oilChange' => $request->oilChange,
             'insurance' => $request->insurance,
-            'vtp' => $filename ? url()->current().'/vtp/'.$filename : null,
+            'vtp' => isset($filename) ? url()->current().'/vtp/'.$filename : null,
         ]);
 
         // Return the created vehicle as a JSON response
@@ -59,8 +61,10 @@ class VehicleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Vehicle $vehicle): JsonResponse
+    public function show(string $id): JsonResponse
     {
+        $vehicle = Vehicle::find($id);
+
         if (!$vehicle) {
             return response()->json(['message' => 'Vozidlo nenalezeno'], 404);
         }
