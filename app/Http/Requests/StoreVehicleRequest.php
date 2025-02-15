@@ -53,10 +53,10 @@ class StoreVehicleRequest extends FormRequest
             'spz.max' => 'SPZ může mít maximálně 7 znaků',
             'color.required' => 'Barva je povinný údaj',
             'stk.required' => 'STK je povinný údaj',
-            'stk.date_format' => 'STK je ve špatném formátu',
-            'tachograph.date_format' => 'Tachograf je ve špatném formátu',
-            'oilChange.date_format' => 'Výměna oleje je ve špatném formátu',
-            'insurance.date_format' => 'Pojištění je ve špatném formátu',
+            'stk.date' => 'STK je ve špatném formátu',
+            'tachograph.date' => 'Tachograf je ve špatném formátu',
+            'oilChange.date' => 'Výměna oleje je ve špatném formátu',
+            'insurance.date' => 'Pojištění je ve špatném formátu',
         ];
     }
 
