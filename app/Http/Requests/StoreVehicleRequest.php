@@ -31,10 +31,10 @@ class StoreVehicleRequest extends FormRequest
             'spz' => 'required|string|max:7',
             'driver' => 'nullable|string',
             'color' => 'required|string',
-            'stk' => 'nullable|date_format:Y-m-d\\TH:i:sO',
-            'tachograph' => 'nullable|date_format:Y-m-d\\TH:i:sO',
-            'oilChange' => 'nullable|date_format:Y-m-d\\TH:i:sO',
-            'insurance' => 'nullable|date_format:Y-m-d\\TH:i:sO',
+            'stk' => 'nullable|date',
+            'tachograph' => 'nullable|date',
+            'oilChange' => 'nullable|date',
+            'insurance' => 'nullable|date',
             'vtp' => 'nullable|file',
         ];
     }
