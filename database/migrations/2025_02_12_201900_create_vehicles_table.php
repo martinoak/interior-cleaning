@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
             $table->string('manufacturer');
             $table->string('model');
             $table->string('productionYear');
@@ -20,10 +21,10 @@ return new class extends Migration
             $table->string('spz');
             $table->string('driver')->nullable();
             $table->string('color');
-            $table->dateTime('stk')->nullable();
-            $table->dateTime('tachograph')->nullable();
-            $table->dateTime('oilChange')->nullable();
-            $table->dateTime('insurance')->nullable();
+            $table->date('stk')->nullable();
+            $table->date('tachograph')->nullable();
+            $table->date('oilChange')->nullable();
+            $table->date('insurance')->nullable();
             $table->string('vtp')->nullable();
             $table->timestamps();
         });

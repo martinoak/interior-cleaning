@@ -12,6 +12,7 @@ class Vehicle extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'type',
         'manufacturer',
         'model',
         'productionYear',
@@ -27,9 +28,9 @@ class Vehicle extends Model
     ];
 
     protected $casts = [
-        'stk' => 'datetime',
-        'tachograph' => 'datetime',
-        'oilChange' => 'datetime',
-        'insurance' => 'datetime',
+        'stk' => 'date',
+        'tachograph' => 'date',
+        'oilChange' => 'date',
+        'insurance' => 'date',
     ];
 }

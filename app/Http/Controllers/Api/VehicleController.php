@@ -7,7 +7,9 @@ use App\Http\Requests\StoreVehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VehicleController extends Controller
 {
@@ -25,37 +27,62 @@ class VehicleController extends Controller
     public function store(StoreVehicleRequest $request): JsonResponse
     {
         if ($request->hasFile('vtp')) {
+            // Get the file from the request
             $file = $request->file('vtp');
-            Storage::disk('api')->put($request->spz.$file->extension(), $file);
-            $request->vtp = asset('storage/api/'.$request->spz.$file->extension());
+
+            // Generate the filename using $request->spz and the file extension
+            $filename = $request->spz.'.'.$file->getClientOriginalExtension();
+
+            // Store the file in the 'api' disk under the 'vtp' directory
+            $file->storeAs('vtp', $filename, 'api');
         }
 
-        $vehicle = Vehicle::create($request->except('token'));
+        // Create the Vehicle record with the updated $request data
+        $vehicle = Vehicle::create([
+            'type' => $request->type,
+            'manufacturer' => $request->manufacturer,
+            'model' => $request->model,
+            'productionYear' => $request->productionYear,
+            'vin' => $request->vin,
+            'spz' => $request->spz,
+            'driver' => $request->driver,
+            'color' => $request->color,
+            'stk' => $request->stk,
+            'tachograph' => $request->tachograph,
+            'oilChange' => $request->oilChange,
+            'insurance' => $request->insurance,
+            'vtp' => isset($filename) ? url()->current().'/vtp/'.$filename : null,
+        ]);
 
+        // Return the created vehicle as a JSON response
         return response()->json($vehicle, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Vehicle $id): JsonResponse
+    public function show(string $id): JsonResponse
     {
-        if (! Vehicle::exists($id)) {
+        $vehicle = Vehicle::find($id);
+
+        if (!$vehicle) {
             return response()->json(['message' => 'Vozidlo nenalezeno'], 404);
         }
 
-        return response()->json(Vehicle::find($id)->toArray());
+        return response()->json($vehicle);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vehicle $id): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
-        if (! Vehicle::exists($id)) {
+        $vehicle = Vehicle::find($id);
+        
+        if (!$vehicle) {
             return response()->json(['message' => 'Vozidlo nenalezeno'], 404);
         } else {
-            $vehicle = Vehicle::find($id)->update($request->except('token'));
+            $vehicle->update($request->except('token'));
 
             return response()->json($vehicle);
         }
@@ -64,8 +91,19 @@ class VehicleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Vehicle $vehicle): JsonResponse
     {
-        //
+        $vehicle->delete();
+
+        return response()->json(['message' => 'Vozidlo bylo smazáno'], 200);
+    }
+
+    public function serveVTP(string $filename): BinaryFileResponse|JsonResponse
+    {
+        if (!Storage::disk('api')->exists('vtp/'.$filename)) {
+            return response()->json(['message' => 'Soubor nenalezen'], 404);
+        } else {
+            return response()->file(Storage::disk('api')->path('vtp/'.$filename));
+        }
     }
 }

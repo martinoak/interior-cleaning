@@ -31,10 +31,10 @@ class StoreVehicleRequest extends FormRequest
             'spz' => 'required|string|max:7',
             'driver' => 'nullable|string',
             'color' => 'required|string',
-            'stk' => 'nullable|date_format:Y-m-d\\TH:i:sO',
-            'tachograph' => 'nullable|date_format:Y-m-d\\TH:i:sO',
-            'oilChange' => 'nullable|date_format:Y-m-d\\TH:i:sO',
-            'insurance' => 'nullable|date_format:Y-m-d\\TH:i:sO',
+            'stk' => 'nullable|date',
+            'tachograph' => 'nullable|date',
+            'oilChange' => 'nullable|date',
+            'insurance' => 'nullable|date',
             'vtp' => 'nullable|file',
         ];
     }
@@ -42,6 +42,7 @@ class StoreVehicleRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'type.required' => 'Typ je povinný údaj',
             'manufacturer.required' => 'Výrobce je povinný údaj',
             'model.required' => 'Model je povinný údaj',
             'productionYear.required' => 'Rok výroby je povinný údaj',
@@ -52,10 +53,10 @@ class StoreVehicleRequest extends FormRequest
             'spz.max' => 'SPZ může mít maximálně 7 znaků',
             'color.required' => 'Barva je povinný údaj',
             'stk.required' => 'STK je povinný údaj',
-            'stk.date_format' => 'STK je ve špatném formátu',
-            'tachograph.date_format' => 'Tachograf je ve špatném formátu',
-            'oilChange.date_format' => 'Výměna oleje je ve špatném formátu',
-            'insurance.date_format' => 'Pojištění je ve špatném formátu',
+            'stk.date' => 'STK je ve špatném formátu',
+            'tachograph.date' => 'Tachograf je ve špatném formátu',
+            'oilChange.date' => 'Výměna oleje je ve špatném formátu',
+            'insurance.date' => 'Pojištění je ve špatném formátu',
         ];
     }
 
