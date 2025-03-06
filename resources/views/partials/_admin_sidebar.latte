@@ -19,60 +19,66 @@
     <div class="h-full px-3 py-4 overflow-y-auto bg-[#3056d3]">
         <div class="h-full flex flex-col justify-between">
             <ul class="space-y-2 font-medium">
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'cleaning'])">
                     <a href="{route('dashboard')}" class="flex items-center p-2 text-white rounded-lg text-xl">
                         <img src="{asset('images/logo/logo-car.png')}" class="h-10" alt="">
                     </a>
                 </li>
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'cleaning'])">
                     <a href="{route('dashboard')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-regular fa-rectangle-list"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Přehled</span>
                     </a>
                 </li>
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'cleaning'])">
                     <a href="{route('customers.index')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-folder-open"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Zákazníci</span>
                     </a>
                 </li>
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'cleaning'])">
                     <a href="{route('admin.feedback')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-star"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Recenze</span>
                         <span class="inline-flex items-center justify-center py-0.5 px-2 ml-3 text-sm font-medium text-black bg-amber-300 rounded-full">{DB::table('feedbacks')->avg('rating')|number:2,'.'}</span>
                     </a>
                 </li>
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'cleaning'])">
                     <a href="{route('invoices.index')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-regular fa-file-lines"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Faktury</span>
                     </a>
                 </li>
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'cleaning'])">
                     <a href="{route('vouchers.index')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-gift"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Vouchery</span>
                     </a>
                 </li>
                 <hr class="w-48 h-1 mx-auto bg-gray-300 border-0 rounded">
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'cleaning'])">
                     <a href="{route('customers.index')}#archiv" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-archive"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Archiv</span>
                     </a>
                 </li>
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows('admin')">
                     <a href="{route('admin.development')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-bug"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Vývoj</span>
                     </a>
                 </li>
                 <hr class="w-48 h-1 mx-auto bg-gray-300 border-0 rounded">
-                <li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'car-park'])">
                     <a href="{route('vin.index')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-barcode"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">VIN Check</span>
+                    </a>
+                </li>
+                <li n:if="Illuminate\Support\Facades\Gate::allows(['admin', 'car-park'])">
+                    <a href="{route('vehicles.index')}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
+                        <i class="text-white fa-solid fa-truck-moving"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Vozový park</span>
                     </a>
                 </li>
             </ul>

@@ -7,7 +7,6 @@ use App\Http\Requests\StoreVehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -78,7 +77,7 @@ class VehicleController extends Controller
     public function update(Request $request, string $id): JsonResponse
     {
         $vehicle = Vehicle::find($id);
-        
+
         if (!$vehicle) {
             return response()->json(['message' => 'Vozidlo nenalezeno'], 404);
         } else {

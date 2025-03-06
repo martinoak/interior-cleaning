@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class AdminController extends Controller
@@ -94,6 +95,8 @@ class AdminController extends Controller
 
     public function showDevelopment(): View
     {
+        abort_if(Gate::denies('admin'), 403);
+
         $tests = $this->doTest();
 
         return view('admin.development', compact('tests'));
@@ -101,6 +104,8 @@ class AdminController extends Controller
 
     public function rerun(): RedirectResponse
     {
+        abort_if(Gate::denies('admin'), 403);
+
         $tests = $this->doTest();
 
         return to_route('admin.development', compact('tests'));
@@ -108,6 +113,8 @@ class AdminController extends Controller
 
     public function showErrorLog(string $type): View
     {
+        abort_if(Gate::denies('admin'), 403);
+
         $log = file_get_contents(storage_path('logs/'.$type.'.log'));
 
         return view('admin.errorlog', [

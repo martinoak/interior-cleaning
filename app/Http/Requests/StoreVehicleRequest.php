@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
@@ -19,7 +20,7 @@ class StoreVehicleRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -31,6 +32,7 @@ class StoreVehicleRequest extends FormRequest
             'spz' => 'required|string|max:7',
             'driver' => 'nullable|string',
             'color' => 'required|string',
+            'type' => 'required|in:car,truck',
             'stk' => 'nullable|date',
             'tachograph' => 'nullable|date',
             'oilChange' => 'nullable|date',
@@ -43,6 +45,7 @@ class StoreVehicleRequest extends FormRequest
     {
         return [
             'type.required' => 'Typ je povinný údaj',
+            'type.in' => 'Typ může být pouze osobní nebo nákladní',
             'manufacturer.required' => 'Výrobce je povinný údaj',
             'model.required' => 'Model je povinný údaj',
             'productionYear.required' => 'Rok výroby je povinný údaj',

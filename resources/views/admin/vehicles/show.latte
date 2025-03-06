@@ -1,0 +1,84 @@
+{layout '../../layout.latte'}
+
+{block content}
+    <div class="p-4 sm:ml-64">
+        <div class="heading justify-start">
+            <button onclick="history.back()" class="button-indigo" type="button">
+                <i class="fa-solid fa-arrow-left fa-lg"></i>
+            </button>
+            <h1 class="heading-title">{$vehicle->manufacturer} {$vehicle->model}</h1>
+        </div>
+        <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Výrobce</dt>
+                <dd class="text-lg font-semibold">{$vehicle->manufacturer}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Model</dt>
+                <dd class="text-lg font-semibold">{$vehicle->model}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Rok výroby</dt>
+                <dd class="text-lg font-semibold">{$vehicle->productionYear}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">VIN</dt>
+                <dd class="text-lg font-semibold">{$vehicle->vin}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">SPZ</dt>
+                <dd class="text-lg font-semibold">{$vehicle->spz}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Řidič</dt>
+                <dd class="text-lg font-semibold">{$vehicle->driver ?? '-'}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Color</dt>
+                <dd class="text-lg font-semibold">
+                    <div class="w-full h-8 rounded-lg" style="background-color: {$vehicle->color|noescape}"></div>
+                </dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">STK</dt>
+                <dd class="text-lg font-semibold">
+                    {$vehicle->stk|date:'j.n.Y'}
+                    {var $diff = Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true)}
+                    <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        (za {Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true)|number:0} dní)
+                    </span>
+                </dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Tachograph</dt>
+                <dd class="text-lg font-semibold">
+                    {$vehicle->tachograph|date:'j.n.Y'}
+                    {var $diff = Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true)}
+                    <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        (za {Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true)|number:0} dní)
+                    </span>
+                </dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Oil Change</dt>
+                <dd class="text-lg font-semibold">
+                    {$vehicle->oilChange|date:'j.n.Y'}
+                    {var $diff = Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true)}
+                    <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        (za {Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true)|number:0} dní)
+                    </span>
+                </dd>
+            </div>
+            <div class="flex flex-col pt-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Insurance</dt>
+                <dd class="text-lg font-semibold">
+                    {$vehicle->insurance|date:'j.n.Y'}
+                    {var $diff = Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true)}
+                    <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        (za {Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true)|number:0} dní)
+                    </span>
+                </dd>
+            </div>
+        </dl>
+    </div>
+{/block}

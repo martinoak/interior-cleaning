@@ -1,0 +1,95 @@
+{layout '../../layout.latte'}
+
+{block content}
+    <div class="p-4 sm:ml-64">
+        <div class="heading justify-start">
+            <button onclick="history.back()" class="button-indigo" type="button">
+                <i class="fa-solid fa-arrow-left fa-lg icon"></i> Zpět
+            </button>
+            <h1 class="heading-title">Nové vozidlo</h1>
+        </div>
+
+        <form method="post" action="{route('vehicles.store')}">
+            {csrf_field()|noescape}
+            <input type="hidden" name="api-token" value="{auth()->user()->api_token}">
+
+            <div class="mb-5">
+                <label for="manufacturer" class="form-label">Výrobce <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="text" name="manufacturer" id="manufacturer" value="{old('manufacturer')}" class="form-input" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="model" class="form-label">Model <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="text" name="model" id="model" value="{old('model')}" class="form-input" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="productionYear" class="form-label">Rok výroby <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="number" name="productionYear" id="productionYear" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{old('productionYear')}" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="spz" class="form-label">SPZ <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="text" name="spz" id="spz" value="{old('spz')}" class="form-input" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="vin" class="form-label">VIN <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="text" name="vin" id="vin" value="{old('vin')}" class="form-input" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="color" class="form-label">Barva <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="color" name="color" id="color" value="{old('color')}" class="form-input" style="min-height: 50px" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="color" class="form-label">Typ <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <ul class="grid w-full gap-6 md:grid-cols-2 mt-2">
+                    <li>
+                        <input type="radio" id="hosting-small" name="type" value="car" class="hidden peer" required />
+                        <label for="hosting-small" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <div class="w-full text-lg font-semibold">Osobní</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="hosting-big" name="type" value="truck" class="hidden peer">
+                        <label for="hosting-big" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <div class="w-full text-lg font-semibold">Nákladní</div>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mb-5">
+                <label for="stk" class="form-label">STK <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="date" name="stk" id="stk" value="{old('stk')}" class="form-input" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="oilChange" class="form-label">Výměna oleje <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="date" name="oilChange" id="oilChange" value="{old('oilChange')}" class="form-input" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="insurance" class="form-label">Povinné ručení <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="date" name="insurance" id="insurance" value="{old('insurance')}" class="form-input" required>
+            </div>
+
+            <div class="mb-5">
+                <label for="tachograph" class="form-label">Tachograf <i class="fa-solid fa-asterisk text-red-600"></i></label>
+                <input type="date" name="tachograph" id="tachograph" value="{old('tachograph')}" class="form-input" required>
+            </div>
+
+
+            <div class="form-buttons">
+                <button type="submit" class="form-submit">Přidat vozidlo</button>
+                <button type="reset" class="form-reset">Vymazat</button>
+            </div>
+        </form>
+    </div>
+{/block}
