@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreVehicleRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class VehicleController extends Controller
@@ -32,6 +31,16 @@ class VehicleController extends Controller
     public function create(): View
     {
         return view('admin.vehicles.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreVehicleRequest $request): RedirectResponse
+    {
+        $this->api->store($request);
+
+        return to_route('vehicles.index')->with('success', 'Vozidlo úspěšně vytvořeno');
     }
 
     /**

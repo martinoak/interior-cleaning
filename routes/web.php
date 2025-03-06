@@ -64,7 +64,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::middleware('can:car-park')->group(function () {
         Route::resource('vin', VinController::class)->except('show');
-        Route::resource('vehicles', VehicleController::class)->except('store', 'update', 'destroy');
+        Route::resource('vehicles', VehicleController::class)->except('update', 'destroy');
     });
 });
 
