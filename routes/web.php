@@ -35,7 +35,7 @@ Route::post('authenticate', [AuthController::class, 'authenticate'])->name('auth
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::middleware('can:cleaning')->group(function () {
+    Route::middleware('can:cleaning,admin')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
         Route::resource('invoices', InvoicesController::class)->except('destroy');

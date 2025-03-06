@@ -18,8 +18,8 @@
                 <form class="space-y-4 md:space-y-6" action="{route('authenticate')}" method="post">
                     {csrf_field()|noescape}
                     <div>
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Jméno</label>
-                        <input type="text" name="name" id="name" value="{old('name')}" class="bg-gray-50 border border-gray-300 text-white bg-gray-700 sm:text-sm rounded-lg block w-full p-2.5" required>
+                        <label for="login" class="block mb-2 text-sm font-medium text-gray-900">Jméno</label>
+                        <input type="text" name="login" id="login" value="{old('name')}" class="bg-gray-50 border border-gray-300 text-white bg-gray-700 sm:text-sm rounded-lg block w-full p-2.5" required>
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Heslo</label>

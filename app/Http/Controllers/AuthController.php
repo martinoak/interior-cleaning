@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -16,7 +17,7 @@ class AuthController extends Controller
 
     public function authenticate(Request $request): RedirectResponse
     {
-        if (Auth::attempt($request->only('name', 'password'))) {
+        if (Auth::attempt($request->only('login', 'password'))) {
             return to_route('dashboard')->with('success', 'Přihlášení proběhlo úspěšně');
         } else {
             return back()->with('error', 'Nesprávné přihlašovací údaje')->withInput();
