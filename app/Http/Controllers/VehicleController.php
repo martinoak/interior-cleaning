@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVehicleRequest;
+use App\Models\Vehicle;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class VehicleController extends Controller
@@ -56,8 +58,24 @@ class VehicleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        $vehicle = Vehicle::where('id', $id)->firstOrFail();
+
+        return view('admin.vehicles.edit', compact('vehicle'));
+    }
+
+    public function update(Request $request, string $id): RedirectResponse
+    {
+        $this->api->update($request, $id);
+
+        return to_route('vehicles.index')->with('success', 'Vozidlo bylo úspěšně aktualizováno.');
+    }
+
+    public function destroy(string $id): RedirectResponse
+    {
+        $this->api->destroy(Vehicle::find($id));
+
+        return to_route('vehicles.index')->with('success', 'Vozidlo bylo úspěšně smazáno.');
     }
 }

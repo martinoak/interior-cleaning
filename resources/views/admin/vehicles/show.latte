@@ -44,10 +44,14 @@
                 <dd class="text-lg font-semibold">
                     {if empty($vehicle->stk)}
                         <em class="text-gray-300 dark:text-gray-400">--- Nevyplněno ---</em>
+                    {elseif Carbon\Carbon::parse($vehicle->stk) < now()}
+                        <span class="font-bold text-red-500">
+                            Po datu! <span class="text-gray dark:text-gray-400">({$vehicle->stk|date:'j.n.Y'})</span>
+                        </span>
                     {else}
-                    {$vehicle->stk|date:'j.n.Y'}
-                    {var $diff = Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true)}
-                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        {$vehicle->stk|date:'j.n.Y'}
+                        {var $diff = Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true)}
+                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-500 dark:text-gray-400'">
                             (za {Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true)|number:0} dní)
                         </span>
                     {/if}
@@ -58,10 +62,14 @@
                 <dd class="text-lg font-semibold">
                     {if empty($vehicle->tachograph)}
                         <em class="text-gray-300 dark:text-gray-400">--- Nevyplněno ---</em>
+                    {elseif Carbon\Carbon::parse($vehicle->tachograph) < now()}
+                        <span class="font-bold text-red-500">
+                            Po datu! <span class="text-gray dark:text-gray-400">({$vehicle->tachograph|date:'j.n.Y'})</span>
+                        </span>
                     {else}
                         {$vehicle->tachograph|date:'j.n.Y'}
                         {var $diff = Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true)}
-                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-500 dark:text-gray-400'">
                             (za {Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true)|number:0} dní)
                         </span>
                     {/if}
@@ -72,10 +80,14 @@
                 <dd class="text-lg font-semibold">
                     {if empty($vehicle->oilChange)}
                         <em class="text-gray-300 dark:text-gray-400">--- Nevyplněno ---</em>
+                    {elseif Carbon\Carbon::parse($vehicle->oilChange) < now()}
+                        <span class="font-bold text-red-500">
+                            Po datu! <span class="text-gray dark:text-gray-400">({$vehicle->oilChange|date:'j.n.Y'})</span>
+                        </span>
                     {else}
-                    {$vehicle->oilChange|date:'j.n.Y'}
-                    {var $diff = Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true)}
-                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        {$vehicle->oilChange|date:'j.n.Y'}
+                        {var $diff = Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true)}
+                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-500 dark:text-gray-400'">
                             (za {Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true)|number:0} dní)
                         </span>
                     {/if}
@@ -86,15 +98,30 @@
                 <dd class="text-lg font-semibold">
                     {if empty($vehicle->insurance)}
                         <em class="text-gray-300 dark:text-gray-400">--- Nevyplněno ---</em>
+                    {elseif Carbon\Carbon::parse($vehicle->insurance) < now()}
+                        <span class="font-bold text-red-500">
+                            Po datu! <span class="text-gray dark:text-gray-400">({$vehicle->insurance|date:'j.n.Y'})</span>
+                        </span>
                     {else}
-                    {$vehicle->insurance|date:'j.n.Y'}
-                    {var $diff = Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true)}
-                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-stk dark:text-gray-400'">
+                        {$vehicle->insurance|date:'j.n.Y'}
+                        {var $diff = Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true)}
+                        <span n:class="$diff < 30 ? 'text-orange-500' : 'text-gray-500 dark:text-gray-400'">
                             (za {Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true)|number:0} dní)
                         </span>
                     {/if}
                 </dd>
             </div>
         </dl>
+
+        <div class="mt-6 space-y-4">
+            <a href="{route('vehicles.edit', [vehicle => $vehicle->id])}" class="button-indigo w-full">Upravit vozidlo</a>
+
+            <form action="{route('vehicles.destroy', [vehicle => $vehicle->id])}" method="post">
+                {csrf_field()|noescape}
+                {method_field('DELETE')|noescape}
+                <button type="submit" class="button-red w-full" onclick="return confirm('Opravdu smazat vozidlo? Tato akce je nevratná.')">Smazat vozidlo</button>
+            </form>
+        </div>
+
     </div>
 {/block}
