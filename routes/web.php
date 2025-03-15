@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\ServiceBookController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VinController;
 use App\Http\Controllers\VouchersController;
@@ -65,6 +66,13 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::middleware('can:car-park')->group(function () {
         Route::resource('vin', VinController::class)->except('show');
         Route::resource('vehicles', VehicleController::class);
+        Route::get('vehicles/vtp/{filename}', [\App\Http\Controllers\Api\VehicleController::class, 'serveVTP'])->name('vtp');
+        Route::resource('vehicles/{vehicle}/service-book', ServiceBookController::class)
+            ->except('show')
+            ->parameters([
+                'service-book' => 'id',
+            ])
+            ->names('service-book');
     });
 });
 

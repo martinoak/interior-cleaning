@@ -9,7 +9,7 @@
             <h1 class="heading-title">Nové vozidlo</h1>
         </div>
 
-        <form method="post" action="{route('vehicles.store')}">
+        <form method="post" action="{route('vehicles.store')}" enctype="multipart/form-data">
             {csrf_field()|noescape}
             <input type="hidden" name="api-token" value="{auth()->user()->api_token}">
 
@@ -63,6 +63,11 @@
                         </label>
                     </li>
                 </ul>
+            </div>
+
+            <div class="mb-5">
+                <label for="vtp" class="form-label">VTP</label>
+                <input type="file" name="vtp" id="vtp" class="file-input">
             </div>
 
             <div class="mb-5">

@@ -2,11 +2,14 @@
 
 {block content}
     <div class="p-4 sm:ml-64">
-        <div class="heading justify-start">
+        <div class="heading justify-between">
             <button onclick="history.back()" class="button-indigo" type="button">
                 <i class="fa-solid fa-arrow-left fa-lg"></i>
             </button>
             <h1 class="heading-title">{$vehicle->manufacturer} {$vehicle->model}</h1>
+            <aside class="flex gap-4">
+                <a href="{route('service-book.index', [vehicle => $vehicle->id])}" class="button-black"><i class="fa-solid fa-wrench fa-lg"></i></a>
+            </aside>
         </div>
         <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
             <div class="flex flex-col py-3">
@@ -28,6 +31,12 @@
             <div class="flex flex-col py-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">SPZ</dt>
                 <dd class="text-lg font-semibold">{$vehicle->spz}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">VTP</dt>
+                <dd class="text-lg font-semibold">
+                    <a href="{$vehicle->vtp}" target="_blank" class="button-indigo w-full">Zobrazit VTP</a>
+                </dd>
             </div>
             <div class="flex flex-col py-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Řidič</dt>
