@@ -1,0 +1,11 @@
+Latte -> Blade
+Komponenty
+Inertia.js?
+Smazat Api/VehiclesController
+Gate -> Policy
+Správa uživatelů v sekci Admin
+api-token -> token, možná Sanctum?
+Úklid Frontend (odprostit se od Flowbite)
+TailwindCSS 4 + Laravel 12 + PHP 8.4
+Cron na API (expirace datumů)
+history.back() neudrží změnu dark:, předělat na route()

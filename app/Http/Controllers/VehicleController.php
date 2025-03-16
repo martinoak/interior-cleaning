@@ -69,7 +69,7 @@ class VehicleController extends Controller
     {
         $this->api->update($request, $id);
 
-        return to_route('vehicles.index')->with('success', 'Vozidlo bylo úspěšně aktualizováno.');
+        return to_route('vehicles.show', ['vehicle' => $id])->with('success', 'Vozidlo bylo úspěšně aktualizováno.');
     }
 
     public function destroy(string $id): RedirectResponse

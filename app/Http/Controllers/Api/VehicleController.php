@@ -81,7 +81,36 @@ class VehicleController extends Controller
         if (!$vehicle) {
             return response()->json(['message' => 'Vozidlo nenalezeno'], 404);
         } else {
-            $vehicle->update($request->except('token'));
+            if ($request->hasFile('vtp')) {
+                // Get the file from the request
+                $file = $request->file('vtp');
+
+                // Generate the filename using $request->spz and the file extension
+                $filename = $request->spz.'.'.$file->getClientOriginalExtension();
+
+                // Store the file in the 'api' disk under the 'vtp' directory
+                $file->storeAs('vtp', $filename, 'api');
+            }
+
+            // Create the Vehicle record with the updated $request data
+            $vehicle->update([
+                'type' => $request->type,
+                'manufacturer' => $request->manufacturer,
+                'model' => $request->model,
+                'productionYear' => $request->productionYear,
+                'vin' => $request->vin,
+                'spz' => $request->spz,
+                'driver' => $request->driver,
+                'color' => $request->color,
+                'stk' => $request->stk,
+                'tachograph' => $request->tachograph,
+                'oilChange' => $request->oilChange,
+                'insurance' => $request->insurance,
+            ]);
+
+            if (isset($filename)) {
+                $vehicle->update(['vtp' => route('vtp', compact('filename'))]);
+            }
 
             return response()->json($vehicle);
         }
