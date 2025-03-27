@@ -24,7 +24,7 @@
                 <i class="{{ \App\Enums\VehicleType::getIcon($vehicle->type) }} mr-2" style="color: {!! $vehicle->color !!}"></i>
                 {{ $vehicle->manufacturer }} {{ $vehicle->model }} <span class="ml-2 text-gray-400">{{ $vehicle->spz }}</span>
             </h5>
-            <p class="font-normal text-gray-700 dark:text-gray-400">STK do: {{ date('j.n.Y', $vehicle->stk) }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400">STK do: {{ $vehicle->stk->format('j.n.Y') }}</p>
         </a>
     @endforeach
 </div>
