@@ -1,24 +1,5 @@
 {layout '../../layout.latte'}
 
 {block content}
-    <div class="p-4 sm:ml-64">
-        <div class="heading">
-            <div>
-                <h1 class="heading-title">Vozový park</h1>
-                <aside class="flex gap-4">
-                    <a href="{route('vehicles.create')}" class="button-black"><i class="fa-solid fa-plus fa-lg icon"></i> Přidat vozidlo</a>
-                </aside>
-            </div>
-        </div>
-
-        {foreach $vehicles as $vehicle}
-            <a href="{route('vehicles.show', [vehicle => $vehicle])}" class="block w-full lg:w-1/2 p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <i class="{\App\Enums\VehicleType::getIcon($vehicle->type)} mr-2" style="color: {$vehicle->color|noescape}"></i>
-                    {$vehicle->manufacturer} {$vehicle->model} <span class="ml-2 text-gray-400">{$vehicle->spz}</span>
-                </h5>
-                <p class="font-normal text-gray-700 dark:text-gray-400">STK do: {$vehicle->stk|date:'j.n.Y'}</p>
-            </a>
-        {/foreach}
-    </div>
+    {livewire 'car-park-vehicles'}
 {/block}

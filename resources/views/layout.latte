@@ -37,6 +37,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
     {/if}
+
+    {livewireStyles}
+
     {block head}{/block}
 </head>
 <body {if $inAdmin}class="bg-gray-50 dark:bg-gray-900"{/if} style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
@@ -51,6 +54,7 @@
         {include content, 'isDev' => $isDev}
     {/if}
 
+    {livewireScripts}
 </body>
     {if $inAdmin}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>

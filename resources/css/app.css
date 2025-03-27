@@ -93,4 +93,9 @@
     .feedback-value {
         @apply order-first text-3xl font-bold tracking-tight text-black dark:text-white sm:text-5xl;
     }
+
+    /* Vehicle park */
+    .car-type {
+        @apply flex items-center text-center w-full p-3 md:p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700
+    }
 }
