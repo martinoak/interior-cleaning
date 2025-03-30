@@ -63,10 +63,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog');
     });
 
-    Route::middleware('can:car-park')->group(function () {
+    Route::middleware(['can:car-park'])->group(function () {
         Route::resource('vin', VinController::class)->except('show');
         Route::resource('vehicles', VehicleController::class);
-        Route::get('vehicles/vtp/{filename}', [\App\Http\Controllers\Api\VehicleController::class, 'serveVTP'])->name('vtp');
+        Route::get('vehicles/vtp/{filename}', [VehicleController::class, 'serveVTP'])->name('vtp');
         Route::resource('vehicles/{vehicle}/service-book', ServiceBookController::class)
             ->except('show')
             ->parameters([
