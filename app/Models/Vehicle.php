@@ -27,6 +27,8 @@ class Vehicle extends Model
         'oilChange',
         'insurance',
         'vtp',
+        'spneu',
+        'wpneu',
     ];
 
     protected $casts = [

@@ -1,16 +1,16 @@
-{layout '../layout.latte'}
+@extends('admin/admin-layout')
 
-{block content}
+@section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-center w-full sm:hidden">
             <h1 class="heading-title">NEOPTIMALIZOVÁNO</h1>
         </div>
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div class="cell-simple">
-                PHP {phpversion()}
+                PHP {{ phpversion() }}
             </div>
             <div class="cell-simple">
-                Laravel v{\Illuminate\Foundation\Application::VERSION}
+                Laravel v{{ \Illuminate\Foundation\Application::VERSION }}
             </div>
             <div class="cell-simple">
                 <a class="text-2xl text-gray-400 dark:text-gray-500" href="https://github.com/martinoak/interior-cleaning" target="_blank">
@@ -26,16 +26,16 @@
                             CRON log
                         </p>
                     </div>
-                    {var $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron.log'))), -15))}
-                    <pre class="w-full">{$content|noescape}</pre>
+                    @php $content = implode("\n", array_slice(preg_split("/\r\n|\n|\r/", file_get_contents(storage_path('logs/cron.log'))), -15)) @endphp
+                    <pre class="w-full">{!! $content !!}</pre>
                 </div>
             </div>
             <div class="grid grid-cols-1 mb-4 ml-4 flex w-1/5">
                 <div class="cell-simple h-full">
                     <div class="flex flex-col space-y-8 text-center text-gray-400 dark:text-gray-500">
                         <p class="cell-title">Error log</p>
-                        <a class="text-sm hover:text-[#f55247]" href="{route('admin.errorlog', ['type' => 'laravel'])}"><i class="fa-brands fa-laravel fa-xl mr-2"></i>Laravel</a>
-                        <a class="text-sm hover:text-white" href="{route('admin.errorlog', ['type' => 'cron'])}"><i class="fa-regular fa-hourglass fa-xl mr-2"></i>Cron</a>
+                        <a class="text-sm hover:text-[#f55247]" href="{{ route('admin.errorlog', ['type' => 'laravel']) }}"><i class="fa-brands fa-laravel fa-xl mr-2"></i>Laravel</a>
+                        <a class="text-sm hover:text-white" href="{{ route('admin.errorlog', ['type' => 'cron']) }}"><i class="fa-regular fa-hourglass fa-xl mr-2"></i>Cron</a>
                     </div>
                 </div>
             </div>
@@ -45,14 +45,14 @@
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Mail</h2>
                     <p class="cell-text">
-                        {if $tests['mail'] === 'OK'}
+                        @if($tests['mail'] === 'OK')
                             <i class="fa-solid fa-check-to-slot" style="color: #33d17a;"></i>
-                        {else}
+                        @else
                             <i class="fa-solid fa-xmark" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
-                        {/if}
+                        @endif
                     </p>
                     <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {$tests['mail']|noescape}
+                        {!! $tests['mail'] !!}
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
@@ -61,14 +61,14 @@
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Databáze</h2>
                     <p class="cell-text">
-                        {if $tests['db'] === 'OK'}
+                        @if($tests['db'] === 'OK')
                             <i class="fa-solid fa-check-to-slot" style="color: #33d17a;"></i>
-                        {else}
+                        @else
                             <i class="fa-solid fa-xmark" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
-                        {/if}
+                        @endif
                     </p>
                     <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {$tests['db']|noescape}
+                        {!! $tests['db'] !!}
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
@@ -77,14 +77,14 @@
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Zákazník</h2>
                     <p class="cell-text">
-                        {if $tests['customer'] === 'OK'}
+                        @if($tests['customer'] === 'OK')
                             <i class="fa-solid fa-check-to-slot" style="color: #33d17a;"></i>
-                        {else}
+                        @else
                             <i class="fa-solid fa-xmark" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
-                        {/if}
+                        @endif
                     </p>
                     <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {$tests['customer']|noescape}
+                        {!! $tests['customer'] !!}
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
@@ -93,14 +93,14 @@
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Feedback</h2>
                     <p class="cell-text">
-                        {if $tests['feedback'] === 'OK'}
+                        @if($tests['feedback'] === 'OK')
                             <i class="fa-solid fa-check-to-slot" style="color: #33d17a;"></i>
-                        {else}
+                        @else
                             <i class="fa-solid fa-xmark" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
-                        {/if}
+                        @endif
                     </p>
                     <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {$tests['feedback']|noescape}
+                        {!! $tests['feedback'] !!}
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
@@ -109,19 +109,19 @@
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Cron</h2>
                     <p class="cell-text">
-                        {if $tests['cron'] === 'OK'}
+                        @if($tests['cron'] === 'OK')
                             <i class="fa-solid fa-check-to-slot" style="color: #33d17a;"></i>
-                        {else}
+                        @else
                             <i class="fa-solid fa-xmark" style="color: #ff4d4d;" data-tooltip-target="tooltip-db"></i>
-                        {/if}
+                        @endif
                     </p>
                     <div id="tooltip-db" role="tooltip" class="absolute z-[500] invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {$tests['cron']|noescape}
+                        {!! $tests['cron'] !!}
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
             </div>
-            <a href="{route('admin.development')}" class="cell flex justify-between hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer">
+            <a href="{{ route('admin.development') }}" class="cell flex justify-between hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer">
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">RERUN</h2>
                     <p class="cell-text">
@@ -145,4 +145,4 @@
             <div class="cell-simple h-12" style="background-color: rgb(0 0 0)">#000000</div>
         </div>
     </div>
-{/block}
+@endsection

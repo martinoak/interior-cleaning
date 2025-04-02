@@ -62,6 +62,8 @@ class VehicleController extends Controller
             'oilChange' => $request->oilChange,
             'insurance' => $request->insurance,
             'vtp' => isset($filename) ? url()->current().'/vtp/'.$filename : null,
+            'spneu' => $request->spneu,
+            'wpneu' => $request->wpneu,
         ]);
 
         return to_route('vehicles.index')->with('success', 'Vozidlo úspěšně vytvořeno');
@@ -118,6 +120,9 @@ class VehicleController extends Controller
             'tachograph' => $request->tachograph,
             'oilChange' => $request->oilChange,
             'insurance' => $request->insurance,
+            /* TODO VTP update */
+            'spneu' => $request->spneu,
+            'wpneu' => $request->wpneu,
         ]);
 
         if (isset($filename)) {

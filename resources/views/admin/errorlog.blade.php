@@ -14,7 +14,7 @@
 </style>
 <body>
 <pre>
-    {$log|noescape}
+    {!! $log !!}
 </pre>
 </body>
 <script>
