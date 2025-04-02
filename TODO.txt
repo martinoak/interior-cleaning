@@ -1,5 +1,4 @@
-Latte -> Blade
-Komponenty
+Latte Emaily -> Markdown mailables
 Livewire
 Gate -> Policy
 Správa uživatelů v sekci Admin
