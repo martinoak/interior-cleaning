@@ -49,7 +49,7 @@
                     @foreach(\App\Enums\VehicleType::cases() as $type)
                         <li>
                             <input type="radio" id="{{ $type->value }}" name="type" value="{{ $type->value }}" class="hidden peer" required />
-                            <label for="{{ $type->value }}" class="car-type">
+                            <label for="{{ $type->value }}" class="vehicle-type">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
                                         <i class="{{ \App\Enums\VehicleType::getIcon($type->value) }} fa-lg mr-2"></i> {{ $type->getName() }}

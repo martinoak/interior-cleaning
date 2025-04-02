@@ -47,7 +47,7 @@
                             @else
                                 <span class="button-disabled"><i class="fa-solid fa-inbox fa-xl"></i></span>
                             @endif
-                            <button data-modal-target="destroy-{{ $customer->id }}" data-modal-toggle="destroy-{$customer->id}" class="button-red">
+                            <button data-modal-target="destroy-{{ $customer->id }}" data-modal-toggle="destroy-{{ $customer->id }}" class="button-red">
                                 <i class="fa-solid fa-trash-can fa-xl"></i>
                             </button>
                         </div>

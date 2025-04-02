@@ -135,7 +135,7 @@
                 <dd class="text-lg font-semibold">
                     @if($vehicle->spneu)
                         @php $season = date('Y') - $vehicle->spneu + (date('n') > 4 || (date('n') == 4 && date('j') > 1) ? 1 : 0) @endphp
-                        {{ $vehicle->spneu }} ({{ $season }}. sezóna)
+                        {{ $vehicle->spneu }} <span class="ml-1 badge @if($season >= 8)badge-red @elseif($season >= 5)badge-orange @endif">@if($season >= 7)<i class="fa-solid fa-triangle-exclamation mr-1"></i>@endif {{ $season }}. sezóna</span>
                     @else
                         <em class="text-gray-400">--- Nevyplněno ---</em>
                     @endif
@@ -144,9 +144,9 @@
             <div class="flex flex-col py-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Zimní pneu</dt>
                 <dd class="text-lg font-semibold">
-                    @if($vehicle->spneu)
-                        @php $season = date('Y') - $vehicle->spneu + (date('n') > 11 || (date('n') == 11 && date('j') > 1) ? 1 : 0) @endphp
-                        {{ $vehicle->wpneu }} ({{ $season }}. sezóna)
+                    @if($vehicle->wpneu)
+                        @php $season = date('Y') - $vehicle->wpneu + (date('n') > 11 || (date('n') == 11 && date('j') > 1) ? 1 : 0) @endphp
+                        {{ $vehicle->wpneu }} <span class="ml-1 badge @if($season >= 8)badge-red @elseif($season >= 5)badge-orange @endif">@if($season >= 7)<i class="fa-solid fa-triangle-exclamation mr-1"></i>@endif {{ $season }}. sezóna</span>
                     @else
                         <em class="text-gray-400">--- Nevyplněno ---</em>
                     @endif

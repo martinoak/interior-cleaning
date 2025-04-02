@@ -28,7 +28,7 @@
                     <p class="cell-text"><i class="text-green-500 fa-solid fa-dollar-sign icon"></i>{{ number_format($month, 0, ',', ' ') }},-</p>
                 </div>
             </div>
-            <div class="cell">
+            <div class="cell flex">
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Další čištění</h2>
                     <p class="cell-text"><i class="text-sky-600 fa-regular fa-calendar icon"></i>{{ $calendar }}</p>

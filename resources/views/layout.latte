@@ -1,5 +1,4 @@
 {var $isDev = str_contains(url()->current(), 'mad.dek.cz') || str_contains(url()->current(), 'localhost')}
-{var $inAdmin = str_contains(url()->current(), 'admin')}
 
 <!DOCTYPE html>
 <html lang="cs">
@@ -33,67 +32,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{asset('css/ud-styles.css')}?m={filemtime(public_path('css/ud-styles.css'))}" />
 
-    {if $inAdmin}
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
-    {/if}
-
-    {livewireStyles}
-
     {block head}{/block}
 </head>
-<body {if $inAdmin}class="bg-gray-50 dark:bg-gray-900"{/if} style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
-    {if $inAdmin}
-        {include 'partials/alerts_tw.latte'}
-        {include 'partials/_admin_sidebar.latte', isDev => $isDev}
-        <div>
-            {include 'partials/_admin_header.latte'}
-            {include content, 'isDev' => $isDev}
-        </div>
-    {else}
-        {include content, 'isDev' => $isDev}
-    {/if}
-
-    {livewireScripts}
+<body style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
+    {include content, 'isDev' => $isDev}
 </body>
-    {if $inAdmin}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-        <script>
-            const moonButton = document.querySelector('#moonButton')
-            const moonButtonMobile = document.querySelector('#moonButton-mobile')
-            const sunButton = document.querySelector('#sunButton')
-            const sunButtonMobile = document.querySelector('#sunButton-mobile')
-
-            const theme = window.localStorage.getItem('theme')
-            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
-
-            if (theme === 'dark' || (!('theme' in localStorage) && prefersDarkScheme.matches)) {
-                document.documentElement.classList.add('dark')
-            } else {
-                document.documentElement.classList.remove('dark')
-            }
-
-            moonButton.addEventListener('click', () => {
-                document.documentElement.classList.add('dark')
-                localStorage.setItem('theme', 'dark')
-            })
-
-            sunButton.addEventListener('click', () => {
-                document.documentElement.classList.remove('dark')
-                localStorage.setItem('theme', 'light')
-            })
-
-            moonButtonMobile.addEventListener('click', () => {
-                document.documentElement.classList.add('dark')
-                localStorage.setItem('theme', 'dark')
-            })
-
-            sunButtonMobile.addEventListener('click', () => {
-                document.documentElement.classList.remove('dark')
-                localStorage.setItem('theme', 'light')
-            })
-        </script>
-    {/if}
-
     {block bottomscripts}{/block}
 </html>
