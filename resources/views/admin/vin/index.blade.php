@@ -47,7 +47,7 @@
         <div id="accordion" data-accordion="collapse">
             @foreach($cars as $car)
                 <div id="accordion-collapse-heading-{{ $car->vin }}" class="cursor-pointer">
-                    <div class="flex items-center justify-between w-full p-5 font-medium text-gray-500 border {if !$iterator->last}border-b-0{/if} border-gray-200 {if $iterator->first}rounded-t-xl{/if} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{$car->vin}" aria-expanded="false">
+                    <div class="flex items-center justify-between w-full p-5 font-medium text-gray-500 border {if !$iterator->last}border-b-0{/if} border-gray-200 {if $iterator->first}rounded-t-xl{/if} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{{ $car->vin }}" aria-expanded="false">
                         <span><i class="me-2 fa-solid fa-car"></i> {{ $car->name }} {{ $car->model }}</span>
                         <div class="flex items-center space-x-4">
                             <a href="{{ route('vin.edit', ['vin' => $car->vin]) }}" type="button" class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700">

@@ -42,7 +42,7 @@
                             {!! \App\Enums\InvoiceTypes::getHtmlSpan($invoice->type) !!}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            {{ date('j.n.Y', $invoice->date) }}
+                            {{ Carbon\Carbon::parse($invoice->date)->format('j.n.Y') }}
                         </td>
                         <td class="px-6 py-4 font-bold whitespace-nowrap">
                             {{ $invoice->price }},-

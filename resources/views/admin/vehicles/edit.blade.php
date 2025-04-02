@@ -35,8 +35,8 @@
             </div>
 
             <div class="mb-5">
-                <label for="vin" class="form-label">VIN <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                <input type="text" name="vin" id="vin" value="{{ old('vin', $vehicle->vin) }}" class="form-input" required>
+                <label for="vin" class="form-label">VIN</label>
+                <input type="text" name="vin" id="vin" value="{{ old('vin', $vehicle->vin) }}" class="form-input">
             </div>
 
             <div class="mb-5">
@@ -96,6 +96,16 @@
             <div class="mb-5">
                 <label for="tachograph" class="form-label">Tachograf</label>
                 <input type="date" name="tachograph" id="tachograph" value="{{ old('tachograph', $vehicle->tachograph ? date_format($vehicle->tachograph, 'Y-m-d') : '') }}" class="form-input">
+            </div>
+
+            <div class="mb-5">
+                <label for="spneu" class="form-label">Letní pneu (rok)</label>
+                <input type="number" name="spneu" id="spneu" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('productionYear', $vehicle->spneu) }}">
+            </div>
+
+            <div class="mb-5">
+                <label for="wpneu" class="form-label">Zimní pneu (rok)</label>
+                <input type="number" name="wpneu" id="wpneu" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('productionYear', $vehicle->wpneu) }}">
             </div>
 
             <button type="submit" class="button-blue mt-6 w-full">Aktualizovat vozidlo</button>

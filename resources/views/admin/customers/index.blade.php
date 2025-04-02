@@ -31,14 +31,14 @@
                                     @csrf
                                     @method('PUT')
                                     @foreach(App\Enums\CleaningTypes::cases() as $case)
-                                        <button type="submit" name="variant" value="{$case->value}" class="button-yellow">
-                                            <i class="fa-solid fa-{$iterator->counter} icon"></i> {{ $case->value }}
+                                        <button type="submit" name="variant" value="{{ $case->value }}" class="button-yellow">
+                                            <i class="fa-solid fa-{{ $loop->iteration }} icon"></i> {{ $case->value }}
                                         </button>
                                     @endforeach
                                 </form>
                             @endif
                             @if($customer->term)
-                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green">{{ date('j.n.Y', $customer->term) }}</a>
+                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green">{{ \Carbon\Carbon::parse($customer->term)->format('j.n.Y') }}</a>
                             @else
                                 <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green"><i class="fa-solid fa-plus fa-xl icon"></i> Objednat</a>
                             @endif
@@ -47,7 +47,7 @@
                             @else
                                 <span class="button-disabled"><i class="fa-solid fa-inbox fa-xl"></i></span>
                             @endif
-                            <button data-modal-target="destroy-{$customer->id}" data-modal-toggle="destroy-{$customer->id}" class="button-red">
+                            <button data-modal-target="destroy-{{ $customer->id }}" data-modal-toggle="destroy-{$customer->id}" class="button-red">
                                 <i class="fa-solid fa-trash-can fa-xl"></i>
                             </button>
                         </div>
@@ -107,7 +107,7 @@
                         </section>
                         <section>
                             @if($customer->term)
-                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green">{{ date('j.n.Y', $customer->term) }}</a>
+                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green">{{ Carbon\Carbon::parse($customer->term)->format('j.n.Y') }}</a>
                             @else
                                 <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green"><i class="fa-solid fa-plus fa-xl icon"></i> Objednat</a>
                             @endif

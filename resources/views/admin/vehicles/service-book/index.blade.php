@@ -19,7 +19,7 @@
             @foreach($vehicle->serviceLog()->orderBy('service_date', 'desc')->get() as $log)
                 <li class="mb-10 ms-4">
                     <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                    <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ date('j.n.Y', $log->service_date) }}</time>
+                    <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ Carbon\Carbon::parse($log->service_date)->format('j.n.Y') }}</time>
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $log->title }}</h3>
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ number_format($log->price, 0, ',', ' ') }} Kč</h3>

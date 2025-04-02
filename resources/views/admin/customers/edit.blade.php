@@ -29,7 +29,7 @@
                 <select name="variant" id="variant" class="form-input" required>
                     <option value="">Vyber...</option>
                     @foreach(App\Enums\CleaningTypes::cases() as $case)
-                        <option value="{$case->value}" @if(old('variant', $customer->variant) === $case->value)selected @endif>{{ $case->value }}</option>
+                        <option value="{{ $case->value }}" @if(old('variant', $customer->variant) === $case->value)selected @endif>{{ $case->value }}</option>
                     @endforeach
                 </select>
             </div>

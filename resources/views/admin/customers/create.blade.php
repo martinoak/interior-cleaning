@@ -27,7 +27,7 @@
                 <label for="variant" class="form-label">Varianta <i class="fa-solid fa-asterisk text-red-600"></i></label>
                 <select name="variant" id="variant" class="form-input" required>
                     @foreach(App\Enums\CleaningTypes::cases() as $case)
-                        <option value="{$case->value}" @if(old('variant') === $case->value)selected @endif>{$case->value}</option>
+                        <option value="{{ $case->value }}" @if(old('variant') === $case->value)selected @endif>{{ $case->value }}</option>
                     @endforeach
                 </select>
             </div>

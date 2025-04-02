@@ -26,7 +26,13 @@
             </div>
             <div class="flex flex-col py-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">VIN</dt>
-                <dd class="text-lg font-semibold">{{ $vehicle->vin }}</dd>
+                <dd class="text-lg font-semibold">
+                    @if($vehicle->vin)
+                       {{ $vehicle->vin }}
+                    @else
+                        <em class="text-gray-400">--- Nevyplněno ---</em>
+                    @endif
+                </dd>
             </div>
             <div class="flex flex-col py-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">SPZ</dt>
@@ -59,31 +65,13 @@
                         <em class="text-gray-400">--- Nevyplněno ---</em>
                     @elseif(Carbon\Carbon::parse($vehicle->stk) < now())
                         <span class="font-bold text-red-500">
-                            Po datu! <span class="text-gray dark:text-gray-400">({{ date('j.n.Y', $vehicle->stk) }})</span>
+                            Po datu! <span class="text-gray dark:text-gray-400">({{ Carbon\Carbon::parse($vehicle->stk)->format('j.n.Y') }})</span>
                         </span>
                     @else
-                        {{ date('j.n.Y', $vehicle->stk }}
+                        {{ Carbon\Carbon::parse($vehicle->stk)->format('j.n.Y') }}
                         @php $diff = Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true) @endphp
                         <span class="@if($diff < 30)text-orange-500 @else text-gray-500 dark:text-gray-400 @endif">
-                            (za {{ Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true) }} dní)
-                        </span>
-                    @endif
-                </dd>
-            </div>
-            <div class="flex flex-col py-3">
-                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Tachograf</dt>
-                <dd class="text-lg font-semibold">
-                    @if(empty($vehicle->tachograph))
-                        <em class="text-gray-400">--- Nevyplněno ---</em>
-                    @elseif(Carbon\Carbon::parse($vehicle->tachograph) < now())
-                        <span class="font-bold text-red-500">
-                            Po datu! <span class="text-gray dark:text-gray-400">({{ date('j.n.Y', $vehicle->tachograph) }})</span>
-                        </span>
-                    @else
-                        {{ date('j.n.Y', $vehicle->tachograph) }}
-                        @php $diff = Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true) @endphp
-                        <span class="@if($diff < 30)text-orange-500 @else text-gray-500 dark:text-gray-400 @endif">
-                            (za {{ Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true) }} dní)
+                            (za {{ floor(Carbon\Carbon::parse($vehicle->stk)->diffInDays(now()->addDays(-1), true)) }} dní)
                         </span>
                     @endif
                 </dd>
@@ -95,13 +83,13 @@
                         <em class="text-gray-400">--- Nevyplněno ---</em>
                     @elseif(Carbon\Carbon::parse($vehicle->oilChange) < now())
                         <span class="font-bold text-red-500">
-                            Po datu! <span class="text-gray dark:text-gray-400">({{ date('j.n.Y', $vehicle->oilChange) }})</span>
+                            Po datu! <span class="text-gray dark:text-gray-400">({{ Carbon\Carbon::parse($vehicle->oilChange)->format('j.n.Y') }})</span>
                         </span>
                     @else
-                        {{ date('j.n.Y', $vehicle->oilChange }}
+                        {{ Carbon\Carbon::parse($vehicle->oilChange)->format('j.n.Y') }}
                         @php $diff = Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true) @endphp
                         <span class="@if($diff < 30)text-orange-500 @else text-gray-500 dark:text-gray-400 @endif">
-                            (za {{ Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true) }} dní)
+                            (za {{ floor(Carbon\Carbon::parse($vehicle->oilChange)->diffInDays(now()->addDays(-1), true)) }} dní)
                         </span>
                     @endif
                 </dd>
@@ -113,14 +101,54 @@
                         <em class="text-gray-400">--- Nevyplněno ---</em>
                     @elseif(Carbon\Carbon::parse($vehicle->insurance) < now())
                         <span class="font-bold text-red-500">
-                            Po datu! <span class="text-gray dark:text-gray-400">({{ date('j.n.Y', $vehicle->insurance) }})</span>
+                            Po datu! <span class="text-gray dark:text-gray-400">({{ Carbon\Carbon::parse($vehicle->insurance)->format('j.n.Y') }})</span>
                         </span>
                     @else
-                        {{ date('j.n.Y', $vehicle->insurance) }}
+                        {{ Carbon\Carbon::parse($vehicle->insurance)->format('j.n.Y') }}
                         @php $diff = Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true) @endphp
                         <span class="@if($diff < 30)text-orange-500 @else text-gray-500 dark:text-gray-400 @endif'">
-                            (za {{ Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true) }} dní)
+                            (za {{ floor(Carbon\Carbon::parse($vehicle->insurance)->diffInDays(now()->addDays(-1), true)) }} dní)
                         </span>
+                    @endif
+                </dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Tachograf</dt>
+                <dd class="text-lg font-semibold">
+                    @if(empty($vehicle->tachograph))
+                        <em class="text-gray-400">--- Nevyplněno ---</em>
+                    @elseif(Carbon\Carbon::parse($vehicle->tachograph) < now())
+                        <span class="font-bold text-red-500">
+                            Po datu! <span class="text-gray dark:text-gray-400">({{ Carbon\Carbon::parse($vehicle->tachograph)->format('j.n.Y') }})</span>
+                        </span>
+                    @else
+                        {{ Carbon\Carbon::parse($vehicle->tachograph)->format('j.n.Y') }}
+                        @php $diff = Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true) @endphp
+                        <span class="@if($diff < 30)text-orange-500 @else text-gray-500 dark:text-gray-400 @endif">
+                            (za {{ floor(Carbon\Carbon::parse($vehicle->tachograph)->diffInDays(now()->addDays(-1), true)) }} dní)
+                        </span>
+                    @endif
+                </dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Letní pneu</dt>
+                <dd class="text-lg font-semibold">
+                    @if($vehicle->spneu)
+                        @php $season = date('Y') - $vehicle->spneu + (date('n') > 4 || (date('n') == 4 && date('j') > 1) ? 1 : 0) @endphp
+                        {{ $vehicle->spneu }} ({{ $season }}. sezóna)
+                    @else
+                        <em class="text-gray-400">--- Nevyplněno ---</em>
+                    @endif
+                </dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Zimní pneu</dt>
+                <dd class="text-lg font-semibold">
+                    @if($vehicle->spneu)
+                        @php $season = date('Y') - $vehicle->spneu + (date('n') > 11 || (date('n') == 11 && date('j') > 1) ? 1 : 0) @endphp
+                        {{ $vehicle->wpneu }} ({{ $season }}. sezóna)
+                    @else
+                        <em class="text-gray-400">--- Nevyplněno ---</em>
                     @endif
                 </dd>
             </div>

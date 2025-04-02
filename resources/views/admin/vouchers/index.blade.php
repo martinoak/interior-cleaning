@@ -25,7 +25,7 @@
                 <p class="cell-note items-center text-md">
                     @foreach($vouchers as $voucher)
                         @if(str_starts_with($voucher->hash, 'x'))
-                            <span class="px-1 {if session('voucher') === $voucher->hash}text-indigo-600 font-bold{/if}">{{ $voucher->hash }}</span>
+                            <span class="px-1 @if(session('voucher') === $voucher->hash)text-indigo-600 font-bold @endif">{{ $voucher->hash }}</span>
                         @endif
                     @endforeach
                 </p>
@@ -38,8 +38,8 @@
                     <form class="cell-text hidden sm:flex space-x-2 text-lg" method="post" action="{{ route('vouchers.store', ['type' => 'regular']) }}">
                         @csrf
                         @foreach(App\Enums\CleaningTypes::cases() as $case)
-                            <button type="submit" name="variant" value="{$case->value}" class="button-yellow">
-                                <i class="fa-solid fa-{$iterator->counter} mr-2"></i> {$case->value}
+                            <button type="submit" name="variant" value="{{ $case->value }}" class="button-yellow">
+                                <i class="fa-solid fa-{{ $loop->iteration }} mr-2"></i> {{ $case->value }}
                             </button>
                         @endforeach
                     </form>
@@ -48,7 +48,7 @@
                     <form class="cell-text flex space-x-2 text-lg" method="post" action="{{ route('vouchers.store', ['type' => 'regular']) }}">
                         @csrf
                         @foreach(App\Enums\CleaningTypes::cases() as $case)
-                            <button type="submit" name="variant" value="{$case->value}" style="@if($loop->first)margin-left: 0 !important;@endif" class="w-1/3 button-yellow">
+                            <button type="submit" name="variant" value="{{ $case->value }}" style="@if($loop->first)margin-left: 0 !important;@endif" class="w-1/3 button-yellow">
                                 {{ $case->getShortenedTitle() }}
                             </button>
                         @endforeach

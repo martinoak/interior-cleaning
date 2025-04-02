@@ -34,8 +34,8 @@
             </div>
 
             <div class="mb-5">
-                <label for="vin" class="form-label">VIN <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                <input type="text" name="vin" id="vin" value="{{ old('vin') }}" class="form-input" required>
+                <label for="vin" class="form-label">VIN</label>
+                <input type="text" name="vin" id="vin" value="{{ old('vin') }}" class="form-input">
             </div>
 
             <div class="mb-5">
@@ -48,11 +48,11 @@
                 <ul class="grid w-full gap-6 grid-cols-3 mt-2">
                     @foreach(\App\Enums\VehicleType::cases() as $type)
                         <li>
-                            <input type="radio" id="{$type->value}" name="type" value="{$type->value}" class="hidden peer" required />
-                            <label for="{$type->value}" class="car-type">
+                            <input type="radio" id="{{ $type->value }}" name="type" value="{{ $type->value }}" class="hidden peer" required />
+                            <label for="{{ $type->value }}" class="car-type">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
-                                        <i class="{\App\Enums\VehicleType::getIcon($type->value)} fa-lg mr-2"></i> {$type->getName()}
+                                        <i class="{{ \App\Enums\VehicleType::getIcon($type->value) }} fa-lg mr-2"></i> {{ $type->getName() }}
                                     </div>
                                 </div>
                             </label>
@@ -86,6 +86,15 @@
                 <input type="date" name="tachograph" id="tachograph" value="{{ old('tachograph') }}" class="form-input">
             </div>
 
+            <div class="mb-5">
+                <label for="spneu" class="form-label">Letní pneu (rok)</label>
+                <input type="number" name="spneu" id="spneu" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('spneu') }}">
+            </div>
+
+            <div class="mb-5">
+                <label for="wpneu" class="form-label">Zimní pneu (rok)</label>
+                <input type="number" name="wpneu" id="wpneu" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('wpneu') }}">
+            </div>
 
             <div class="form-buttons">
                 <button type="submit" class="form-submit">Přidat vozidlo</button>
