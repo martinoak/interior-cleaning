@@ -36,12 +36,13 @@ class FormEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.newDemand',
+            markdown: 'emails.newDemand',
             with: [
                 'name' => $this->details['name'],
                 'email' => $this->details['email'],
                 'telephone' => $this->details['telephone'],
                 'message' => $this->details['message'],
+                'url' => route('dashboard'),
             ]
         );
     }

@@ -43,10 +43,9 @@ class FeedbackEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.feedback',
+            markdown: 'emails.feedback',
             with: [
-                'hash' => $this->hash,
-                'variant' => $this->variant,
+                'url' => route('addFeedback', ['hash' => $this->hash, 'variant' => $this->variant]),
             ]
         );
     }

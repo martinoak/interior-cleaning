@@ -64,7 +64,7 @@ class HomepageController extends Controller
             Mail::to($request->get('email'))
                 ->send(new FeedbackEmail(md5(time()), CleaningTypes::from($request->get('variant'))->value));
 
-            Customer::where('id', $request->get('id'))->update(['feedbackSent' => 1]);
+            // Customer::where('id', $request->get('id'))->update(['feedbackSent' => 1]);
 
             return back()->with('success', 'Feedback email odeslán!');
         }
