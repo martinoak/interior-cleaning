@@ -1,31 +1,30 @@
-{layout 'layout.latte'}
+@extends('layout')
 
-{block head}
+@section('head')
     <!--====== OG META ======-->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cisteni-kondrac.cz/">
     <meta property="og:title" content="Čištění interiérů Kondrac">
     <meta property="og:description" content="Vaše auto vyčistíme rychle, levně a kvalitně! Čištíme osobní automobily a používáme šetrné, ale účinné prostředky, aby se Vaše auto blyštilo.">
-    <meta property="og:image" content="{asset('images/logo/logo-car2.png')}">
+    <meta property="og:image" content="{{ asset('images/logo/logo-car2.png') }}">
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14" defer></script>
-    <script src="https://www.google.com/recaptcha/api.js?render={env('GOOGLE_RECAPTCHA_SITE_KEY')}"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}"></script>
     <script>
         grecaptcha.ready(function() {
             document.getElementById('demandForm').addEventListener("submit", function(event) {
                 event.preventDefault();
-                grecaptcha.execute({env('GOOGLE_RECAPTCHA_SITE_KEY')}, { action: 'contact' }).then(function(token) {
+                grecaptcha.execute({{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}, { action: 'contact' }).then(function(token) {
                     document.getElementById("recaptchaResponse").value= token;
                     document.getElementById('demandForm').submit();
                 });
             }, false);
         });
     </script>
-{/block}
+@endsection
 
-{block content}
-
-{include 'partials/alerts_bs.latte'}
+@section('content')
+<x-alert-bs />
 <div id="vue-control">
     <!-- ====== Header Start ====== -->
     <header class="ud-header">
@@ -34,9 +33,9 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
                         <span class="navbar-brand">
-                            <img src="{asset('images/logo/logo-car.png')}" alt="Logo" class="w-100"/>
+                            <img src="{{ asset('images/logo/logo-car.png') }}" alt="Logo" class="w-100"/>
                         </span>
-                        <a class="ud-logo-text navbar-brand-text fw-bold" href="{route('homepage')}" style="color: white">
+                        <a class="ud-logo-text navbar-brand-text fw-bold" href="{{ route('homepage') }}" style="color: white">
                             Čištění interiérů
                         </a>
                         <button class="navbar-toggler" aria-label="Menu" type="button">
@@ -70,9 +69,9 @@
 
     <section id="home" style="position: relative; overflow: hidden;">
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
-        {var $fileName = 'hero-' . rand(1, 5) . '.mp4'}
+        @php $fileName = 'hero-' . rand(1, 5) . '.mp4' @endphp
         <video autoplay muted loop playsinline id="hpVideo" style="width: 100%; object-fit: cover; z-index: 0;">
-            <source src="{asset($fileName)}" type="video/mp4">
+            <source src="{{ asset($fileName) }}" type="video/mp4">
         </video>
         <div class="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 2;">
             <div class="row">
@@ -91,7 +90,8 @@
     </section>
 
 
-{*    <section class="ud-hero" id="home">
+{{--
+    <section class="ud-hero" id="home">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -106,7 +106,8 @@
                 </div>
             </div>
         </div>
-    </section>*}
+    </section>
+--}}
 
     <section id="features" class="ud-features">
         <div class="container">
@@ -194,10 +195,10 @@
                     </div>
                 </div>
                 <div class="ud-about-image-desktop" style="background-color: #3056d3">
-                    <img src="{asset('images/logo/typography.png')}" alt="about-image" style="margin-top: 25px;padding: 50px" />
+                    <img src="{{ asset('images/logo/typography.png') }}" alt="about-image" style="margin-top: 25px;padding: 50px" />
                 </div>
                 <div class="ud-about-image-mobile" style="background-color: #3056d3">
-                    <img src="{asset('images/logo/logo-car.png')}" alt="about-image" style="padding: 20px 0;width: 20%" />
+                    <img src="{{ asset('images/logo/logo-car.png') }}" alt="about-image" style="padding: 20px 0;width: 20%" />
                 </div>
             </div>
         </div>
@@ -210,39 +211,39 @@
                     <div class="ud-section-title mx-auto text-center">
                         <span>Ceník</span>
                         <h2>Tak jak to dneska bude?</h2>
-                        <hr />
+                        <hr>
                     </div>
                 </div>
             </div>
 
             <div class="row g-0 align-items-center justify-content-center">
-                {foreach $pricelist as $item => $values}
+                @foreach($pricelist as $item => $values)
                     <div class="col-lg-4 col-md-10 col-sm-10">
-                        <div class="ud-single-pricing {if $iterator->first}first-item me-2{elseif $iterator->even}active{elseif $iterator->last}last-item ms-2{/if}">
-                            {if $iterator->even} <span class="ud-popular-tag">Populární</span> {/if}
+                        <div class="ud-single-pricing @if($loop->first)first-item me-2 @elseif($loop->even) active @elseif($loop->last)last-item ms-2 @endif">
+                            @if($loop->even) <span class="ud-popular-tag">Populární</span>  @endif
                             <div class="ud-pricing-header">
-                                <h3>{$item|upper}</h3>
-                                <h4>{$values['price']}</h4>
+                                <h3>{{ strtoupper($item) }}</h3>
+                                <h4>{{ $values['price'] }}</h4>
                             </div>
                             <div class="ud-pricing-body">
                                 <ul>
-                                    {for $i = 0; $i <= 9; $i++}
-                                        {if isset($values['description'][$i])}
-                                            <li>{$values['description'][$i]|noescape}</li>
-                                        {else}
+                                    @for($i = 0; $i <= 9; $i++)
+                                        @if(isset($values['description'][$i]))
+                                            <li>{!! $values['description'][$i] !!}</li>
+                                        @else
                                             <li>&nbsp;</li>
-                                        {/if}
-                                    {/for}
+                                         @endif
+                                    @endfor
                                 </ul>
                             </div>
                             <div class="ud-pricing-footer">
-                                <a href="#kontakt" class="ud-main-btn ud-border-btn" v-on:click="setVariant" data-variant="{$item}">
+                                <a href="#kontakt" class="ud-main-btn ud-border-btn" v-on:click="setVariant" data-variant="{{ $item }}">
                                     To beru!
                                 </a>
                             </div>
                         </div>
                     </div>
-                {/foreach}
+                @endforeach
                 <p class="text-center">Za extra znečištěné auto může být účtován příplatek.</p>
                 <p class="text-center">Ke každému čištění <span class="text-primary">malý dárek</span>.</p>
             </div>
@@ -264,61 +265,61 @@
 
         <div id="carouselExampleIndicators" class="d-none d-md-flex carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-inner w-50 mx-auto">
-                {foreach $feedbacks as $feedback}
-                    <div class="carousel-item {if $iterator->first}active{/if}">
+                @foreach($feedbacks as $feedback)
+                    <div class="carousel-item @if($loop->first)active @endif">
                         <div class="d-block w-100">
                             <div class="ud-single-testimonial">
                                 <div class="ud-testimonial-ratings">
-                                    {if $feedback->rating == 1}
+                                    @if($feedback->rating == 1)
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
-                                    {elseif $feedback->rating == 2}
+                                    @elseif($feedback->rating == 2)
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
-                                    {elseif $feedback->rating == 3}
+                                    @elseif($feedback->rating == 3)
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
-                                    {elseif $feedback->rating == 4}
+                                    @elseif($feedback->rating == 4)
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-regular fa-star"></i>
-                                    {else}
+                                    @else
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
-                                    {/if}
+                                     @endif
                                 </div>
                                 <div class="ud-testimonial-content">
-                                    <p>{$feedback->message}</p>
+                                    <p>{{ $feedback->message }}</p>
                                 </div>
                                 <div class="ud-testimonial-info" style="justify-content: space-between">
                                     <div class="ud-testimonial-meta">
-                                        <h3>{$feedback->name}</h3>
-                                        {ifset $feedback->variant}
-                                            <p>Varianta: {$feedback->variant}</p>
-                                        {/ifset}
+                                        <h3>{{ $feedback->name }}</h3>
+                                        @if(isset($feedback->variant))
+                                            <p>Varianta: {{ $feedback->variant }}</p>
+                                        @endif
                                     </div>
-                                    {if $feedback->fromGoogle}
-                                        <img src="{asset('images/maps.svg')}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
-                                    {/if}
+                                    @if($feedback->fromGoogle)
+                                        <img src="{{ asset('images/maps.svg') }}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
+                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                {/foreach}
+                @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -332,31 +333,31 @@
 
         <div id="carouselExampleIndicatorsMobile" class="d-flex d-md-none carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-inner w-75 mx-auto">
-                {foreach $feedbacks as $feedback}
-                    <div class="carousel-item {if $iterator->first}active{/if}">
+                @foreach($feedbacks as $feedback)
+                    <div class="carousel-item @if($loop->first) active @endif">
                         <div class="d-block w-100">
                             <div class="ud-single-testimonial" style="padding: 20px">
                                 <div class="ud-testimonial-ratings">
-                                    {$feedback->rating|number}<i class="ms-2 fa-solid fa-star"></i>
+                                    {{ $feedback->rating }}<i class="ms-2 fa-solid fa-star"></i>
                                 </div>
                                 <div class="ud-testimonial-content">
-                                    <p>{$feedback->message}</p>
+                                    <p>{{ $feedback->message }}</p>
                                 </div>
                                 <div class="ud-testimonial-info" style="justify-content: space-between">
                                     <div class="ud-testimonial-meta">
-                                        <h3>{$feedback->name}</h3>
-                                        {ifset $feedback->variant}
-                                            <p>Varianta: {$feedback->variant}</p>
-                                        {/ifset}
+                                        <h3>{{ $feedback->name }}</h3>
+                                        @if(isset($feedback->variant))
+                                            <p>Varianta: {{ $feedback->variant }}</p>
+                                        @endif
                                     </div>
-                                    {if $feedback->fromGoogle}
-                                        <img src="{asset('images/maps.svg')}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
-                                    {/if}
+                                    @if($feedback->fromGoogle)
+                                        <img src="{{ asset('images/maps.svg') }}" class="ms-2" style="max-width: 100px; object-fit: contain" alt="">
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                {/foreach}
+                @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicatorsMobile" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -382,32 +383,32 @@
             </div>
 
             <div class="row justify-content-around">
-                {foreach config('web.team') as $worker}
+                @foreach(config('web.team') as $worker)
                     <div class="col-xl-3 col-lg-3 col-sm-6">
                         <div class="ud-single-team">
                             <div class="ud-team-image-wrapper">
                                 <div class="ud-team-image">
-                                    <img src="{asset('images/team/team-01.png')}" alt="team" />
+                                    <img src="{{ asset('images/team/team-01.png') }}" alt="team" />
                                 </div>
-                                <img src="{asset('images/team/dotted-shape.svg')}" alt="shape" class="shape shape-1" />
-                                <img src="{asset('images/team/shape-2.svg')}" alt="shape" class="shape shape-2" />
+                                <img src="{{ asset('images/team/dotted-shape.svg') }}" alt="shape" class="shape shape-1" />
+                                <img src="{{ asset('images/team/shape-2.svg') }}" alt="shape" class="shape shape-2" />
                             </div>
                             <div class="ud-team-info">
-                                <h3>{$worker['name']}</h3>
-                                <h4>{$worker['position']}</h4>
-                                <a href="tel:{str_replace(' ','', $worker['tel'])}">{$worker['tel']}</a>
+                                <h3>{{ $worker['name'] }}</h3>
+                                <h4>{{ $worker['position'] }}</h4>
+                                <a href="tel:{{ str_replace(' ','', $worker['tel']) }}">{{ $worker['tel'] }}</a>
                             </div>
                             <ul class="ud-team-socials">
                                 <li>
-                                    <a href="{$worker['facebook']}" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="{{ $worker['facebook'] }}" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                                 </li>
                                 <li>
-                                    <a href="{$worker['instagram']}" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="{{ $worker['instagram'] }}" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                {/foreach}
+                @endforeach
             </div>
         </div>
     </section>
@@ -461,11 +462,11 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="ud-contact-form-wrapper">
                         <h3 class="ud-contact-form-title">Napište nám! <i class="fa-solid fa-pen ms-2"></i></h3>
-                        {foreach $errors->all() as $error}
-                            <p style="color: red;margin-bottom: 5px">{$error}</p>
-                        {/foreach}
-                        <form id="demandForm" class="ud-contact-form" method="post" action="{route('sendEmail', [sendEmail => true])}">
-                            {csrf_field()|noescape}
+                        @foreach($errors->all() as $error)
+                            <p style="color: red;margin-bottom: 5px">{{ $error }}</p>
+                        @endforeach
+                        <form id="demandForm" class="ud-contact-form" method="post" action="{{ route('sendEmail', ['sendEmail' => true]) }}">
+                            @csrf
                             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                             <div class="ud-form-group">
                                 <label for="name">Celé jméno <i class="fa-solid fa-star-of-life text-danger"></i></label>
@@ -526,13 +527,27 @@
     </section>
 </div>
 
-{include 'partials/footer.latte'}
+<footer class="ud-footer">
+    <div class="ud-footer-bottom">
+        <div class="container">
+            <div class="row">
+                <p class="ud-footer-bottom-right text-center">
+                    &copy; {{ date('Y') }} Martin Dub
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
 
-{/block}
+<a href="" class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+</a>
 
-{block bottomscripts}
+@endsection
+
+@section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="{asset('/js/main.js')}" defer></script>
+    <script src="{{ asset('/js/main.js') }}" defer></script>
     <script>
         let video = document.getElementById("hpVideo");
         video.style.maxHeight = window.innerHeight + "px";
@@ -562,4 +577,4 @@
             }
         });
     </script>
-{/block}
+@endsection

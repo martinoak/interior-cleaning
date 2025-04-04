@@ -81,4 +81,5 @@ Route::group(['prefix' => 'cron'], function () {
     Route::any('today', [CronController::class, 'today'])->name('cron.today');
     Route::any('bill', [CronController::class, 'bill'])->name('cron.bill');
     Route::any('invalidate-vouchers', [CronController::class, 'invalidateVouchers'])->name('cron.invalidate-vouchers');
+    Route::any('car-park', [CronController::class, 'carPark'])->name('cron.car-park');
 });

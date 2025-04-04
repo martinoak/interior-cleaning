@@ -1,28 +1,28 @@
-{layout 'layout.latte'}
+@extends('layout')
 
-{block head}
+@section('head')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{asset('css/tailwind.css')}?m={filemtime(public_path('css/tailwind.css'))}" />
-    <link rel="stylesheet" href="{asset('css/style.css')}?m={filemtime(public_path('css/style.css'))}"/>
-{/block}
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?m={{ filemtime(public_path('css/tailwind.css')) }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?m={{ filemtime(public_path('css/style.css')) }}"/>
+@endsection
 
-{block content}
+@section('content')
     <section class="bg-[#3056d3]">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a class="flex flex-col items-center mb-6 text-2xl">
-                <img class="h-12 mb-2" src="{asset('images/logo/logo-car.png')}" alt="logo">
+                <img class="h-12 mb-2" src="{{ asset('images/logo/logo-car.png') }}" alt="logo">
                 <h1 class="text-white font-bold">
                     Recenze
                 </h1>
             </a>
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 md:space-y-6 sm:p-8">
-                    <form class="space-y-4" method="post" action="{route('storeFeedback')}">
-                        {csrf_field()|noescape}
-                        <input type="hidden" name="hash" value="{$hash}">
+                    <form class="space-y-4" method="post" action="{{ route('storeFeedback') }}">
+                        @csrf
+                        <input type="hidden" name="hash" value="{{ $hash }}">
                         <div>
                             <label for="variant" class="block mb-2 text-sm font-medium text-gray-900">Varianta</label>
-                            <input type="text" id="variant" name="variant" class="bg-gray-100 text-gray-500 sm:text-sm rounded-lg block w-full p-2.5" value="{$variant}" readonly>
+                            <input type="text" id="variant" name="variant" class="bg-gray-100 text-gray-500 sm:text-sm rounded-lg block w-full p-2.5" value="{{ $variant }}" readonly>
                         </div>
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Jméno a příjmení <i class="fa-solid fa-asterisk text-red-600"></i></label>
@@ -73,9 +73,9 @@
             </div>
         </div>
     </section>
-{/block}
+@endsection
 
-{block bottomscripts}
+@section('scripts')
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
-    <script src="{asset('js/main.js')}"></script>
-{/block}
+    <script src="{{ asset('js/main.js') }}"></script>
+@endsection

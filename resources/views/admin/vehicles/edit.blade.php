@@ -3,9 +3,9 @@
 @section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-start">
-            <button onclick="history.back()" class="button-indigo" type="button">
+            <a href="{{ route('vehicles.show', ['vehicle' => $vehicle->id]) }}" class="button-indigo" type="button">
                 <i class="fa-solid fa-arrow-left fa-lg"></i>
-            </button>
+            </a>
             <h1 class="heading-title">{{ $vehicle->manufacturer }} {{ $vehicle->model }}</h1>
         </div>
 

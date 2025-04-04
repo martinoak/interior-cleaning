@@ -297,3 +297,26 @@ img {
 .break-all {
     word-break: break-all;
 }
+
+/* Custom */
+
+.badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    padding: 0.125rem 0.625rem;
+    border-radius: 0.125rem;
+    background-color: #edf2f7;
+    color: #2d3748;
+}
+
+.badge-red {
+    background-color: #f56565;
+    color: #fff;
+    border-radius: 0.125rem;
+}
+
+.badge-orange {
+    background-color: #f6ad55;
+    color: #fff;
+}

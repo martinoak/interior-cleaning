@@ -1,9 +1,6 @@
-Latte Emaily -> Markdown mailables
-Livewire
+Vue -> Livewire
 Gate -> Policy
 Správa uživatelů v sekci Admin
 Úklid Frontend (odprostit se od Flowbite)
-TailwindCSS 4 + Laravel 12 + PHP 8.4
-Cron na API (expirace datumů)
-history.back() neudrží změnu dark:, předělat na route()
+TailwindCSS 4 + PHP 8.4
 config do DB - schema type, value

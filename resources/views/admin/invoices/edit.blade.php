@@ -3,9 +3,9 @@
 @section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-start">
-            <button onclick="history.back()" class="button-indigo" type="button">
+            <a href="{{ route('invoices.index') }}" class="button-indigo" type="button">
                 <i class="fa-solid fa-arrow-left fa-lg text-white mr-1"></i> Zpět
-            </button>
+            </a>
             <h1 class="heading-title">Faktura</h1>
         </div>
 

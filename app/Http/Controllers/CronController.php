@@ -20,4 +20,9 @@ class CronController extends Controller
     {
         Artisan::call('app:invalidate-vouchers');
     }
+
+    public function carPark(): void
+    {
+        Artisan::call('app:car-park');
+    }
 }
