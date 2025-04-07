@@ -8,19 +8,25 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
-class NewSeasonMail extends Mailable
+class ExpiringDatesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private string $season;
+    /**
+     * The array of vehicles with expiring dates.
+     *
+     * @var Collection
+     */
+    private Collection $expiring;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(string $season)
+    public function __construct(Collection $expiring)
     {
-        $this->season = $season;
+        $this->expiring = $expiring;
     }
 
     /**
@@ -29,7 +35,7 @@ class NewSeasonMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Vozový park - Nová sezóna',
+            subject: 'Vozový park - kontrola datumů',
         );
     }
 
@@ -39,10 +45,8 @@ class NewSeasonMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.car-park.new-season',
-            with: [
-                'season' => $this->season,
-            ],
+            markdown: 'emails.car-park.expiring-dates-mail',
+            with: ['expiring' => $this->expiring],
         );
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\ExpiringDatesMail;
 use App\Mail\NewSeasonMail;
 use App\Models\Vehicle;
 use Carbon\Carbon;
@@ -25,9 +26,10 @@ class CarParkCommand extends Command
      */
     protected $description = 'Cron, který každý den kontroluje vozový park';
 
-    private int $firstWarning = 30;
-
-    private int $secondWarning = 7;
+    public int $stkDeadline = 30;
+    public int $insuranceDeadline = 50; // Ze zákona případná změna pojišťovny alespoň 6 týdnů předem
+    public int $oilChangeDeadline = 14;
+    public int $tachographDeadline = 14;
 
     private Carbon $summerSeasonStart;
 
@@ -65,25 +67,31 @@ class CarParkCommand extends Command
 
     private function getExpirations(): void
     {
+        $sendEmail = false;
+
         foreach (Vehicle::all() as $vehicle) {
-            if ($vehicle->stk?->diffInDays(now()) <= $this->firstWarning) {
+            if ($vehicle->stk && abs($vehicle->stk->diffInDays(now())) <= $this->stkDeadline) {
                 $this->expiring['stk']->push($vehicle);
+                $sendEmail = true;
             }
 
-            if ($vehicle->insurance?->diffInDays(now()) <= $this->firstWarning) {
+            if ($vehicle->insurance && abs($vehicle->insurance->diffInDays(now())) <= $this->insuranceDeadline) {
                 $this->expiring['insurance']->push($vehicle);
+                $sendEmail = true;
             }
 
-            if ($vehicle->oilChange?->diffInDays(now()) <= $this->firstWarning) {
+            if ($vehicle->oilChange && abs($vehicle->oilChange->diffInDays(now())) <= $this->oilChangeDeadline) {
                 $this->expiring['oilChange']->push($vehicle);
+                $sendEmail = true;
             }
 
-            if ($vehicle->tachograph?->diffInDays(now()) <= $this->firstWarning) {
+            if ($vehicle->tachograph && abs($vehicle->tachograph->diffInDays(now())) <= $this->tachographDeadline) {
                 $this->expiring['tachograph']->push($vehicle);
+                $sendEmail = true;
             }
         }
 
-        // TODO: Send email with expiring vehicles
+        $sendEmail && Mail::to($this->to)->send(new ExpiringDatesMail($this->expiring));
     }
 
     private function announceNewSeason(string $season): void
