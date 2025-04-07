@@ -34,7 +34,6 @@
     <link rel="stylesheet" href="{{ asset('css/ud-styles.css') . '?m=' . filemtime(public_path('css/ud-styles.css')) }}" />
 
     @if($inAdmin)
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('css/tailwind.css') . '?m=' . filemtime(public_path('css/tailwind.css')) }}" />
     @endif
 

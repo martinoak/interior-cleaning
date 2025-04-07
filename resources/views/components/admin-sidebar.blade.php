@@ -71,6 +71,12 @@
                             <span class="flex-1 ml-3 whitespace-nowrap">Vývoj</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.users.index') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
+                            <i class="text-white fa-solid fa-user-gear"></i>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Uživatelé</span>
+                        </a>
+                    </li>
                 @endif
                 <hr class="w-48 h-1 mx-auto bg-gray-300 border-0 rounded">
                 <li>

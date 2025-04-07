@@ -109,4 +109,25 @@
     .vehicle-type {
         @apply flex items-center text-center w-full p-3 md:p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700
     }
+
+    .form-offset {
+        @apply mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0 dark:border-gray-50/50 dark:sm:divide-gray-50/50;
+    }
+
+    .row-wrapper {
+        @apply sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6;
+        & > div {
+            @apply mt-2 sm:col-span-2 sm:mt-0;
+        }
+        & label {
+            @apply block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5 dark:text-white
+        }
+    }
+
+    .helper-text {
+        @apply mt-3 text-sm leading-6 text-gray-600 dark:text-gray-400;
+    }
+    .users-input {
+        @apply block w-full rounded-md border py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6
+    }
 }

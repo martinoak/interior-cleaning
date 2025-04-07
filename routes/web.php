@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CustomersController;
+use App\Http\Controllers\Admin\InvoicesController;
+use App\Http\Controllers\Admin\ServiceBookController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Admin\VinController;
+use App\Http\Controllers\Admin\VouchersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CronController;
-use App\Http\Controllers\CustomersController;
-use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomepageController;
-use App\Http\Controllers\InvoicesController;
-use App\Http\Controllers\ServiceBookController;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\VinController;
-use App\Http\Controllers\VouchersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +43,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
         Route::resource('customers', CustomersController::class)->except('show');
         Route::group(['prefix' => 'customers'], function () {
-            Route::any('export', [ExportController::class, 'exportCustomers'])->name('invoices.export');
+            Route::any('export', [CustomersController::class, 'exportCustomers'])->name('invoices.export');
             Route::any('archive/{id}', [CustomersController::class, 'archive'])->name('archiveCustomer');
         });
 
@@ -59,6 +59,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::middleware('can:admin')->group(function () {
         Route::get('development', [AdminController::class, 'showDevelopment'])->name('admin.development');
+        Route::resource('users', UsersController::class)->except('show')->names('admin.users');
 
         Route::get('log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog');
     });

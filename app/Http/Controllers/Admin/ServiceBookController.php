@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreServiceLogRequest;
 use App\Models\ServiceLog;
 use App\Models\Vehicle;

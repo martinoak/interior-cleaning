@@ -1,6 +1,5 @@
 Vue -> Livewire
 Gate -> Policy
-Správa uživatelů v sekci Admin
 Úklid Frontend (odprostit se od Flowbite)
 TailwindCSS 4 + PHP 8.4
 config do DB - schema type, value

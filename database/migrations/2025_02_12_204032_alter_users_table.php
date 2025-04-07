@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('api_token')->after('password')->nullable();
+            $table->enum('role', \App\Enums\Role::toArray())->after('api_token');
         });
     }
 

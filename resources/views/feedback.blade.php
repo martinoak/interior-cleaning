@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('head')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?m={{ filemtime(public_path('css/tailwind.css')) }}" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}?m={{ filemtime(public_path('css/style.css')) }}"/>
 @endsection

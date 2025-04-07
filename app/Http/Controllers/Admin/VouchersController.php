@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Enums\CleaningTypes;
+use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Voucher;
 use DateTime;

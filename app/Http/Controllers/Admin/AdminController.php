@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Enums\CleaningTypes;
+use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Feedback;
 use App\Models\Invoice;
@@ -97,18 +98,7 @@ class AdminController extends Controller
     {
         abort_if(Gate::denies('admin'), 403);
 
-        $tests = $this->doTest();
-
-        return view('admin.development', compact('tests'));
-    }
-
-    public function rerun(): RedirectResponse
-    {
-        abort_if(Gate::denies('admin'), 403);
-
-        $tests = $this->doTest();
-
-        return to_route('admin.development', compact('tests'));
+        return view('admin.development');
     }
 
     public function showErrorLog(string $type): View
@@ -120,39 +110,5 @@ class AdminController extends Controller
         return view('admin.errorlog', [
             'log' => $log,
         ]);
-    }
-
-    protected function doTest(): array
-    {
-        //        try {
-        //            \Illuminate\Support\Facades\Mail::to('dev@cisteni-kondrac.cz')->send(new \App\Mail\SendMonthlyBillMail(12345));
-        //
-        //            $output['mail'] = 'OK';
-        //        } catch (Exception $e) {
-        //            $output['mail'] = $e->getMessage();
-        //        }
-        //
-        //        try {
-        //            \Illuminate\Support\Facades\DB::connection()->getPdo();
-        //
-        //            $output['db'] = 'OK';
-        //        } catch (Exception $e) {
-        //            $output['db'] = $e->getMessage();
-        //        }
-        //
-        //        try {
-        //            Customer::all();
-        //
-        //            $output['customer'] = 'OK';
-        //        } catch (Exception $e) {
-        //            $output['customer'] = $e->getMessage();
-        //        }
-        $output['mail'] = 'OK';
-        $output['db'] = 'OK';
-        $output['customer'] = 'OK';
-        $output['feedback'] = 'OK';
-        $output['cron'] = 'OK';
-
-        return $output;
     }
 }
