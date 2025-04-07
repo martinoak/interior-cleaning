@@ -26,9 +26,12 @@
             </div>
             <div class="flex flex-col py-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">VIN</dt>
-                <dd class="text-lg font-semibold">
+                <dd class="text-lg font-semibold flex items-center">
                     @if($vehicle->vin)
-                       {{ $vehicle->vin }}
+                        {{ $vehicle->vin }}
+                        <button type="button" class="ml-2 button-indigo px-3 py-2" onclick="navigator.clipboard.writeText('{{ $vehicle->vin }}')">
+                            <i class="fa-regular fa-paste"></i>
+                        </button>
                     @else
                         <em class="text-gray-400">--- Nevyplněno ---</em>
                     @endif

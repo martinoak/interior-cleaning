@@ -6,7 +6,7 @@
                         name="types[]"
                         value="{{ $type->value }}"
                         wire:click="refreshTypes('{{ $type->value }}')"
-                        class="px-4 py-2 text-sm font-medium text-gray-900 @if(! $types->contains($type->value))bg-blue-800 @else bg-transparent @endif @if($loop->first || $loop->last)border @else border-b border-t @endif border-gray-900 @if($loop->first)rounded-s-lg @elseif($loop->last)rounded-e-lg @endif hover:bg-gray-900 hover:text-white focus:z-10 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700"
+                        class="px-4 py-2 text-sm font-medium text-gray-800 dark:text-gray-900 @if(! $types->contains($type->value))text-white bg-blue-800 @else bg-transparent @endif @if($loop->first || $loop->last)border @else border-b border-t @endif border-gray-900 @if($loop->first)rounded-s-lg @elseif($loop->last)rounded-e-lg @endif hover:bg-gray-900 hover:text-white focus:z-10 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700"
                 >
                     <i class="{{ \App\Enums\VehicleType::getIcon($type->value) }} fa-lg"></i>
                 </button>

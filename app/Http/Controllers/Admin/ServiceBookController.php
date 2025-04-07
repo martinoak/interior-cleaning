@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreServiceLogRequest;
+use App\Models\ServiceAttachment;
 use App\Models\ServiceLog;
 use App\Models\Vehicle;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +38,22 @@ class ServiceBookController extends Controller
      */
     public function store(StoreServiceLogRequest $request): RedirectResponse
     {
-        ServiceLog::create($request->except('_token'));
+        $counter = 0;
+        $serviceLog = ServiceLog::create($request->except('_token'));
+
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $attachment) {
+                $filename = $request->array('attachment-name')[$counter] ?? $attachment->getClientOriginalName();
+
+                $attachment->storeAs('service/attachments', $filename, 'api');
+
+                ServiceAttachment::create([
+                    'service_id' => $serviceLog->id,
+                    'title' => $filename,
+                    'data' => url()->current().'/service/attachments/'.$filename,
+                ]);
+            }
+        }
 
         return to_route('service-book.index', ['vehicle' => $request->input('vehicle_id')])->with('success', 'Záznam do knihy byl vytvořen.');
     }

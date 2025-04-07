@@ -25,6 +25,9 @@
                         API token
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Role
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Akce
                     </th>
                 </tr>
@@ -40,6 +43,9 @@
                         </td>
                         <td class="px-6 py-4">
                             {{ $user->api_token }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ \App\Enums\Role::from($user->role)->getName() }}
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center space-x-4">

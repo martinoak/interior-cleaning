@@ -59,7 +59,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::middleware('can:admin')->group(function () {
         Route::get('development', [AdminController::class, 'showDevelopment'])->name('admin.development');
-        Route::resource('users', UsersController::class)->except('show')->names('admin.users');
+        Route::resource('users', UsersController::class)->except(['show', 'destroy'])->names('admin.users');
 
         Route::get('log/{type}', [AdminController::class, 'showErrorLog'])->name('admin.errorlog');
     });

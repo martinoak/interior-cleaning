@@ -31,6 +31,6 @@ class ServiceLog extends Model
 
     public function attachments(): ?HasMany
     {
-        return null;
+        return $this->hasMany(ServiceAttachment::class, 'service_id', 'id');
     }
 }

@@ -1,15 +1,15 @@
-{layout '../../../layout.latte'}
+@extends('admin/admin-layout')
 
 @section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-start">
-            <a href="{{ route('service-book.index') }}" class="button-indigo" type="button">
+            <a href="{{ route('service-book.index', ['vehicle' => $vehicle->id]) }}" class="button-indigo" type="button">
                 <i class="fa-solid fa-arrow-left fa-lg icon"></i> Zpět
             </a>
             <h1 class="heading-title">Nový záznam</h1>
         </div>
 
-        <form method="post" action="{{ route('service-book.store', ['vehicle' => $vehicle->id]) }}">
+        <form method="post" action="{{ route('service-book.store', ['vehicle' => $vehicle->id]) }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="api-token" value="{{ auth()->user()->api_token }}">
             <input type="hidden" name="vehicle_id" value="{{ $vehicle->id }}">
@@ -40,6 +40,10 @@
                 <label for="service_date" class="form-label">Datum provedení práce <i class="fa-solid fa-asterisk text-red-600"></i></label>
                 <input type="date" name="service_date" id="service_date" value="{{ old('service_date', date('Y-m-d')) }}" class="form-input" required>
             </div>
+
+            <hr class="mb-5">
+
+            <livewire:service-log-attachment />
 
             <div class="form-buttons">
                 <button type="submit" class="form-submit">Přidat záznam</button>
