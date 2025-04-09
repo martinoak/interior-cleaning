@@ -10,6 +10,7 @@ use App\Models\Vehicle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ServiceBookController extends Controller
 {
@@ -45,12 +46,12 @@ class ServiceBookController extends Controller
             foreach ($request->file('attachments') as $attachment) {
                 $filename = $request->array('attachment-name')[$counter] ?? $attachment->getClientOriginalName();
 
-                $attachment->storeAs('service/attachments', $filename, 'api');
+                $attachment->storeAs('attachments', substr(md5(time()), 0, 5) . '-' . $filename, 'api');
 
                 ServiceAttachment::create([
                     'service_id' => $serviceLog->id,
                     'title' => $filename,
-                    'data' => url()->current().'/service/attachments/'.$filename,
+                    'path' => '/attachments/'.substr(md5(time()), 0, 5) . '-' . $filename,
                 ]);
             }
         }
@@ -82,5 +83,18 @@ class ServiceBookController extends Controller
         ServiceLog::where('id', $id)->delete();
 
         return to_route('service-book.index', ['vehicle' => $vehicle])->with('success', 'Záznam byl smazán.');
+    }
+
+    public function serveAttachment(string $id): BinaryFileResponse
+    {
+        $attachment = ServiceAttachment::where('id', $id)->firstOrFail();
+
+        $path = storage_path('app/api/'.$attachment->path);
+
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path);
     }
 }

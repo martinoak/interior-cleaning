@@ -27,16 +27,16 @@
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ number_format($log->price, 0, ',', ' ') }} Kč</h3>
                     </div>
 
-                    <div class="flex justify-between">
+                    <div class="flex justify-between mb-1">
                         <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400 size-max">{{ $log->note }}</p>
-                        <p class="w-1/2 text-right ml-4">{{ $log->hours }} h</p>
+                        <p class="w-1/2 text-right ml-4 text-gray-500 dark:text-gray-400">{{ $log->hours }} h</p>
                     </div>
 
                     <div class="@if($log->attachments()?->get())justify-between @else justify-end @endif flex items-center">
                         @if($log->attachments()?->get())
                             <div class="inline-flex items-center space-x-4">
                                 @foreach($log->attachments()->get() as $att)
-                                    <a href="{{ $att->data }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-hidden focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                    <a href="{{ route('attachment', ['id' => $att->id]) }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-hidden focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                         <i class="fa-solid fa-paperclip mr-2"></i> {{ $att->title }}
                                     </a>
                                 @endforeach

@@ -19,7 +19,7 @@ class ServiceAttachment extends Model
     protected $fillable = [
         'service_id',
         'title',
-        'data',
+        'path',
     ];
 
     public function serviceLog(): BelongsTo

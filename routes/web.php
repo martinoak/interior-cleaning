@@ -74,6 +74,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
                 'service-book' => 'id',
             ])
             ->names('service-book');
+        Route::get('vehicles/service-book/attachments/{id}', [ServiceBookController::class, 'serveAttachment'])->name('attachment');
     });
 });
 
