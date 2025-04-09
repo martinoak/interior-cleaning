@@ -1,4 +1,5 @@
 @php $isDev = str_contains(url()->current(), 'mad.dek.cz') || str_contains(url()->current(), 'localhost') @endphp
+@php $inAdmin = str_contains(url()->current(), 'admin') @endphp
 
 <!DOCTYPE html>
 <html lang="cs">
@@ -44,9 +45,9 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900" style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
     <x-alert />
-    <x-admin-sidebar :isDev="$isDev" />
+    @if($inAdmin)<x-admin-sidebar :isDev="$isDev" />@endif
     <div>
-        <x-admin-header />
+        @if($inAdmin)<x-admin-header />@endif
         @yield('content')
     </div>
 
