@@ -62,7 +62,7 @@
                                             {{ $monthEarning }},
                                         @endforeach
                                     ],
-                                    hidden: {{ $year !== (int)date('Y') }},
+                                    hidden: '{{ $year !== (int)date('Y') }}',
                                     borderColor: '{{ config('web.admin.chartColors.'.$year) }}',
                                     backgroundColor: 'transparent',
                                     pointStyle: 'circle',
