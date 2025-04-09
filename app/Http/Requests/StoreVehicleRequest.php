@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\VehicleType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class StoreVehicleRequest extends FormRequest
@@ -32,7 +34,7 @@ class StoreVehicleRequest extends FormRequest
             'spz' => 'required|string|max:7',
             'driver' => 'nullable|string',
             'color' => 'required|string',
-            'type' => 'required|in:car,truck',
+            'type' => ['required', Rule::in(VehicleType::toArray())],
             'stk' => 'nullable|date',
             'tachograph' => 'nullable|date',
             'oilChange' => 'nullable|date',
