@@ -107,3 +107,26 @@
         </div>
     </div>
 </aside>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.querySelector('[data-drawer-toggle="sidebar"]');
+
+        function hideSidebar() {
+            if (window.innerWidth < 640) {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('transform-none');
+            }
+        }
+
+        document.addEventListener('click', function (event) {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnToggleButton = toggleButton.contains(event.target);
+
+            if (!isClickInsideSidebar && !isClickOnToggleButton) {
+                hideSidebar();
+            }
+        });
+    });
+</script>
