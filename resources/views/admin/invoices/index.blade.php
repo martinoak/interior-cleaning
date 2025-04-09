@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                 @foreach($invoices as $invoice)
-                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-200 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <tr class="odd:bg-white dark:odd:bg-gray-900 even:bg-gray-200 dark:even:bg-gray-800 border-b dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $invoice->name }}
                         </th>

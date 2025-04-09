@@ -14,7 +14,7 @@
                     Recenze
                 </h1>
             </a>
-            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+            <div class="w-full bg-white rounded-lg shadow-xs dark:border md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 md:space-y-6 sm:p-8">
                     <form class="space-y-4" method="post" action="{{ route('storeFeedback') }}">
                         @csrf

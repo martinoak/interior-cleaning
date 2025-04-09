@@ -1,6 +1,6 @@
 <div class="p-4 sm:ml-64">
     <div class="heading">
-        <object class="inline-flex rounded-md shadow-xs">
+        <object class="inline-flex rounded-md shadow-2xs">
             @foreach(\App\Enums\VehicleType::cases() as $type)
                 <button type="button"
                         name="types[]"
@@ -19,7 +19,7 @@
     </div>
 
     @foreach($vehicles as $vehicle)
-        <a href="{{ route('vehicles.show', ['vehicle' => $vehicle]) }}" class="block w-full lg:w-1/2 p-3 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <a href="{{ route('vehicles.show', ['vehicle' => $vehicle]) }}" class="block w-full lg:w-1/2 p-3 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 <i class="{{ \App\Enums\VehicleType::getIcon($vehicle->type) }} mr-2" style="color: {!! $vehicle->color !!}"></i>
                 {{ $vehicle->manufacturer }} {{ $vehicle->model }} <span class="ml-2 text-gray-400">{{ $vehicle->spz }}</span>
