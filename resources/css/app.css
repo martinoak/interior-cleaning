@@ -1,8 +1,13 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
     * {
         font-family: "IBM Plex Sans", sans-serif;
+    }
+    button {
+        @apply cursor-pointer;
     }
 }
 

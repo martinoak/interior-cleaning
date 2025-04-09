@@ -1,5 +1,4 @@
 @php $isDev = str_contains(url()->current(), 'mad.dek.cz') || str_contains(url()->current(), 'localhost') @endphp
-@php $inAdmin = str_contains(url()->current(), 'admin') @endphp
 
 <!DOCTYPE html>
 <html lang="cs">
@@ -37,66 +36,58 @@
     @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
-    @if($inAdmin)
-        <link rel="stylesheet" href="{{ asset('css/tailwind.css') . '?m=' . filemtime(public_path('css/tailwind.css')) }}" />
-    @endif
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') . '?m=' . filemtime(public_path('css/tailwind.css')) }}" />
 
     @livewireStyles
 
     @yield('head')
 </head>
-<body @if($inAdmin)class="bg-gray-50 dark:bg-gray-900"@endif style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
-    @if($inAdmin)
-        <x-alert />
-        <x-admin-sidebar :isDev="$isDev" />
-        <div>
-            <x-admin-header />
-            @yield('content')
-        </div>
-    @else
+<body class="bg-gray-50 dark:bg-gray-900" style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
+    <x-alert />
+    <x-admin-sidebar :isDev="$isDev" />
+    <div>
+        <x-admin-header />
         @yield('content')
-    @endif
+    </div>
 
     @livewireScripts
 </body>
-    @if($inAdmin)
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-        <script>
-            const moonButton = document.querySelector('#moonButton')
-            const moonButtonMobile = document.querySelector('#moonButton-mobile')
-            const sunButton = document.querySelector('#sunButton')
-            const sunButtonMobile = document.querySelector('#sunButton-mobile')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script>
+        const moonButton = document.querySelector('#moonButton')
+        const moonButtonMobile = document.querySelector('#moonButton-mobile')
+        const sunButton = document.querySelector('#sunButton')
+        const sunButtonMobile = document.querySelector('#sunButton-mobile')
 
-            const theme = window.localStorage.getItem('theme')
-            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
+        const theme = window.localStorage.getItem('theme')
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
 
-            if (theme === 'dark' || (!('theme' in localStorage) && prefersDarkScheme.matches)) {
-                document.documentElement.classList.add('dark')
-            } else {
-                document.documentElement.classList.remove('dark')
-            }
+        if (theme === 'dark' || (!('theme' in localStorage) && prefersDarkScheme.matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
 
-            moonButton.addEventListener('click', () => {
-                document.documentElement.classList.add('dark')
-                localStorage.setItem('theme', 'dark')
-            })
+        moonButton.addEventListener('click', () => {
+            document.documentElement.classList.add('dark')
+            localStorage.setItem('theme', 'dark')
+        })
 
-            sunButton.addEventListener('click', () => {
-                document.documentElement.classList.remove('dark')
-                localStorage.setItem('theme', 'light')
-            })
+        sunButton.addEventListener('click', () => {
+            document.documentElement.classList.remove('dark')
+            localStorage.setItem('theme', 'light')
+        })
 
-            moonButtonMobile.addEventListener('click', () => {
-                document.documentElement.classList.add('dark')
-                localStorage.setItem('theme', 'dark')
-            })
+        moonButtonMobile.addEventListener('click', () => {
+            document.documentElement.classList.add('dark')
+            localStorage.setItem('theme', 'dark')
+        })
 
-            sunButtonMobile.addEventListener('click', () => {
-                document.documentElement.classList.remove('dark')
-                localStorage.setItem('theme', 'light')
-            })
-        </script>
-    @endif
+        sunButtonMobile.addEventListener('click', () => {
+            document.documentElement.classList.remove('dark')
+            localStorage.setItem('theme', 'light')
+        })
+    </script>
 
     @yield('scripts')
 </html>
