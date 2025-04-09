@@ -9,8 +9,8 @@
             <img class="w-8 h-6 mx-2 rounded-full object-fit block dark:hidden" src="{{ asset('images/logo/logo-car2.png') }}" alt=""/>
             <img class="w-8 h-6 mx-2 rounded-full object-fit hidden dark:block" src="{{ asset('images/logo/logo-car.png') }}" alt=""/>
             <span class="font-bold">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
-            <button id="moonButton-mobile" class="w-8 h-8 bg-gray-700 rounded ms-4 me-1 block dark:hidden"><i class="fa-solid fa-moon text-white"></i></button>
-            <button id="sunButton-mobile" class="w-8 h-8 bg-[#3056d3] rounded ms-4 me-1 hidden dark:block"><i class="fa-solid fa-sun text-white"></i></button>
+            <button id="moonButton-mobile" class="w-8 h-8 bg-gray-700 rounded-xs ms-4 me-1 block dark:hidden"><i class="fa-solid fa-moon text-white"></i></button>
+            <button id="sunButton-mobile" class="w-8 h-8 bg-[#3056d3] rounded-xs ms-4 me-1 hidden dark:block"><i class="fa-solid fa-sun text-white"></i></button>
         </div>
     </div>
 </div>
@@ -56,7 +56,7 @@
                             <span class="flex-1 ml-3 whitespace-nowrap">Vouchery</span>
                         </a>
                     </li>
-                    <hr class="w-48 h-1 mx-auto bg-gray-300 border-0 rounded">
+                    <hr class="w-48 h-1 mx-auto bg-gray-300 border-0 rounded-xs">
                     <li>
                         <a href="{{ route('customers.index') }}#archiv" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                             <i class="text-white fa-solid fa-archive"></i>
@@ -71,8 +71,14 @@
                             <span class="flex-1 ml-3 whitespace-nowrap">Vývoj</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.users.index') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
+                            <i class="text-white fa-solid fa-user-gear"></i>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Uživatelé</span>
+                        </a>
+                    </li>
                 @endif
-                <hr class="w-48 h-1 mx-auto bg-gray-300 border-0 rounded">
+                <hr class="w-48 h-1 mx-auto bg-gray-300 border-0 rounded-xs">
                 <li>
                     <a href="{{ route('vin.index') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="text-white fa-solid fa-barcode"></i>

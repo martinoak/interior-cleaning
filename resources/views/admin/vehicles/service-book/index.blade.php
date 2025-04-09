@@ -2,9 +2,11 @@
 
 @section('content')
     <div class="p-4 sm:ml-64">
-        <div class="heading">
+        <div class="heading justify-between">
+            <a href="{{ route('vehicles.show', ['vehicle' => $vehicle->id]) }}" class="button-indigo" type="button">
+                <i class="fa-solid fa-arrow-left fa-lg icon"></i> Zpět
+            </a>
             <h1 class="heading-title">Servisní kniha</h1>
-
             <aside class="flex gap-4">
                 <a href="{{ route('service-book.create', ['vehicle' => $vehicle->id]) }}" class="button-black"><i class="fa-solid fa-plus fa-lg icon"></i> Přidat záznam</a>
             </aside>
@@ -32,9 +34,13 @@
 
                     <div class="@if($log->attachments()?->get())justify-between @else justify-end @endif flex items-center">
                         @if($log->attachments()?->get())
-                            <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
-                                <i class="fa-solid fa-paperclip mr-2"></i> Přílohy
-                            </a>
+                            <div class="inline-flex items-center space-x-4">
+                                @foreach($log->attachments()->get() as $att)
+                                    <a href="{{ $att->data }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-hidden focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                        <i class="fa-solid fa-paperclip mr-2"></i> {{ $att->title }}
+                                    </a>
+                                @endforeach
+                            </div>
                         @endif
                         <div class="flex space-x-2">
                             {{--<a href="{route('service-book.edit', [vehicle => $vehicle->id, id => $log->id])}" class="button-black" type="button">

@@ -1,5 +1,4 @@
 @php $isDev = str_contains(url()->current(), 'mad.dek.cz') || str_contains(url()->current(), 'localhost') @endphp
-@php $inAdmin = str_contains(url()->current(), 'admin') @endphp
 
 <!DOCTYPE html>
 <html lang="cs">
@@ -26,74 +25,69 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
     <link rel="apple-touch-icon" type="image/png" href="{{ asset('images/logo/apple.png') }}"/>
 
+    <!--====== Fonts ======-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100..700" rel="stylesheet">
+
     <!-- ===== All CSS files ===== -->
     @if(url()->current() == route('homepage'))
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" href="{{ asset('css/ud-styles.css') . '?m=' . filemtime(public_path('css/ud-styles.css')) }}" />
 
-    @if($inAdmin)
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="{{ asset('css/tailwind.css') . '?m=' . filemtime(public_path('css/tailwind.css')) }}" />
-    @endif
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') . '?m=' . filemtime(public_path('css/tailwind.css')) }}" />
 
     @livewireStyles
 
     @yield('head')
 </head>
-<body @if($inAdmin)class="bg-gray-50 dark:bg-gray-900"@endif style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
-    @if($inAdmin)
-        <x-alert />
-        <x-admin-sidebar :isDev="$isDev" />
-        <div>
-            <x-admin-header />
-            @yield('content')
-        </div>
-    @else
+<body class="bg-gray-50 dark:bg-gray-900" style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
+    <x-alert />
+    <x-admin-sidebar :isDev="$isDev" />
+    <div>
+        <x-admin-header />
         @yield('content')
-    @endif
+    </div>
 
     @livewireScripts
 </body>
-    @if($inAdmin)
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-        <script>
-            const moonButton = document.querySelector('#moonButton')
-            const moonButtonMobile = document.querySelector('#moonButton-mobile')
-            const sunButton = document.querySelector('#sunButton')
-            const sunButtonMobile = document.querySelector('#sunButton-mobile')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script>
+        const moonButton = document.querySelector('#moonButton')
+        const moonButtonMobile = document.querySelector('#moonButton-mobile')
+        const sunButton = document.querySelector('#sunButton')
+        const sunButtonMobile = document.querySelector('#sunButton-mobile')
 
-            const theme = window.localStorage.getItem('theme')
-            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
+        const theme = window.localStorage.getItem('theme')
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
 
-            if (theme === 'dark' || (!('theme' in localStorage) && prefersDarkScheme.matches)) {
-                document.documentElement.classList.add('dark')
-            } else {
-                document.documentElement.classList.remove('dark')
-            }
+        if (theme === 'dark' || (!('theme' in localStorage) && prefersDarkScheme.matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
 
-            moonButton.addEventListener('click', () => {
-                document.documentElement.classList.add('dark')
-                localStorage.setItem('theme', 'dark')
-            })
+        moonButton.addEventListener('click', () => {
+            document.documentElement.classList.add('dark')
+            localStorage.setItem('theme', 'dark')
+        })
 
-            sunButton.addEventListener('click', () => {
-                document.documentElement.classList.remove('dark')
-                localStorage.setItem('theme', 'light')
-            })
+        sunButton.addEventListener('click', () => {
+            document.documentElement.classList.remove('dark')
+            localStorage.setItem('theme', 'light')
+        })
 
-            moonButtonMobile.addEventListener('click', () => {
-                document.documentElement.classList.add('dark')
-                localStorage.setItem('theme', 'dark')
-            })
+        moonButtonMobile.addEventListener('click', () => {
+            document.documentElement.classList.add('dark')
+            localStorage.setItem('theme', 'dark')
+        })
 
-            sunButtonMobile.addEventListener('click', () => {
-                document.documentElement.classList.remove('dark')
-                localStorage.setItem('theme', 'light')
-            })
-        </script>
-    @endif
+        sunButtonMobile.addEventListener('click', () => {
+            document.documentElement.classList.remove('dark')
+            localStorage.setItem('theme', 'light')
+        })
+    </script>
 
     @yield('scripts')
 </html>

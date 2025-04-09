@@ -40,9 +40,10 @@ class SendMonthlyBillMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.monthly-bill',
+            markdown: 'emails.monthly-bill',
             with: [
                 'total' => $this->total,
+                'url' => route('dashboard'),
             ],
         );
     }

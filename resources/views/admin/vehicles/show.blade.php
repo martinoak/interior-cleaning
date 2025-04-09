@@ -3,9 +3,9 @@
 @section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-between">
-            <button onclick="history.back()" class="button-indigo" type="button">
+            <a href="{{ route('vehicles.index') }}" class="button-indigo" type="button">
                 <i class="fa-solid fa-arrow-left fa-lg"></i>
-            </button>
+            </a>
             <h1 class="heading-title">{{ $vehicle->manufacturer }} {{ $vehicle->model }}</h1>
             <aside class="flex gap-4">
                 <a href="{{ route('service-book.index', ['vehicle' => $vehicle->id]) }}" class="button-black"><i class="fa-solid fa-wrench fa-lg"></i></a>
@@ -26,9 +26,12 @@
             </div>
             <div class="flex flex-col py-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">VIN</dt>
-                <dd class="text-lg font-semibold">
+                <dd class="text-lg font-semibold flex items-center">
                     @if($vehicle->vin)
-                       {{ $vehicle->vin }}
+                        {{ $vehicle->vin }}
+                        <button type="button" class="ml-2 button-indigo px-3 py-2" onclick="navigator.clipboard.writeText('{{ $vehicle->vin }}')">
+                            <i class="fa-regular fa-paste"></i>
+                        </button>
                     @else
                         <em class="text-gray-400">--- Nevyplněno ---</em>
                     @endif

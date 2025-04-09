@@ -22,14 +22,14 @@
                 </dl>
             </div>
         </div>
-        <hr class="w-46 lg:w-96 h-1 mx-auto bg-gray-300 border-0 rounded dark:bg-gray-50 my-6">
+        <hr class="w-46 lg:w-96 h-1 mx-auto bg-gray-300 border-0 rounded-xs dark:bg-gray-50 my-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
             @foreach($feedbacks as $feedback)
                 <div class="cell {if !$feedback->message}flex justify-between{/if}">
                     <div class="cell-content justify-between">
                         <h2 class="cell-title">
                             @if($feedback->fromGoogle)
-                                <span class="px-2 bg-black rounded icon"><i class="fa-brands fa-google text-white fa-xs"></i></span>
+                                <span class="px-2 bg-black rounded-xs icon"><i class="fa-brands fa-google text-white fa-xs"></i></span>
                             @endif
                             {{ $feedback->name }}
                         </h2>

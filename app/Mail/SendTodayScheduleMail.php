@@ -31,7 +31,7 @@ class SendTodayScheduleMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Denní itinerář - Čištění Kondrac',
+            subject: 'Denní itinerář',
         );
     }
 
@@ -41,7 +41,7 @@ class SendTodayScheduleMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.todaySchedule',
+            markdown: 'emails.today',
             with: [
                 'customers' => $this->customers,
             ],

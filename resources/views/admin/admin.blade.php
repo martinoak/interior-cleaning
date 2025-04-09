@@ -9,7 +9,7 @@
         <div class="heading">
             <h1 class="heading-title">Administrace</h1>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
             <div class="cell flex">
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Celkový zisk</h2>
@@ -28,12 +28,12 @@
                     <p class="cell-text"><i class="text-green-500 fa-solid fa-dollar-sign icon"></i>{{ number_format($month, 0, ',', ' ') }},-</p>
                 </div>
             </div>
-            <div class="cell flex">
-                <div class="cell-content justify-between">
-                    <h2 class="cell-title">Další čištění</h2>
-                    <p class="cell-text"><i class="text-sky-600 fa-regular fa-calendar icon"></i>{{ $calendar }}</p>
-                </div>
-            </div>
+{{--            <div class="cell flex">--}}
+{{--                <div class="cell-content justify-between">--}}
+{{--                    <h2 class="cell-title">Další čištění</h2>--}}
+{{--                    <p class="cell-text"><i class="text-sky-600 fa-regular fa-calendar icon"></i>{{ $calendar }}</p>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="cell flex">
                 <div class="cell-content justify-between">
                     <h2 class="cell-title">Zákazníci</h2>
@@ -62,7 +62,7 @@
                                             {{ $monthEarning }},
                                         @endforeach
                                     ],
-                                    hidden: {{ $year !== (int)date('Y') }},
+                                    hidden: '{{ $year !== (int)date('Y') }}',
                                     borderColor: '{{ config('web.admin.chartColors.'.$year) }}',
                                     backgroundColor: 'transparent',
                                     pointStyle: 'circle',

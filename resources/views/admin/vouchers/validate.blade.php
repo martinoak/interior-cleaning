@@ -3,9 +3,9 @@
 @section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-start">
-            <button onclick="history.back()" class="button-indigo" type="button">
+            <a href="{{ route('vouchers.index') }}" class="button-indigo" type="button">
                 <i class="fa-solid fa-arrow-left fa-lg icon"></i> Zpět
-            </button>
+            </a>
             <h1 class="heading-title">{{ $voucher['message'] }}</h1>
         </div>
         <div class="grid grid-cols-1 gap-4 mb-4">

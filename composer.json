@@ -12,7 +12,6 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.6",
-        "miko/laravel-latte": "^3.0",
         "sunrise/vin": "^1.0"
     },
     "require-dev": {
