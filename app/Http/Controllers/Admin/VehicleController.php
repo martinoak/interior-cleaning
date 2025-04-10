@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\CarParkDates;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVehicleRequest;
 use App\Models\Vehicle;
@@ -79,6 +80,7 @@ class VehicleController extends Controller
 
         return view('admin.vehicles.show', [
             'vehicle' => $vehicle,
+            'dates' => CarParkDates::toArray()
         ]);
     }
 

@@ -576,6 +576,9 @@
   .transform {
     transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
   }
+  .transform-none {
+    transform: none;
+  }
   .cursor-pointer {
     cursor: pointer;
   }
@@ -1237,6 +1240,12 @@
       }
     }
   }
+  .focus\:outline-none {
+    &:focus {
+      --tw-outline-style: none;
+      outline-style: none;
+    }
+  }
   .sm\:ml-64 {
     @media (width >= 40rem) {
       margin-left: calc(var(--spacing) * 64);
@@ -1336,6 +1345,11 @@
   .md\:w-auto {
     @media (width >= 48rem) {
       width: auto;
+    }
+  }
+  .md\:grid-cols-2 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   .md\:grid-cols-3 {
@@ -2376,9 +2390,6 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
     color: var(--color-gray-900);
-    @media (width >= 40rem) {
-      padding-top: calc(var(--spacing) * 1.5);
-    }
     &:where(.dark, .dark *) {
       color: var(--color-white);
     }
@@ -2428,6 +2439,12 @@
   @media (width >= 40rem) {
     --tw-leading: calc(var(--spacing) * 6);
     line-height: calc(var(--spacing) * 6);
+  }
+  &:where(.dark, .dark *) {
+    border-color: var(--color-black);
+  }
+  &:where(.dark, .dark *) {
+    color: var(--color-white);
   }
 }
 @property --tw-translate-x {

@@ -4,13 +4,13 @@ Vozidla, kterým do 30 dnů vyprší některý z termínů (STK, výměna oleje,
 <br>
 @foreach($expiring as $type => $collection)
     @continue($collection->isEmpty())
-    <h2><strong>{{ \App\Enums\CarParkDates::getTitle($type) }}</strong></h2>
+    <h2><strong>{{ \App\Enums\CarParkDates::from($type)->getTitle() }}</strong></h2>
     <x-mail::table>
         | Vozidlo       | SPZ           | Zbývá dní     |
         | :------------ | :-----------: | ------------: |
         @foreach($collection as $vehicle)
             @php $remaining = floor(abs($vehicle->$type->diffInDays(now()))); @endphp
-            | {{ $vehicle->manufacturer }} {{ $vehicle->model }} | {{ $vehicle->spz }} | <span class="ml-1 badge @if($remaining <= 7)badge-red @else badge-orange @endif">{{ $remaining }} @if($remaining === 1) den @elseif($remaining < 4) dny @else dnů @endif</span> |
+            | {{ $vehicle->manufacturer }} {{ $vehicle->model }} | {{ $vehicle->spz }} | <x-badge :red="$remaining <= 7" :orange="$remaining > 7" :text="$remaining . ' ' . ($remaining === 1 ? 'den' : ($remaining < 4 ? 'dny' : 'dnů')" /> |
         @endforeach
     </x-mail::table>
 @endforeach

@@ -26,13 +26,13 @@
 
             <div class="mb-5">
                 <label for="price" class="form-label">Cena opravy</label>
-                <input type="number" name="price" id="price" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('price') }}">
+                <input type="number" name="price" id="price" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('price', 0) }}">
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Částka se přičte do ročního záznamu.</p>
             </div>
 
             <div class="mb-5">
                 <label for="hours" class="form-label">Odpracováno hodin</label>
-                <input type="number" name="hours" id="hours" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('hours') }}">
+                <input type="number" name="hours" id="hours" class="form-input" inputmode="numeric" pattern="[0-9]*" value="{{ old('hours', 0) }}">
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Hodiny se přičtou do ročního záznamu.</p>
             </div>
 

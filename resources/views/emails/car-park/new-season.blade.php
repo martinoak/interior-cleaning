@@ -8,8 +8,8 @@ Zde je přehled pneumatik (pokud byl jejich rok výroby vyplněn) u jednotlivýc
         | Vozidlo       | SPZ           | {{ $season === 'summer' ? 'Letní' : 'Zimní' }} pneu |
         | :------------ | :-----------: | ------------: |
         @foreach($vehicles as $vehicle)
-            @php $season = date('Y') - ($season === 'summer' ? $vehicle->spneu : $vehicle->wpneu) + (date('n') > 4 || (date('n') == 4 && date('j') > 1) ? 1 : 0); @endphp
-        | {{ $vehicle->manufacturer }} {{ $vehicle->model }} | {{ $vehicle->spz }} | <span class="ml-1 badge @if($season >= 8)badge-red @elseif($season >= 5)badge-orange @endif">{{ $season }}. sezóna</span> |
+            @php $season = \App\Services\CarParkService::getTyreSeason($season === 'summer' ? $vehicle->spneu : $vehicle->wpneu) @endphp
+        | {{ $vehicle->manufacturer }} {{ $vehicle->model }} | {{ $vehicle->spz }} | <x-badge :red="$season >= 8" :orange="$season >= 5" :text="{{ $season }} . '. sezóna'" /> |
         @endforeach
     </x-mail::table>
 @endforeach

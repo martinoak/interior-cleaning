@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\CarParkDates;
 use App\Mail\ExpiringDatesMail;
 use App\Mail\NewSeasonMail;
 use App\Models\Vehicle;
@@ -25,11 +26,6 @@ class CarParkCommand extends Command
      * @var string
      */
     protected $description = 'Cron, který každý den kontroluje vozový park';
-
-    public int $stkDeadline = 30;
-    public int $insuranceDeadline = 50; // Ze zákona případná změna pojišťovny alespoň 6 týdnů předem
-    public int $oilChangeDeadline = 14;
-    public int $tachographDeadline = 14;
 
     private Carbon $summerSeasonStart;
 
@@ -70,22 +66,22 @@ class CarParkCommand extends Command
         $sendEmail = false;
 
         foreach (Vehicle::all() as $vehicle) {
-            if ($vehicle->stk && abs($vehicle->stk->diffInDays(now())) <= $this->stkDeadline) {
+            if ($vehicle->stk && abs($vehicle->stk->diffInDays(now())) <= CarParkDates::getFirstWarning('stk')) {
                 $this->expiring['stk']->push($vehicle);
                 $sendEmail = true;
             }
 
-            if ($vehicle->insurance && abs($vehicle->insurance->diffInDays(now())) <= $this->insuranceDeadline) {
+            if ($vehicle->insurance && abs($vehicle->insurance->diffInDays(now())) <= CarParkDates::getFirstWarning('insurance')) {
                 $this->expiring['insurance']->push($vehicle);
                 $sendEmail = true;
             }
 
-            if ($vehicle->oilChange && abs($vehicle->oilChange->diffInDays(now())) <= $this->oilChangeDeadline) {
+            if ($vehicle->oilChange && abs($vehicle->oilChange->diffInDays(now())) <= CarParkDates::getFirstWarning('oilChange')) {
                 $this->expiring['oilChange']->push($vehicle);
                 $sendEmail = true;
             }
 
-            if ($vehicle->tachograph && abs($vehicle->tachograph->diffInDays(now())) <= $this->tachographDeadline) {
+            if ($vehicle->tachograph && abs($vehicle->tachograph->diffInDays(now())) <= CarParkDates::getFirstWarning('tachograph')) {
                 $this->expiring['tachograph']->push($vehicle);
                 $sendEmail = true;
             }
