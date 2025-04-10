@@ -8,6 +8,11 @@ enum VehicleType: string
     case TRUCK = 'truck';
     case WORK = 'work';
 
+    public static function toArray(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
     public function getName(): string
     {
         return match ($this) {
