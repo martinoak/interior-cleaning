@@ -1,5 +1,9 @@
 @extends('admin/admin-layout')
 
+@section('head')
+    <meta name="viewport" content="user-scalable=no">
+@endsection
+
 @section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-start">
@@ -11,7 +15,7 @@
 
         <form method="post" action="{{ route('vehicles.store') }}" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="api-token" value="{auth()->user()->api_token}">
+            <input type="hidden" name="api-token" value="{{ auth()->user()->api_token }}">
 
             <div class="mb-5">
                 <label for="manufacturer" class="form-label">Výrobce <i class="fa-solid fa-asterisk text-red-600"></i></label>
@@ -63,12 +67,12 @@
 
             <div class="mb-5">
                 <label for="vtp" class="form-label">VTP</label>
-                <input type="file" name="vtp" id="vtp" class="file-input">
+                <input type="file" class="file-input">
             </div>
 
             <div class="mb-5">
                 <label for="stk" class="form-label">STK</label>
-                <input type="date" name="stk" id="stk" value="{{ old('stk') }}" class="form-input">
+                <input type="date" name="stk" id="stk" class="form-input">
             </div>
 
             <div class="mb-5">

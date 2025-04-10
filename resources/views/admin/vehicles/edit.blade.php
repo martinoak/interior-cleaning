@@ -1,5 +1,9 @@
 @extends('admin/admin-layout')
 
+@section('head')
+    <meta name="viewport" content="user-scalable=no">
+@endsection
+
 @section('content')
     <div class="p-4 sm:ml-64">
         <div class="heading justify-start">
