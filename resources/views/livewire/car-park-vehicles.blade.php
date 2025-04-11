@@ -18,9 +18,9 @@
         </aside>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
         @foreach($vehicles as $vehicle)
-            <a href="{{ route('vehicles.show', ['vehicle' => $vehicle]) }}" class="block w-full p-3 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <a href="{{ route('vehicles.show', ['vehicle' => $vehicle]) }}" class="block w-full p-3 bg-white border border-gray-200 rounded-lg shadow-xs hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <div class="flex justify-between">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         <i class="{{ \App\Enums\VehicleType::getIcon($vehicle->type) }} mr-2 text-shadow-lg" style="color: {!! $vehicle->color !!}"></i>
