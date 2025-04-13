@@ -54,8 +54,8 @@ class CarParkCommand extends Command
 
         $this->getExpirations();
 
-        $this->summerSeasonStart->isToday() && $this->announceNewSeason('summer');
-        $this->winterSeasonStart->isToday() && $this->announceNewSeason('winter');
+        $this->announceNewSeason('summer');
+        $this->announceNewSeason('winter');
 
         fwrite($file, date('Y-m-d H:i:s').' [CRON] Vozový park byl zkontrolován.'.PHP_EOL);
         echo "[CRON] Vozový park byl zkontrolován.\n";
