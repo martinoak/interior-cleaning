@@ -25,7 +25,7 @@ class CarParkCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Cron, který každý den kontroluje vozový park';
+    protected $description = 'Cron, který kontroluje vozový park';
 
     private Carbon $summerSeasonStart;
 

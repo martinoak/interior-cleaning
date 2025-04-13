@@ -10,7 +10,7 @@ Vozidla, kterým do 30 dnů vyprší některý z termínů (STK, výměna oleje,
         | :------------ | :-----------: | ------------: |
         @foreach($collection as $vehicle)
             @php $remaining = floor(abs($vehicle->$type->diffInDays(now()))); @endphp
-            | {{ $vehicle->manufacturer }} {{ $vehicle->model }} | {{ $vehicle->spz }} | <x-badge :red="$remaining <= 7" :orange="$remaining > 7" :text="$remaining . ' ' . ($remaining === 1 ? 'den' : ($remaining < 4 ? 'dny' : 'dnů')" /> |
+            | {{ $vehicle->manufacturer }} {{ $vehicle->model }} | {{ $vehicle->spz }} | {{ $remaining }} |
         @endforeach
     </x-mail::table>
 @endforeach
