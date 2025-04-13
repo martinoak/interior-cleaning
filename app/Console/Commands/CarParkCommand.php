@@ -52,10 +52,10 @@ class CarParkCommand extends Command
     {
         $file = fopen(storage_path('logs/cron.log'), 'a');
 
-        $this->getExpirations();
+        (new Carbon())->dayOfWeek() === Carbon::MONDAY && $this->getExpirations();
 
-        $this->announceNewSeason('summer');
-        $this->announceNewSeason('winter');
+        $this->summerSeasonStart->isToday() && $this->announceNewSeason('summer');
+        $this->winterSeasonStart->isToday() && $this->announceNewSeason('winter');
 
         fwrite($file, date('Y-m-d H:i:s').' [CRON] Vozový park byl zkontrolován.'.PHP_EOL);
         echo "[CRON] Vozový park byl zkontrolován.\n";
