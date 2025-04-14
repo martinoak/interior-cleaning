@@ -62,21 +62,18 @@
                     <div class="w-full h-8 rounded-lg" style="background-color: {!! $vehicle->color !!}"></div>
                 </dd>
             </div>
-            @foreach ($dates as $type)
+            @foreach ($dates as $date)
+                @continue(! $vehicle->$date)
                 <div class="flex flex-col py-3">
-                    <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">{{ \App\Enums\CarParkDates::from($type)->getTitle() }}</dt>
+                    <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">{{ \App\Enums\CarParkDates::from($date)->getTitle() }}</dt>
                     <dd class="text-lg font-semibold">
-                        @if($vehicle->$type)
-                            {{ Carbon\Carbon::parse($vehicle->$type)->format('j.n.Y') }}
-                            <x-badge
-                                :red="in_array(floor(Carbon\Carbon::parse($vehicle->$type)->diffInDays()), range(-7, 0))"
-                                :orange="in_array(floor(Carbon\Carbon::parse($vehicle->$type)->diffInDays()), range(-60, -8))"
-                                :triangle="in_array(floor(Carbon\Carbon::parse($vehicle->$type)->diffInDays()), range(-7, 0))"
-                                :text="floor(Carbon\Carbon::parse($vehicle->$type)->diffInDays(now()->addDays(-1), true)) . ' dní'"
-                            />
-                        @else
-                            <em class="text-gray-400">--- Nevyplněno ---</em>
-                        @endif
+                        {{ Carbon\Carbon::parse($vehicle->$date)->format('j.n.Y') }}
+                        @php $diff = floor(Carbon\Carbon::parse($vehicle->$date)->diffInDays()) @endphp
+                        <x-badge
+                            :red="in_array($diff, range(-7, 999))"
+                            :orange="in_array($diff, range(-60, -8))"
+                            :triangle="in_array($diff, range(-7, 999))"
+                            :text="$diff > 0 ? 'Po platnosti!' : abs($diff) . ' dní'" />
                     </dd>
                 </div>
             @endforeach
