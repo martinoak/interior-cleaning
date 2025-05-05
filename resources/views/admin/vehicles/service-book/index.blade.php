@@ -26,7 +26,7 @@
                     <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ Carbon\Carbon::parse($log->service_date)->format('j.n.Y') }}</time>
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $log->title }}</h3>
-                        @if($log->hours)
+                        @if($log->price)
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ number_format($log->price, 0, ',', ' ') }} Kč</h3>
                         @endif
                     </div>
