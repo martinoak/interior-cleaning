@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,13 @@ class AuthController extends Controller
     public function authenticate(Request $request): RedirectResponse
     {
         if (Auth::attempt($request->only('login', 'password'))) {
+            $user = Auth::user();
+
+            // Redirect car-park users to vehicles page instead of dashboard
+            if ($user->role === Role::CAR_PARK->value) {
+                return to_route('vehicles.index')->with('success', 'Přihlášení proběhlo úspěšně');
+            }
+
             return to_route('dashboard')->with('success', 'Přihlášení proběhlo úspěšně');
         } else {
             return back()->with('error', 'Nesprávné přihlašovací údaje')->withInput();
