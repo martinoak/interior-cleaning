@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{ asset('css/ud-styles.css') }}?m={{ filemtime(public_path('css/ud-styles.css')) }}" />
 
     @yield('head')
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
     @yield('content')
