@@ -2,7 +2,6 @@
 
 @section('head')
     <meta name="viewport" content="user-scalable=no">
-    <link rel="stylesheet" href="{{ asset('css/tailwind.css') . '?m=' . filemtime(public_path('css/tailwind.css')) }}" />
     <style>body{ background-color:rgb(17,24,39);}</style>
 @endsection
 
