@@ -10,7 +10,7 @@
             <div>
                 <h1 class="heading-title">Nové VIN</h1>
 
-                <x-errors :errors="$errors" class="my-4" />
+                <x-errors :errors="$errors" />
 
                 <div class="form-wrapper">
                     <div class="form-row">

@@ -30,7 +30,7 @@
         <div class="cell flex">
             <div class="cell-content justify-between">
                 <h2 class="cell-title">Zákazníci</h2>
-                <p class="cell-text"><i class="text-indigo-700 fa-solid fa-users-line icon"></i>{{ \App\Models\Customer::all()->count() }}</p>
+                <p class="cell-text"><i class="text-primary-700 fa-solid fa-users-line icon"></i>{{ \App\Models\Customer::all()->count() }}</p>
             </div>
         </div>
     </div>

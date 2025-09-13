@@ -10,7 +10,7 @@
             <div>
                 <h1 class="heading-title">Nové vozidlo</h1>
 
-                <x-errors :errors="$errors" class="my-4" />
+                <x-errors :errors="$errors" />
 
                 <div class="form-wrapper">
                     <div class="form-row">
@@ -222,6 +222,29 @@
                                    autocomplete="off"
                                    inputmode="numeric"
                                    pattern="[0-9]*"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-base/7 font-semibold text-gray-900 dark:text-white">
+                    <img src="{{ asset('images/oni.png') }}" alt="ONI system ID" class="h-6 inline-block">
+                </h2>
+
+                <div class="form-wrapper">
+                    <div class="form-row">
+                        <label for="oni_id">
+                            ID vozidla
+                        </label>
+                        <div class="mt-2 sm:col-span-2 sm:mt-0">
+                            <input id="oni_id"
+                                   type="text"
+                                   name="oni_id"
+                                   value="{{ old('oni_id') }}"
+                                   autocomplete="off"
+                                   class="max-w-2xl"
                             />
                         </div>
                     </div>

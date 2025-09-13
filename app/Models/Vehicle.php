@@ -29,6 +29,7 @@ class Vehicle extends Model
         'vtp',
         'spneu',
         'wpneu',
+        'oni_id',
     ];
 
     protected $casts = [

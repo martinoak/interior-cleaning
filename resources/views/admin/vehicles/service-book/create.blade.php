@@ -11,7 +11,7 @@
             <div>
                 <h1 class="heading-title">Nový servisní záznam</h1>
 
-                <x-errors :errors="$errors" class="my-4" />
+                <x-errors :errors="$errors" />
 
                 <div class="form-wrapper">
                     <div class="form-row">

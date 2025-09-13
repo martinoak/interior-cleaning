@@ -1,8 +1,9 @@
 @extends('admin/layout')
 
 @section('content')
-    <form method="post" action="{{ route('vehicles.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('vehicles.update', ['vehicle' => $vehicle->id]) }}" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
         <input type="hidden" name="api-token" value="{{ auth()->user()->api_token }}">
 
@@ -10,7 +11,7 @@
             <div>
                 <h1 class="heading-title">Úpravy vozidla</h1>
 
-                <x-errors :errors="$errors" class="my-4" />
+                <x-errors :errors="$errors" />
 
                 <div class="form-wrapper">
                     <div class="form-row">
@@ -227,11 +228,34 @@
                     </div>
                 </div>
             </div>
+
+            <div>
+                <h2 class="text-base/7 font-semibold text-gray-900 dark:text-white">
+                    <img src="{{ asset('images/oni.png') }}" alt="ONI system ID" class="h-6 inline-block">
+                </h2>
+
+                <div class="form-wrapper">
+                    <div class="form-row">
+                        <label for="oni_id">
+                            ID vozidla
+                        </label>
+                        <div class="mt-2 sm:col-span-2 sm:mt-0">
+                            <input id="oni_id"
+                                   type="text"
+                                   name="oni_id"
+                                   value="{{ old('oni_id', $vehicle->oni_id) }}"
+                                   autocomplete="off"
+                                   class="max-w-2xl"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
             <button type="button" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Zrušit</button>
-            <button type="submit" class="primary w-1/6 h-12">Uložit vozidlo</button>
+            <button type="submit" class="primary w-1/6 h-12">Aktualizovat vozidlo</button>
         </div>
     </form>
 

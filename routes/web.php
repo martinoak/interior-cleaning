@@ -77,7 +77,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
             ->names('service-book');
         Route::get('vehicles/service-book/attachments/{id}', [ServiceBookController::class, 'serveAttachment'])->name('attachment');
 
-        Route::resource('oni', OniController::class);
+        Route::resource('oni', OniController::class)->only('index', 'show');
     });
 });
 

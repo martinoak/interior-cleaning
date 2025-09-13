@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\CarParkDates;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Requests\UpdateVehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -62,6 +63,7 @@ class VehicleController extends Controller
             'vtp' => isset($filename) ? url()->current().'/vtp/'.$filename : null,
             'spneu' => $request->spneu,
             'wpneu' => $request->wpneu,
+            'oni_id' => $request->oni_id,
         ]);
 
         return to_route('vehicles.index')->with('success', 'Vozidlo úspěšně vytvořeno');
@@ -90,7 +92,7 @@ class VehicleController extends Controller
         return view('admin.vehicles.edit', compact('vehicle'));
     }
 
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(UpdateVehicleRequest $request, string $id): RedirectResponse
     {
         $vehicle = Vehicle::where('id', $id)->firstOrFail();
 
@@ -117,6 +119,7 @@ class VehicleController extends Controller
             'insurance' => $request->insurance,
             'spneu' => $request->spneu,
             'wpneu' => $request->wpneu,
+            'oni_id' => $request->oni_id,
         ]);
 
         if (isset($filename)) {

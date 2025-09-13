@@ -23,7 +23,7 @@
             <p class="cell-note items-center text-md">
                 @foreach($vouchers as $voucher)
                     @if(str_starts_with($voucher->hash, 'x'))
-                        <span class="px-1 @if(session('voucher') === $voucher->hash)text-indigo-600 font-bold @endif">{{ $voucher->hash }}</span>
+                        <span class="px-1 @if(session('voucher') === $voucher->hash)text-primary-600 font-bold @endif">{{ $voucher->hash }}</span>
                     @endif
                 @endforeach
             </p>
