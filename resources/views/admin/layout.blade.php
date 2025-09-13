@@ -47,8 +47,8 @@
     <div>
         @if($inAdmin)<x-admin-header />@endif
 
-            <div class="lg:pl-72">
-                <main class="py-4">
+            <div @class(['lg:pl-72' => $offset ?? true])>
+                <main @class(['py-4' => $offset ?? true])>
                     <div class="px-4 sm:px-6 lg:px-8">
                         @yield('content')
                     </div>
