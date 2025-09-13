@@ -65,7 +65,7 @@ class AdminController extends Controller
             }
         }
 
-        return view('admin.admin', [
+        return view('admin.dashboard', [
             'customers' => Customer::where('archived', 0)->get(),
             'calendar' => $calendar,
             'annual' => $annual,

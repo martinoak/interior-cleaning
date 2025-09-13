@@ -1,0 +1,24 @@
+@utility button-base {
+    @apply flex items-center justify-center rounded-md px-3 py-1.5 text-sm shadow-xs;
+}
+
+button, a {
+    @apply cursor-pointer;
+
+    &.primary {
+        @apply button-base bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600;
+    }
+
+    &.red {
+        @apply button-base bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600;
+    }
+
+    &.black {
+        @apply button-base bg-black text-white hover:bg-gray-800 dark:bg-white/10 dark:text-white dark:hover:bg-white/20;
+    }
+
+    &.green {
+        @apply button-base bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600;
+    }
+}
+

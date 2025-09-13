@@ -1,5 +1,4 @@
 Vue -> Livewire
 Gate -> Policy
-Úklid Frontend (odprostit se od Flowbite)
 PHP 8.4
 config do DB - schema type, value

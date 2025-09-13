@@ -1,43 +1,50 @@
-@extends('admin/admin-layout')
+@extends('admin/layout')
 
 @section('content')
-    <div class="p-4 sm:ml-64">
-        <div class="heading justify-start">
-            <a href="{{ route('invoices.index' }}" class="button-indigo" type="button">
-                <i class="fa-solid fa-arrow-left fa-lg icon"></i> Zpět
-            </a>
-            <h1 class="heading-title">Nová faktura</h1>
+    <h1 class="heading-title">Nová faktura</h1>
+
+    <form method="post" action="{{ route('invoices.store') }}">
+        @csrf
+
+        <div class="form-wrapper">
+            <div class="form-row">
+                <label for="name">Název faktury *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input id="name" type="text" name="name" autocomplete="off" class="max-w-xs" value="{{ old('name') }}" required />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="price">Částka *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input id="price" type="number" name="price" autocomplete="off" class="max-w-xs" value="{{ old('price') }}" required />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="price">Typ *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select id="type" name="type" class="max-w-xs" required>
+                        @foreach(App\Enums\InvoiceTypes::cases() as $case)
+                            <option value="{{ $case->value }}" @if(old('variant') === $case->value)selected @endif>
+                                {{ $case->getReadableFormat() }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="date">Datum faktury *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input id="date" type="date" name="date" autocomplete="off" class="max-w-xs" value="{{ old('date', \Illuminate\Support\Carbon::parse(time())->toDateString()) }}" required />
+                </div>
+            </div>
         </div>
 
-        <form method="post" action="{{ route('invoices.store') }}">
-            @csrf
-            <div class="mb-5">
-                <label for="name" class="form-label">Název faktury <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-input" required>
-            </div>
-            <div class="mb-5">
-                <label for="type" class="form-label">Typ faktury <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                <select name="type" id="type" class="form-input" required>
-                    @foreach(App\Enums\InvoiceTypes::cases() as $case)
-                        <option value="{{ $case->value }}" @if(old('variant') === $case->value)selected @endif>
-                            {{ $case->getReadableFormat() }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-5">
-                <label for="price" class="form-label">Částka <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                <input name="price" id="price" class="form-input" type="number" inputmode="numeric" pattern="[0-9]*" value="{{ old('price') }}" required>
-            </div>
-            <div class="mb-5">
-                <label for="date" class="form-label">Datum <i class="fa-solid fa-asterisk text-red-600"></i></label>
-                <input type="date" name="date" id="date" value="{{ old('term', \Illuminate\Support\Carbon::parse(time())->toDateString()) }}" class="form-input" required>
-            </div>
-            <input type="hidden" name="worker" value="S">
-            <div class="form-buttons">
-                <button type="submit" class="form-submit">Odeslat</button>
-                <button type="reset" class="form-reset">Vymazat</button>
-            </div>
-        </form>
-    </div>
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button type="button" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Zrušit</button>
+            <button type="submit" class="primary w-1/6 h-12">Vytvořit fakturu</button>
+        </div>
+    </form>
 @endsection

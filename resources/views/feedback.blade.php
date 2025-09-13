@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="bg-[#3056d3]">
+    <section class="bg-primary">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a class="flex flex-col items-center mb-6 text-2xl">
                 <img class="h-12 mb-2" src="{{ asset('images/logo/logo-car.png') }}" alt="logo">
@@ -74,6 +74,5 @@
 @endsection
 
 @section('scripts')
-    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 @endsection

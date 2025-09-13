@@ -1,45 +1,50 @@
-@extends('admin/admin-layout')
+@extends('admin/layout')
 
 @section('content')
-    <div class="p-4 sm:ml-64">
-        <div class="heading justify-start">
-            <a href="{{ route('invoices.index') }}" class="button-indigo" type="button">
-                <i class="fa-solid fa-arrow-left fa-lg text-white mr-1"></i> Zpět
-            </a>
-            <h1 class="heading-title">Faktura</h1>
+    <h1 class="heading-title">Úprava faktury</h1>
+
+    <form method="post" action="{{ route('invoices.update', ['invoice' => $invoice->id]) }}">
+        @csrf
+
+        <div class="form-wrapper">
+            <div class="form-row">
+                <label for="name">Název faktury *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input id="name" type="text" name="name" autocomplete="off" class="max-w-xs" value="{{ old('name', $invoice->name) }}" required />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="price">Částka *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input id="price" type="number" name="price" autocomplete="off" class="max-w-xs" value="{{ old('price', $invoice->price) }}" required />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="price">Typ *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select id="type" name="type" class="max-w-xs" required>
+                        @foreach(App\Enums\InvoiceTypes::cases() as $case)
+                            <option value="{{ $case->value }}" @selected(old('variant', substr($invoice->type, 0, 1)) === $case->value)>
+                                {{ $case->getReadableFormat() }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="date">Datum faktury *</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input id="date" type="date" name="date" autocomplete="off" class="max-w-xs" value="{{ old('date', \Illuminate\Support\Carbon::parse($invoice->date)->toDateString()) }}" required />
+                </div>
+            </div>
         </div>
 
-        <form method="post" action="{{ route('invoices.update', ['invoice' => $invoice->id]) }}">
-            @csrf
-                @method('PUT')
-            <div class="mb-5">
-                <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID faktury</label>
-                <input type="text" id="id" name="id" value="{{ old('id', $invoice->id) }}" class="form-input" readonly>
-            </div>
-            <div class="mb-5">
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zákazník</label>
-                <input type="text" id="name" name="name" value="{{ old('name', $invoice->name) }}" class="form-input" required>
-            </div>
-            <div class="mb-5">
-                <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Typ faktury</label>
-                <select id="type" name="type" class="form-input">
-                    <option value="T" @if($invoice->type === 'T')selected @endif class="text-green-600">Tržba</option>
-                    <option value="N" @if($invoice->type === 'N')selected @endif class="text-red-600">Náklad</option>
-                    <option value="P" @if($invoice->type === 'P')selected @endif class="text-blue-600">Poukaz</option>
-                </select>
-            </div>
-            <div class="mb-5">
-                <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Datum</label>
-                <input type="text" id="date" name="date" value="{{ old('date', $invoice->date) }}" class="form-input">
-            </div>
-            <div class="mb-5">
-                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cena</label>
-                <input type="text" id="price" name="price" value="{{ old('price', $invoice->price) }}" class="form-input">
-            </div>
-            <div class="form-buttons">
-                <button type="submit" class="form-submit">Odeslat</button>
-                <button type="reset" class="form-reset">Vymazat</button>
-            </div>
-        </form>
-    </div>
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button type="button" class="text-sm/6 font-semibold text-gray-900 dark:text-white">Zrušit</button>
+            <button type="submit" class="primary w-1/6 h-12">Aktualizovat fakturu</button>
+        </div>
+    </form>
 @endsection

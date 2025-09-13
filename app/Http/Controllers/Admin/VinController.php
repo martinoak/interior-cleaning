@@ -25,9 +25,9 @@ class VinController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('admin.vin.create');
     }
 
     /**
@@ -56,26 +56,6 @@ class VinController extends Controller
         } catch (InvalidArgumentException $e) {
            return back()->with('error','VIN není validný, zadej údaje ručně.')->withInput();
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $vin): View
-    {
-        $car = Vin::find($vin);
-
-        return view('admin.vin.edit', compact('car'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $vin): RedirectResponse
-    {
-        Vin::find($vin)->update($request->all());
-
-        return to_route('vin.index')->with('success','VIN byl úspěšně upraven.');
     }
 
     public function destroy(string $vin): RedirectResponse

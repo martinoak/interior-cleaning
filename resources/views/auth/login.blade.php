@@ -1,4 +1,4 @@
-@extends('admin/admin-layout')
+@extends('admin/layout')
 
 @section('head')
     <meta name="viewport" content="user-scalable=no">

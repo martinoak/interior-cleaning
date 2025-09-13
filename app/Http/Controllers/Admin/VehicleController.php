@@ -39,18 +39,14 @@ class VehicleController extends Controller
     public function store(StoreVehicleRequest $request): RedirectResponse
     {
         if ($request->hasFile('vtp')) {
-            // Get the file from the request
             $file = $request->file('vtp');
 
-            // Generate the filename using $request->spz and the file extension
             $filename = $request->spz.'.'.$file->getClientOriginalExtension();
 
-            // Store the file in the 'api' disk under the 'vtp' directory
             $file->storeAs('vtp', $filename, 'api');
         }
 
-        // Create the Vehicle record with the updated $request data
-        $vehicle = Vehicle::create([
+        Vehicle::create([
             'type' => $request->type,
             'manufacturer' => $request->manufacturer,
             'model' => $request->model,
@@ -99,17 +95,13 @@ class VehicleController extends Controller
         $vehicle = Vehicle::where('id', $id)->firstOrFail();
 
         if ($request->hasFile('vtp')) {
-            // Get the file from the request
             $file = $request->file('vtp');
 
-            // Generate the filename using $request->spz and the file extension
             $filename = $request->spz.'.'.$file->getClientOriginalExtension();
 
-            // Store the file in the 'api' disk under the 'vtp' directory
             $file->storeAs('vtp', $filename, 'api');
         }
 
-        // Create the Vehicle record with the updated $request data
         $vehicle->update([
             'type' => $request->type,
             'manufacturer' => $request->manufacturer,
@@ -123,7 +115,6 @@ class VehicleController extends Controller
             'tachograph' => $request->tachograph,
             'oilChange' => $request->oilChange,
             'insurance' => $request->insurance,
-            /* TODO VTP update */
             'spneu' => $request->spneu,
             'wpneu' => $request->wpneu,
         ]);
@@ -143,10 +134,10 @@ class VehicleController extends Controller
         return to_route('vehicles.index')->with('success', 'Vozidlo bylo úspěšně smazáno.');
     }
 
-    protected function serveVTP(string $filename): BinaryFileResponse|JsonResponse
+    protected function serveVTP(string $filename): BinaryFileResponse
     {
         if (!Storage::disk('api')->exists('vtp/'.$filename)) {
-            return response()->json(['message' => 'Soubor nenalezen'], 404);
+            abort(404);
         } else {
             return response()->file(Storage::disk('api')->path('vtp/'.$filename));
         }

@@ -1,211 +1,80 @@
-@extends('admin/admin-layout')
+@extends('admin/layout')
 
 @section('content')
-    <div class="p-4 sm:ml-64">
-        <div class="heading">
-            <div>
-                <h1 class="heading-title">Administrace</h1>
-                <a href="{{ route('customers.create') }}" class="button-black"><i class="fa-solid fa-plus fa-lg icon"></i> Zákazník</a>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 gap-4 mb-4">
-            @foreach($customers as $customer)
-                <div class="cell">
-                    <div class="cell-content justify-between">
-                        <h2 class="cell-title">
-                            {{ $customer->name }} @if($customer->variant)<span class="text-lg text-gray-500">| {{ $customer->variant }}</span> @endif
-                        </h2>
-                        <div class="hidden sm:flex flex-row justify-end items-center gap-4 mr-2">
-                            @if($customer->telephone)
-                                <a class="button-blue" href="tel:{{ $customer->telephone }}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i>Zavolat</a>
-                            @else
-                                <span class="button-disabled"><i class="fa-solid fa-mobile-screen fa-xl icon"></i>Telefon</span>
-                            @endif
-                            @if($customer->email)
-                                <a class="button-blue" href="mailto:{{ $customer->email }}"><i class="fa-solid fa-at fa-xl icon"></i>Napsat e-mail</a>
-                            @else
-                                <span class="button-disabled"><i class="fa-solid fa-at fa-xl icon"></i>E-mail</span>
-                            @endif
-                            @if(! $customer->variant)
-                                <form method="post" action="{{ route('customers.update', ['customer' => $customer->id]) }}" class="flex gap-4">
-                                    @csrf
-                                    @method('PUT')
-                                    @foreach(App\Enums\CleaningTypes::cases() as $case)
-                                        <button type="submit" name="variant" value="{{ $case->value }}" class="button-yellow">
-                                            <i class="fa-solid fa-{{ $loop->iteration }} icon"></i> {{ $case->value }}
-                                        </button>
-                                    @endforeach
-                                </form>
-                            @endif
-                            @if($customer->term)
-                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green">{{ \Carbon\Carbon::parse($customer->term)->format('j.n.Y') }}</a>
-                            @else
-                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green"><i class="fa-solid fa-plus fa-xl icon"></i> Objednat</a>
-                            @endif
-                            @if($customer->term)
-                                <a href="{{ route('archiveCustomer', ['id' => $customer->id]) }}" class="button-yellow"><i class="fa-solid fa-inbox fa-xl"></i></a>
-                            @else
-                                <span class="button-disabled"><i class="fa-solid fa-inbox fa-xl"></i></span>
-                            @endif
-                            <button data-modal-target="destroy-{{ $customer->id }}" data-modal-toggle="destroy-{{ $customer->id }}" class="button-red">
-                                <i class="fa-solid fa-trash-can fa-xl"></i>
-                            </button>
-                        </div>
-                        <div id="destroy-{{ $customer->id }}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div class="relative p-4 w-full max-w-md max-h-full">
-                                <div class="relative bg-white rounded-lg shadow-xs dark:bg-gray-700">
-                                    <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="destroy-{{ $customer->id }}">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <div class="p-4 md:p-5 text-center">
-                                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                        </svg>
-                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Opravdu kompletně smazat uživatele<br> <strong>{{ $customer->name }}</strong>?</h3>
-                                        <form action="{{ route('customers.destroy', ['customer' => $customer->id]) }}" method="post" class="flex justify-around">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="button-red w-[120px]"><i class="fa-solid fa-trash-can icon"></i> Smazat</button>
-                                            <button data-modal-hide="destroy-{{ $customer->id }}" type="button" class="button-black w-[120px]"><i class="fa-solid fa-xmark icon"></i> Zrušit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @if(! empty($customer->message))
-                        <p class="cell-note">{{ nl2br($customer->message) }}</p>
-                    @endif
-                    <div class="cell-note-mobile">
-                        <section>
-                            @if($customer->telephone)
-                                <a class="button-blue w-1/2" href="tel:{{ $customer->telephone }}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i></a>
-                            @else
-                                <span class="button-disabled w-1/2"><i class="fa-solid fa-mobile-screen fa-xl icon"></i></span>
-                            @endif
-                            @if($customer->email)
-                                <a class="button-blue w-1/2" href="mailto:{{ $customer->email }}"><i class="fa-solid fa-at fa-xl icon"></i></a>
-                            @else
-                                <span class="button-disabled w-1/2"><i class="fa-solid fa-at fa-xl icon"></i></span>
-                            @endif
-                        </section>
-                        <section>
-                            @if(! $customer->variant)
-                                <form method="post" action="{{ route('customers.update', ['customer' => $customer->id]) }}" class="flex w-full space-x-2 justify-between">
-                                    @csrf
-                                    @method('PUT')
-                                    @foreach(App\Enums\CleaningTypes::cases() as $case)
-                                        <button type="submit" name="variant" value="{{ $case->value }}" style="@if($loop->first)margin-left: 0 !important;@endif" class="w-1/3 button-yellow">
-                                             {{ $case->getShortenedTitle() }}
-                                        </button>
-                                    @endforeach
-                                </form>
-                            @endif
-                        </section>
-                        <section>
-                            @if($customer->term)
-                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green">{{ Carbon\Carbon::parse($customer->term)->format('j.n.Y') }}</a>
-                            @else
-                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="button-green"><i class="fa-solid fa-plus fa-xl icon"></i> Objednat</a>
-                            @endif
-                            <div class="flex space-x-2">
-                                @if($customer->term)
-                                    <a href="{{ route('archiveCustomer', ['id' => $customer->id]) }}" class="button-yellow"><i class="fa-solid fa-inbox fa-xl"></i></a>
-                                @else
-                                    <span class="button-disabled w-1/2"><i class="fa-solid fa-inbox fa-xl"></i></span>
-                                @endif
-                                <button data-modal-target="destroy-{{ $customer->id }}" data-modal-toggle="destroy-{{ $customer->id }}" class="button-red">
-                                    <i class="fa-solid fa-trash-can fa-xl"></i>
-                                </button>
-                            </div>
-                        </section>
-                        <div id="destroy-{{ $customer->id }}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div class="relative p-4 w-full max-w-md max-h-full">
-                                <div class="relative bg-white rounded-lg shadow-xs dark:bg-gray-700">
-                                    <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="destroy-{{ $customer->id }}">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <div class="p-4 md:p-5 text-center">
-                                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                        </svg>
-                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Opravdu smazat uživatele<br> <strong>{{ $customer->name }}</strong>?</h3>
-                                        <form action="{{ route('customers.destroy', ['customer' => $customer->id]) }}" method="post" class="flex justify-around">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="button-red w-[120px]"><i class="fa-solid fa-trash-can icon"></i> Smazat</button>
-                                            <button data-modal-hide="destroy-{{ $customer->id }}" type="button" class="button-black w-[120px]"><i class="fa-solid fa-xmark icon"></i> Zrušit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+    <div class="heading">
+        <div>
+            <h1 class="heading-title">Administrace</h1>
+            <a href="{{ route('customers.create') }}" class="black"><i class="fa-solid fa-plus fa-lg icon"></i> Zákazník</a>
         </div>
     </div>
-    <div class="inline-flex items-center justify-center w-full mt-[100px]" id="archiv">
-        <hr class="w-96 h-1 my-8 bg-gray-300 border-0">
-        <span class="absolute px-3 font-black text-gray-900 text-xl -translate-x-1/2 bg-gray-50 dark:bg-gray-900 left-1/2 dark:text-white">Archiv</span>
-    </div>
-    <div class="p-4 sm:ml-64">
-        <div class="grid grid-cols-1 gap-4 mb-4">
-            @foreach($archived as $customer)
-                <div class="cell">
-                    <div class="cell-content justify-between">
-                        <h2 class="cell-title">
-                            {{ $customer->name }} @if($customer->variant)<span class="text-lg text-gray-500">| {{ $customer->variant }}</span>@endif
-                        </h2>
-                        <div class="hidden sm:flex flex-row justify-end items-center gap-4 mr-2">
-                            @if($customer->telephone)
-                                <a class="button-blue" href="tel:{{ $customer->telephone }}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i>Zavolat</a>
-                            @endif
-                            @if($customer->email)
-                                <a class="button-blue" href="mailto:{{ $customer->email }}"><i class="fa-solid fa-at fa-xl icon"></i>Napsat e-mail</a>
-                            @endif
-                            @if(! $customer->feedbackSent && $customer->variant)
-                                <a href="{{ route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant]) }}" class="button-indigo"><i class="fa-solid fa-paper-plane fa-lg text-white icon"></i>Feedback</a>
-                            @endif
-                            @if(! $customer->variant)
-                                <button class="button-red"><i class="fa-solid fa-gear fa-lg text-white icon"></i>Varianta</button>
-                            @endif
-                            @if($customer->variant && $customer->feedbackSent)
-                                <span class="button-green"><i class="fa-solid fa-user-check icon"></i> OK</span>
-                            @endif
-                        </div>
-                    </div>
-                    @if(! empty($customer->message))
-                        <p class="cell-note">{{ nl2br($customer->message) }}</p>
-                    @endif
-                    <div class="cell-note-mobile">
-                        <section>
-                            @if($customer->telephone)
-                                <a class="button-blue w-1/2" href="tel:{{ $customer->telephone }}"><i class="fa-solid fa-mobile-screen fa-xl icon"></i></a>
-                            @endif
-                            @if($customer->email)
-                                <a class="button-blue w-1/2" href="mailto:{{ $customer->email }}"><i class="fa-solid fa-at fa-xl icon"></i></a>
-                            @endif
-                        </section>
 
-                        @if(! $customer->feedbackSent && $customer->variant)
-                            <a href="{{ route('feedback', ['id' => $customer->id, 'email' => $customer->email, 'variant' => $customer->variant]) }}" class="button-indigo"><i class="fa-solid fa-paper-plane fa-lg text-white icon"></i>Feedback</a>
+    <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        @foreach($customers as $customer)
+            <li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow-sm dark:divide-white/10 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                <div class="flex w-full items-center justify-between space-x-6 p-6">
+                    <div class="flex-1 truncate">
+                        <div class="flex items-center space-x-3">
+                            <h3 class="truncate text-sm font-medium text-gray-900 dark:text-white">{{ $customer->name }}</h3>
+                            @if($customer->variant)
+                                <span class="inline-flex shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20 dark:bg-green-500/10 dark:text-green-500 dark:inset-ring-green-500/10">{{ $customer->variant }}</span>
+                            @endif
+                        </div>
+                        @if($customer->message)
+                            <p class="mt-1 truncate text-sm text-gray-500 dark:text-gray-400">{{ $customer->message }}</p>
+                        @elseif($customer->term)
+                            <p class="mt-1 truncate text-sm text-gray-500 dark:text-gray-400">Termín: {{ \Carbon\Carbon::parse($customer->term)->format('j.n.Y') }}</p>
+                        @else
+                            <p class="mt-1 truncate text-sm text-gray-500 dark:text-gray-400">Nový zákazník</p>
                         @endif
-                        @if(! $customer->variant)
-                            <button class="button-red"><i class="fa-solid fa-gear fa-lg text-white icon"></i>Varianta</button>
+                    </div>
+                    @if($customer->term)
+                        <div class="flex items-center">
+                            <a href="{{ route('archiveCustomer', ['id' => $customer->id]) }}" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300">
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                                    <path d="M2 3a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2Z" />
+                                    <path fill-rule="evenodd" d="M2 7.5h16l-.811 7.71a2 2 0 0 1-1.99 1.79H4.8a2 2 0 0 1-1.99-1.79L2 7.5ZM7 10a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0v-3Zm5-1a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0v-3a1 1 0 0 0-1-1Z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    @endif
+                </div>
+                <div>
+                    <div class="-mt-px flex divide-x divide-gray-200 dark:divide-white/10">
+                        @if($customer->email)
+                            <div class="flex w-0 flex-1">
+                                <a href="mailto:{{ $customer->email }}" class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-white">
+                                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-gray-400 dark:text-gray-500">
+                                        <path d="M3 4a2 2 0 0 0-2 2v1.161l8.441 4.221a1.25 1.25 0 0 0 1.118 0L19 7.162V6a2 2 0 0 0-2-2H3Z" />
+                                        <path d="m19 8.839-7.77 3.885a2.75 2.75 0 0 1-2.46 0L1 8.839V14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.839Z" />
+                                    </svg>
+                                    Email
+                                </a>
+                            </div>
                         @endif
-                        @if($customer->variant && $customer->feedbackSent)
-                            <span class="button-green"><i class="fa-solid fa-user-check icon"></i> OK</span>
+                        @if($customer->telephone)
+                            <div class="{{ $customer->email ? '-ml-px' : '' }} flex w-0 flex-1">
+                                <a href="tel:{{ $customer->telephone }}" class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 {{ $customer->email ? 'rounded-br-lg' : 'rounded-b-lg' }} border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-white">
+                                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-gray-400 dark:text-gray-500">
+                                        <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z" clip-rule="evenodd" fill-rule="evenodd" />
+                                    </svg>
+                                    Call
+                                </a>
+                            </div>
+                        @endif
+                        @if(!$customer->email && !$customer->telephone)
+                            <div class="flex w-0 flex-1">
+                                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-b-lg border border-transparent py-4 text-sm font-semibold text-gray-900 dark:text-white">
+                                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-gray-400 dark:text-gray-500">
+                                        <path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" />
+                                        <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" />
+                                    </svg>
+                                    Edit
+                                </a>
+                            </div>
                         @endif
                     </div>
                 </div>
-            @endforeach
-        </div>
-    </div>
+            </li>
+        @endforeach
+    </ul>
 @endsection

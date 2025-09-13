@@ -1,4 +1,4 @@
-@php $isDev = str_contains(url()->current(), 'mad.dek.cz') || str_contains(url()->current(), 'localhost') @endphp
+@php $isDev = ! str_contains(url()->current(), 'cisteni-kondrac.cz') @endphp
 @php $inAdmin = str_contains(url()->current(), 'admin') @endphp
 
 <!DOCTYPE html>
@@ -11,15 +11,15 @@
     <title>Čištění interiérů Kondrac</title>
 
     @if (! $isDev)
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH9KTSQLV2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH9KTSQLV2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-        gtag('config', 'G-CH9KTSQLV2');
-    </script>
+            gtag('config', 'G-CH9KTSQLV2');
+        </script>
     @endif
 
     <!--====== Favicon Icon ======-->
@@ -39,17 +39,27 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-50 dark:bg-gray-900" style="overflow: hidden;overflow-y: scroll;box-sizing: content-box">
+<body class="bg-gray-50 dark:bg-zinc-800">
     <x-alert />
-    @if($inAdmin)<x-admin-sidebar :isDev="$isDev" />@endif
+
+    @if($inAdmin)<x-sidebar :isDev="$isDev" />@endif
+
     <div>
         @if($inAdmin)<x-admin-header />@endif
-        @yield('content')
+
+            <div class="lg:pl-72">
+                <main class="py-4">
+                    <div class="px-4 sm:px-6 lg:px-8">
+                        @yield('content')
+                    </div>
+                </main>
+            </div>
     </div>
 
     @livewireScripts
 </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+
     <script>
         const moonButton = document.querySelector('#moonButton')
         const moonButtonMobile = document.querySelector('#moonButton-mobile')

@@ -4,10 +4,8 @@ namespace App\Http\Requests;
 
 use App\Enums\VehicleType;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
 class StoreVehicleRequest extends FormRequest
 {
@@ -61,16 +59,5 @@ class StoreVehicleRequest extends FormRequest
             'oilChange.date' => 'Výměna oleje je ve špatném formátu',
             'insurance.date' => 'Pojištění je ve špatném formátu',
         ];
-    }
-
-    protected $stopOnFirstFailure = true;
-
-    protected function failedValidation(Validator $validator)
-    {
-        $response = response()->json([
-            'errors' => $validator->errors(),
-        ], 422);
-
-        throw new ValidationException($validator, $response);
     }
 }
