@@ -127,7 +127,7 @@
                                         <div class="flex items-center">
                                             <i class="fa-solid fa-wrench fa-lg text-gray-500 dark:text-gray-300"></i>
                                             <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                <span class="truncate font-medium text-gray-900 dark:text-white">{{ $log->title }}</span>
+                                                <span class="truncate font-medium text-xl text-gray-900 dark:text-white">{{ $log->title }}</span>
                                             </div>
                                         </div>
                                         <div class="w-1/3 grid grid-cols-2 gap-4">
