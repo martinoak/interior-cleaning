@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CustomersController;
 use App\Http\Controllers\Admin\InvoicesController;
+use App\Http\Controllers\Admin\OniController;
 use App\Http\Controllers\Admin\ServiceBookController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\VehicleController;
@@ -75,6 +76,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
             ])
             ->names('service-book');
         Route::get('vehicles/service-book/attachments/{id}', [ServiceBookController::class, 'serveAttachment'])->name('attachment');
+
+        Route::resource('oni', OniController::class);
     });
 });
 

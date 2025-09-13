@@ -13,8 +13,14 @@
             @endforeach
         </object>
 
-        <aside>
-            <a href="{{ route('vehicles.create') }}" class="black"><i class="fa-solid fa-plus fa-lg icon"></i> Přidat vozidlo</a>
+        <aside class="flex space-x-4">
+            <a href="{{ route('oni.index') }}" class="black">
+                <img src="{{ asset('images/oni.png') }}" class="h-4 mr-2"> Získat data z ONI systému
+            </a>
+
+            <a href="{{ route('vehicles.create') }}" class="black">
+                <i class="fa-solid fa-plus fa-lg icon"></i> Přidat vozidlo
+            </a>
         </aside>
     </div>
 
