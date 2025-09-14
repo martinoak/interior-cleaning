@@ -11,6 +11,7 @@
                 <a href="{{ url()->current() }}" class="primary">Obnovit stránku</a>
             </div>
         </div>
+
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -27,19 +28,19 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-white/10">
                             @foreach($vehicles as $vehicle)
-                                @continue($vehicle['is_active'] === 'F')
+                                @continue($vehicle['AKTIVNÍ'] === 'F')
                                 <tr>
-                                    <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ $vehicle['name'] }}</td>
-                                    <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ $vehicle['id'] }}</td>
+                                    <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ $vehicle['NAZEV'] }}</td>
+                                    <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ $vehicle['IDOBJ'] }}</td>
                                     <td class="px-3 py-4 text-sm text-center whitespace-nowrap text-gray-500 dark:text-gray-400">
-                                        @if($vehicle['is_active'] === 'T')
+                                        @if($vehicle['AKTIVNÍ'] === 'T')
                                             <span class="badge-green">ANO</span>
                                         @else
                                             <span class="badge-red">NE</span>
                                         @endif
                                     </td>
                                     <td class="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
-                                        <a href="{{ route('oni.show', ['oni' => $vehicle['id']]) }}" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                        <a href="{{ route('oni.show', ['oni' => $vehicle['IDOBJ']]) }}" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
                                             Detail vozidla
                                         </a>
                                     </td>

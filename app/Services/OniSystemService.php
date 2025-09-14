@@ -4,8 +4,6 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\RequestOptions;
-use Illuminate\Support\Facades\Log;
 
 class OniSystemService
 {
@@ -36,38 +34,51 @@ class OniSystemService
     }
 
     /**
+     * Get parsed vehicle list
+     *
+     * @throws GuzzleException
+     */
+    public function getParsedVehicleList(): array
+    {
+        $rawData = $this->getVehicleList();
+
+        return $this->parseVehicleData($rawData);
+    }
+
+    public function getRideHistory(string $id, string $timeFrom = '2025-09-01T00:00:00', string $timeTo = '2025-09-10T23:59:59'): string
+    {
+        $params = self::getFormParams([
+            'ACT' => 'drives2',
+            'IDOBJ' => $id,
+            'TIMEFROM' => $timeFrom,
+            'TIMETO' => $timeTo,
+        ]);
+
+        $response = $this->client->get(self::getBaseUri(), [
+            'query' => $params,
+        ]);
+
+        return $response->getBody()->getContents();
+    }
+
+    /**
      * Get list of vehicles from ONI system
      *
      * @throws GuzzleException
      */
-    public function getVehicleList(): string
+    private function getVehicleList(): string
     {
-        try {
-            $response = $this->client->post(self::getBaseUri(), [
-                RequestOptions::FORM_PARAMS => self::getFormParams(['ACT' => 'listobj']),
-            ]);
+        $response = $this->client->get(self::getBaseUri(), [
+            'query' => self::getFormParams(['ACT' => 'listobj']),
+        ]);
 
-            $data = $response->getBody()->getContents();
-
-            Log::info('ONI System: Successfully fetched vehicle list', [
-                'response_length' => strlen($data),
-                'status_code' => $response->getStatusCode(),
-            ]);
-
-            return $data;
-        } catch (GuzzleException $e) {
-            Log::error('ONI System: Failed to fetch vehicle list', [
-                'error' => $e->getMessage(),
-                'code' => $e->getCode(),
-            ]);
-            throw $e;
-        }
+        return $response->getBody()->getContents();
     }
 
     /**
      * Parse the raw ONI system data into structured array
      */
-    public function parseVehicleData(string $rawData): array
+    private function parseVehicleData(string $rawData): array
     {
         $lines = explode("\n", trim($rawData));
         $vehicles = [];
@@ -81,16 +92,15 @@ class OniSystemService
 
             // Based on the example data structure
             $vehicles[] = [
-                'id' => $fields[0] ?? '',
-                'name' => $fields[1] ?? '',
-                'is_active' => $fields[2] ?? '',
-                'spz' => $fields[3] ?? '',
-                'year' => $fields[8] ?? '',
-                'fuel_type' => $fields[25] ?? '',
-                'vehicle_type' => $fields[28] ?? '',
-                'color' => $fields[32] ?? '',
-                'email_nocomm' => $fields[33] ?? '',
-                'intern_code' => $fields[54] ?? '',
+                'IDOBJ' => $fields[0] ?? '',
+                'NAZEV' => $fields[1] ?? '',
+                'AKTIVNÍ' => $fields[2] ?? '',
+                'SPZ' => $fields[3] ?? '',
+                'VYR' => $fields[8] ?? '',
+                'IDSRC' => $fields[25] ?? '',
+                'DRUH' => $fields[28] ?? '',
+                'COLOR' => $fields[32] ?? '',
+                'EMAIL_NOCOMM' => $fields[33] ?? '',
             ];
         }
 
@@ -98,14 +108,60 @@ class OniSystemService
     }
 
     /**
-     * Get parsed vehicle list
+     * Parse the raw ONI ride history data into structured array
+     */
+    private function parseRideHistoryData(string $rawData): array
+    {
+        $lines = explode("\n", trim($rawData));
+        $rides = [];
+
+        foreach ($lines as $line) {
+            if (empty(trim($line))) {
+                continue;
+            }
+
+            $fields = explode("\t", $line);
+
+            // Based on the example ride history data structure
+            $rides[] = [
+                'IDDRIVE' => $fields[0] ?? '',
+                'STARTTIME' => $fields[1] ?? '',
+                'STARTGPSLO' => $fields[2] ?? '',
+                'STARTGPSLA' => $fields[3] ?? '',
+                'STOPTIME' => $fields[5] ?? '',
+                'STOPGPSLO' => $fields[6] ?? '',
+                'STOPGPSLA' => $fields[7] ?? '',
+                'DRIVETYPE' => $fields[10] ?? '',
+                'DRIVEDIST' => $fields[11] ?? '',
+                'STARTOBEC' => $fields[12] ?? '',
+                'STOPOBEC' => $fields[13] ?? '',
+                'STARTSTAT' => $fields[16] ?? '',
+                'STARTSTATN' => $fields[17] ?? '',
+                'STARTCISPOP' => $fields[20] ?? '',
+                'STARTCISOR' => $fields[21] ?? '',
+                'STOPSTAT' => $fields[22] ?? '',
+                'STOPSTATN' => $fields[23] ?? '',
+                'STOPCISPOP' => $fields[26] ?? '',
+                'STOPCISOR' => $fields[27] ?? '',
+                'VEMAX' => $fields[28] ?? '',
+                'VEAVG' => $fields[29] ?? '',
+                'TIMEDIFF' => $fields[30] ?? '',
+                'MOTOHOD' => $fields[39] ?? '',
+            ];
+        }
+
+        return $rides;
+    }
+
+    /**
+     * Get parsed ride history
      *
      * @throws GuzzleException
      */
-    public function getParsedVehicleList(): array
+    public function getParsedRideHistory(string $id, string $timeFrom = '2025-09-01T00:00:00', string $timeTo = '2025-09-10T23:59:59'): array
     {
-        $rawData = $this->getVehicleList();
+        $rawData = $this->getRideHistory($id, $timeFrom, $timeTo);
 
-        return $this->parseVehicleData($rawData);
+        return $this->parseRideHistoryData($rawData);
     }
 }

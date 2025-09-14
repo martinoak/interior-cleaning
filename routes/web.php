@@ -78,6 +78,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('vehicles/service-book/attachments/{id}', [ServiceBookController::class, 'serveAttachment'])->name('attachment');
 
         Route::resource('oni', OniController::class)->only('index', 'show');
+        Route::get('oni/{oni}/export', [OniController::class, 'export'])->name('oni.export');
+        Route::get('oni/{oni}/map', [OniController::class, 'showMap'])->name('oni.map');
     });
 });
 
