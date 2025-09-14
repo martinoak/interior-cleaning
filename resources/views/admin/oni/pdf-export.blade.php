@@ -214,56 +214,6 @@
         </table>
     @endif
 
-    <!-- Google Maps Section -->
-    @if(count($rides) > 0)
-        <div class="section">
-            <h2>Mapa tras</h2>
-            @if($mapImage)
-                <div style="text-align: center; margin: 15px 0;">
-                    <img src="{{ $mapImage }}" alt="Google Maps - Mapa tras" style="max-width: 100%; height: auto; border: 1px solid #dee2e6; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                </div>
-                <div style="font-size: 8px; color: #666; text-align: center; margin-top: 10px;">
-                    <strong>Google Maps:</strong> Interaktivní mapa zachycená s polylines trasami a číslovanými body startu/konce každé jízdy
-                </div>
-            @else
-                <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; padding: 15px; text-align: center;">
-                    <div style="font-size: 10px; color: #856404; margin-bottom: 10px;">
-                        <strong>⚠️ Mapa nebyla zachycena</strong>
-                    </div>
-                    <div style="font-size: 8px; color: #856404; margin-bottom: 10px;">
-                        Pro zobrazení Google Maps v PDF exportu:
-                    </div>
-                    <div style="font-size: 8px; color: #856404; text-align: left; margin: 0 auto; max-width: 400px;">
-                        1. Přejděte na stránku "Mapa tras" pro tento datum<br>
-                        2. Klikněte na tlačítko "Zachytit mapu"<br>
-                        3. Poté znovu exportujte PDF
-                    </div>
-                </div>
-
-                <!-- Fallback: GPS coordinates table -->
-                <div style="margin-top: 15px;">
-                    <h3 style="font-size: 10px; margin-bottom: 10px;">GPS souřadnice tras:</h3>
-                    <div style="display: table; width: 100%; table-layout: fixed;">
-                        @foreach($rides as $index => $ride)
-                            @if($index % 2 == 0)
-                                <div style="display: table-row;">
-                            @endif
-                            <div style="display: table-cell; background-color: white; padding: 8px; border: 1px solid #dee2e6; margin: 2px; vertical-align: top;">
-                                <div style="font-weight: bold; margin-bottom: 3px; font-size: 9px;">Jízda {{ $index + 1 }}</div>
-                                <div style="font-size: 8px;"><strong>Start:</strong> {{ $ride['STARTGPSLA'] ?? 'N/A' }}, {{ $ride['STARTGPSLO'] ?? 'N/A' }}</div>
-                                <div style="font-size: 8px;"><strong>Cíl:</strong> {{ $ride['STOPGPSLA'] ?? 'N/A' }}, {{ $ride['STOPGPSLO'] ?? 'N/A' }}</div>
-                                <div style="font-size: 8px;"><strong>Vzdálenost:</strong> {{ $ride['DRIVEDIST'] }} km</div>
-                            </div>
-                            @if($index % 2 == 1 || $loop->last)
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-        </div>
-    @endif
-
     <!-- Footer -->
     <div class="footer">
         Vygenerováno: {{ now()->format('d.m.Y H:i:s') }} | Systém evidence vozidel
