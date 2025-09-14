@@ -29,6 +29,7 @@
                         <tbody class="divide-y divide-gray-200 dark:divide-white/10">
                             @foreach($vehicles as $vehicle)
                                 @continue($vehicle['AKTIVNÍ'] === 'F')
+                                @continue($vehicle['IDOBJ'] === '93584') {{-- Hide Kamarýt --}}
                                 <tr>
                                     <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ $vehicle['NAZEV'] }}</td>
                                     <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ $vehicle['IDOBJ'] }}</td>

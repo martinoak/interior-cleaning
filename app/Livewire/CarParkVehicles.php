@@ -23,11 +23,8 @@ class CarParkVehicles extends Component
 
     public function refreshTypes(string $type): void
     {
-        if ($this->types->contains($type)) {
-            $this->types = $this->types->reject($type);
-        } else {
-            $this->types->push($type);
-        }
+        $this->types = collect();
+        $this->types->push($type);
     }
 
     public function render(): View
