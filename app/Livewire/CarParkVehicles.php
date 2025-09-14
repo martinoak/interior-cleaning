@@ -33,7 +33,7 @@ class CarParkVehicles extends Component
 
         foreach ($vehicles as $vehicle) {
             if ($this->types->contains($vehicle->type)) {
-                $vehicles = $vehicles->reject($vehicle);
+                $vehicles = $vehicles->push($vehicle);
             }
         }
 
