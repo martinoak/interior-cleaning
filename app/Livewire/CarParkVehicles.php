@@ -4,42 +4,38 @@ namespace App\Livewire;
 
 use App\Enums\VehicleType;
 use App\Models\Vehicle;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class CarParkVehicles extends Component
 {
-    public Collection $types;
+    public ?string $selectedType = null;
 
     public function mount(): void
     {
-        $this->types = collect();
-
-        foreach (VehicleType::cases() as $type) {
-            $this->types->push($type);
-        }
+        // Show all vehicles by default (no type selected)
+        $this->selectedType = null;
     }
 
-    public function refreshTypes(string $type): void
+    public function updatedSelectedType(): void
     {
-        $this->types = collect();
-        $this->types->push($type);
+        // This method will be called automatically when selectedType changes
+        // No additional logic needed as the render method will handle filtering
     }
 
     public function render(): View
     {
-        $vehicles = Vehicle::all();
+        $query = Vehicle::query();
 
-        foreach ($vehicles as $vehicle) {
-            if ($this->types->contains($vehicle->type)) {
-                $vehicles = $vehicles->push($vehicle);
-            }
+        // Filter by selected type if one is selected
+        if ($this->selectedType) {
+            $query->where('type', $this->selectedType);
         }
+
+        $vehicles = $query->get();
 
         return view('livewire.car-park-vehicles', [
             'vehicles' => $vehicles,
-            'types' => $this->types,
         ]);
     }
 }
