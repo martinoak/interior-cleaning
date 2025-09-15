@@ -97,29 +97,48 @@
                         <!-- Statistics Grid - Mobile Responsive -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:space-x-8 gap-4 lg:gap-0 text-sm">
                             <div class="flex flex-col sm:flex-row sm:items-center">
-                                <span class="font-medium text-gray-900 dark:text-white">Celkem jízd:</span>
+                                <span class="font-medium text-gray-900 dark:text-white">Jízd:</span>
                                 <span class="text-gray-600 dark:text-gray-300 sm:ml-2">{{ count($rides) }}</span>
                             </div>
                             <div class="flex flex-col sm:flex-row sm:items-center">
-                                <span class="font-medium text-gray-900 dark:text-white">Celková vzdálenost:</span>
+                                <span class="font-medium text-gray-900 dark:text-white">Vzdálenost:</span>
                                 <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ number_format(collect($rides)->sum('DRIVEDIST'), 1) }} km
                                 </span>
                             </div>
                             <div class="flex flex-col sm:flex-row sm:items-center">
-                                <span class="font-medium text-gray-900 dark:text-white">Celkový čas:</span>
+                                <span class="font-medium text-gray-900 dark:text-white">Jízda:</span>
                                 <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ \Carbon\CarbonInterval::seconds(collect($rides)->sum('TIMEDIFF'))->cascade()->forHumans() }}
                                 </span>
                             </div>
+                            @php
+                                $totalPauseTime = 0;
+                                for($i = 1; $i < count($rides); $i++) {
+                                    $previousRide = $rides[$i - 1];
+                                    $currentRide = $rides[$i];
+                                    $previousEndTime = \Carbon\Carbon::createFromFormat('d.m.y H:i:s', $previousRide['STOPTIME']);
+                                    $currentStartTime = \Carbon\Carbon::createFromFormat('d.m.y H:i:s', $currentRide['STARTTIME']);
+                                    $pauseTime = $previousEndTime->diffInSeconds($currentStartTime);
+                                    if($pauseTime > 0) {
+                                        $totalPauseTime += $pauseTime;
+                                    }
+                                }
+                            @endphp
                             <div class="flex flex-col sm:flex-row sm:items-center">
-                                <span class="font-medium text-gray-900 dark:text-white">Max. rychlost:</span>
+                                <span class="font-medium text-gray-900 dark:text-white">Pauza:</span>
+                                <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
+                                    {{ $totalPauseTime > 0 ? \Carbon\CarbonInterval::seconds($totalPauseTime)->cascade()->forHumans() : '0 minut' }}
+                                </span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <span class="font-medium text-gray-900 dark:text-white">Max rychl.:</span>
                                 <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ collect($rides)->max('VEMAX') }} km/h
                                 </span>
                             </div>
                             <div class="flex flex-col sm:flex-row sm:items-center">
-                                <span class="font-medium text-gray-900 dark:text-white">Prům. rychlost:</span>
+                                <span class="font-medium text-gray-900 dark:text-white">Prům. rychl.:</span>
                                 <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ number_format(collect($rides)->avg('VEAVG'), 1) }} km/h
                                 </span>
