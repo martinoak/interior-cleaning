@@ -1,7 +1,6 @@
 @extends('admin/layout')
 
 @section('content')
-<div class="px-4 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center">
         <h1 class="heading-title">Seznam jízd vozidla</h1>
         <form action="{{ route('oni.show', ['oni' => $vehicle->oni_id]) }}" method="get">
@@ -37,7 +36,29 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-white/10">
-                                    @foreach($rides as $ride)
+                                    @foreach($rides as $index => $ride)
+                                        {{-- Show pause time between rides --}}
+                                        @if($index > 0)
+                                            @php
+                                                $previousRide = $rides[$index - 1];
+                                                $previousEndTime = \Carbon\Carbon::createFromFormat('d.m.y H:i:s', $previousRide['STOPTIME']);
+                                                $currentStartTime = \Carbon\Carbon::createFromFormat('d.m.y H:i:s', $ride['STARTTIME']);
+                                                $pauseTime = $previousEndTime->diffInSeconds($currentStartTime);
+                                            @endphp
+                                            @if($pauseTime > 0)
+                                                <tr class="bg-gray-50 dark:bg-white/5">
+                                                    <td colspan="6" class="px-3 py-2 text-left lg:text-center text-xs text-gray-600 dark:text-gray-400 border-t border-dashed border-gray-300 dark:border-gray-600">
+                                                        <span class="inline-flex items-center gap-1">
+                                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            </svg>
+                                                            Pauza: {{ \Carbon\CarbonInterval::seconds($pauseTime)->cascade()->forHumans() }}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endif
+
                                         <tr>
                                             <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
                                                 {{ $ride['STARTTIME'] }}
@@ -55,7 +76,13 @@
                                                 {{ $ride['STARTOBEC'] ?: $ride['start_city'] }} - {{ $ride['STOPOBEC'] ?: $ride['end_city'] }}
                                             </td>
                                             <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
-                                                {{ $ride['VEMAX'] }}
+                                                @if(intval($ride['VEMAX']) > 110)
+                                                    <span class="badge-red">{{ $ride['VEMAX'] }}</span>
+                                                @elseif(intval($ride['VEMAX']) > 95)
+                                                    <span class="badge-yellow">{{ $ride['VEMAX'] }}</span>
+                                                @else
+                                                    {{ $ride['VEMAX'] }}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -65,49 +92,51 @@
                     </div>
                 </div>
 
-                <!-- Summary row for this date -->
                 <div class="mt-4 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex space-x-8 text-sm">
-                            <div>
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                        <!-- Statistics Grid - Mobile Responsive -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:space-x-8 gap-4 lg:gap-0 text-sm">
+                            <div class="flex flex-col sm:flex-row sm:items-center">
                                 <span class="font-medium text-gray-900 dark:text-white">Celkem jízd:</span>
-                                <span class="text-gray-600 dark:text-gray-300">{{ count($rides) }}</span>
+                                <span class="text-gray-600 dark:text-gray-300 sm:ml-2">{{ count($rides) }}</span>
                             </div>
-                            <div>
+                            <div class="flex flex-col sm:flex-row sm:items-center">
                                 <span class="font-medium text-gray-900 dark:text-white">Celková vzdálenost:</span>
-                                <span class="text-gray-600 dark:text-gray-300">
+                                <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ number_format(collect($rides)->sum('DRIVEDIST'), 1) }} km
                                 </span>
                             </div>
-                            <div>
+                            <div class="flex flex-col sm:flex-row sm:items-center">
                                 <span class="font-medium text-gray-900 dark:text-white">Celkový čas:</span>
-                                <span class="text-gray-600 dark:text-gray-300">
+                                <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ \Carbon\CarbonInterval::seconds(collect($rides)->sum('TIMEDIFF'))->cascade()->forHumans() }}
                                 </span>
                             </div>
-                            <div>
+                            <div class="flex flex-col sm:flex-row sm:items-center">
                                 <span class="font-medium text-gray-900 dark:text-white">Max. rychlost:</span>
-                                <span class="text-gray-600 dark:text-gray-300">
+                                <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ collect($rides)->max('VEMAX') }} km/h
                                 </span>
                             </div>
-                            <div>
+                            <div class="flex flex-col sm:flex-row sm:items-center">
                                 <span class="font-medium text-gray-900 dark:text-white">Prům. rychlost:</span>
-                                <span class="text-gray-600 dark:text-gray-300">
+                                <span class="text-gray-600 dark:text-gray-300 sm:ml-2">
                                     {{ number_format(collect($rides)->avg('VEAVG'), 1) }} km/h
                                 </span>
                             </div>
                         </div>
-                        <div class="flex space-x-2">
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                             <a href="{{ route('oni.map', ['oni' => $id, 'date' => DateTime::createFromFormat('d.m.y', $date)->format('Y-m-d')]) }}"
-                               class="inline-flex items-center px-3 py-2 border border-blue-300 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-800">
+                               class="inline-flex items-center justify-center px-3 py-2 border border-blue-300 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-800">
                                 <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7"></path>
                                 </svg>
                                 Mapa
                             </a>
                             <a href="{{ route('oni.export', ['oni' => $id, 'date' => DateTime::createFromFormat('d.m.y', $date)->format('Y-m-d')]) }}"
-                               class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-600">
+                               class="inline-flex items-center justify-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-600">
                                 <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 1H7a2 2 0 00-2 2v16a2 2 0 002 2z"></path>
                                 </svg>
@@ -123,5 +152,4 @@
             <p class="text-sm text-gray-500 dark:text-gray-400">No ride history found for this vehicle.</p>
         </div>
     @endif
-</div>
 @endsection
