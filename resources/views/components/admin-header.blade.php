@@ -14,16 +14,16 @@
             <el-dropdown class="relative flex items-center">
                 <button class="relative flex items-center">
                     <span class="absolute -inset-1.5"></span>
-                    <img class="w-8 h-6 rounded-full object-fit block dark:hidden" src="{{ asset('images/logo/logo-car2.png') }}" alt=""/>
-                    <img class="w-8 h-6 rounded-full object-fit hidden dark:block" src="{{ asset('images/logo/logo-car.png') }}" alt=""/>
+                    <img class="w-8 h-6 rounded-full object-fit block dark:hidden me-4" src="{{ asset('images/logo/logo-car2.png') }}" alt=""/>
+                    <img class="w-8 h-6 rounded-full object-fit hidden dark:block me-4" src="{{ asset('images/logo/logo-car.png') }}" alt=""/>
                     <span class="hidden lg:flex lg:items-center">
-                        <span aria-hidden="true" class="mx-4 text-sm/6 font-semibold text-gray-900 dark:text-white">
+                        <span aria-hidden="true" class="text-sm/6 font-semibold text-gray-900 dark:text-white">
                             {{ \Illuminate\Support\Facades\Auth::user()?->name }}
                         </span>
                     </span>
 
-                    <button id="moonButton" class="w-8 h-8 bg-gray-700 rounded-sm block dark:hidden"><i class="fa-solid fa-moon text-white"></i></button>
-                    <button id="sunButton" class="w-8 h-8 bg-primary rounded-sm hidden dark:block"><i class="fa-solid fa-sun text-white"></i></button>
+                    <button id="moonButton" class="ms-4 w-8 h-8 bg-gray-700 rounded-sm block dark:hidden"><i class="fa-solid fa-moon text-white"></i></button>
+                    <button id="sunButton" class="ms-4 w-8 h-8 bg-primary rounded-sm hidden dark:block"><i class="fa-solid fa-sun text-white"></i></button>
                 </button>
             </el-dropdown>
         </div>

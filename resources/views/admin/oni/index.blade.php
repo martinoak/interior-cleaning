@@ -19,8 +19,8 @@
                         <thead>
                         <tr>
                             <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white">Název</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">ID vozidla</th>
-                            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 dark:text-white">Aktivní</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white hidden lg:table-cell">ID vozidla</th>
+                            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 dark:text-white hidden md:table-cell">Aktivní</th>
                             <th scope="col" class="py-3.5 pr-4 text-right pl-3 sm:pr-0 text-gray-900 dark:text-white">
                                 Akce
                             </th>
@@ -29,10 +29,11 @@
                         <tbody class="divide-y divide-gray-200 dark:divide-white/10">
                             @foreach($vehicles as $vehicle)
                                 @continue($vehicle['AKTIVNÍ'] === 'F')
+                                @continue($vehicle['IDOBJ'] === '93584') {{-- Hide Kamarýt --}}
                                 <tr>
                                     <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ $vehicle['NAZEV'] }}</td>
-                                    <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ $vehicle['IDOBJ'] }}</td>
-                                    <td class="px-3 py-4 text-sm text-center whitespace-nowrap text-gray-500 dark:text-gray-400">
+                                    <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400 hidden lg:table-cell">{{ $vehicle['IDOBJ'] }}</td>
+                                    <td class="px-3 py-4 text-sm text-center whitespace-nowrap text-gray-500 dark:text-gray-400 hidden md:table-cell">
                                         @if($vehicle['AKTIVNÍ'] === 'T')
                                             <span class="badge-green">ANO</span>
                                         @else

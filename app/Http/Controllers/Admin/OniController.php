@@ -45,13 +45,16 @@ class OniController extends Controller
      *
      * @throws GuzzleException
      */
-    public function show(string $id): View
+    public function show(string $id): View|RedirectResponse
     {
         try {
             $from = request('start_date', date('c', strtotime('-1 month'))).'T00:00:00';
             $to = request('end_date', date('c')).'T23:59:59';
 
             $vehicle = Vehicle::where('oni_id', $id)->first();
+            if (!$vehicle) {
+                return back()->with('error', 'Vozidlo nemá přiřazené ONI ID!');
+            }
             $rides = $this->oni->getParsedRideHistory($id, $from, $to);
 
             // Group rides by date and sort chronologically
@@ -82,12 +85,7 @@ class OniController extends Controller
 
             return view('admin.oni.show', compact('vehicle', 'ridesByDate', 'id'));
         } catch (GuzzleException|\Exception $e) {
-            return view('admin.oni.show', [
-                'vehicle' => null,
-                'ridesByDate' => collect(),
-                'id' => $id,
-                'error' => $e->getMessage(),
-            ]);
+            return back()->with('error', $e->getMessage());
         }
     }
 

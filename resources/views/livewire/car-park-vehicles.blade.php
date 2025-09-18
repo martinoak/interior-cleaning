@@ -1,25 +1,26 @@
 <div>
-    <div class="heading">
-        <object class="inline-flex rounded-lg shadow-2xs">
+    <div class="flex justify-between mb-4" style="width: unset">
+        <div class="inline-flex rounded-lg shadow-2xs">
             @foreach(\App\Enums\VehicleType::cases() as $type)
-                <button type="button"
-                        name="types[]"
-                        value="{{ $type->value }}"
-                        wire:click="refreshTypes('{{ $type->value }}')"
-                        class="px-4 py-2 text-sm font-medium @if(! $types->contains($type->value)) text-white bg-blue-800 @else text-gray-800 bg-transparent @endif @if($loop->first || $loop->last) border @else border-b border-t @endif border-gray-900 @if($loop->first) rounded-s-lg @elseif($loop->last) rounded-e-lg @endif hover:bg-gray-900 hover:text-white focus:z-10 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700"
-                >
+                <label class="px-4 py-2 text-sm font-medium cursor-pointer border @if($selectedType === $type->value) text-white bg-blue-800 @else text-gray-800 bg-transparent @endif @if($loop->last) rounded-e-lg @elseif($loop->first) rounded-s-lg border-b border-t @endif border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700">
+                    <input type="radio"
+                           wire:model.live="selectedType"
+                           value="{{ $type->value }}"
+                           class="sr-only">
                     <i class="{{ \App\Enums\VehicleType::getIcon($type->value) }} fa-lg"></i>
-                </button>
+                </label>
             @endforeach
-        </object>
+        </div>
 
         <aside class="flex space-x-4">
             <a href="{{ route('oni.index') }}" class="black">
-                <img src="{{ asset('images/oni.png') }}" class="h-4 mr-2"> Získat data z ONI systému
+                <img src="{{ asset('images/oni.png') }}" class="h-4 lg:mr-2">
+                <span class="hidden lg:block">Získat data z ONI systému</span>
             </a>
 
             <a href="{{ route('vehicles.create') }}" class="black">
-                <i class="fa-solid fa-plus fa-lg icon"></i> Přidat vozidlo
+                <i class="fa-solid fa-plus fa-lg icon mr-0! lg:mr-2"></i>
+                <span class="hidden lg:block">Přidat vozidlo</span>
             </a>
         </aside>
     </div>
