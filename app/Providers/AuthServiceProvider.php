@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,15 +29,15 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('admin', function (User $user) {
-            return $user->login === 'admin';
+            return $user->role === Role::ADMIN->value;
         });
 
         Gate::define('cleaning', function (User $user) {
-            return in_array($user->login, ['stepan', 'admin']);
+            return $user->role === Role::CLEANING->value;
         });
 
         Gate::define('car-park', function (User $user) {
-            return in_array($user->login, ['stepan', 'janp', 'admin']);
+            return $user->role === Role::CAR_PARK->value;
         });
     }
 }
